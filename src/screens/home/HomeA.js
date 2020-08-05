@@ -26,7 +26,7 @@ import getImgSource from '../../utils/getImgSource.js';
 
 // import components
 import ActionProductCard from '../../components/cards/ActionProductCard';
-import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
+//import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
 import LinkButton from '../../components/buttons/LinkButton';
 import {Heading6} from '../../components/text/CustomText';
 import TouchableItem from '../../components/TouchableItem';
@@ -40,6 +40,11 @@ const imgHolder = require('../../assets/img/imgholder.png');
 
 //Import images
 const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
+const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
+
+
+//import icons
+import { FontAwesome5 } from '@expo/vector-icons';
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -279,11 +284,10 @@ export default class HomeA extends Component {
                 <TouchableOpacity style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
                     <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
                 </TouchableOpacity>
-                <LinkButton
-                  title="View all"
-                  titleStyle={styles.viewAllText}
-                  onPress={this.navigateTo('Categories')}
-                />
+
+                <TouchableOpacity style={{marginRight:5}}>
+                    <FontAwesome5  name="sort-alpha-up" size={19} color={"#70AD66"} />
+                </TouchableOpacity>
               </View>
 
               {/*<FlatList
@@ -318,29 +322,124 @@ export default class HomeA extends Component {
 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                        <View style={{width: 336, height: 170, marginBottom:5, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                        <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
                             <View style={{flexDirection:'row'}}>
                                 <Image source={fotoAnuncio} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                 
                                 <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: '900', marginLeft:25, color:'#70AD66'}}>Forneço Cupcakes</Text>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>Forneço Cupcakes</Text>
                                   
                                   <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#70AD66'}}>Sou confeiteiro Profissional, tenho variedades de sabores</Text>
+                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Sou confeiteiro Profissional, tenho variedades de sabores</Text>
                                   </View>
                                 </View>
                             </View>  
 
-                            <View>
-                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 15, marginLeft: 31}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                     <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                 </TouchableOpacity>
+
+                                <View style={{marginTop: 24, marginRight: 30}}>
+                                    <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
+                                </View>
                             </View> 
 
                         </View>
                     </View>
                 </View>
 
+
+
+                <View style={{flex:1, alignItems: 'center'}}>
+                    <View>
+                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                            <View style={{flexDirection:'row'}}>
+                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                                
+                                <View style={{flexDirection:'column'}}>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
+                                  
+                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
+                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
+                                  </View>
+                                </View>
+                            </View>  
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                                </TouchableOpacity>
+
+                                <View style={{marginTop: 24, marginRight: 30}}>
+                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                </View>
+                            </View> 
+
+                        </View>
+                    </View>
+                </View>
+
+
+
+                <View style={{flex:1, alignItems: 'center'}}>
+                    <View>
+                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                            <View style={{flexDirection:'row'}}>
+                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                                
+                                <View style={{flexDirection:'column'}}>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
+                                  
+                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
+                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
+                                  </View>
+                                </View>
+                            </View>  
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                                </TouchableOpacity>
+
+                                <View style={{marginTop: 24, marginRight: 30}}>
+                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                </View>
+                            </View> 
+
+                        </View>
+                    </View>
+                </View>
+
+
+                <View style={{flex:1, alignItems: 'center'}}>
+                    <View>
+                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                            <View style={{flexDirection:'row'}}>
+                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                                
+                                <View style={{flexDirection:'column'}}>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
+                                  
+                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
+                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
+                                  </View>
+                                </View>
+                            </View>  
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                                </TouchableOpacity>
+
+                                <View style={{marginTop: 24, marginRight: 30}}>
+                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                </View>
+                            </View> 
+
+                        </View>
+                    </View>
+                </View>
 
           </ScrollView>
         </View>

@@ -15,7 +15,9 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Image,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import Color from 'color';
 
@@ -34,6 +36,10 @@ import Colors from '../../theme/colors';
 
 // HomeA Config
 const imgHolder = require('../../assets/img/imgholder.png');
+
+
+//Import images
+const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -255,24 +261,7 @@ export default class HomeA extends Component {
     />
   );
 
-  renderPopularProductItem = ({item, index}) => (
-    <ActionProductCardHorizontal
-      onPress={this.navigateTo('Product')}
-      onPressRemove={this.onPressRemove(item)}
-      onPressAdd={this.onPressAdd(item)}
-      swipeoutDisabled
-      key={index}
-      imageUri={item.imageUri}
-      title={item.name}
-      description={item.description}
-      rating={item.rating}
-      price={item.price}
-      quantity={item.quantity}
-      discountPercentage={item.discountPercentage}
-      label={item.label}
-    />
-  );
-
+ 
   render() {
     const {categories, products, popularProducts} = this.state;
 
@@ -287,7 +276,9 @@ export default class HomeA extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-                <Heading6 style={styles.titleText}>Categories</Heading6>
+                <TouchableOpacity style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
+                    <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
+                </TouchableOpacity>
                 <LinkButton
                   title="View all"
                   titleStyle={styles.viewAllText}
@@ -295,7 +286,7 @@ export default class HomeA extends Component {
                 />
               </View>
 
-              <FlatList
+              {/*<FlatList
                 data={categories}
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -304,13 +295,15 @@ export default class HomeA extends Component {
                 renderItem={this.renderCategoryItem}
                 contentContainerStyle={styles.categoriesList}
               />
+              */}
+
             </View>
 
             <View style={styles.titleContainer}>
-              <Heading6 style={styles.titleText}>Special Offers</Heading6>
+              <Heading6 style={styles.titleText}>Serviços Gerais</Heading6>
             </View>
 
-            <FlatList
+           {/*  <FlatList
               data={products}
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -320,21 +313,35 @@ export default class HomeA extends Component {
               contentContainerStyle={styles.productsList}
             />
 
-            <View style={styles.titleContainer}>
-              <Heading6 style={styles.titleText}>Popular</Heading6>
-              <LinkButton
-                title="View all"
-                titleStyle={styles.viewAllText}
-                onPress={this.navigateTo('SearchResults')}
-              />
-            </View>
+           */}
 
-            <FlatList
-              data={popularProducts}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderPopularProductItem}
-              contentContainerStyle={styles.popularProductsList}
-            />
+
+                <View style={{flex:1, alignItems: 'center'}}>
+                    <View>
+                        <View style={{width: 336, height: 170, marginBottom:5, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                            <View style={{flexDirection:'row'}}>
+                                <Image source={fotoAnuncio} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                                
+                                <View style={{flexDirection:'column'}}>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: '900', marginLeft:25, color:'#70AD66'}}>Forneço Cupcakes</Text>
+                                  
+                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
+                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#70AD66'}}>Sou confeiteiro Profissional, tenho variedades de sabores</Text>
+                                  </View>
+                                </View>
+                            </View>  
+
+                            <View>
+                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 15, marginLeft: 31}}>
+                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                                </TouchableOpacity>
+                            </View> 
+
+                        </View>
+                    </View>
+                </View>
+
+
           </ScrollView>
         </View>
       </SafeAreaView>

@@ -276,7 +276,7 @@ export default class OnboardingA extends Component {
             ) : (
               <TouchableItem onPress={this.navigateTo('Welcome')}>
                 <View style={styles.actionButton}>
-                  <Text style={styles.buttonText}>{'done'.toUpperCase()}</Text>
+                  <Text style={styles.buttonText}>{'Entrar'.toUpperCase()}</Text>
                 </View>
               </TouchableItem>
             )}

@@ -14,6 +14,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Picker,
   StyleSheet,
   Text,
   View,
@@ -44,7 +45,7 @@ const MINUS_ICON = IOS ? 'ios-remove' : 'md-remove';
 const PLUS_ICON = IOS ? 'ios-add' : 'md-add';
 const FAVORITE_ICON = IOS ? 'ios-star' : 'md-star';
 const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
-const imgHolder = require('../../assets/img/imgholder.png');
+const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
 // ProductA Styles
 const styles = StyleSheet.create({
@@ -177,11 +178,12 @@ export default class TelaAnuncio extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      horario: '',
       product: {
         images: [
-          require('../../assets/img/pizza_3.jpg'),
-          require('../../assets/img/pizza_1.jpg'),
-          require('../../assets/img/pizza_2.jpg'),
+          require('../../assets/img/confeiteira.jpeg'),
+          require('../../assets/img/confeiteira.jpeg'),
+          require('../../assets/img/confeiteira.jpeg'),
         ],
         name: 'Forneço Cupcakes',
         description:
@@ -358,7 +360,18 @@ export default class TelaAnuncio extends Component {
 
           <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                 <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
-                <Text style={{fontSize:15, marginLeft: 15}}>Fecha às 23:00</Text>
+                <Picker
+                  selectedValue={this.state.horario}
+                  onValueChange={(itemValue, itemIndex) => this.setState({horario: itemValue})}
+                  style={{marginLeft:10, width: 300, height:50}}>
+                  <Picker.Item label="Segunda: De: 8:00 às 23:00" value=""/>
+                  <Picker.Item label="Terça: De: 8:00 às 23:00" value=""/>
+                  <Picker.Item label="Quarta: De: 8:00 às 23:00" value=""/>
+                  <Picker.Item label="Quinta: De: 8:00 às 23:00" value=""/>
+                  <Picker.Item label="Sexta: De: 8:00 às 23:00" value=""/>
+                  <Picker.Item label="Sábado: De: 8:00 às 21:00" value=""/>
+                  <Picker.Item label="Domingo: De: 8:00 às 21:00" value=""/>
+                </Picker>
           </View>
 
           <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>

@@ -202,6 +202,17 @@ export default class Cadastro extends Component {
     }
   };
 
+  convertDate() {
+    let day = this.state.date.getDate();
+    let month = this.state.date.getMonth() + 1;
+    let year = this.state.date.getFullYear();
+
+    let fullDate = day + '/' + month + '/' + year;
+
+    console.log('data escolhida: ' +  fullDate)
+    return fullDate;
+  }
+
   render() {
     const {
       emailFocused,
@@ -287,11 +298,10 @@ export default class Cadastro extends Component {
                 />
 
               
-                  <TouchableOpacity style={{width:150, height: 50, alignItems:'center', justifyContent:'center', marginTop: 30, borderRadius:20}} onPress={() => this.setState({showDate: true})}>
-                      <Text style={{fontWeight: 'bold', fontSize:12, color:'#fff'}}>
-                        Data de Nascimento
-                      </Text>
-                      <FontAwesome5 name="clock" size={25} color={"#fff"}/>
+                  <TouchableOpacity style={{width:150, height: 55, alignItems:'center', justifyContent:'center', marginTop: 30, borderRadius:20}} onPress={() => this.setState({showDate: true})}>
+                          <Text style={{fontWeight: 'bold', fontSize:12, color:'#fff'}}>
+                            Defina sua Data de Nascimento: {this.convertDate()}
+                          </Text>
                   </TouchableOpacity>
                
                { this.state.showDate == true &&

@@ -24,7 +24,7 @@ import Welcome from '../screens/welcome/WelcomeA';
 import SignUp from '../screens/signup/Cadastro';
 
 // import Verification screen
-import Verification from '../screens/verification/VerificationA';
+import Verification from '../screens/verification/Verificação';
 
 // import SignIn screen
 import SignIn from '../screens/signin/SignInA';

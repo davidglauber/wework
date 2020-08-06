@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 });
 
 // VerificationB
-export default class VerificationB extends Component {
+export default class Verificação extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -175,11 +175,12 @@ export default class VerificationB extends Component {
 
         <GradientContainer containerStyle={styles.container}>
           <View style={styles.instructionContainer}>
-            <Heading5 style={styles.heading}>Verification Code</Heading5>
+            <Heading5 style={styles.heading}>Código de Verificação</Heading5>
             <Paragraph style={styles.instruction}>
-              Please, enter the verification code sent to +1234567810
+              Por favor, confirme o seu cadastro pelo link que foi enviado ao seu email
             </Paragraph>
 
+          {/* 
             <View style={styles.codeContainer}>
               <View style={styles.digitContainer}>
                 <Text style={styles.digit}>{pin[0]}</Text>
@@ -194,6 +195,8 @@ export default class VerificationB extends Component {
                 <Text style={styles.digit}>{pin[3]}</Text>
               </View>
             </View>
+
+          */}
           </View>
 
           <View style={styles.buttonContainer}>
@@ -203,26 +206,11 @@ export default class VerificationB extends Component {
               borderRadius={4}
               color={Colors.onPrimaryColor}
               small
-              title={'Submit code'.toUpperCase()}
+              title={'Vou verificar'.toUpperCase()}
               titleColor={Colors.primaryColor}
             />
           </View>
 
-          <NumericKeyboard
-            actionButtonTitle="skip"
-            onPress={this.pressKeyboardButton}
-          />
-
-          <ActivityIndicatorModal
-            message="Please wait . . ."
-            onRequestClose={this.closeModal}
-            statusBarColor={Color(Colors.primaryColorDark)
-              .darken(0.4)
-              .rgb()
-              .string()}
-            title="Loading"
-            visible={modalVisible}
-          />
         </GradientContainer>
       </SafeAreaView>
     );

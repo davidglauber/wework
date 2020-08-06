@@ -113,7 +113,7 @@ export default class SearchResultsA extends Component {
 
   renderProductItem = ({item, index}) => (
     <ActionProductCardHorizontal
-      onPress={this.navigateTo('Product')}
+      onPress={this.navigateTo('TelaAnuncio')}
       onPressRemove={this.onPressRemove(item)}
       onPressAdd={this.onPressAdd(item)}
       swipeoutDisabled

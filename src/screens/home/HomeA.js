@@ -275,7 +275,7 @@ export default class HomeA extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-                <TouchableOpacity style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
+                <TouchableOpacity onPress={this.navigateTo('SignUp')} style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
                     <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
                 </TouchableOpacity>
 

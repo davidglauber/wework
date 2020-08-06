@@ -21,7 +21,7 @@ import Onboarding from '../screens/onboarding/OnboardingA';
 import Welcome from '../screens/welcome/WelcomeA';
 
 // import SignUp screen
-import SignUp from '../screens/signup/SignUpA';
+import SignUp from '../screens/signup/SignUpB';
 
 // import Verification screen
 import Verification from '../screens/verification/VerificationA';
@@ -118,13 +118,27 @@ function MainNavigatorA() {
         <Stack.Screen
           name="SignUp"
           component={SignUp}
-          options={{
-            title: 'Create Account',
+          options={
+            ({navigation}) => ({ 
+            headerTitleStyle: {
+              color:'white'
+            },
+            title: 'Criar Conta',
             headerStyle: {
               elevation: 0,
               shadowOpacity: 0,
+              backgroundColor: '#00b970'
             },
-          }}
+
+            headerLeft: () => (
+              <HeaderIconButton
+                onPress={() => navigation.goBack()}
+                name={'ios-arrow-back'}
+                color={'white'}
+              />
+            ),
+            })
+          }
         />
         <Stack.Screen
           name="Verification"

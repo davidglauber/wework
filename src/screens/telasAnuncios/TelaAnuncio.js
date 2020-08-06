@@ -349,16 +349,22 @@ export default class TelaAnuncio extends Component {
             <SmallText style={styles.shortDescription}>{description}</SmallText>
           </View>
 
+        {/* INFO ESTAB
           <View style={styles.pickerGroup}>
             <View style={styles.pickerContainer}>
               <Caption style={styles.caption}>Informações do Estabelecimento:</Caption>
             </View>
-
           </View>
+        */}
 
+          <View style={styles.pickerGroup}>
+            <View style={styles.pickerContainer}>
+              <Caption style={styles.caption}>Informações do Autônomo:</Caption>
+            </View>
+          </View>
+        
 
-
-          <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+        {/* PICKER ESTAB <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                 <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
                 <Picker
                   selectedValue={this.state.horario}
@@ -374,14 +380,28 @@ export default class TelaAnuncio extends Component {
                 </Picker>
           </View>
 
+        */}
+
+
           <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                <FontAwesome5 name="user-tie" size={25} color={"#70AD66"}/>
+                <Text style={{fontSize:15, marginLeft: 15}}>João Figueiredo</Text>
+          </View>
+
+        {/* LOCALIZACAO ESTAB   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                 <FontAwesome5 name="map-marked-alt" size={25} color={"#70AD66"}/>
                 <Text style={{fontSize:15, marginLeft: 15}}>Rua Domingues, 203</Text>
           </View>
+        */}
 
           <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                 <FontAwesome5 name="phone-square" size={30} color={"#70AD66"}/>
                 <Text style={{fontSize:15, marginLeft: 15}}>(11) 98107-3287</Text>
+          </View>
+
+          <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
+                <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
+                <Text style={{fontSize:15, marginLeft: 15}}>Chefe de Cozinha</Text>
           </View>
         </ScrollView>
 
@@ -425,8 +445,8 @@ export default class TelaAnuncio extends Component {
         </View>
       */}
 
-        <View style={{flex: 1, flexDirection:'row'}}>
-            <View style={{flexDirection:'row', justifyContent:'space-between', width: 329, height:80, marginLeft:16, padding:20,  backgroundColor: '#E3FAE5', borderRadius:20}}>
+        <View style={{flex: 1, flexDirection:'row', marginBottom:50, bottom:50}}>
+            <View style={{flexDirection:'row', justifyContent:'space-between', width: 329, height:80, left:16, padding:20,  backgroundColor: '#E3FAE5', borderRadius:20}}>
                 <TouchableOpacity style={{flexDirection:'row', padding:10, alignItems:'center', width: '100%', height:'100%', borderRadius: 20, backgroundColor: '#70AD66'}}>
                     <Text style={{fontWeight:'bold', color:'white', marginRight:20}}>Telefonar</Text>
                     <FontAwesome5 name="mobile" size={20} color={"white"}/>

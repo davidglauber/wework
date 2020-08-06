@@ -33,6 +33,10 @@ import TouchableItem from '../../components/TouchableItem';
 // import colors
 import Colors from '../../theme/colors';
 
+//import icons
+import { FontAwesome5 } from '@expo/vector-icons';
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+
 // ProductA Config
 const isRTL = I18nManager.isRTL;
 const IOS = Platform.OS === 'ios';
@@ -47,6 +51,8 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: Colors.background,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20
   },
   swiperContainer: {
     width: '100%',
@@ -112,8 +118,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   caption: {
-    width: 80,
+    width: 300,
     textAlign: 'left',
+    fontWeight: '600',
+    fontSize: 17
   },
   amountContainer: {
     flexDirection: 'row',
@@ -165,7 +173,7 @@ const styles = StyleSheet.create({
 });
 
 // ProductA
-export default class ProductA extends Component {
+export default class TelaAnuncio extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -175,10 +183,10 @@ export default class ProductA extends Component {
           require('../../assets/img/pizza_1.jpg'),
           require('../../assets/img/pizza_2.jpg'),
         ],
-        name: 'Pizza Carbonara',
+        name: 'Forneço Cupcakes',
         description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-        price: 10.9,
+          'Sou confeiteiro Profissional, tenho variedades de sabores, entrego em todo país. Encomenda a combinar por chat. Peça já o seu!',
+        price: 56.7,
         quantity: 1,
         servingSize: 1,
         sideDish: 20,
@@ -328,8 +336,8 @@ export default class ProductA extends Component {
 
           <View style={styles.descriptionContainer}>
             <View style={styles.productTitleContainer}>
-              <Heading5 style={styles.productTitle}>{product.name}</Heading5>
-              <Text style={styles.priceText}>{`$ ${(
+                  <Heading5 style={styles.productTitle}>{product.name}</Heading5>
+              <Text style={styles.priceText}>{`R$ ${(
                 price * servingSize
               ).toFixed(2)}`}</Text>
             </View>
@@ -341,41 +349,32 @@ export default class ProductA extends Component {
 
           <View style={styles.pickerGroup}>
             <View style={styles.pickerContainer}>
-              <Caption style={styles.caption}>SIZE</Caption>
-              <SizePicker
-                title="Small"
-                onPress={this.setServingSize(1)}
-                picked={servingSize === 1}
-              />
-              <SizePicker
-                title="Medium"
-                onPress={this.setServingSize(1.5)}
-                picked={servingSize === 1.5}
-              />
-              <SizePicker
-                title="Large"
-                onPress={this.setServingSize(2)}
-                picked={servingSize === 2}
-              />
+              <Caption style={styles.caption}>Informações do Estabelecimento:</Caption>
             </View>
 
-            <View style={styles.pickerContainer}>
-              <Caption style={styles.caption}>SIDE DISH</Caption>
-              <SizePicker
-                title="Mayonaise"
-                onPress={this.setSideDish(20)}
-                picked={sideDish === 20}
-              />
-              <SizePicker
-                title="Cheese"
-                onPress={this.setSideDish(30)}
-                picked={sideDish === 30}
-              />
-            </View>
+          </View>
+
+
+
+          <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
+                <Text style={{fontSize:15, marginLeft: 15}}>Fecha às 23:00</Text>
+          </View>
+
+          <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                <FontAwesome5 name="map-marked-alt" size={25} color={"#70AD66"}/>
+                <Text style={{fontSize:15, marginLeft: 15}}>Rua Domingues, 203</Text>
+          </View>
+
+          <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                <FontAwesome5 name="phone-square" size={30} color={"#70AD66"}/>
+                <Text style={{fontSize:15, marginLeft: 15}}>(11) 98107-3287</Text>
           </View>
         </ScrollView>
 
-        <View style={styles.amountContainer}>
+          
+
+      {/*  <View style={styles.amountContainer}>
           <View style={styles.amountButtonsContainer}>
             <TouchableItem onPress={this.onPressDecreaseAmount} borderless>
               <View style={styles.iconContainer}>
@@ -401,13 +400,31 @@ export default class ProductA extends Component {
           </View>
         </View>
 
-        <View style={styles.bottomButtonContainer}>
+        */}
+
+       {/*  <View style={styles.bottomButtonContainer}>
           <Button onPress={this.goBack} title={'Add to Cart'.toUpperCase()} />
           <View style={styles.buttonPriceContainer}>
             <Text style={styles.buttonPriceText}>
               {`$ ${total.toFixed(2)}`}
             </Text>
           </View>
+        </View>
+      */}
+
+        <View style={{flex: 1, flexDirection:'row'}}>
+            <View style={{flexDirection:'row', justifyContent:'space-between', width: 329, height:80, marginLeft:16, padding:20,  backgroundColor: '#E3FAE5', borderRadius:20}}>
+                <TouchableOpacity style={{flexDirection:'row', padding:10, alignItems:'center', width: '100%', height:'100%', borderRadius: 20, backgroundColor: '#70AD66'}}>
+                    <Text style={{fontWeight:'bold', color:'white', marginRight:20}}>Telefonar</Text>
+                    <FontAwesome5 name="mobile" size={20} color={"white"}/>
+                </TouchableOpacity>   
+
+                <TouchableOpacity style={{flexDirection:'row', padding:10, alignItems:'center', width: '100%', height:'100%', borderRadius: 20, backgroundColor: '#70AD66'}}>
+                    <Text style={{fontWeight:'bold', color:'white', marginRight:20}}>Conversar</Text>
+                    <FontAwesome5 name="comment-alt" size={20} color={"white"}/>
+                </TouchableOpacity>            
+            </View>
+
         </View>
       </SafeAreaView>
     );

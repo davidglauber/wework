@@ -1,9 +1,3 @@
-/**
- * Food Delivery - React Native Template
- *
- * @format
- * @flow
- */
 
 // import dependencies
 import React, {Component} from 'react';
@@ -336,7 +330,7 @@ export default class HomeA extends Component {
                             </View>  
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                     <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                 </TouchableOpacity>
 
@@ -367,7 +361,7 @@ export default class HomeA extends Component {
                             </View>  
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                     <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                 </TouchableOpacity>
 
@@ -398,7 +392,7 @@ export default class HomeA extends Component {
                             </View>  
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                     <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                 </TouchableOpacity>
 
@@ -428,7 +422,7 @@ export default class HomeA extends Component {
                             </View>  
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                     <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                 </TouchableOpacity>
 

@@ -39,7 +39,7 @@ import TermsConditions from '../screens/terms/TermsConditionsA';
 import HomeNavigator from './HomeNavigatorA';
 
 // import Product screen
-import Product from '../screens/product/ProductA';
+import TelaAnuncio from '../screens/telasAnuncios/TelaAnuncio';
 
 // import Categories screen
 import Categories from '../screens/categories/CategoriesA';
@@ -180,8 +180,8 @@ function MainNavigatorA() {
           }}
         />
         <Stack.Screen
-          name="Product"
-          component={Product}
+          name="TelaAnuncio"
+          component={TelaAnuncio}
           options={{headerShown: false}}
         />
         <Stack.Screen

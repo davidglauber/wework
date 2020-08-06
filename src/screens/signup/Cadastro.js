@@ -27,6 +27,14 @@ import UnderlineTextInput from '../../components/textinputs/UnderlineTextInput';
 import Colors from '../../theme/colors';
 import Layout from '../../theme/layout';
 
+
+//import datepicker
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+//import icon 
+import { FontAwesome5 } from '@expo/vector-icons';
+
 // SignUpB Config
 const PLACEHOLDER_TEXT_COLOR = 'rgba(255, 255, 255, 0.7)';
 const INPUT_TEXT_COLOR = '#fff';
@@ -94,19 +102,36 @@ const styles = StyleSheet.create({
 });
 
 // SignUpB
-export default class SignUpB extends Component {
+export default class Cadastro extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       emailFocused: false,
-      phone: '',
-      phoneFocused: false,
+      nome:'', 
+      nomeFocused:false,
+      date: new Date(),
+      showDate: false,
+      mode:'date',
+      dateFocused: false,
       password: '',
       passwordFocused: false,
       secureTextEntry: true,
     };
   }
+
+  onChange = (event, selectedDate) => {
+    this.setState({showDate: false})
+    const currentDate = selectedDate || this.state.date;
+    this.setState({date: currentDate});
+    console.log('data selecionada: ' + currentDate)
+    
+  };
+
+  showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
 
   emailChange = text => {
     this.setState({
@@ -117,24 +142,23 @@ export default class SignUpB extends Component {
   emailFocus = () => {
     this.setState({
       emailFocused: true,
-      phoneFocused: false,
       passwordFocused: false,
     });
   };
 
-  phoneChange = text => {
+  nomeChange = text => {
     this.setState({
-      phone: text,
+      nome: text,
     });
   };
 
-  phoneFocus = () => {
+  nomeFocus = () => {
     this.setState({
-      phoneFocused: true,
-      emailFocused: false,
+      nomeFocused: true,
       passwordFocused: false,
     });
   };
+
 
   passwordChange = text => {
     this.setState({
@@ -146,7 +170,6 @@ export default class SignUpB extends Component {
     this.setState({
       passwordFocused: true,
       emailFocused: false,
-      phoneFocused: false,
     });
   };
 
@@ -167,7 +190,6 @@ export default class SignUpB extends Component {
     this.setState(
       {
         emailFocused: false,
-        phoneFocused: false,
         passwordFocused: false,
       },
       this.navigateTo('Verification'),
@@ -183,7 +205,7 @@ export default class SignUpB extends Component {
   render() {
     const {
       emailFocused,
-      phoneFocused,
+      dateFocused,
       password,
       passwordFocused,
       secureTextEntry,
@@ -203,6 +225,26 @@ export default class SignUpB extends Component {
               <View />
 
               <View style={styles.form}>
+
+                <UnderlineTextInput
+                  onRef={r => {
+                    this.nome = r;
+                  }}
+                  onChangeText={this.nomeChange}
+                  onFocus={this.nomeFocus}
+                  inputFocused={this.state.nomeFocused}
+                  onSubmitEditing={this.focusOn(this.email)}
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  keyboardType="default"
+                  placeholder="Seu nome"
+                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                  inputTextColor={INPUT_TEXT_COLOR}
+                  borderColor={INPUT_BORDER_COLOR}
+                  focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
+                  inputContainerStyle={styles.inputContainer}
+                />
+
                 <UnderlineTextInput
                   onRef={r => {
                     this.email = r;
@@ -210,7 +252,7 @@ export default class SignUpB extends Component {
                   onChangeText={this.emailChange}
                   onFocus={this.emailFocus}
                   inputFocused={emailFocused}
-                  onSubmitEditing={this.focusOn(this.phone)}
+                  onSubmitEditing={this.focusOn(this.date)}
                   returnKeyType="next"
                   blurOnSubmit={false}
                   keyboardType="email-address"
@@ -222,24 +264,6 @@ export default class SignUpB extends Component {
                   inputContainerStyle={styles.inputContainer}
                 />
 
-                <UnderlineTextInput
-                  onRef={r => {
-                    this.phone = r;
-                  }}
-                  onChangeText={this.phoneChange}
-                  onFocus={this.phoneFocus}
-                  inputFocused={phoneFocused}
-                  onSubmitEditing={this.focusOn(this.password)}
-                  returnKeyType="next"
-                  blurOnSubmit={false}
-                  keyboardType="phone-pad"
-                  placeholder="Phone number"
-                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                  inputTextColor={INPUT_TEXT_COLOR}
-                  borderColor={INPUT_BORDER_COLOR}
-                  focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
-                  inputContainerStyle={styles.inputContainer}
-                />
 
                 <UnderlinePasswordInput
                   onRef={r => {
@@ -250,66 +274,62 @@ export default class SignUpB extends Component {
                   inputFocused={passwordFocused}
                   onSubmitEditing={this.createAccount}
                   returnKeyType="done"
-                  placeholder="Password"
+                  placeholder="Senha"
                   placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
                   inputTextColor={INPUT_TEXT_COLOR}
                   secureTextEntry={secureTextEntry}
                   borderColor={INPUT_BORDER_COLOR}
                   focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
                   toggleVisible={password.length > 0}
-                  toggleText={secureTextEntry ? 'Show' : 'Hide'}
+                  toggleText={secureTextEntry ? 'Mostrar' : 'Esconder'}
                   onTogglePress={this.onTogglePress}
                   inputContainerStyle={styles.inputContainer}
                 />
 
+              
+                  <TouchableOpacity style={{width:150, height: 50, alignItems:'center', justifyContent:'center', marginTop: 30, borderRadius:20}} onPress={() => this.setState({showDate: true})}>
+                      <Text style={{fontWeight: 'bold', fontSize:12, color:'#fff'}}>
+                        Data de Nascimento
+                      </Text>
+                      <FontAwesome5 name="clock" size={25} color={"#fff"}/>
+                  </TouchableOpacity>
+               
+               { this.state.showDate == true &&
+                  <DateTimePicker
+                      testID="dateTimePicker"
+                      value={this.state.date}
+                      mode={this.state.mode}
+                      is24Hour={true}
+                      display="calendar"
+                      onChange={this.onChange}
+                      
+                  />
+               }
+
                 <View style={styles.buttonContainer}>
                   <ContainedButton
                     onPress={this.createAccount}
-                    color={Colors.accentColor}
-                    title={'Create Account'.toUpperCase()}
+                    color={"#70AD66"}
+                    title={'Criar Conta'.toUpperCase()}
                   />
                 </View>
 
-                <View style={styles.separator}>
-                  <View style={styles.line} />
-                  <Text style={styles.orText}>or</Text>
-                  <View style={styles.line} />
-                </View>
 
-                <View style={styles.buttonsGroup}>
-                  <ContainedButton
-                    onPress={this.createAccount}
-                    color={Colors.surface}
-                    socialIconName="facebook-square"
-                    iconColor="#3b5998"
-                    title={'Sign up with Facebook'.toUpperCase()}
-                    titleColor="#3b5998"
-                  />
-                  <View style={styles.vSpacer} />
-                  <ContainedButton
-                    onPress={this.createAccount}
-                    color={Colors.surface}
-                    socialIconName="google"
-                    iconColor="#db4437"
-                    title={'Sign up with Google'.toUpperCase()}
-                    titleColor="#db4437"
-                  />
-                </View>
               </View>
 
               <TouchableWithoutFeedback
                 onPress={this.navigateTo('TermsConditions')}>
                 <View style={styles.footer}>
                   <Text style={styles.footerText}>
-                    By registering, you accepts our
+                    Se registrando, você aceita nossos
                   </Text>
                   <View style={styles.termsContainer}>
                     <Text style={[styles.footerText, styles.footerLink]}>
-                      Terms & Conditions
+                      Termos & Condições
                     </Text>
-                    <Text style={styles.footerText}> and </Text>
+                    <Text style={styles.footerText}> e </Text>
                     <Text style={[styles.footerText, styles.footerLink]}>
-                      Privacy Policy
+                      Política de Privacidade
                     </Text>
                     <Text style={styles.footerText}>.</Text>
                   </View>

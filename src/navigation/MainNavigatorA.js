@@ -171,7 +171,7 @@ function MainNavigatorA() {
           name="TermsConditions"
           component={TermsConditions}
           options={{
-            title: 'Terms and Conditions',
+            title: 'Termos e Condições',
           }}
         />
         <Stack.Screen

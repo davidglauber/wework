@@ -202,7 +202,7 @@ export default class Verificação extends Component {
           <View style={styles.buttonContainer}>
             <Button
               onPress={this.submit}
-              disabled={pin.length < 4}
+              disabled={false}
               borderRadius={4}
               color={Colors.onPrimaryColor}
               small

@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 });
 
 // CartA
-export default class CartA extends Component {
+export default class CartaoVisita extends Component {
   constructor(props) {
     super(props);
 

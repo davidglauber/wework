@@ -23,13 +23,17 @@ import Search from '../screens/search/SearchA';
 import Favorites from '../screens/favorites/FavoritesA';
 
 // import Cart screen
-import Cart from '../screens/cart/CartA';
+import Cart from '../screens/cart/CartaoVisita';
 
 // import Settings screen
-import Settings from '../screens/settings/SettingsA';
+import Settings from '../screens/settings/Configuracoes';
 
 // import colors
 import Colors from '../theme/colors';
+
+//import ICON
+import { FontAwesome5 } from '@expo/vector-icons';
+
 
 // HomeNavigator Config
 
@@ -82,9 +86,8 @@ function HomeNavigator() {
         component={Cart}
         options={{
           tabBarIcon: props => (
-            <TabBadgeIcon
-              name={`cart${props.focused ? '' : '-outline'}`}
-              badgeCount={5}
+            <FontAwesome5
+              name={`address-card${props.focused ? '' : ''}`}
               {...props}
             />
           ),

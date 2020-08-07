@@ -41,6 +41,7 @@ const NOTIFICATION_ICON = IOS ? 'ios-notifications' : 'md-notifications';
 const ADDRESS_ICON = IOS ? 'ios-pin' : 'md-pin';
 const PAYMENT_ICON = IOS ? 'ios-card' : 'md-card';
 const ORDERS_ICON = IOS ? 'ios-list' : 'md-list';
+const VISIT_CARD = IOS ? 'ios-albums' : 'ios-albums';
 
 const ABOUT_ICON = IOS ? 'ios-finger-print' : 'md-finger-print';
 const UPDATE_ICON = IOS ? 'ios-cloud-download' : 'md-cloud-download';
@@ -166,7 +167,7 @@ const Setting = ({onPress, icon, setting, type}: SettingProps) => (
 );
 
 // SetingsB
-export default class SettingsB extends Component {
+export default class Configuracoes extends Component {
   constructor(props) {
     super(props);
 
@@ -210,7 +211,7 @@ export default class SettingsB extends Component {
 
         <ScrollView contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.titleContainer}>
-            <Heading6 style={styles.titleText}>Settings</Heading6>
+            <Heading6 style={styles.titleText}>Configurações</Heading6>
           </View>
 
           <TouchableItem useForeground onPress={this.navigateTo('EditProfile')}>
@@ -222,9 +223,12 @@ export default class SettingsB extends Component {
                   rounded
                 />
                 <View style={styles.profileInfo}>
-                  <Subtitle1 style={styles.name}>Kristin Evans</Subtitle1>
+                  <Subtitle1 style={styles.name}>Roberto Farias</Subtitle1>
                   <Subtitle2 style={styles.email}>
-                    kristin.evans@gmail.com
+                    bebertofarias@gmail.com
+                  </Subtitle2>
+                  <Subtitle2 style={styles.email}>
+                    2/9/2002
                   </Subtitle2>
                 </View>
               </View>
@@ -233,7 +237,8 @@ export default class SettingsB extends Component {
 
           <Divider />
 
-          <SectionHeader title="Notifications" />
+         {/*
+          <SectionHeader title="Notificações" />
           <TouchableItem onPress={this.navigateTo('Notifications')}>
             <View style={[styles.row, styles.setting]}>
               <View style={styles.leftSide}>
@@ -266,44 +271,53 @@ export default class SettingsB extends Component {
             </View>
           </TouchableItem>
 
-          <SectionHeader title="Address" />
+          */}
+
+        {/*  <SectionHeader title="Address" />
           <Setting
             onPress={this.navigateTo('DeliveryAddress')}
             icon={ADDRESS_ICON}
             setting="Set Delivery Address"
           />
+        */}
+        
 
-          <SectionHeader title="Payments" />
+          <SectionHeader title="Planos" />
           <Setting
             onPress={this.navigateTo('PaymentMethod')}
             icon={PAYMENT_ICON}
-            setting="Choose Payment Method"
+            setting="Escolha o Seu Plano"
           />
 
-          <SectionHeader title="Orders" />
+          <SectionHeader title="Anúncios & Cartões de Visita" />
           <Setting
             onPress={this.navigateTo('Orders')}
             icon={ORDERS_ICON}
-            setting="My Orders"
+            setting="Meus Anúncios"
+          />
+          <Setting
+            onPress={this.navigateTo('Orders')}
+            icon={VISIT_CARD}
+            setting="Meus Cartões de Visita"
           />
 
-          <SectionHeader title="About" />
+          <SectionHeader title="Sobre" />
           <Setting
             onPress={this.navigateTo('AboutUs')}
             icon={ABOUT_ICON}
-            setting="Who We Are"
+            setting="Quem Nós Somos"
           />
 
-          <Setting icon={UPDATE_ICON} setting="App Updates" />
+        {/* <Setting icon={UPDATE_ICON} setting="App Updates" /> */}
 
           <Setting
             onPress={this.navigateTo('TermsConditions')}
             icon={TERMS_ICON}
-            setting="Terms of Use"
+            setting="Termos & Condições"
           />
 
-          <SectionHeader title="Logins" />
-          <Setting icon={ADD_ICON} setting="Add Account" />
+          <SectionHeader title="Sair" />
+          {/* <Setting icon={ADD_ICON} setting="Add Account" /> */}
           <Setting
             onPress={this.logout}
             icon={LOGOUT_ICON}

@@ -298,7 +298,7 @@ export default class HomeA extends Component {
             </View>
 
             <View style={styles.titleContainer}>
-              <Heading6 style={styles.titleText}>Serviços Gerais</Heading6>
+              <Heading6 style={styles.titleText}>Anúncios</Heading6>
             </View>
 
            {/*  <FlatList

@@ -12,6 +12,9 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  Text,
+  TouchableOpacity,
+  Image,
   FlatList,
 } from 'react-native';
 import remove from 'lodash/remove';
@@ -22,6 +25,14 @@ import Button from '../../components/buttons/Button';
 import {Heading6, Subtitle1} from '../../components/text/CustomText';
 import Divider from '../../components/divider/Divider';
 import EmptyState from '../../components/emptystate/EmptyState';
+
+//import gradient
+import  { LinearGradient } from 'expo-linear-gradient';
+
+import { FontAwesome5 } from '@expo/vector-icons';
+
+const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
+const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 // import colors
 import Colors from '../../theme/colors';
@@ -53,6 +64,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontWeight: '700',
+    color: 'white'
   },
   productList: {
     // spacing = paddingHorizontal + ActionProductCardHorizontal margin = 12 + 4 = 16
@@ -195,41 +207,69 @@ export default class CartaoVisita extends Component {
   keyExtractor = (item) => item.id.toString();
 
   renderProductItem = ({item}) => (
-    <ActionProductCardHorizontal
-      key={item.id}
-      onPress={this.navigateTo('Product')}
-      onPressRemove={this.onPressRemove(item)}
-      onPressAdd={this.onPressAdd(item)}
-      imageUri={item.imageUri}
-      title={item.name}
-      description={item.description}
-      rating={item.rating}
-      price={item.price}
-      quantity={item.quantity}
-      discountPercentage={item.discountPercentage}
-      label={item.label}
-      swipeoutOnPressRemove={this.swipeoutOnPressRemove(item)}
-    />
+    <View style={{flex:1, alignItems: 'center'}}>
+        <View>
+            <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                <View style={{flexDirection:'row'}}>
+                    <Image source={fotoAnuncio} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                    
+                    <View style={{flexDirection:'column'}}>
+                        <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>Forneço Cupcakes</Text>
+                      
+                      <View style={{justifyContent: 'center', alignItems: 'center',}}>
+                        <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Sou confeiteiro Profissional, tenho variedades de sabores</Text>
+                      </View>
+                    </View>
+                </View>  
+
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                        <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                    </TouchableOpacity>
+
+                    <View style={{marginTop: 24, marginRight: 30}}>
+                        <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
+                    </View>
+                </View> 
+
+            </View>
+        </View>
+    </View>
   );
 
   render() {
     const {total, products} = this.state;
 
     return (
+
       <SafeAreaView style={styles.container}>
+
+        <LinearGradient
+          // Background Linear Gradient
+          colors={['#00b970', '#00b9a7', '#00b9a7']}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: '100%',
+          }}
+        />
+
         <StatusBar
           backgroundColor={Colors.statusBarColor}
           barStyle="dark-content"
         />
+        
 
         <View style={styles.titleContainer}>
-          <Heading6 style={styles.titleText}>Cart</Heading6>
+          <Heading6 style={styles.titleText}>Cartões de Visita</Heading6>
           {products.length > 0 && (
             <View style={styles.inline}>
-              <Subtitle1 style={styles.subTotalText}> Subtotal: </Subtitle1>
-              <Heading6 style={styles.subTotalPriceText}>
-                {`$ ${parseFloat(Math.round(total * 100) / 100).toFixed(2)}`}
-              </Heading6>
+              <TouchableOpacity style={{marginRight:5}}>
+                    <FontAwesome5  name="sort-alpha-up" size={19} color={"#fff"} />
+              </TouchableOpacity>
+            
             </View>
           )}
         </View>
@@ -254,6 +294,7 @@ export default class CartaoVisita extends Component {
 
             <Divider />
 
+           {/* 
             <View>
               <View style={styles.bottomButtonContainer}>
                 <Button
@@ -262,6 +303,7 @@ export default class CartaoVisita extends Component {
                 />
               </View>
             </View>
+            */}
           </Fragment>
         )}
       </SafeAreaView>

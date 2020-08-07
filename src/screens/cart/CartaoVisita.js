@@ -26,6 +26,11 @@ import {Heading6, Subtitle1} from '../../components/text/CustomText';
 import Divider from '../../components/divider/Divider';
 import EmptyState from '../../components/emptystate/EmptyState';
 
+
+//import GestureHandler
+
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+
 //import gradient
 import  { LinearGradient } from 'expo-linear-gradient';
 
@@ -207,9 +212,20 @@ export default class CartaoVisita extends Component {
 
   keyExtractor = (item) => item.id.toString();
 
+  rightAction() {
+    return(
+      <FontAwesome5 style={{marginTop:80, marginRight:40}} name="star" size={24} color={"white"} />
+    );
+  }
+
   renderProductItem = ({item}) => (
+
+    <Swipeable
+      renderRightActions={this.rightAction}
+    >
     <View style={{flex:1, alignItems: 'center'}}>
         <View>
+
             <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
                 <View style={{flexDirection:'row'}}>
                     <Image source={fotoCartaoVisita} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -254,7 +270,8 @@ export default class CartaoVisita extends Component {
 
             </View>
         </View>
-    </View>
+      </View>
+    </Swipeable>
   );
 
   render() {

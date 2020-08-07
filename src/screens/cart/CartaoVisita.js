@@ -31,11 +31,12 @@ import  { LinearGradient } from 'expo-linear-gradient';
 
 import { FontAwesome5 } from '@expo/vector-icons';
 
-const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
+const fotoCartaoVisita = require('../../assets/img/smile.jpg');
 const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 // import colors
 import Colors from '../../theme/colors';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 // CartA Config
 const EMPTY_STATE_ICON = 'cart-remove';
@@ -211,23 +212,42 @@ export default class CartaoVisita extends Component {
         <View>
             <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
                 <View style={{flexDirection:'row'}}>
-                    <Image source={fotoAnuncio} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                    <Image source={fotoCartaoVisita} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                     
-                    <View style={{flexDirection:'column'}}>
-                        <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>Forneço Cupcakes</Text>
+                    <View style={{flexDirection:'column', width:165}}>
+                        <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>Roberto Carlos</Text>
                       
-                      <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                        <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Sou confeiteiro Profissional, tenho variedades de sabores</Text>
+                      <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <Text style={{textAlign:'center', fontSize:12, marginTop:20, fontWeight: '500',  marginLeft:25, color:'#888888'}}>Confeitaria</Text>
+                            
+                            <View style={{marginTop:20}}>
+                                <TouchableWithoutFeedback style={{width:25, height:25,  backgroundColor: '#00b9a7', borderRadius:5}}>
+                                    <FontAwesome5 style={{marginLeft:3}} name="briefcase" size={19} color={'#E3E3E3'}/>
+                                </TouchableWithoutFeedback>
+                            </View>
                       </View>
+
+
+                      <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <Text style={{textAlign:'center', fontSize:12, marginTop:7, fontWeight: '500',  marginLeft:25, color:'#888888'}}>(82) 99203-4312</Text>
+                            
+                            <View style={{marginTop:0}}>
+                                <TouchableWithoutFeedback style={{width:25, height:25, marginTop:7,  backgroundColor: '#00b9a7', borderRadius:5}}>
+                                    <FontAwesome5 style={{marginLeft:3, marginTop: 2}} name="phone" size={19} color={'#E3E3E3'}/>
+                                </TouchableWithoutFeedback>
+                            </View>
+                      </View>
+
+                      
                     </View>
                 </View>  
 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                    <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 20, marginLeft: 31}}>
                         <Text style={{color: 'white'}}>Ver Detalhes</Text>
                     </TouchableOpacity>
 
-                    <View style={{marginTop: 24, marginRight: 30}}>
+                    <View style={{marginTop: 20, marginRight: 30}}>
                         <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
                     </View>
                 </View> 

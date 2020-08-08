@@ -77,7 +77,7 @@ import AddCreditCard from '../screens/payment/AddCreditCardA';
 import Notifications from '../screens/notifications/NotificationsA';
 
 // import Orders screen
-import Orders from '../screens/orders/OrdersB';
+import Orders from '../screens/orders/CriarAnuncio';
 
 // import AboutUs screen
 import AboutUs from '../screens/about/AboutUsA';
@@ -304,7 +304,7 @@ function MainNavigatorA() {
           name="Orders"
           component={Orders}
           options={{
-            title: 'Criar Anúncio',
+            title: 'Criar Anúncio'
           }}
         />
         <Stack.Screen

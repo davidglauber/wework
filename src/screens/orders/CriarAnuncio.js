@@ -13,6 +13,8 @@ import {
   StatusBar,
   StyleSheet,
   TouchableOpacity,
+  Picker,
+  TextInput,
   View,
   Text,
 } from 'react-native';
@@ -64,16 +66,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     height: 36,
+  },
+
+  inputStyle: {
+    borderBottomWidth:0.5,
+
   }
 });
 
 // OrdersB
-export default class OrdersB extends Component {
+export default class CriarAnuncio extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       type: 'Estabelecimento',
+      categoria: '',
       orders: [
         {
           orderNumber: '11',
@@ -152,46 +160,6 @@ export default class OrdersB extends Component {
 
   keyExtractor = item => item.orderNumber.toString();
 
-  renderItem = ({item, index}) => (
-    <View style={{ marginVertical: 4,
-      marginHorizontal: 12,
-      borderRadius: 16,
-      backgroundColor: Colors.background}}>
-    
-      <View style={{ width: Layout.SCREEN_WIDTH - 2 * 12}}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',padding: 16}}>
-          <View style={{flexDirection:'column'}}>
-            <Subtitle2
-              style={{ paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>{'Order #2121'}</Subtitle2>
-            <Caption>12/12/2005</Caption>
-            <FontAwesome5 nome="sort-alpha-up" size={40} color={'#70AD66'}/>
-          </View>
-          <View style={{alignItems: 'flex-end'}}>
-            <Subtitle1>{`$ 43,21`}</Subtitle1>
-            <Caption>{'33 items'}</Caption>
-          </View>
-        </View>
-      </View>
-
-      {/*Divisor estiloso*/}
-      <View style={{ flex: 1,  flexDirection: 'row',  justifyContent: 'space-between',alignItems: 'center'}}>
-        <View style={[styles.circleMask, styles.leftCircle]} />
-        <View style={styles.dividerLine} />
-        <View style={[styles.circleMask, styles.rightCircle]} />
-      </View>
-
-      <View style={styles.itemContainer}>
-            <TouchableOpacity>
-              <View style={styles.item}>
-                <Subtitle2>TESTE</Subtitle2>
-                <Subtitle2>{'R$3'}</Subtitle2>
-              </View>
-            </TouchableOpacity>
-      </View>
-
-
-    </View>
-  );
 
   render() {
     const {orders} = this.state;
@@ -225,16 +193,17 @@ export default class OrdersB extends Component {
                             <View style={{flexDirection:'row'}}>
                                 <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30}}/>
                                 <Subtitle2
-                                  style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                  style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
                             </View>                         
                           }
                         </View>
 
 
 
-                        <View style={{alignItems: 'flex-end'}}>
-                          <Subtitle1>{`$ 43,21`}</Subtitle1>
-                          <Caption>{'33 items'}</Caption>
+                        <View>
+                          <TouchableOpacity style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                              <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
+                          </TouchableOpacity>
                         </View>
               </View>
 
@@ -248,10 +217,12 @@ export default class OrdersB extends Component {
                       <View style={{flexDirection:'row', padding: 16}}>
                               <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30}}/>
                               <Subtitle2
-                                  style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                                  style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
                       </View>
                      }
                     </View>
+
+
 
                     {/*Divisor estiloso*/}
                     <View style={{ flex: 1,  flexDirection: 'row',  justifyContent: 'space-between',alignItems: 'center'}}>
@@ -260,13 +231,67 @@ export default class OrdersB extends Component {
                       <View style={[styles.circleMask, styles.rightCircle]} />
                     </View>
 
+
+
                     <View style={styles.itemContainer}>
-                          <TouchableOpacity>
-                            <View style={styles.item}>
-                              <Subtitle2>TESTE</Subtitle2>
-                              <Subtitle2>{'R$3'}</Subtitle2>
-                            </View>
-                          </TouchableOpacity>
+                        <View style={styles.item}>
+                            <TextInput
+                              style={styles.inputStyle}
+                              placeholder="Título do Anúncio                                                        "
+                            />
+                        </View>
+
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TextInput
+                              style={styles.inputStyle}
+                              placeholder="Descrição do Anúncio                                                    "
+                            />
+                        </View>
+
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TextInput
+                              style={styles.inputStyle}
+                              keyboardType={"number-pad"}
+                              placeholder="Valor do Serviço                                                          "
+                            />
+                        </View>
+
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TextInput
+                              style={styles.inputStyle}
+                              autoCapitalize={'words'}
+                              placeholder="Seu nome                                                                       "
+                            />
+                        </View>
+
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TextInput
+                              style={styles.inputStyle}
+                              keyboardType={"phone-pad"}
+                              placeholder="Número de Telefone                                                   "
+                            />
+                        </View>
+
+                        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                            <Picker
+                              selectedValue={this.state.categoria}
+                              onValueChange={(itemValue, itemIndex) => this.setState({categoria: itemValue})}
+                              style={{marginLeft:10, width: 200, height:50}}>
+                              <Picker.Item label="Categoria" value=""/>
+                              <Picker.Item label="Mecânico(a)" value="Mecânico(a)"/>
+                              <Picker.Item label="Artesão" value="Artesão"/>
+                              <Picker.Item label="Doméstico" value="Doméstico"/>
+                              <Picker.Item label="Corredor" value="Corredor"/>
+                              <Picker.Item label="Criador de Aves" value="Criador de Aves"/>
+                              <Picker.Item label="Farmaceutico" value="Farmaceutico"/>
+                            </Picker>
+                          
+                            <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
+                              <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
+                                Publicar
+                              </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
             </View>

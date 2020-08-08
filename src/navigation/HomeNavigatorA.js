@@ -23,7 +23,7 @@ import Search from '../screens/search/SearchA';
 import Favorites from '../screens/favorites/FavoritesA';
 
 // import Cart screen
-import Cart from '../screens/cart/CartaoVisita';
+import Cart from '../screens/cartaoVisita/CartaoVisita';
 
 // import Settings screen
 import Settings from '../screens/settings/Configuracoes';

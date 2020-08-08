@@ -43,6 +43,8 @@ import HomeNavigator from './HomeNavigatorA';
 // import Product screen
 import TelaAnuncio from '../screens/telasAnuncios/TelaAnuncio';
 
+import TelaCartaoVisita from '../screens/cartaoVisita/TelaCartaoVisita';
+
 // import Categories screen
 import Categories from '../screens/categories/CategoriesA';
 import Category from '../screens/categories/CategoryA';
@@ -210,6 +212,11 @@ function MainNavigatorA() {
         <Stack.Screen
           name="TelaAnuncio"
           component={TelaAnuncio}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TelaCartaoVisita"
+          component={TelaCartaoVisita}
           options={{headerShown: false}}
         />
         <Stack.Screen

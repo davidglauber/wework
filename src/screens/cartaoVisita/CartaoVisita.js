@@ -267,7 +267,7 @@ export default class CartaoVisita extends Component {
                 </View>  
 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 20, marginLeft: 31}}>
+                    <TouchableOpacity onPress={this.navigateTo('TelaCartaoVisita')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 20, marginLeft: 31}}>
                         <Text style={{color: 'white'}}>Ver Detalhes</Text>
                     </TouchableOpacity>
 

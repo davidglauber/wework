@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
   },
 });
 
-// VerificationB
-export default class Verificação extends Component {
+// VerificationEMAIL
+export default class SMSVerificacao extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -139,7 +139,7 @@ export default class Verificação extends Component {
     });
   };
 
-  toEmail = () => {
+  submit = () => {
     this.setState(
       {
         modalVisible: true,
@@ -148,23 +148,8 @@ export default class Verificação extends Component {
         // for demo purpose after 3s close modal
         this.timeout = setTimeout(() => {
           this.closeModal();
-          this.navigateTo('EmailVerificacao');
-        }, 1000);
-      },
-    );
-  };
-
-  toSMS = () => {
-    this.setState(
-      {
-        modalVisible: true,
-      },
-      () => {
-        // for demo purpose after 3s close modal
-        this.timeout = setTimeout(() => {
-          this.closeModal();
-          this.navigateTo('SMSVerificacao');
-        }, 1000);
+          this.navigateTo('HomeNavigator');
+        }, 3000);
       },
     );
   };
@@ -190,12 +175,12 @@ export default class Verificação extends Component {
 
         <GradientContainer containerStyle={styles.container}>
           <View style={styles.instructionContainer}>
-            <Heading5 style={styles.heading}>Código de Verificação</Heading5>
+            <Heading5 style={styles.heading}>Aguarde...</Heading5>
             <Paragraph style={styles.instruction}>
-              Escolha como irá confirmar seu cadastro
+                O SMS de confirmação foi enviado com o código de acesso. 
+                Ao receber, digite abaixo
             </Paragraph>
 
-          {/* 
             <View style={styles.codeContainer}>
               <View style={styles.digitContainer}>
                 <Text style={styles.digit}>{pin[0]}</Text>
@@ -211,33 +196,23 @@ export default class Verificação extends Component {
               </View>
             </View>
 
-          */}
+          
           </View>
 
 
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-            <Button
-              onPress={this.toEmail}
-              disabled={false}
-              borderRadius={4}
-              color={Colors.onPrimaryColor}
-              small
-              title={'EMAIL'.toUpperCase()}
-              titleColor={Colors.primaryColor}
-            />
+        
 
           <View style={{marginBottom: 44, marginLeft: 10}}>
             <Button
-              onPress={this.toSMS}
+              onPress={this.submit}
               disabled={false}
               borderRadius={4}
               color={Colors.onPrimaryColor}
               small
-              title={'SMS'.toUpperCase()}
+              title={'Entrar'.toUpperCase()}
               titleColor={Colors.primaryColor}
             />
           </View>
-        </View>
 
         </GradientContainer>
       </SafeAreaView>

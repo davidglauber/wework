@@ -113,6 +113,8 @@ export default class Cadastro extends Component {
       date: new Date(),
       showDate: false,
       mode:'date',
+      phone: '',
+      phoneFocused:false,
       dateFocused: false,
       password: '',
       passwordFocused: false,
@@ -142,7 +144,24 @@ export default class Cadastro extends Component {
   emailFocus = () => {
     this.setState({
       emailFocused: true,
+      nomeFocused: false,
+      phoneFocused:false,
+      passwordFocused: false
+    });
+  };
+
+  phoneChange = text => {
+    this.setState({
+      phone: text,
+    });
+  };
+
+  phoneFocus = () => {
+    this.setState({
+      emailFocused: false,
       passwordFocused: false,
+      nomeFocused: false,
+      phoneFocused:true,
     });
   };
 
@@ -156,6 +175,8 @@ export default class Cadastro extends Component {
     this.setState({
       nomeFocused: true,
       passwordFocused: false,
+      phoneFocused: false,
+      emailFocused:false,
     });
   };
 
@@ -170,6 +191,8 @@ export default class Cadastro extends Component {
     this.setState({
       passwordFocused: true,
       emailFocused: false,
+      nomeFocused:false,
+      phoneFocused:false
     });
   };
 
@@ -294,6 +317,26 @@ export default class Cadastro extends Component {
                   toggleVisible={password.length > 0}
                   toggleText={secureTextEntry ? 'Mostrar' : 'Esconder'}
                   onTogglePress={this.onTogglePress}
+                  inputContainerStyle={styles.inputContainer}
+                />
+
+
+                <UnderlineTextInput
+                  onRef={r => {
+                    this.phone = r;
+                  }}
+                  onChangeText={this.phoneChange}
+                  onFocus={this.phoneFocus}
+                  inputFocused={this.state.phoneFocused}
+                  onSubmitEditing={this.focusOn(this.date)}
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  keyboardType="phone-pad"
+                  placeholder="Número de Telefone"
+                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                  inputTextColor={INPUT_TEXT_COLOR}
+                  borderColor={INPUT_BORDER_COLOR}
+                  focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
                   inputContainerStyle={styles.inputContainer}
                 />
 

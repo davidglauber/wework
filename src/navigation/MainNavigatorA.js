@@ -25,6 +25,8 @@ import SignUp from '../screens/signup/Cadastro';
 
 // import Verification screen
 import Verification from '../screens/verification/Verificação';
+import EmailVerificacao from '../screens/verification/EmailVerificacao';
+import SMSVerificacao from '../screens/verification/SMSVerificacao';
 
 // import SignIn screen
 import SignIn from '../screens/signin/SignInA';
@@ -143,6 +145,18 @@ function MainNavigatorA() {
         <Stack.Screen
           name="Verification"
           component={Verification}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="EmailVerificacao"
+          component={EmailVerificacao}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="SMSVerificacao"
+          component={SMSVerificacao}
           options={{headerShown: false}}
         />
         <Stack.Screen

@@ -296,7 +296,7 @@ export default class Configuracoes extends Component {
             setting="Meus Anúncios"
           />
           <Setting
-            onPress={this.navigateTo('Orders')}
+            onPress={() => {}}
             icon={VISIT_CARD}
             setting="Meus Cartões de Visita"
           />

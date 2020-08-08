@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  Alert,
 } from 'react-native';
 import remove from 'lodash/remove';
 
@@ -28,7 +29,7 @@ import EmptyState from '../../components/emptystate/EmptyState';
 
 
 //import GestureHandler
-
+import { RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 //import gradient
@@ -99,6 +100,7 @@ export default class CartaoVisita extends Component {
 
     this.state = {
       total: 0.0,
+      favorite: false,
       products: [
         {
           id: 'product1',
@@ -127,7 +129,7 @@ export default class CartaoVisita extends Component {
   }
 
   componentDidMount = () => {
-    this.updateTotalAmount();
+    console.log('favorito: ' + this.state.favorite);
   };
 
   navigateTo = (screen) => () => {
@@ -191,6 +193,7 @@ export default class CartaoVisita extends Component {
     );
   };
 
+
   updateTotalAmount = () => {
     const {products} = this.state;
     let total = 0.0;
@@ -212,16 +215,21 @@ export default class CartaoVisita extends Component {
 
   keyExtractor = (item) => item.id.toString();
 
-  rightAction() {
-    return(
-      <FontAwesome5 style={{marginTop:80, marginRight:40}} name="star" size={24} color={"white"} />
-    );
+
+
+  RightAction() {
+      return(
+        <TouchableOpacity style={{width: 336, height: 170, flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom:5, marginTop: 10, borderRadius: 10, opacity:0.5}}>
+            <FontAwesome5 style={{marginRight:40}} name="star" size={24} color={"white"} />
+            <Text style={{color:'#fff', fontSize:30}}>Favoritar</Text>
+        </TouchableOpacity>
+      );
   }
 
   renderProductItem = ({item}) => (
 
     <Swipeable
-      renderRightActions={this.rightAction}
+      renderRightActions={this.RightAction}
     >
     <View style={{flex:1, alignItems: 'center'}}>
         <View>

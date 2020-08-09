@@ -82,6 +82,8 @@ export default class CriarAnuncio extends Component {
     this.state = {
       type: 'Estabelecimento',
       categoria: '',
+      horarioOpen:'',
+      horarioClose:'',
       orders: [
         {
           orderNumber: '11',
@@ -186,14 +188,18 @@ export default class CriarAnuncio extends Component {
                           { this.state.type == 'Estabelecimento' ?
                             <View style={{flexDirection:'row'}}>
                                 <TouchableOpacity style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30}}/>
-                                <Subtitle2
-                                  style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                <TouchableOpacity>
+                                    <Subtitle2
+                                      style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                </TouchableOpacity>
                             </View>
                           :
                             <View style={{flexDirection:'row'}}>
                                 <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30}}/>
-                                <Subtitle2
-                                  style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                  <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})}>
+                                      <Subtitle2
+                                        style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                  </TouchableOpacity>
                             </View>                         
                           }
                         </View>
@@ -210,14 +216,18 @@ export default class CriarAnuncio extends Component {
                      {this.state.type == 'Autonomo' ?     
                       <View style={{flexDirection:'row', padding: 16}}>
                               <TouchableOpacity  style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30}}/>
-                              <Subtitle2
-                            style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                                  <TouchableOpacity>
+                                      <Subtitle2
+                                        style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                                  </TouchableOpacity>
                       </View>
                       :
                       <View style={{flexDirection:'row', padding: 16}}>
                               <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30}}/>
-                              <Subtitle2
-                                  style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                              <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})}>
+                                  <Subtitle2
+                                      style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                              </TouchableOpacity>
                       </View>
                      }
                     </View>
@@ -271,6 +281,125 @@ export default class CriarAnuncio extends Component {
                               placeholder="Número de Telefone                                                   "
                             />
                         </View>
+
+                        {this.state.type == 'Estabelecimento' &&
+                          <View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                                <TextInput
+                                  style={styles.inputStyle}
+                                  keyboardType={"phone-pad"}
+                                  placeholder="Endereço do Estabelecimento                                                   "
+                                />
+                            </View>
+
+                            <View>
+
+                              <View style={{flexDirection:'row'}}>
+                                <View style={{flexDirection:'row'}}>
+                                  <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
+                                </View>
+
+                                <View style={{flexDirection:'row'}}>
+                                  <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
+                                </View>
+
+                                <View style={{flexDirection:'row'}}>
+                                  <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
+                                </View>
+                              </View>
+
+                              <View style={{flexDirection:'row'}}>
+                                <View style={{flexDirection:'row'}}>
+                                  <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
+                                </View>
+
+                                <View style={{flexDirection:'row'}}>
+                                    <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
+                                </View>
+
+                                <View style={{flexDirection:'row'}}>
+                                    <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
+                                </View>
+                              </View>
+
+                            <View style={{flexDirection:'row'}}>
+                                  <View style={{flexDirection:'row'}}>
+                                    <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Dom</Text>
+                                  </View>
+                            </View>
+
+                            <View style={{flexDirection:'row'}}>
+                              <View>
+                                <Text style={{color:Colors.primaryColorDark,  fontWeight:'bold', paddingLeft: 15, marginTop:20}}>Horário de Abertura</Text>
+                                  <Picker
+                                    selectedValue={this.state.horarioOpen}
+                                    onValueChange={(itemValue, itemIndex) => this.setState({horarioOpen: itemValue})}
+                                    style={{marginLeft:8, width: 130, height:30}}>
+                                    <Picker.Item label="4:00" value=""/>
+                                    <Picker.Item label="5:00" value="5:00"/>
+                                    <Picker.Item label="6:00" value="6:00"/>
+                                    <Picker.Item label="7:00" value="7:00"/>
+                                    <Picker.Item label="8:00" value="8:00"/>
+                                    <Picker.Item label="9:00" value="9:00"/>
+                                    <Picker.Item label="10:00" value="10:00"/>
+                                    <Picker.Item label="11:00" value="11:00"/>
+                                    <Picker.Item label="12:00" value="12:00"/>
+                                    <Picker.Item label="13:00" value="13:00"/>
+                                    <Picker.Item label="14:00" value="14:00"/>
+                                    <Picker.Item label="15:00" value="15:00"/>
+                                    <Picker.Item label="16:00" value="16:00"/>
+                                    <Picker.Item label="17:00" value="17:00"/>
+                                    <Picker.Item label="18:00" value="18:00"/>
+                                    <Picker.Item label="19:00" value="19:00"/>
+                                    <Picker.Item label="20:00" value="20:00"/>
+                                    <Picker.Item label="21:00" value="21:00"/>
+                                    <Picker.Item label="22:00" value="22:00"/>
+                                    <Picker.Item label="23:00" value="23:00"/>
+                                    <Picker.Item label="00:00" value="00:00"/>
+                                  </Picker>
+                              </View>
+
+                                <View>
+                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'bold', paddingLeft: 35, marginTop:20}}>Horário de Fechamento</Text>
+                                  <Picker
+                                    selectedValue={this.state.horarioClose}
+                                    onValueChange={(itemValue, itemIndex) => this.setState({horarioClose: itemValue})}
+                                    style={{marginLeft:28, width: 130, height:30}}>
+                                    <Picker.Item label="4:00" value=""/>
+                                    <Picker.Item label="5:00" value="5:00"/>
+                                    <Picker.Item label="6:00" value="6:00"/>
+                                    <Picker.Item label="7:00" value="7:00"/>
+                                    <Picker.Item label="8:00" value="8:00"/>
+                                    <Picker.Item label="9:00" value="9:00"/>
+                                    <Picker.Item label="10:00" value="10:00"/>
+                                    <Picker.Item label="11:00" value="11:00"/>
+                                    <Picker.Item label="12:00" value="12:00"/>
+                                    <Picker.Item label="13:00" value="13:00"/>
+                                    <Picker.Item label="14:00" value="14:00"/>
+                                    <Picker.Item label="15:00" value="15:00"/>
+                                    <Picker.Item label="16:00" value="16:00"/>
+                                    <Picker.Item label="17:00" value="17:00"/>
+                                    <Picker.Item label="18:00" value="18:00"/>
+                                    <Picker.Item label="19:00" value="19:00"/>
+                                    <Picker.Item label="20:00" value="20:00"/>
+                                    <Picker.Item label="21:00" value="21:00"/>
+                                    <Picker.Item label="22:00" value="22:00"/>
+                                    <Picker.Item label="23:00" value="23:00"/>
+                                    <Picker.Item label="00:00" value="00:00"/>
+                                  </Picker>
+                                </View>
+                            </View>
+                              
+                            </View>
+                          </View>
+                        }
 
                         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <Picker

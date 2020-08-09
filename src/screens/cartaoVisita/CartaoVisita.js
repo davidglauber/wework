@@ -13,6 +13,7 @@ import {
   StyleSheet,
   View,
   Text,
+  I18nManager,
   TouchableOpacity,
   Image,
   FlatList,
@@ -23,7 +24,7 @@ import remove from 'lodash/remove';
 // import components
 import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
 import Button from '../../components/buttons/Button';
-import {Heading6, Subtitle1} from '../../components/text/CustomText';
+import {Heading6, SmallText} from '../../components/text/CustomText';
 import Divider from '../../components/divider/Divider';
 import EmptyState from '../../components/emptystate/EmptyState';
 
@@ -36,6 +37,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import  { LinearGradient } from 'expo-linear-gradient';
 
 import { FontAwesome5 } from '@expo/vector-icons';
+
 
 const fotoCartaoVisita = require('../../assets/img/smile.jpg');
 const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
@@ -337,7 +339,6 @@ export default class CartaoVisita extends Component {
               />
             </View>
 
-            <Divider />
 
            {/* 
             <View>
@@ -349,6 +350,13 @@ export default class CartaoVisita extends Component {
               </View>
             </View>
             */}
+          <View style={{justifyContent: 'center',alignItems: 'center', padding: 8}}>
+            <View style={{borderTopWidth:0,justifyContent: 'center', alignItems: 'center', height: 28,borderRadius: 4,  paddingHorizontal: 8, backgroundColor: '#f1f1f1'}}>
+                <SmallText>
+                      {`Deslize para a esquerda para favoritar`}
+                </SmallText>
+            </View>
+          </View>
           </Fragment>
         )}
       </SafeAreaView>

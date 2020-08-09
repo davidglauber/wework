@@ -47,6 +47,8 @@ import TelaAnuncio from '../screens/telasAnuncios/TelaAnuncio';
 
 import TelaCartaoVisita from '../screens/cartaoVisita/TelaCartaoVisita';
 
+import TelaGeralCriarCartao from '../screens/cartaoVisita/TelaGeralCriarCartao';
+
 // import Categories screen
 import Categories from '../screens/categories/CategoriesA';
 import Category from '../screens/categories/CategoryA';
@@ -224,6 +226,11 @@ function MainNavigatorA() {
         <Stack.Screen
           name="TelaCartaoVisita"
           component={TelaCartaoVisita}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TelaGeralCriarCartao"
+          component={TelaGeralCriarCartao}
           options={{headerShown: false}}
         />
         <Stack.Screen

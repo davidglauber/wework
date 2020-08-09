@@ -28,6 +28,9 @@ import TouchableItem from '../../components/TouchableItem';
 // import colors
 import Colors from '../../theme/colors';
 
+//import gradient
+import  { LinearGradient } from 'expo-linear-gradient';
+
 // HomeA Config
 const imgHolder = require('../../assets/img/imgholder.png');
 
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TelaPrincipalAnuncio extends Component {
+export default class TelaGeralCriarCartao extends Component {
   constructor(props) {
     super(props);
 
@@ -266,9 +269,20 @@ export default class TelaPrincipalAnuncio extends Component {
 
     return (
       <SafeAreaView style={styles.screenContainer}>
+          <LinearGradient
+          // Background Linear Gradient
+          colors={['#00b970', '#00b9a7', '#00b9a7']}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: '100%',
+          }}
+        />
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={"#00b970"}
+          barStyle="white-content"
         />
 
         <View style={styles.container}>
@@ -279,7 +293,7 @@ export default class TelaPrincipalAnuncio extends Component {
                     <Text style={{color: 'black', fontWeight: 'bold'}}>Ativos</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={this.navigateTo('Orders')} style={{marginRight:5, borderRadius:25, alignItems:'center', justifyContent:'center', width:40, height:40, backgroundColor: "#70AD66"}}>
+                <TouchableOpacity onPress={this.navigateTo('Orders')} style={{marginRight:5, borderRadius:25, alignItems:'center', justifyContent:'center', width:40, height:40}}>
                         <FontAwesome5  name="plus" size={19} color={"#fff"} />
                 </TouchableOpacity>
 

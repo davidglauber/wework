@@ -291,7 +291,7 @@ export default class Configuracoes extends Component {
 
           <SectionHeader title="Anúncios & Cartões de Visita" />
           <Setting
-            onPress={this.navigateTo('Orders')}
+            onPress={this.navigateTo('TelaPrincipalAnuncio')}
             icon={ORDERS_ICON}
             setting="Meus Anúncios"
           />

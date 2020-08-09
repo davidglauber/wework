@@ -88,6 +88,7 @@ export default class CriarAnuncio extends Component {
       horarioOpen:'',
       horarioClose:'',
       phone:'',
+      preco:'',
       segunda:false,
       terca:false, 
       quarta:false,
@@ -176,6 +177,11 @@ export default class CriarAnuncio extends Component {
   onChangePhone(text) {
     this.setState({phone: text})
     console.log('mask phone: '  + this.state.phone)
+  }
+
+  onChangePreco(text) {
+    this.setState({preco: text})
+    console.log('preco'  + this.state.preco)
   }
 
   render() {
@@ -275,8 +281,11 @@ export default class CriarAnuncio extends Component {
                         </View>
 
                         <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                            <TextInput
+                            <TextInputMask
+                              type={'money'}
                               style={styles.inputStyle}
+                              value={this.state.preco}
+                              onChangeText={text => this.onChangePreco(text)}
                               keyboardType={"number-pad"}
                               placeholder="Valor do Serviço                                                          "
                             />
@@ -293,7 +302,7 @@ export default class CriarAnuncio extends Component {
                         <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                             <TextInputMask
                               type={'cel-phone'}
-                              style={styles.inputStyle}
+                              style={styles.inputStyle} 
                               keyboardType={"phone-pad"}
                               maxLength={17}
                               value={this.state.phone}

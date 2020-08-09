@@ -40,6 +40,8 @@ import TermsConditions from '../screens/terms/TermsConditionsA';
 // import HomeNavigator
 import HomeNavigator from './HomeNavigatorA';
 
+import TelaPrincipalAnuncio from '../screens/anuncios/TelaPrincipalAnuncio';
+
 // import Product screen
 import TelaAnuncio from '../screens/telasAnuncios/TelaAnuncio';
 
@@ -77,7 +79,7 @@ import AddCreditCard from '../screens/payment/AddCreditCardA';
 import Notifications from '../screens/notifications/NotificationsA';
 
 // import Orders screen
-import Orders from '../screens/orders/CriarAnuncio';
+import Orders from '../screens/anuncios/CriarAnuncio';
 
 // import AboutUs screen
 import AboutUs from '../screens/about/AboutUsA';
@@ -193,6 +195,11 @@ function MainNavigatorA() {
         <Stack.Screen
           name="HomeNavigator"
           component={HomeNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TelaPrincipalAnuncio"
+          component={TelaPrincipalAnuncio}
           options={{headerShown: false}}
         />
         <Stack.Screen

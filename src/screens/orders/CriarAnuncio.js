@@ -22,9 +22,12 @@ import {
 import {Caption, Subtitle1, Subtitle2} from '../../components/text/CustomText';
 import Layout from '../../theme/layout';
 
+
 // import components
 import OrderItem from '../../components/cards/OrderItemB';
 import { FontAwesome5 } from '@expo/vector-icons';
+
+import { TextInputMask } from 'react-native-masked-text';
 
 // import colors
 import Colors from '../../theme/colors';
@@ -84,6 +87,14 @@ export default class CriarAnuncio extends Component {
       categoria: '',
       horarioOpen:'',
       horarioClose:'',
+      phone:'',
+      segunda:false,
+      terca:false, 
+      quarta:false,
+      quinta:false,
+      sexta:false,
+      sabado:false,
+      domingo:false,
       orders: [
         {
           orderNumber: '11',
@@ -162,6 +173,10 @@ export default class CriarAnuncio extends Component {
 
   keyExtractor = item => item.orderNumber.toString();
 
+  onChangePhone(text) {
+    this.setState({phone: text})
+    console.log('mask phone: '  + this.state.phone)
+  }
 
   render() {
     const {orders} = this.state;
@@ -247,6 +262,7 @@ export default class CriarAnuncio extends Component {
                         <View style={styles.item}>
                             <TextInput
                               style={styles.inputStyle}
+                              maxLength={21}
                               placeholder="Título do Anúncio                                                        "
                             />
                         </View>
@@ -275,9 +291,13 @@ export default class CriarAnuncio extends Component {
                         </View>
 
                         <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                            <TextInput
+                            <TextInputMask
+                              type={'cel-phone'}
                               style={styles.inputStyle}
                               keyboardType={"phone-pad"}
+                              maxLength={17}
+                              value={this.state.phone}
+                              onChangeText={text => this.onChangePhone(text)}
                               placeholder="Número de Telefone                                                   "
                             />
                         </View>
@@ -295,44 +315,97 @@ export default class CriarAnuncio extends Component {
                             <View>
 
                               <View style={{flexDirection:'row'}}>
-                                <View style={{flexDirection:'row'}}>
-                                  <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
-                                </View>
+                                
+                                { this.state.segunda == false ?
+                                    <View style={{flexDirection:'row'}}>
+                                      <TouchableOpacity onPress={() => this.setState({segunda: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
+                                    </View>
+                                    :
+                                    <View style={{flexDirection:'row'}}>
+                                      <TouchableOpacity onPress={() => this.setState({segunda: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
+                                    </View>
+                                }
 
-                                <View style={{flexDirection:'row'}}>
-                                  <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
-                                </View>
+                                { this.state.terca == false ?
+                                    <View style={{flexDirection:'row'}}>
+                                      <TouchableOpacity onPress={() => this.setState({terca: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
+                                    </View>
+                                    :
+                                    <View style={{flexDirection:'row'}}>
+                                      <TouchableOpacity onPress={() => this.setState({terca: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
+                                    </View>
+                                }
 
-                                <View style={{flexDirection:'row'}}>
-                                  <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
-                                </View>
+
+                                { this.state.quarta == false ?
+                                    <View style={{flexDirection:'row'}}>
+                                      <TouchableOpacity onPress={() => this.setState({quarta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
+                                    </View>
+                                    :
+                                    <View style={{flexDirection:'row'}}>
+                                      <TouchableOpacity onPress={() => this.setState({quarta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
+                                    </View>
+                                }
                               </View>
 
                               <View style={{flexDirection:'row'}}>
-                                <View style={{flexDirection:'row'}}>
-                                  <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
-                                </View>
+                                { this.state.quinta == false ?
+                                  <View style={{flexDirection:'row'}}>
+                                    <TouchableOpacity onPress={() => this.setState({quinta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
+                                  </View>
 
-                                <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
-                                </View>
+                                :
+                                  <View style={{flexDirection:'row'}}>
+                                    <TouchableOpacity onPress={() => this.setState({quinta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
+                                  </View>
+                                }
 
-                                <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
-                                </View>
+                                { this.state.sexta == false ?
+                                    <View style={{flexDirection:'row'}}>
+                                        <TouchableOpacity onPress={() => this.setState({sexta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
+                                    </View>
+                                    :
+                                    <View style={{flexDirection:'row'}}>
+                                        <TouchableOpacity onPress={() => this.setState({sexta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
+                                    </View>
+                                }
+
+
+                                { this.state.sabado == false ?
+                                    <View style={{flexDirection:'row'}}>
+                                        <TouchableOpacity onPress={() => this.setState({sabado: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
+                                    </View>
+                                    :
+                                    <View style={{flexDirection:'row'}}>
+                                        <TouchableOpacity onPress={() => this.setState({sabado: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
+                                    </View>
+                                }
                               </View>
 
                             <View style={{flexDirection:'row'}}>
+                                { this.state.domingo == false ?
                                   <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <TouchableOpacity onPress={() => this.setState({domingo: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
                                     <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Dom</Text>
                                   </View>
+                                  :
+                                  <View style={{flexDirection:'row'}}>
+                                    <TouchableOpacity onPress={() => this.setState({domingo: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Dom</Text>
+                                  </View>
+                                }
                             </View>
 
                             <View style={{flexDirection:'row'}}>
@@ -372,7 +445,7 @@ export default class CriarAnuncio extends Component {
                                     selectedValue={this.state.horarioClose}
                                     onValueChange={(itemValue, itemIndex) => this.setState({horarioClose: itemValue})}
                                     style={{marginLeft:28, width: 130, height:30}}>
-                                    <Picker.Item label="4:00" value=""/>
+                                    <Picker.Item label="3:00" value=""/>
                                     <Picker.Item label="5:00" value="5:00"/>
                                     <Picker.Item label="6:00" value="6:00"/>
                                     <Picker.Item label="7:00" value="7:00"/>
@@ -401,11 +474,12 @@ export default class CriarAnuncio extends Component {
                           </View>
                         }
 
-                        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                        <View style={{flexDirection:'row', paddingTop:50, alignItems:'center', justifyContent:'center'}}>
+                          <View style={{backgroundColor:'#70AD66', marginRight:5, borderRadius:10}}>
                             <Picker
                               selectedValue={this.state.categoria}
                               onValueChange={(itemValue, itemIndex) => this.setState({categoria: itemValue})}
-                              style={{marginLeft:10, width: 200, height:50}}>
+                              style={{marginLeft:10, width: 180, height:50}}>
                               <Picker.Item label="Categoria" value=""/>
                               <Picker.Item label="Mecânico(a)" value="Mecânico(a)"/>
                               <Picker.Item label="Artesão" value="Artesão"/>
@@ -414,6 +488,7 @@ export default class CriarAnuncio extends Component {
                               <Picker.Item label="Criador de Aves" value="Criador de Aves"/>
                               <Picker.Item label="Farmaceutico" value="Farmaceutico"/>
                             </Picker>
+                          </View>
                           
                             <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
                               <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>

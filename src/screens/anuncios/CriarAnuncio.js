@@ -87,8 +87,16 @@ export default class CriarAnuncio extends Component {
       categoria: '',
       horarioOpen:'',
       horarioClose:'',
-      phone:'',
-      preco:'',
+      phoneAuto:'',
+      phoneEstab:'',
+      precoAuto:'',
+      precoEstab:'',
+      nomeAuto:'',
+      tituloAuto:'',
+      tituloEstab:'',
+      descricaoAuto:'',
+      descricaoEstab:'',
+      enderecoEstab:'',
       segunda:false,
       terca:false, 
       quarta:false,
@@ -174,15 +182,56 @@ export default class CriarAnuncio extends Component {
 
   keyExtractor = item => item.orderNumber.toString();
 
-  onChangePhone(text) {
-    this.setState({phone: text})
-    console.log('mask phone: '  + this.state.phone)
+  onChangePhoneAuto(text) {
+    this.setState({phoneAuto: text})
+    console.log('auto phone: '  + this.state.phoneAuto)
   }
 
-  onChangePreco(text) {
-    this.setState({preco: text})
-    console.log('preco'  + this.state.preco)
+  onChangePhoneEstab(text) {
+    this.setState({phoneEstab: text})
+    console.log('estab phone: '  + this.state.phoneEstab)
   }
+
+  onChangePrecoAuto(text) {
+    this.setState({precoAuto: text})
+    console.log('preco auto'  + this.state.precoAuto)
+  }
+
+  onChangePrecoEstab(text) {
+    this.setState({precoEstab: text})
+    console.log('preco estab'  + this.state.precoEstab)
+  }
+
+  onChangeTituloAuto(text) {
+    this.setState({tituloAuto: text})
+    console.log('title auto'  + this.state.tituloAuto)
+  }
+
+  onChangeTituloEstab(text) {
+    this.setState({tituloEstab: text})
+    console.log('title estab'  + this.state.tituloEstab)
+  }
+
+  onChangeDescricaoAuto(text) {
+    this.setState({descricaoAuto: text})
+    console.log('descricao auto'  + this.state.descricaoAuto)
+  }
+
+  onChangeDescricaoEstab(text) {
+    this.setState({descricaoEstab: text})
+    console.log('descricao estab'  + this.state.descricaoEstab)
+  }
+
+  onChangeNomeAuto(text) {
+    this.setState({nomeAuto: text})
+    console.log('nome auto'  + this.state.nomeAuto)
+  }
+
+  onChangeEnderecoEstab(text) {
+    this.setState({enderecoEstab: text})
+    console.log('endereco estab'  + this.state.enderecoEstab)
+  }
+
 
   render() {
     const {orders} = this.state;
@@ -265,57 +314,112 @@ export default class CriarAnuncio extends Component {
 
 
                     <View style={styles.itemContainer}>
-                        <View style={styles.item}>
-                            <TextInput
-                              style={styles.inputStyle}
-                              maxLength={21}
-                              placeholder="Título do Anúncio                                                        "
-                            />
-                        </View>
 
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                            <TextInput
-                              style={styles.inputStyle}
-                              placeholder="Descrição do Anúncio                                                    "
-                            />
-                        </View>
+                      { this.state.type == 'Autonomo' &&
+                        <View>
+                          <View style={styles.item}>
+                              <TextInput
+                                style={styles.inputStyle}
+                                value={this.state.tituloAuto}
+                                onChangeText={text => this.onChangeTituloAuto(text)}
+                                maxLength={21}
+                                placeholder="Título do Anúncio                                                        "
+                              />
+                          </View>
 
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                            <TextInputMask
-                              type={'money'}
-                              style={styles.inputStyle}
-                              value={this.state.preco}
-                              onChangeText={text => this.onChangePreco(text)}
-                              keyboardType={"number-pad"}
-                              placeholder="Valor do Serviço                                                          "
-                            />
-                        </View>
+                          <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                              <TextInput
+                                value={this.state.descricaoAuto}
+                                onChangeText={text => this.onChangeDescricaoAuto(text)}
+                                style={styles.inputStyle}
+                                placeholder="Descrição do Anúncio                                                    "
+                              />
+                          </View>
 
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                            <TextInput
-                              style={styles.inputStyle}
-                              autoCapitalize={'words'}
-                              placeholder="Seu nome                                                                       "
-                            />
-                        </View>
+                          <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                              <TextInputMask
+                                type={'money'}
+                                style={styles.inputStyle}
+                                value={this.state.precoAuto}
+                                onChangeText={text => this.onChangePrecoAuto(text)}
+                                keyboardType={"number-pad"}
+                                placeholder="Valor do Serviço                                                          "
+                              />
+                          </View>
 
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                            <TextInputMask
-                              type={'cel-phone'}
-                              style={styles.inputStyle} 
-                              keyboardType={"phone-pad"}
-                              maxLength={17}
-                              value={this.state.phone}
-                              onChangeText={text => this.onChangePhone(text)}
-                              placeholder="Número de Telefone                                                   "
-                            />
-                        </View>
+                          <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                              <TextInput
+                                style={styles.inputStyle}
+                                value={this.state.nomeAuto}
+                                onChangeText={text => this.onChangeNomeAuto(text)}
+                                autoCapitalize={'words'}
+                                placeholder="Seu nome                                                                       "
+                              />
+                          </View>
 
+                          <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                              <TextInputMask
+                                type={'cel-phone'}
+                                style={styles.inputStyle} 
+                                keyboardType={"phone-pad"}
+                                maxLength={17}
+                                value={this.state.phoneAuto}
+                                onChangeText={text => this.onChangePhoneAuto(text)}
+                                placeholder="Número de Telefone                                                   "
+                              />
+                          </View>
+
+                      </View>
+                      }
                         {this.state.type == 'Estabelecimento' &&
                           <View>
+                            <View style={styles.item}>
+                              <TextInput
+                                style={styles.inputStyle}
+                                value={this.state.tituloEstab}
+                                onChangeText={text => this.onChangeTituloEstab(text)}
+                                maxLength={21}
+                                placeholder="Título do Anúncio                                                        "
+                              />
+                            </View>
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                              <TextInput
+                                style={styles.inputStyle}
+                                value={this.state.descricaoEstab}
+                                onChangeText={text => this.onChangeDescricaoEstab(text)}
+                                placeholder="Descrição do Anúncio                                                    "
+                              />
+                            </View>
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                              <TextInputMask
+                                type={'money'}
+                                style={styles.inputStyle}
+                                value={this.state.precoEstab}
+                                onChangeText={text => this.onChangePrecoEstab(text)}
+                                keyboardType={"number-pad"}
+                                placeholder="Valor do Serviço                                                          "
+                              />
+                            </View>
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                              <TextInputMask
+                                type={'cel-phone'}
+                                style={styles.inputStyle} 
+                                keyboardType={"phone-pad"}
+                                maxLength={17}
+                                value={this.state.phoneEstab}
+                                onChangeText={text => this.onChangePhoneEstab(text)}
+                                placeholder="Número de Telefone                                                   "
+                              />
+                            </View>
+                          
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                                 <TextInput
                                   style={styles.inputStyle}
+                                  value={this.state.enderecoEstab}
+                                  onChangeText={text => this.onChangeEnderecoEstab(text)}
                                   keyboardType={"default"}
                                   placeholder="Endereço do Estabelecimento                                                   "
                                 />

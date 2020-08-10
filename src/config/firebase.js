@@ -11,9 +11,6 @@ const firebaseConfig = {
     measurementId: "G-EEF7E299F2"
 };
 
-if(!firebase.app.length) { 
-    //Senão tiver conexão do firebase criada, abra a conexão
     firebase.initializeApp(firebaseConfig);
-}
 
 export default firebase;

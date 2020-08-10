@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Button,
   Text,
   TouchableWithoutFeedback,
   View,
@@ -33,7 +34,7 @@ import { TextInputMask } from 'react-native-masked-text';
 
 //import datepicker
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 
 //import firebase 
 import firebase from '../../config/firebase';
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingVertical: 23,
+    alignItems:'center'
   },
   buttonsGroup: {
     paddingTop: 23,
@@ -110,7 +112,7 @@ export default class Cadastro extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      emailUser: '',
       emailFocused: false,
       nome:'', 
       nomeFocused:false,
@@ -121,10 +123,16 @@ export default class Cadastro extends Component {
       phoneFocused:false,
       dateFocused: false,
       password: '',
+      confirmPassword:'',
+      confirmPasswordFocused: false,
       passwordFocused: false,
       secureTextEntry: true,
+      secureTextEntry2: true,
     };
   }
+
+
+
 
   onChange = (event, selectedDate) => {
     this.setState({showDate: false})
@@ -141,10 +149,10 @@ export default class Cadastro extends Component {
 
   emailChange = text => {
     this.setState({
-      email: text,
+      emailUser: text,
     });
 
-    console.log('email user: ' + this.state.email)
+    console.log('email user: ' + this.state.emailUser)
   };
 
   emailFocus = () => {
@@ -186,9 +194,26 @@ export default class Cadastro extends Component {
     console.log('senha user: ' + this.state.password)
   };
 
+  confirmPasswordChange = text => {
+    this.setState({
+      confirmPassword: text,
+    });
+    console.log('confirm senha user: ' + this.state.confirmPassword)
+  };
+
   passwordFocus = () => {
     this.setState({
       passwordFocused: true,
+      emailFocused: false,
+      nomeFocused:false,
+      phoneFocused:false
+    });
+  };
+
+  confirmPasswordFocus = () => {
+    this.setState({
+      confirmPasswordFocused: true,
+      passwordFocused: false,
       emailFocused: false,
       nomeFocused:false,
       phoneFocused:false
@@ -202,20 +227,16 @@ export default class Cadastro extends Component {
     });
   };
 
+  onTogglePressConfirmPassword = () => {
+    const {secureTextEntry2} = this.state;
+    this.setState({
+      secureTextEntry2: !secureTextEntry2,
+    });
+  };
+
   navigateTo = screen => () => {
     const {navigation} = this.props;
     navigation.navigate(screen);
-  };
-
-  createAccount = () => {
-    // const { email, phone, password } = this.state;
-    this.setState(
-      {
-        emailFocused: false,
-        passwordFocused: false,
-      },
-      this.navigateTo('Verification'),
-    );
   };
 
   focusOn = nextFiled => () => {
@@ -235,6 +256,54 @@ export default class Cadastro extends Component {
     return fullDate;
   }
 
+
+
+
+
+
+
+
+
+  async registerUserFirebase(email, senha) {
+
+    if(this.state.password !== this.state.confirmPassword){
+    alert('As senhas não coincidem')
+    } else { 
+     await firebase.auth().createUserWithEmailAndPassword(email, senha).then(() => {
+        alert('Usuário Cadastrado com Sucesso!')
+      }).catch((error) => {
+        if(error.code === 'auth/email-already-exists') {
+          alert('Esse endereço de email já está em uso, por favor tente outro')
+          return;
+        } else if (error.code === 'auth/internal-error') {
+          alert('Ocorreu um erro interno no nosso servidor, tente novamente mais tarde')
+          return;
+        } else if (error.code === 'auth/invalid-email') {
+          alert('O endereço de email fornecido é inválido, verifique se há algo errado')
+          return;
+        } else if (error.code === 'auth/invalid-password') {
+          alert('Esta Senha é inválida')
+          return;
+        } else if (error.code === 'auth/weak-password') {
+          alert('Esta Senha é muito fraca, ela precisa ter ao minimo 6 caracteres')
+          return;
+        }
+      })
+      
+    }
+
+    //firebase.firestore().collection("usuarios").doc('')
+  }
+
+
+
+
+
+
+
+
+
+
   render() {
     const {
       emailFocused,
@@ -242,6 +311,7 @@ export default class Cadastro extends Component {
       password,
       passwordFocused,
       secureTextEntry,
+      secureTextEntry2
     } = this.state;
 
     return (
@@ -280,16 +350,13 @@ export default class Cadastro extends Component {
 
                 <UnderlineTextInput
                   onRef={r => {
-                    this.email = r;
+                    this.emailUser = r;
                   }}
                   onChangeText={this.emailChange}
                   onFocus={this.emailFocus}
                   inputFocused={emailFocused}
-                  onSubmitEditing={this.focusOn(this.date)}
-                  returnKeyType="next"
-                  blurOnSubmit={false}
-                  keyboardType="email-address"
                   placeholder="E-mail"
+                  keyboardType={"email-address"}
                   placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
                   inputTextColor={INPUT_TEXT_COLOR}
                   borderColor={INPUT_BORDER_COLOR}
@@ -305,8 +372,6 @@ export default class Cadastro extends Component {
                   onChangeText={this.passwordChange}
                   onFocus={this.passwordFocus}
                   inputFocused={passwordFocused}
-                  onSubmitEditing={this.createAccount}
-                  returnKeyType="done"
                   placeholder="Senha"
                   placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
                   inputTextColor={INPUT_TEXT_COLOR}
@@ -319,6 +384,24 @@ export default class Cadastro extends Component {
                   inputContainerStyle={styles.inputContainer}
                 />
 
+                <UnderlinePasswordInput
+                  onRef={r => {
+                    this.confirmPassword = r;
+                  }}
+                  onChangeText={this.confirmPasswordChange}
+                  onFocus={this.confirmPasswordFocus}
+                  inputFocused={this.state.confirmPasswordFocused}
+                  placeholder="Confirmar Senha"
+                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                  inputTextColor={INPUT_TEXT_COLOR}
+                  secureTextEntry={secureTextEntry2}
+                  borderColor={INPUT_BORDER_COLOR}
+                  focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
+                  toggleVisible={password.length > 0}
+                  toggleText={secureTextEntry2 ? 'Mostrar' : 'Esconder'}
+                  onTogglePress={this.onTogglePressConfirmPassword}
+                  inputContainerStyle={styles.inputContainer}
+                />
 
                 <TextInputMask
                   type={'cel-phone'}
@@ -351,11 +434,12 @@ export default class Cadastro extends Component {
                }
 
                 <View style={styles.buttonContainer}>
-                  <ContainedButton
-                    onPress={this.createAccount}
-                    color={"#70AD66"}
-                    title={'Criar Conta'.toUpperCase()}
-                  />
+                  <TouchableOpacity
+                    onPress={() => this.registerUserFirebase(this.state.emailUser, this.state.password)}
+                    style={{backgroundColor:'white', width:300, borderRadius:30, height:30}}
+                  >
+                    <Text style={{fontWeight:'bold', textAlign:'center', fontSize:16, marginTop:4}}>Criar Conta</Text>
+                  </TouchableOpacity>
                 </View>
 
 

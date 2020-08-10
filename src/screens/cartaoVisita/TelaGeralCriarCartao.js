@@ -293,7 +293,7 @@ export default class TelaGeralCriarCartao extends Component {
                     <Text style={{color: 'black', fontWeight: 'bold'}}>Ativos</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={this.navigateTo('Orders')} style={{marginRight:5, borderRadius:25, alignItems:'center', justifyContent:'center', width:40, height:40}}>
+                <TouchableOpacity onPress={this.navigateTo('TelaCriarCartaoVisita')} style={{marginRight:5, borderRadius:25, alignItems:'center', justifyContent:'center', width:40, height:40}}>
                         <FontAwesome5  name="plus" size={19} color={"#fff"} />
                 </TouchableOpacity>
 

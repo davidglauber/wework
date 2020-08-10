@@ -49,6 +49,8 @@ import TelaCartaoVisita from '../screens/cartaoVisita/TelaCartaoVisita';
 
 import TelaGeralCriarCartao from '../screens/cartaoVisita/TelaGeralCriarCartao';
 
+import TelaCriarCartaoVisita from '../screens/cartaoVisita/TelaCriarCartaoVisita';
+
 // import Categories screen
 import Categories from '../screens/categories/CategoriesA';
 import Category from '../screens/categories/CategoryA';
@@ -321,6 +323,15 @@ function MainNavigatorA() {
             title: 'Criar Anúncio'
           }}
         />
+
+        <Stack.Screen
+          name="TelaCriarCartaoVisita"
+          component={TelaCriarCartaoVisita}
+          options={{
+            title: 'Criar Cartão de Visita'
+          }}
+        />
+
         <Stack.Screen
           name="AboutUs"
           component={AboutUs}

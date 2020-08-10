@@ -55,8 +55,6 @@ import TelaCriarCartaoVisita from '../screens/cartaoVisita/TelaCriarCartaoVisita
 import Categories from '../screens/categories/CategoriesA';
 import Category from '../screens/categories/CategoryA';
 
-// import Search results screen
-import SearchResults from '../screens/search/SearchResultsA';
 
 // import Checkout screen
 import Checkout from '../screens/checkout/CheckoutA';
@@ -69,6 +67,9 @@ import DeliveryAddress from '../screens/address/DeliveryAddressA';
 
 // import AddAddress screen
 import AddAddress from '../screens/address/AddAddressA';
+
+// import Search screen
+import Search from '../screens/search/SearchB';
 
 // import EditAddress screen
 import EditAddress from '../screens/address/EditAddressA';
@@ -90,6 +91,8 @@ import AboutUs from '../screens/about/AboutUsA';
 
 // import colors
 import Colors from '../theme/colors';
+import FilterB from '../screens/search/FilterB';
+import FilterCartao from '../screens/search/FilterCartao'
 
 // MainNavigatorA Config
 const SAVE_ICON = Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark';
@@ -236,12 +239,16 @@ function MainNavigatorA() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="SearchResults"
-          component={SearchResults}
-          options={{
-            title: 'Search Results',
-          }}
+          name="FilterB"
+          component={FilterB}
+          options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="FilterCartao"
+          component={FilterCartao}
+          options={{headerShown: false}}
+        />
+
         <Stack.Screen
           name="Checkout"
           component={Checkout}

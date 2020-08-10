@@ -24,6 +24,8 @@ import Button from '../../components/buttons/Button';
 import FilterPicker from '../../components/pickers/FilterPicker';
 import {Subtitle1} from '../../components/text/CustomText';
 
+import {Heading6} from '../../components/text/CustomText';
+
 // import colors
 import Colors from '../../theme/colors';
 import Layout from '../../theme/layout';
@@ -91,10 +93,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     backgroundColor: Colors.background,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
 });
 
 // SearchFilterB
-export default class SearchFilterB extends Component {
+export default class FilterCartao extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -103,22 +113,25 @@ export default class SearchFilterB extends Component {
       fromPriceFocused: false,
       toPriceFocused: false,
       menu: [
-        {title: 'Breakfast', picked: false},
-        {title: 'Lunch', picked: false},
-        {title: 'Dinner', picked: true},
-        {title: 'Snack', picked: false},
-        {title: 'Dessert', picked: false},
-        {title: 'Teatime', picked: false},
+        {title: 'Autônomo', picked: false},
+        {title: 'Estabelecimento', picked: true}
       ],
       cuisine: [
-        {title: 'Italian', picked: true},
-        {title: 'French', picked: false},
-        {title: 'Chinese', picked: false},
-        {title: 'Japanese', picked: false},
-        {title: 'Indian', picked: false},
-        {title: 'Austrian', picked: false},
-        {title: 'Armenian', picked: false},
-        {title: 'Belgian', picked: false},
+        {title: 'Professor', picked: true},
+        {title: 'Motorista', picked: false},
+        {title: 'Caminhoneiro', picked: false},
+        {title: 'Jogador', picked: false},
+        {title: 'Encanador', picked: false},
+        {title: 'Músico', picked: false},
+        {title: 'Ator', picked: false},
+        {title: 'Tradutor', picked: false},
+        {title: 'Caminhoneiro', picked: false},
+        {title: 'Jogador', picked: false},
+        {title: 'Caminhoneiro', picked: false},
+        {title: 'Jogador', picked: false},
+        {title: 'Caminhoneiro', picked: false},
+        {title: 'Jogador', picked: false},
+        
       ],
     };
   }
@@ -204,61 +217,25 @@ export default class SearchFilterB extends Component {
     return (
       <SafeAreaView style={styles.screenContainer}>
         <StatusBar
-          backgroundColor={Colors.primaryColor}
-          barStyle="light-content"
+          backgroundColor={"#00b970"}
+          barStyle="white-content"
         />
 
         <KeyboardAwareScrollView
           contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.formContainer}>
-            <Subtitle1 style={styles.subtitle}>Price range</Subtitle1>
-            <View style={styles.row}>
-              <View style={[styles.inputContainer, styles.small]}>
-                <TextInput
-                  onChangeText={this.onChangeText('fromPrice')}
-                  onFocus={this.onFocus('fromPriceFocused')}
-                  onSubmitEditing={this.focusOn(this.toPrice)}
-                  keyboardType="numeric"
-                  returnKeyType="next"
-                  blurOnSubmit={false}
-                  placeholder="From 1$"
-                  value={fromPrice}
-                  style={[
-                    styles.textInput,
-                    fromPriceFocused && styles.textInputFocused,
-                  ]}
-                />
-              </View>
-
-              <View style={[styles.inputContainer, styles.small]}>
-                <TextInput
-                  ref={(r) => {
-                    this.toPrice = r;
-                  }}
-                  onChangeText={this.onChangeText('toPrice')}
-                  onFocus={this.onFocus('toPriceFocused')}
-                  keyboardType="numeric"
-                  returnKeyType="done"
-                  blurOnSubmit
-                  placeholder="To 200$"
-                  value={toPrice}
-                  style={[
-                    styles.textInput,
-                    toPriceFocused && styles.textInputFocused,
-                  ]}
-                />
-              </View>
+            <View style={styles.titleContainer}>
+              <Heading6 style={{fontWeight: '700'}}>Filtro de Cartão de Visita</Heading6>
             </View>
-
-            <Subtitle1 style={[styles.subtitle, styles.mt8]}>Menu</Subtitle1>
+            <Subtitle1 style={styles.subtitle}>Qual tipo de Profissional?</Subtitle1>
             <View style={styles.rowWrap}>
               {menu.map((item, index) =>
                 this.renderFilterItem({item, index}, menu),
               )}
             </View>
 
-            <Subtitle1 style={[styles.subtitle, styles.mt8]}>Cuisine</Subtitle1>
-            <View style={styles.rowWrap}>
+            <Subtitle1 style={[styles.subtitle, styles.mt8]}>Escolha a categoria abaixo</Subtitle1>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
               {cuisine.map((item, index) => (
                 <FilterPicker
                   key={index}
@@ -271,7 +248,7 @@ export default class SearchFilterB extends Component {
           </View>
 
           <View style={styles.buttonContainer}>
-            <Button onPress={this.goBack} title="Apply Filters" rounded />
+            <Button onPress={this.goBack} title="Aplicar Filtros" rounded />
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>

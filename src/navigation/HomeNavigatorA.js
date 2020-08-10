@@ -16,9 +16,6 @@ import TabBadgeIcon from '../components/navigation/TabBadgeIcon';
 // import Home screen
 import Home from '../screens/home/HomeA';
 
-// import Search screen
-import Search from '../screens/search/SearchA';
-
 // import Favorites screen
 import Favorites from '../screens/favorites/FavoritesA';
 
@@ -58,8 +55,6 @@ function HomeNavigator() {
 
           if (route.name === 'Home') {
             iconName = `home${focused ? '' : '-outline'}`;
-          } else if (route.name === 'Search') {
-            iconName = 'magnify';
           } else if (route.name === 'Favorites') {
             iconName = `star${focused ? '' : '-outline'}`;
           } else if (route.name === 'Settings') {
@@ -80,7 +75,6 @@ function HomeNavigator() {
         },
       }}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Search" component={Search} />
       <Tab.Screen
         name="Cart"
         component={Cart}

@@ -313,7 +313,7 @@ export default class CartaoVisita extends Component {
           <Heading6 style={styles.titleText}>Cartões de Visita</Heading6>
           {products.length > 0 && (
             <View style={styles.inline}>
-              <TouchableOpacity style={{marginRight:5}}>
+              <TouchableOpacity onPress={this.navigateTo('FilterCartao')} style={{marginRight:5}}>
                     <FontAwesome5  name="sort-alpha-up" size={19} color={"#fff"} />
               </TouchableOpacity>
             

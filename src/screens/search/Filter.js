@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 });
 
 // SearchResultsB
-export default class SearchResultsB extends Component {
+export default class Filter extends Component {
   constructor(props) {
     super(props);
 

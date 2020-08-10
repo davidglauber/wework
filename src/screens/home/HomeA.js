@@ -279,7 +279,7 @@ export default class HomeA extends Component {
                     <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{marginRight:5}}>
+                <TouchableOpacity onPress={this.navigateTo('FilterB')} style={{width:20, height:20}}>
                     <FontAwesome5  name="sort-alpha-up" size={19} color={"#70AD66"} />
                 </TouchableOpacity>
               </View>

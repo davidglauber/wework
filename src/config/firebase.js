@@ -1,0 +1,19 @@
+import * as firebase from 'firebase';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCstuIsKV33r55UdrU-zR2OED5WpX80mtw",
+    authDomain: "wework-test-5280e.firebaseapp.com",
+    databaseURL: "https://wework-test-5280e.firebaseio.com",
+    projectId: "wework-test-5280e",
+    storageBucket: "wework-test-5280e.appspot.com",
+    messagingSenderId: "419527216736",
+    appId: "1:419527216736:web:c9e15537c5a960ae933d05",
+    measurementId: "G-EEF7E299F2"
+};
+
+if(!firebase.app.length) { 
+    //Senão tiver conexão do firebase criada, abra a conexão
+    firebase.initializeApp(firebaseConfig);
+}
+
+export default firebase;

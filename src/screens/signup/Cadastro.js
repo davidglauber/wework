@@ -27,13 +27,17 @@ import UnderlineTextInput from '../../components/textinputs/UnderlineTextInput';
 import Colors from '../../theme/colors';
 import Layout from '../../theme/layout';
 
+//input mask
+import { TextInputMask } from 'react-native-masked-text';
+
 
 //import datepicker
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-//import icon 
-import { FontAwesome5 } from '@expo/vector-icons';
+//import firebase 
+import firebase from '../../config/firebase';
+
 
 // SignUpB Config
 const PLACEHOLDER_TEXT_COLOR = 'rgba(255, 255, 255, 0.7)';
@@ -139,6 +143,8 @@ export default class Cadastro extends Component {
     this.setState({
       email: text,
     });
+
+    console.log('email user: ' + this.state.email)
   };
 
   emailFocus = () => {
@@ -150,25 +156,17 @@ export default class Cadastro extends Component {
     });
   };
 
-  phoneChange = text => {
-    this.setState({
-      phone: text,
-    });
-  };
-
-  phoneFocus = () => {
-    this.setState({
-      emailFocused: false,
-      passwordFocused: false,
-      nomeFocused: false,
-      phoneFocused:true,
-    });
-  };
+ 
+  onChangePhone(text) {
+    this.setState({phone: text})
+    console.log('phone: '  + this.state.phone)
+  }
 
   nomeChange = text => {
     this.setState({
       nome: text,
     });
+    console.log('nome user: ' + this.state.nome)
   };
 
   nomeFocus = () => {
@@ -185,6 +183,7 @@ export default class Cadastro extends Component {
     this.setState({
       password: text,
     });
+    console.log('senha user: ' + this.state.password)
   };
 
   passwordFocus = () => {
@@ -321,23 +320,15 @@ export default class Cadastro extends Component {
                 />
 
 
-                <UnderlineTextInput
-                  onRef={r => {
-                    this.phone = r;
-                  }}
-                  onChangeText={this.phoneChange}
-                  onFocus={this.phoneFocus}
-                  inputFocused={this.state.phoneFocused}
-                  onSubmitEditing={this.focusOn(this.date)}
-                  returnKeyType="next"
-                  blurOnSubmit={false}
-                  keyboardType="phone-pad"
-                  placeholder="Número de Telefone"
+                <TextInputMask
+                  type={'cel-phone'}
                   placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                  inputTextColor={INPUT_TEXT_COLOR}
                   borderColor={INPUT_BORDER_COLOR}
-                  focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
-                  inputContainerStyle={styles.inputContainer}
+                  style={{marginTop:10, borderBottomWidth:1, color:'white'}}
+                  value={this.state.phone}
+                  onChangeText={text => this.onChangePhone(text)}
+                  keyboardType={"phone-pad"}
+                  placeholder="Número de Telefone"
                 />
 
               

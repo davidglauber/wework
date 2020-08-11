@@ -25,6 +25,7 @@ import GradientContainer from '../../components/gradientcontainer/GradientContai
 import {Heading5, Paragraph} from '../../components/text/CustomText';
 import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 
+
 // import colors
 import Colors from '../../theme/colors';
 
@@ -88,6 +89,11 @@ export default class Verificação extends Component {
     this.state = {
       modalVisible: false,
       pin: '',
+      email:'',
+      nome:'',
+      data:'',
+      telefone:'',
+      senha:''
     };
   }
 
@@ -96,9 +102,37 @@ export default class Verificação extends Component {
     clearTimeout(this.timeout);
   };
 
+  componentDidMount() {
+    let getNome = this.props.route.params.nome;
+    let getEmail = this.props.route.params.email;
+    let getSenha = this.props.route.params.senha;
+    let getTelefone = this.props.route.params.telefone;
+    let getDataNascimento = this.props.route.params.dataNascimento;
+
+    this.setState({nome: getNome})
+    this.setState({email: getEmail})
+    this.setState({senha: getSenha})
+    this.setState({telefone: getTelefone})
+    this.setState({data: getDataNascimento})
+
+
+    console.log('email navigation: ' + getEmail)
+    console.log('senha navigation: ' + getSenha)
+    console.log('nome navigation: ' + getNome)
+    console.log('Telefone navigation: ' + getTelefone)
+    console.log('Data born navigation: ' + getDataNascimento)
+    
+  }
+
   navigateTo = (screen) => {
     const {navigation} = this.props;
-    navigation.navigate(screen);
+    navigation.navigate(screen, {
+      nome: this.state.nome,
+      email: this.state.email,
+      senha: this.state.senha,
+      telefone: this.state.telefone,
+      dataNascimento: this.state.data
+    });
   };
 
   pressKeyboardButton = (keyboardButton) => () => {
@@ -149,7 +183,7 @@ export default class Verificação extends Component {
         this.timeout = setTimeout(() => {
           this.closeModal();
           this.navigateTo('EmailVerificacao');
-        }, 1000);
+        }, 500);
       },
     );
   };

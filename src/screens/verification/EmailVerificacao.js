@@ -88,6 +88,11 @@ export default class EmailVerificacao extends Component {
     this.state = {
       modalVisible: false,
       pin: '',
+      email:'',
+      nome:'',
+      data:'',
+      telefone:'',
+      senha:''
     };
   }
 
@@ -96,47 +101,34 @@ export default class EmailVerificacao extends Component {
     clearTimeout(this.timeout);
   };
 
+
+  componentDidMount() {
+    let getNome = this.props.route.params.nome;
+    let getEmail = this.props.route.params.email;
+    let getSenha = this.props.route.params.senha;
+    let getTelefone = this.props.route.params.telefone;
+    let getDataNascimento = this.props.route.params.dataNascimento;
+
+    this.setState({nome: getNome})
+    this.setState({email: getEmail})
+    this.setState({senha: getSenha})
+    this.setState({telefone: getTelefone})
+    this.setState({data: getDataNascimento})
+
+
+    console.log('email navigation: ' + getEmail)
+    console.log('senha navigation: ' + getSenha)
+    console.log('nome navigation: ' + getNome)
+    console.log('Telefone navigation: ' + getTelefone)
+    console.log('Data born navigation: ' + getDataNascimento)
+    
+  }
+
+
+
   navigateTo = (screen) => {
     const {navigation} = this.props;
     navigation.navigate(screen);
-  };
-
-  pressKeyboardButton = (keyboardButton) => () => {
-    let {pin} = this.state;
-
-    if (keyboardButton === 'backspace') {
-      pin = pin.slice(0, -1);
-      this.setState({
-        pin,
-      });
-      return;
-    }
-
-    if (keyboardButton === 'skip') {
-      Alert.alert(
-        'Skip verification',
-        'You surely want to skip this one?',
-        [
-          {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-          {
-            text: 'OK',
-            onPress: () => {
-              this.navigateTo('HomeNavigator');
-            },
-          },
-        ],
-        {cancelable: false},
-      );
-      return;
-    }
-
-    if ((pin + keyboardButton).length > 4) {
-      return;
-    }
-
-    this.setState({
-      pin: pin + keyboardButton,
-    });
   };
 
   submit = () => {

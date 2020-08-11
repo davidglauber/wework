@@ -235,8 +235,16 @@ export default class Cadastro extends Component {
   };
 
   navigateTo = screen => () => {
+    let dataAtual = this.convertDate();
+
     const {navigation} = this.props;
-    navigation.navigate(screen);
+    navigation.navigate(screen, {
+      nome: this.state.nome,
+      email: this.state.emailUser,
+      senha: this.state.password,
+      telefone: this.state.phone,
+      dataNascimento: dataAtual
+    });
   };
 
   focusOn = nextFiled => () => {
@@ -435,8 +443,8 @@ export default class Cadastro extends Component {
 
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity
-                    onPress={() => this.registerUserFirebase(this.state.emailUser, this.state.password)}
-                    style={{backgroundColor:'white', width:300, borderRadius:30, height:30}}
+                    onPress={this.navigateTo('Verification')}
+                    style={{backgroundColor:'white', width:300, borderRadius:10, height:30}}
                   >
                     <Text style={{fontWeight:'bold', textAlign:'center', fontSize:16, marginTop:4}}>Criar Conta</Text>
                   </TouchableOpacity>

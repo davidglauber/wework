@@ -183,19 +183,18 @@ export default class EmailVerificacao extends Component {
     navigation.navigate(screen);
   };
 
-  submit = () => {
-    this.setState(
-      {
-        modalVisible: true,
-      },
-      () => {
-        // for demo purpose after 3s close modal
-        this.timeout = setTimeout(() => {
-          this.closeModal();
-          this.navigateTo('HomeNavigator');
-        }, 3000);
-      },
-    );
+  verifyIfUserHasVerified(){
+    var user = firebase.auth().currentUser;
+    user.reload().then(() => {
+      console.log('estado do verificar: '+ firebase.auth().currentUser.emailVerified)
+
+      if(firebase.auth().currentUser.emailVerified == true) {
+        this.navigateTo('HomeNavigator')
+      } else {
+        alert('Você ainda não confirmou o seu cadastro pelo email')
+      }
+    })
+   
   };
 
   closeModal = () => {
@@ -248,7 +247,7 @@ export default class EmailVerificacao extends Component {
            
           <View style={{marginBottom: 44}}>
             <Button
-              onPress={this.submit}
+              onPress={() => this.verifyIfUserHasVerified()}
               disabled={false}
               borderRadius={4}
               color={Colors.onPrimaryColor}

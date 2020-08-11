@@ -155,10 +155,6 @@ export default class EmailVerificacao extends Component {
       } else if (error.code === 'auth/internal-error') {
         alert('Ocorreu um erro interno no nosso servidor, tente novamente mais tarde')
         return;
-      } else if (error.code === 'auth/invalid-email') {
-        alert('O endereço de email fornecido é inválido, verifique se há algo errado')
-        this.navigateTo('SignUp')
-        return;
       } else if (error.code === 'auth/invalid-password') {
         alert('A senha inserida é inválida')
         this.navigateTo('SignUp')

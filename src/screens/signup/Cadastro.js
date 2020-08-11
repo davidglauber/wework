@@ -234,18 +234,34 @@ export default class Cadastro extends Component {
     });
   };
 
+
+
+
+
   navigateTo = screen => () => {
     let dataAtual = this.convertDate();
 
     const {navigation} = this.props;
-    navigation.navigate(screen, {
-      nome: this.state.nome,
-      email: this.state.emailUser,
-      senha: this.state.password,
-      telefone: this.state.phone,
-      dataNascimento: dataAtual
-    });
+
+    if(this.state.password !== this.state.confirmPassword){
+      alert('As senhas não coincidem')
+      } 
+      
+    if (this.state.password.length < 6) {
+      alert('A senha deve ter no mínimo 6 caracteres')
+    } else {  
+        navigation.navigate(screen, {
+          nome: this.state.nome,
+          email: this.state.emailUser,
+          senha: this.state.password,
+          telefone: this.state.phone,
+          dataNascimento: dataAtual
+        });
+    }
   };
+
+
+  
 
   focusOn = nextFiled => () => {
     if (nextFiled) {
@@ -263,50 +279,6 @@ export default class Cadastro extends Component {
     console.log('data escolhida: ' +  fullDate)
     return fullDate;
   }
-
-
-
-
-
-
-
-
-
-  async registerUserFirebase(email, senha) {
-
-    if(this.state.password !== this.state.confirmPassword){
-    alert('As senhas não coincidem')
-    } else { 
-     await firebase.auth().createUserWithEmailAndPassword(email, senha).then(() => {
-        alert('Usuário Cadastrado com Sucesso!')
-      }).catch((error) => {
-        if(error.code === 'auth/email-already-exists') {
-          alert('Esse endereço de email já está em uso, por favor tente outro')
-          return;
-        } else if (error.code === 'auth/internal-error') {
-          alert('Ocorreu um erro interno no nosso servidor, tente novamente mais tarde')
-          return;
-        } else if (error.code === 'auth/invalid-email') {
-          alert('O endereço de email fornecido é inválido, verifique se há algo errado')
-          return;
-        } else if (error.code === 'auth/invalid-password') {
-          alert('Esta Senha é inválida')
-          return;
-        } else if (error.code === 'auth/weak-password') {
-          alert('Esta Senha é muito fraca, ela precisa ter ao minimo 6 caracteres')
-          return;
-        }
-      })
-      
-    }
-
-    //firebase.firestore().collection("usuarios").doc('')
-  }
-
-
-
-
-
 
 
 
@@ -346,6 +318,7 @@ export default class Cadastro extends Component {
                   inputFocused={this.state.nomeFocused}
                   onSubmitEditing={this.focusOn(this.email)}
                   returnKeyType="next"
+                  autoCapitalize={"words"}
                   blurOnSubmit={false}
                   keyboardType="default"
                   placeholder="Seu nome"

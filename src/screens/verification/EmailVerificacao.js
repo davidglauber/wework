@@ -28,6 +28,10 @@ import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 // import colors
 import Colors from '../../theme/colors';
 
+//import firebase 
+import firebase from '../../config/firebase';
+
+
 // VerificationB Config
 const isRTL = I18nManager.isRTL;
 
@@ -116,6 +120,10 @@ export default class EmailVerificacao extends Component {
     this.setState({data: getDataNascimento})
 
 
+    //pegar os parametros de email e senha
+    this.registerUserAndConfirmEmail(getEmail, getSenha)
+
+
     console.log('email navigation: ' + getEmail)
     console.log('senha navigation: ' + getSenha)
     console.log('nome navigation: ' + getNome)
@@ -123,6 +131,50 @@ export default class EmailVerificacao extends Component {
     console.log('Data born navigation: ' + getDataNascimento)
     
   }
+
+
+
+  async registerUserAndConfirmEmail(email, senha) {
+    await firebase.auth().createUserWithEmailAndPassword(email, senha).then(() => {
+
+      firebase.auth().currentUser.sendEmailVerification().then(() => {
+      }).catch((error) => {
+        alert('ocorreu um erro ao enviar o email')
+      })
+
+      alert('Usuário Cadastrado com Sucesso!')
+    }).catch((error) => {
+      if(error.code === 'auth/email-already-exists') {
+        alert('Esse endereço de email já está em uso, por favor tente outro')
+        this.navigateTo('SignUp')
+        return;
+      } else if (error.code === 'auth/internal-error') {
+        alert('Ocorreu um erro interno no nosso servidor, tente novamente mais tarde')
+        return;
+      } else if (error.code === 'auth/invalid-email') {
+        alert('O endereço de email fornecido é inválido, verifique se há algo errado')
+        this.navigateTo('SignUp')
+        return;
+      } else if (error.code === 'auth/invalid-password') {
+        alert('A senha inserida é inválida')
+        this.navigateTo('SignUp')
+        return;
+      } else if (error.code === 'auth/weak-password') {
+        alert('A senha inserida é muito fraca, ela precisa ter ao mínimo 6 caracteres')
+        this.navigateTo('SignUp')
+        return;
+      }
+    })
+  }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -169,7 +221,7 @@ export default class EmailVerificacao extends Component {
           <View style={styles.instructionContainer}>
             <Heading5 style={styles.heading}>Tudo Certo!</Heading5>
             <Paragraph style={styles.instruction}>
-              O email de confirmação foi enviado, caso não tenha recebido confira seu email no cadastro e tente novamente :)
+              O email de confirmação foi enviado, confira a caixa de SPAM e caso não tenha recebido o email recadastre-se
             </Paragraph>
 
           {/* 
@@ -194,14 +246,14 @@ export default class EmailVerificacao extends Component {
 
       
            
-          <View style={{marginBottom: 44, marginLeft: 10}}>
+          <View style={{marginBottom: 44}}>
             <Button
               onPress={this.submit}
               disabled={false}
               borderRadius={4}
               color={Colors.onPrimaryColor}
               small
-              title={'ENTRAR'.toUpperCase()}
+              title={'Acessar Conta'.toUpperCase()}
               titleColor={Colors.primaryColor}
             />
           </View>

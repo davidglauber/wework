@@ -221,15 +221,15 @@ export default class HomeA extends Component {
 
     await AsyncStorage.getItem('verified').then((value) => {
       if(value == 'true') {
-        this.setState({verified: true})
+        AsyncStorage.setItem('verified', JSON.stringify(true))
       }
 
       if(value == 'false') {
-        AsyncStorage.getItem('nome').then((value) =>{nomeUser = value})
-        AsyncStorage.getItem('email').then((value) =>{emailUser = value})
-        AsyncStorage.getItem('senha').then((value) =>{senhaUser = value})
-        AsyncStorage.getItem('telefone').then((value) =>{telefoneUser = value})
-        AsyncStorage.getItem('dataNascimento').then((value) =>{dataNascimentoUser = value})
+         AsyncStorage.getItem('nome').then((value) =>{nomeUser = value})
+         AsyncStorage.getItem('email').then((value) =>{emailUser = value})
+         AsyncStorage.getItem('senha').then((value) =>{senhaUser = value})
+         AsyncStorage.getItem('telefone').then((value) =>{telefoneUser = value})
+         AsyncStorage.getItem('dataNascimento').then((value) =>{dataNascimentoUser = value})
 
         this.props.navigation.navigate('EmailVerificacao', {
             nome: nomeUser,

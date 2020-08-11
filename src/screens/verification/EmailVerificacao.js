@@ -139,7 +139,14 @@ export default class EmailVerificacao extends Component {
 
 
   async registerUserAndConfirmEmail(email, senha) {
-    await firebase.auth().createUserWithEmailAndPassword(email, senha).then(() => {
+    await firebase.auth().createUserWithEmailAndPassword(email, senha).then((value) => {
+
+      firebase.firestore().collection('usuarios').doc(value.user.uid).set({
+        email: email,
+        nome: this.props.route.params.nome,
+        premium: false,
+        dataNascimento: this.props.route.params.dataNascimento
+      })
 
       firebase.auth().currentUser.sendEmailVerification().then(() => {
       }).catch((error) => {

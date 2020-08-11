@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
+
 // import components
 import ContainedButton from '../../components/buttons/ContainedButton';
 import GradientContainer from '../../components/gradientcontainer/GradientContainer';
@@ -130,6 +131,10 @@ export default class Cadastro extends Component {
       secureTextEntry2: true,
     };
   }
+
+
+
+
 
 
 
@@ -248,8 +253,10 @@ export default class Cadastro extends Component {
       } 
       
     if (this.state.password.length < 6) {
-      alert('A senha deve ter no mínimo 6 caracteres')
-    } else {  
+        alert('A senha deve ter no mínimo 6 caracteres')
+    } 
+    
+    if(this.state.password == this.state.confirmPassword && this.state.password.length >= 6){  
         navigation.navigate(screen, {
           nome: this.state.nome,
           email: this.state.emailUser,
@@ -259,7 +266,6 @@ export default class Cadastro extends Component {
         });
     }
   };
-
 
   
 

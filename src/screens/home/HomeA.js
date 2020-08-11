@@ -28,6 +28,14 @@ import TouchableItem from '../../components/TouchableItem';
 // import colors
 import Colors from '../../theme/colors';
 
+
+//import AsyncStorage
+import AsyncStorage from '@react-native-community/async-storage';
+
+
+//import firebase 
+import firebase from '../../config/firebase';
+
 // HomeA Config
 const imgHolder = require('../../assets/img/imgholder.png');
 
@@ -188,13 +196,67 @@ export default class HomeA extends Component {
           quantity: 0,
         },
       ],
+      verified:false
     };
   }
+
+
 
   navigateTo = screen => () => {
     const {navigation} = this.props;
     navigation.navigate(screen);
   };
+
+
+
+  
+
+
+ async componentDidMount() {
+   let nomeUser = '';
+   let emailUser = '';
+   let senhaUser = '';
+   let telefoneUser = '';
+   let dataNascimentoUser = '';
+
+    await AsyncStorage.getItem('verified').then((value) => {
+      if(value == 'true') {
+        this.setState({verified: true})
+      }
+
+      if(value == 'false') {
+        AsyncStorage.getItem('nome').then((value) =>{nomeUser = value})
+        AsyncStorage.getItem('email').then((value) =>{emailUser = value})
+        AsyncStorage.getItem('senha').then((value) =>{senhaUser = value})
+        AsyncStorage.getItem('telefone').then((value) =>{telefoneUser = value})
+        AsyncStorage.getItem('dataNascimento').then((value) =>{dataNascimentoUser = value})
+
+        this.props.navigation.navigate('EmailVerificacao', {
+            nome: nomeUser,
+            email: emailUser,
+            senha: senhaUser,
+            telefone: telefoneUser,
+            dataNascimento: dataNascimentoUser
+        })
+        alert('Você ainda não confirmou o email!')
+      }
+
+      if(value == 'undefined' || value == 'null') {
+        return null;
+      }
+      console.log('VALOR DO ASYNC STORAGE: ' + value)
+    })
+  }
+
+
+
+
+
+
+
+
+
+
 
   onPressRemove = item => () => {
     let {quantity} = item;

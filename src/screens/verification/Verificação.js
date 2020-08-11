@@ -173,20 +173,6 @@ export default class Verificação extends Component {
     });
   };
 
-  toEmail = () => {
-    this.setState(
-      {
-        modalVisible: true,
-      },
-      () => {
-        // for demo purpose after 3s close modal
-        this.timeout = setTimeout(() => {
-          this.closeModal();
-          this.navigateTo('EmailVerificacao');
-        }, 500);
-      },
-    );
-  };
 
   toSMS = () => {
     this.setState(
@@ -251,7 +237,7 @@ export default class Verificação extends Component {
 
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
             <Button
-              onPress={this.toEmail}
+              onPress={() => this.navigateTo('EmailVerificacao')}
               disabled={false}
               borderRadius={4}
               color={Colors.onPrimaryColor}

@@ -28,6 +28,10 @@ import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 // import colors
 import Colors from '../../theme/colors';
 
+
+//import AsyncStorage
+import AsyncStorage from '@react-native-community/async-storage';
+
 //import firebase 
 import firebase from '../../config/firebase';
 
@@ -183,14 +187,28 @@ export default class EmailVerificacao extends Component {
     navigation.navigate(screen);
   };
 
-  verifyIfUserHasVerified(){
+ async verifyIfUserHasVerified(){
+
+  let getNome = this.props.route.params.nome;
+  let getEmail = this.props.route.params.email;
+  let getSenha = this.props.route.params.senha;
+  let getTelefone = this.props.route.params.telefone;
+  let getDataNascimento = this.props.route.params.dataNascimento;
+
+
     var user = firebase.auth().currentUser;
     user.reload().then(() => {
-      console.log('estado do verificar: '+ firebase.auth().currentUser.emailVerified)
-
       if(firebase.auth().currentUser.emailVerified == true) {
-        this.navigateTo('HomeNavigator')
+        AsyncStorage.setItem('verified', JSON.stringify(true))
+          this.navigateTo('HomeNavigator')
       } else {
+        AsyncStorage.setItem('verified', JSON.stringify(false))
+        AsyncStorage.setItem('nome', getNome)
+        AsyncStorage.setItem('email', getEmail)
+        AsyncStorage.setItem('senha', getSenha)
+        AsyncStorage.setItem('telefone', getTelefone)
+        AsyncStorage.setItem('dataNascimento', getDataNascimento)
+
         alert('Você ainda não confirmou o seu cadastro pelo email')
       }
     })

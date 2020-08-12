@@ -25,6 +25,12 @@ import GradientContainer from '../../components/gradientcontainer/GradientContai
 import {Heading5, Paragraph} from '../../components/text/CustomText';
 import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 
+
+//import firebase
+import firebase from '../../config/firebase';
+import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaVerifier } from 'expo-firebase-recaptcha';
+
+
 // import colors
 import Colors from '../../theme/colors';
 
@@ -66,8 +72,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 5,
-    width: 48,
-    height: 50,
+    width: 43,
+    height: 45,
     borderRadius: 4,
     backgroundColor: Color(Colors.onPrimaryColor).alpha(0.84),
   },
@@ -88,6 +94,9 @@ export default class SMSVerificacao extends Component {
     this.state = {
       modalVisible: false,
       pin: '',
+      confirm:null,
+      code:'',
+      verificationId:''
     };
   }
 
@@ -95,6 +104,31 @@ export default class SMSVerificacao extends Component {
   componentWillUnmount = () => {
     clearTimeout(this.timeout);
   };
+
+
+
+  async componentDidMount() {
+    let getNome = this.props.route.params.nome;
+    let getEmail = this.props.route.params.email;
+    let getSenha = this.props.route.params.senha;
+    let getTelefone = this.props.route.params.telefone;
+    let getDataNascimento = this.props.route.params.dataNascimento;
+
+  }
+
+
+
+
+  async confirmCode() {
+    try {
+      await confirm.confirm(code);
+    } catch (error) {
+      console.log('Invalid code.');
+    }
+  }
+
+
+
 
   navigateTo = (screen) => {
     const {navigation} = this.props;
@@ -114,10 +148,10 @@ export default class SMSVerificacao extends Component {
 
     if (keyboardButton === 'skip') {
       Alert.alert(
-        'Skip verification',
-        'You surely want to skip this one?',
+        'Pular verificação',
+        'Tem certeza que quer pular? Não será possível logar depois',
         [
-          {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+          {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
           {
             text: 'OK',
             onPress: () => {
@@ -130,7 +164,7 @@ export default class SMSVerificacao extends Component {
       return;
     }
 
-    if ((pin + keyboardButton).length > 4) {
+    if ((pin + keyboardButton).length > 6) {
       return;
     }
 
@@ -165,6 +199,8 @@ export default class SMSVerificacao extends Component {
 
   render() {
     const {modalVisible, pin} = this.state;
+    const firebaseConfig = firebase.apps.length ? firebase.app().options : undefined;
+    const applicationVerifier = new FirebaseRecaptchaVerifier();
 
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
@@ -181,6 +217,7 @@ export default class SMSVerificacao extends Component {
                 Ao receber, digite abaixo
             </Paragraph>
 
+
             <View style={styles.codeContainer}>
               <View style={styles.digitContainer}>
                 <Text style={styles.digit}>{pin[0]}</Text>
@@ -194,25 +231,35 @@ export default class SMSVerificacao extends Component {
               <View style={styles.digitContainer}>
                 <Text style={styles.digit}>{pin[3]}</Text>
               </View>
+              <View style={styles.digitContainer}>
+                <Text style={styles.digit}>{pin[4]}</Text>
+              </View>
+              <View style={styles.digitContainer}>
+                <Text style={styles.digit}>{pin[5]}</Text>
+              </View>
             </View>
 
           
           </View>
 
-
         
 
-          <View style={{marginBottom: 44, marginLeft: 10}}>
+          <View style={{marginBottom: 44}}>
             <Button
-              onPress={this.submit}
+              onPress={() => this.confirmCode()}
               disabled={false}
               borderRadius={4}
               color={Colors.onPrimaryColor}
               small
-              title={'Entrar'.toUpperCase()}
+              title={'Confirmar'.toUpperCase()}
               titleColor={Colors.primaryColor}
             />
+
           </View>
+          <NumericKeyboard
+            actionButtonTitle="skip"
+            onPress={this.pressKeyboardButton}
+          />
 
         </GradientContainer>
       </SafeAreaView>

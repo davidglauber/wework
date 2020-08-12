@@ -198,7 +198,8 @@ export default class EmailVerificacao extends Component {
             email: getEmail,
             nome: this.props.route.params.nome,
             premium: false,
-            dataNascimento: this.props.route.params.dataNascimento
+            dataNascimento: this.props.route.params.dataNascimento,
+            telefone: getTelefone
           })
   
         AsyncStorage.setItem('verified', JSON.stringify(true))

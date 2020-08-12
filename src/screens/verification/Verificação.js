@@ -135,44 +135,6 @@ export default class Verificação extends Component {
     });
   };
 
-  pressKeyboardButton = (keyboardButton) => () => {
-    let {pin} = this.state;
-
-    if (keyboardButton === 'backspace') {
-      pin = pin.slice(0, -1);
-      this.setState({
-        pin,
-      });
-      return;
-    }
-
-    if (keyboardButton === 'skip') {
-      Alert.alert(
-        'Skip verification',
-        'You surely want to skip this one?',
-        [
-          {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-          {
-            text: 'OK',
-            onPress: () => {
-              this.navigateTo('HomeNavigator');
-            },
-          },
-        ],
-        {cancelable: false},
-      );
-      return;
-    }
-
-    if ((pin + keyboardButton).length > 4) {
-      return;
-    }
-
-    this.setState({
-      pin: pin + keyboardButton,
-    });
-  };
-
 
   toSMS = () => {
     this.setState(
@@ -248,7 +210,7 @@ export default class Verificação extends Component {
 
           <View style={{marginBottom: 44, marginLeft: 10}}>
             <Button
-              onPress={this.toSMS}
+              onPress={() => this.navigateTo('SMSVerificacao')}
               disabled={false}
               borderRadius={4}
               color={Colors.onPrimaryColor}

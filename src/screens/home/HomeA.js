@@ -246,6 +246,7 @@ export default class HomeA extends Component {
       }
       console.log('VALOR DO ASYNC STORAGE: ' + value)
     })
+
   }
 
 

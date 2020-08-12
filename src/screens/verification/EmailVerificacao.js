@@ -140,14 +140,6 @@ export default class EmailVerificacao extends Component {
 
   async registerUserAndConfirmEmail(email, senha) {
     await firebase.auth().createUserWithEmailAndPassword(email, senha).then((value) => {
-
-      firebase.firestore().collection('usuarios').doc(value.user.uid).set({
-        email: email,
-        nome: this.props.route.params.nome,
-        premium: false,
-        dataNascimento: this.props.route.params.dataNascimento
-      })
-
       firebase.auth().currentUser.sendEmailVerification().then(() => {
       }).catch((error) => {
         alert('ocorreu um erro ao enviar o email')
@@ -202,14 +194,22 @@ export default class EmailVerificacao extends Component {
     var user = firebase.auth().currentUser;
     user.reload().then(() => {
       if(firebase.auth().currentUser.emailVerified == true) {
+         firebase.firestore().collection('usuarios').doc(user.uid).set({
+            email: getEmail,
+            nome: this.props.route.params.nome,
+            premium: false,
+            dataNascimento: this.props.route.params.dataNascimento
+          })
+  
         AsyncStorage.setItem('verified', JSON.stringify(true))
           this.navigateTo('HomeNavigator')
       } else {
+        
         AsyncStorage.setItem('verified', JSON.stringify(false))
         AsyncStorage.setItem('nome', getNome)
         AsyncStorage.setItem('email', getEmail)
         AsyncStorage.setItem('senha', getSenha)
-        AsyncStorage.setItem('telefone', getTelefone)
+        AsyncStorage.setItem('telefone', getTelefone) 
         AsyncStorage.setItem('dataNascimento', getDataNascimento)
 
         alert('Você ainda não confirmou o seu cadastro pelo email')

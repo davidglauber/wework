@@ -249,7 +249,7 @@ export default function SMSVerificacao () {
                       dataNascimento: getDataNascimento,
                       telefone: getTelefone
                     })
-
+                  navigateTo('HomeNavigator')
                   alert('Você foi cadastrado com sucesso 👍')
                 } catch (err) {
                   alert('Erro ao confirmar código', err)

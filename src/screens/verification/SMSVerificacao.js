@@ -6,7 +6,7 @@
  */
 
 // import dependencies
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {
   Alert,
   I18nManager,
@@ -19,7 +19,6 @@ import {
 import Color from 'color';
 
 // import components
-import ActivityIndicatorModal from '../../components/modals/ActivityIndicatorModal';
 import Button from '../../components/buttons/Button';
 import GradientContainer from '../../components/gradientcontainer/GradientContainer';
 import {Heading5, Paragraph} from '../../components/text/CustomText';
@@ -33,6 +32,7 @@ import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaVerifier } from 'expo-
 
 // import colors
 import Colors from '../../theme/colors';
+import { TextInput } from 'react-native-gesture-handler';
 
 // VerificationB Config
 const isRTL = I18nManager.isRTL;
@@ -85,122 +85,59 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginBottom: 44,
   },
+  
 });
 
+
+const getNome = this.props.route.params.nome;
+const getEmail = this.props.route.params.email;
+const getSenha = this.props.route.params.senha;
+const getTelefone = this.props.route.params.telefone;
+const getDataNascimento = this.props.route.params.dataNascimento;
+
 // VerificationEMAIL
-export default class SMSVerificacao extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modalVisible: false,
-      pin: '',
-      confirm:null,
-      code:'',
-      verificationId:''
-    };
-  }
-
-  // avoid memory leak
-  componentWillUnmount = () => {
-    clearTimeout(this.timeout);
-  };
+export default function SMSVerificacao () {
+  const recaptchaVerifier = React.useRef(null);
+  const [phoneNumber, setPhoneNumber] = React.useState('+5582991573294');
+  const [pin, setPin] = React.useState('');
+  const [pin2, setPin2] = React.useState('');
+  const [pin3, setPin3] = React.useState('');
+  const [pin4, setPin4] = React.useState('');
+  const [pin5, setPin5] = React.useState('');
+  const [pin6, setPin6] = React.useState('');
+  const [verificationId, setVerificationId] = React.useState();
+  const [verificationCode, setVerificationCode] = React.useState();
+  const firebaseConfig = firebase.apps.length ? firebase.app().options : undefined;
+ 
 
 
 
-  async componentDidMount() {
-    let getNome = this.props.route.params.nome;
-    let getEmail = this.props.route.params.email;
-    let getSenha = this.props.route.params.senha;
-    let getTelefone = this.props.route.params.telefone;
-    let getDataNascimento = this.props.route.params.dataNascimento;
-
-  }
-
-
-
-
-  async confirmCode() {
-    try {
-      await confirm.confirm(code);
-    } catch (error) {
-      console.log('Invalid code.');
+  useEffect(() =>{
+    async function SendSMS() {
+      try {
+        const phoneProvider = new firebase.auth.PhoneAuthProvider();
+        const verificationId = await phoneProvider.verifyPhoneNumber(
+          phoneNumber,
+          recaptchaVerifier.current
+        );
+        setVerificationId(verificationId);
+        alert('O código de verificação foi enviado para o seu celular')
+      } catch (err) {
+        alert('Ocorreu um erro ao enviar o SMS: ' + err)
+      }
     }
-  }
+    SendSMS();
+  }, [])
 
 
 
 
-  navigateTo = (screen) => {
+  function navigateTo (screen) {
     const {navigation} = this.props;
     navigation.navigate(screen);
   };
 
-  pressKeyboardButton = (keyboardButton) => () => {
-    let {pin} = this.state;
 
-    if (keyboardButton === 'backspace') {
-      pin = pin.slice(0, -1);
-      this.setState({
-        pin,
-      });
-      return;
-    }
-
-    if (keyboardButton === 'skip') {
-      Alert.alert(
-        'Pular verificação',
-        'Tem certeza que quer pular? Não será possível logar depois',
-        [
-          {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
-          {
-            text: 'OK',
-            onPress: () => {
-              this.navigateTo('HomeNavigator');
-            },
-          },
-        ],
-        {cancelable: false},
-      );
-      return;
-    }
-
-    if ((pin + keyboardButton).length > 6) {
-      return;
-    }
-
-    this.setState({
-      pin: pin + keyboardButton,
-    });
-  };
-
-  submit = () => {
-    this.setState(
-      {
-        modalVisible: true,
-      },
-      () => {
-        // for demo purpose after 3s close modal
-        this.timeout = setTimeout(() => {
-          this.closeModal();
-          this.navigateTo('HomeNavigator');
-        }, 3000);
-      },
-    );
-  };
-
-  closeModal = () => {
-    // for demo purpose clear timeout if user request close modal before 3s timeout
-    clearTimeout(this.timeout);
-    this.setState({
-      modalVisible: false,
-      pin: '',
-    });
-  };
-
-  render() {
-    const {modalVisible, pin} = this.state;
-    const firebaseConfig = firebase.apps.length ? firebase.app().options : undefined;
-    const applicationVerifier = new FirebaseRecaptchaVerifier();
 
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
@@ -209,6 +146,10 @@ export default class SMSVerificacao extends Component {
           barStyle="light-content"
         />
 
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebaseConfig}
+      />
         <GradientContainer containerStyle={styles.container}>
           <View style={styles.instructionContainer}>
             <Heading5 style={styles.heading}>Aguarde...</Heading5>
@@ -220,22 +161,59 @@ export default class SMSVerificacao extends Component {
 
             <View style={styles.codeContainer}>
               <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[0]}</Text>
+                <TextInput
+                  style={styles.digit}
+                  maxLength={1}
+                  autoFocus={true}
+                  keyboardType={'number-pad'}
+                  value={pin}
+                  onChangeText={(value) => setPin(value)}
+                />
               </View>
               <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[1]}</Text>
+                <TextInput
+                  style={styles.digit}
+                  maxLength={1}
+                  keyboardType={'number-pad'}
+                  value={pin2}
+                  onChangeText={(value) => setPin2(value)}
+                />
               </View>
               <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[2]}</Text>
+                <TextInput
+                  style={styles.digit}
+                  maxLength={1}
+                  keyboardType={'number-pad'}
+                  value={pin3}
+                  onChangeText={(value) => setPin3(value)}
+                />
               </View>
               <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[3]}</Text>
+                <TextInput
+                  style={styles.digit}
+                  maxLength={1}
+                  keyboardType={'number-pad'}
+                  value={pin4}
+                  onChangeText={(value) => setPin4(value)}
+                />
               </View>
               <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[4]}</Text>
+                <TextInput
+                  style={styles.digit}
+                  maxLength={1}
+                  value={pin5}
+                  keyboardType={'number-pad'}
+                  onChangeText={(value) => setPin5(value)}
+                />
               </View>
               <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[5]}</Text>
+                <TextInput
+                  style={styles.digit}
+                  maxLength={1}
+                  keyboardType={'number-pad'}
+                  value={pin6}
+                  onChangeText={(value) => setPin6(value)}
+                />
               </View>
             </View>
 
@@ -246,7 +224,18 @@ export default class SMSVerificacao extends Component {
 
           <View style={{marginBottom: 44}}>
             <Button
-              onPress={() => this.confirmCode()}
+              onPress={async () => {
+                try {
+                  const credential = firebase.auth.PhoneAuthProvider.credential(
+                    verificationId,
+                    verificationCode
+                  );
+                  await firebase.auth().signInWithCredential(credential);
+                  alert('Você foi cadastrado com sucesso 👍')
+                } catch (err) {
+                  alert('Erro ao confirmar código', err)
+                }
+              }}
               disabled={false}
               borderRadius={4}
               color={Colors.onPrimaryColor}
@@ -256,13 +245,7 @@ export default class SMSVerificacao extends Component {
             />
 
           </View>
-          <NumericKeyboard
-            actionButtonTitle="skip"
-            onPress={this.pressKeyboardButton}
-          />
-
         </GradientContainer>
       </SafeAreaView>
     );
   }
-}

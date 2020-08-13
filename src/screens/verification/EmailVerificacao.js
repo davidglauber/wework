@@ -229,8 +229,6 @@ export default class EmailVerificacao extends Component {
   };
 
   render() {
-    const {modalVisible, pin} = this.state;
-
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
         <StatusBar

@@ -23,7 +23,7 @@ import Button from '../../components/buttons/Button';
 import GradientContainer from '../../components/gradientcontainer/GradientContainer';
 import {Heading5, Paragraph} from '../../components/text/CustomText';
 import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
-
+import { useRoute } from "@react-navigation/native";
 
 //import firebase
 import firebase from '../../config/firebase';
@@ -33,6 +33,7 @@ import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaVerifier } from 'expo-
 // import colors
 import Colors from '../../theme/colors';
 import { TextInput } from 'react-native-gesture-handler';
+import { firestore } from 'firebase';
 
 // VerificationB Config
 const isRTL = I18nManager.isRTL;
@@ -89,14 +90,10 @@ const styles = StyleSheet.create({
 });
 
 
-const getNome = this.props.route.params.nome;
-const getEmail = this.props.route.params.email;
-const getSenha = this.props.route.params.senha;
-const getTelefone = this.props.route.params.telefone;
-const getDataNascimento = this.props.route.params.dataNascimento;
 
 // VerificationEMAIL
 export default function SMSVerificacao () {
+  const route = useRoute();
   const recaptchaVerifier = React.useRef(null);
   const [phoneNumber, setPhoneNumber] = React.useState('+5582991573294');
   const [pin, setPin] = React.useState('');
@@ -108,7 +105,11 @@ export default function SMSVerificacao () {
   const [verificationId, setVerificationId] = React.useState();
   const [verificationCode, setVerificationCode] = React.useState();
   const firebaseConfig = firebase.apps.length ? firebase.app().options : undefined;
- 
+  const getNome = route.params.nome;
+  const getEmail = route.params.email;
+  const getSenha = route.params.senha;
+  const getTelefone = route.params.telefone;
+  const getDataNascimento = route.params.dataNascimento;
 
 
 
@@ -231,6 +232,15 @@ export default function SMSVerificacao () {
                     verificationCode
                   );
                   await firebase.auth().signInWithCredential(credential);
+                    var user = firebase.auth().currentUser;
+                    firebase.firestore().collection('usuarios').doc(user.uid).set({
+                      email: getEmail,
+                      nome: getNome,
+                      premium: false,
+                      dataNascimento: getDataNascimento,
+                      telefone: getTelefone
+                    })
+
                   alert('Você foi cadastrado com sucesso 👍')
                 } catch (err) {
                   alert('Erro ao confirmar código', err)

@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 export default function SMSVerificacao () {
   const route = useRoute();
   const recaptchaVerifier = React.useRef(null);
-  const [phoneNumber, setPhoneNumber] = React.useState('+5582991573294');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [pin, setPin] = React.useState('');
   const [pin2, setPin2] = React.useState('');
   const [pin3, setPin3] = React.useState('');
@@ -114,6 +114,15 @@ export default function SMSVerificacao () {
 
 
   useEffect(() =>{
+
+    let changePhone = '+55' + route.params.telefone;
+    let changePhone2 = changePhone.replace(' ', '');
+    let changePhone3 = changePhone2.replace('-', '');
+    let changePhone4 = changePhone3.replace('(', '');
+    let changePhone5 = changePhone4.replace(')', '');
+
+    setPhoneNumber(changePhone5)
+
     async function SendSMS() {
       try {
         const phoneProvider = new firebase.auth.PhoneAuthProvider();

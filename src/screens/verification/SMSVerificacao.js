@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 5,
-    width: 43,
+    width: 103,
     height: 45,
     borderRadius: 4,
     backgroundColor: Color(Colors.onPrimaryColor).alpha(0.84),
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
 // VerificationEMAIL
 export default function SMSVerificacao () {
   const route = useRoute();
+  let changePhone = '+55' + route.params.telefone;
+  let changePhone2 = changePhone.replace(' ', '');
+  let changePhone3 = changePhone2.replace('-', '');
+  let changePhone4 = changePhone3.replace('(', '');
+  let changePhone5 = changePhone4.replace(')', '');
+
   const recaptchaVerifier = React.useRef(null);
-  const [phoneNumber, setPhoneNumber] = React.useState('');
-  const [pin, setPin] = React.useState('');
-  const [pin2, setPin2] = React.useState('');
-  const [pin3, setPin3] = React.useState('');
-  const [pin4, setPin4] = React.useState('');
-  const [pin5, setPin5] = React.useState('');
-  const [pin6, setPin6] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState(`${changePhone5}`);
   const [verificationId, setVerificationId] = React.useState();
   const [verificationCode, setVerificationCode] = React.useState();
   const firebaseConfig = firebase.apps.length ? firebase.app().options : undefined;
@@ -114,15 +114,6 @@ export default function SMSVerificacao () {
 
 
   useEffect(() =>{
-
-    let changePhone = '+55' + route.params.telefone;
-    let changePhone2 = changePhone.replace(' ', '');
-    let changePhone3 = changePhone2.replace('-', '');
-    let changePhone4 = changePhone3.replace('(', '');
-    let changePhone5 = changePhone4.replace(')', '');
-
-    setPhoneNumber(changePhone5)
-
     async function SendSMS() {
       try {
         const phoneProvider = new firebase.auth.PhoneAuthProvider();
@@ -173,56 +164,10 @@ export default function SMSVerificacao () {
               <View style={styles.digitContainer}>
                 <TextInput
                   style={styles.digit}
-                  maxLength={1}
+                  maxLength={6}
                   autoFocus={true}
                   keyboardType={'number-pad'}
-                  value={pin}
-                  onChangeText={(value) => setPin(value)}
-                />
-              </View>
-              <View style={styles.digitContainer}>
-                <TextInput
-                  style={styles.digit}
-                  maxLength={1}
-                  keyboardType={'number-pad'}
-                  value={pin2}
-                  onChangeText={(value) => setPin2(value)}
-                />
-              </View>
-              <View style={styles.digitContainer}>
-                <TextInput
-                  style={styles.digit}
-                  maxLength={1}
-                  keyboardType={'number-pad'}
-                  value={pin3}
-                  onChangeText={(value) => setPin3(value)}
-                />
-              </View>
-              <View style={styles.digitContainer}>
-                <TextInput
-                  style={styles.digit}
-                  maxLength={1}
-                  keyboardType={'number-pad'}
-                  value={pin4}
-                  onChangeText={(value) => setPin4(value)}
-                />
-              </View>
-              <View style={styles.digitContainer}>
-                <TextInput
-                  style={styles.digit}
-                  maxLength={1}
-                  value={pin5}
-                  keyboardType={'number-pad'}
-                  onChangeText={(value) => setPin5(value)}
-                />
-              </View>
-              <View style={styles.digitContainer}>
-                <TextInput
-                  style={styles.digit}
-                  maxLength={1}
-                  keyboardType={'number-pad'}
-                  value={pin6}
-                  onChangeText={(value) => setPin6(value)}
+                  onChangeText={setVerificationCode}
                 />
               </View>
             </View>
@@ -240,7 +185,7 @@ export default function SMSVerificacao () {
                     verificationId,
                     verificationCode
                   );
-                  await firebase.auth().signInWithCredential(credential);
+                  firebase.auth().signInWithCredential(credential);
                     var user = firebase.auth().currentUser;
                     firebase.firestore().collection('usuarios').doc(user.uid).set({
                       email: getEmail,

@@ -192,7 +192,7 @@ export default class Configuracoes extends Component {
         firebase.firestore().collection('usuarios').doc(user.uid).onSnapshot(documentSnapshot => {
           console.log('User data: ', documentSnapshot.data());
           this.setState({status: true})
-          this.setState({emailUser: user.email})
+          this.setState({emailUser: documentSnapshot.data().email})
           this.setState({nomeUser: documentSnapshot.data().nome})
           this.setState({dataNascimento: documentSnapshot.data().dataNascimento})
         })

@@ -116,6 +116,7 @@ export default class TelaLogin extends Component {
     };
   }
 
+  
   emailChange = text => {
     this.setState({
       email: text,
@@ -245,9 +246,18 @@ export default class TelaLogin extends Component {
                   <ContainedButton
                     onPress={() => this.signIn(this.state.email, this.state.password)}
                     color={Colors.accentColor}
-                    title={'Logar'.toUpperCase()}
+                    title={'Logar com Email e Senha'.toUpperCase()}
                   />
                 </View>
+
+                <View style={styles.buttonContainer}>
+                  <ContainedButton
+                    onPress={this.navigateTo('TelaLoginSMS')}
+                    color={Colors.accentColor}
+                    title={'Logar com Telefone'.toUpperCase()}
+                  />
+                </View>
+                
 
                 <View style={styles.forgotPassword}>
                   <Text

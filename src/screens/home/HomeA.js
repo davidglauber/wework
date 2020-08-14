@@ -147,14 +147,17 @@ async componentDidMount() {
     await firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           e.setState({status: true})
-          let removeCharacters = user.email.replace('@', '')
-          let removeCharacters2 = removeCharacters.replace('gmail.com', '')
-          let removeCharacters3 = removeCharacters2.replace('hotmail.com', '')
-          let removeCharacters4 = removeCharacters3.replace('outlook.com', '')
-          let removeCharacters5 = removeCharacters4.replace('live.com', '')
-          let removeCharacters6 = removeCharacters5.replace('yahoo.com', '')
+          firebase.firestore().collection('usuarios').doc(user.uid).onSnapshot(documentSnapshot => {
+            var removeCharacters = documentSnapshot.data().email.replace('@', '')
+              let removeCharacters2 = removeCharacters.replace('gmail.com', '')
+              let removeCharacters3 = removeCharacters2.replace('hotmail.com', '')
+              let removeCharacters4 = removeCharacters3.replace('outlook.com', '')
+              let removeCharacters5 = removeCharacters4.replace('live.com', '')
+              let removeCharacters6 = removeCharacters5.replace('yahoo.com', '')
 
-          e.setState({emailUserFunction: removeCharacters6})
+              e.setState({emailUserFunction: removeCharacters6})
+
+        })
         } else {
           e.setState({status: false})
         }

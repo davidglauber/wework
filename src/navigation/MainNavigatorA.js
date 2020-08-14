@@ -30,6 +30,7 @@ import Settings from '../screens/settings/Configuracoes';
 import Verification from '../screens/verification/Verificação';
 import EmailVerificacao from '../screens/verification/EmailVerificacao';
 import SMSVerificacao from '../screens/verification/SMSVerificacao';
+import TelaLoginSMS from '../screens/signin/TelaLoginSMS';
 
 // import SignIn screen
 import TelaLogin from '../screens/signin/TelaLogin';
@@ -176,6 +177,14 @@ function MainNavigatorA() {
           component={SMSVerificacao}
           options={{headerShown: false}}
         />
+
+        <Stack.Screen
+          name="TelaLoginSMS"
+          component={TelaLoginSMS}
+          options={{headerShown: false}}
+        />
+
+
         <Stack.Screen
           name="SignIn"
           component={TelaLogin}

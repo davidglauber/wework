@@ -23,18 +23,23 @@ import Button from '../../components/buttons/Button';
 import GradientContainer from '../../components/gradientcontainer/GradientContainer';
 import {Heading5, Paragraph} from '../../components/text/CustomText';
 import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 //import firebase
 import firebase from '../../config/firebase';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaVerifier } from 'expo-firebase-recaptcha';
 
+//input mask
+import { TextInputMask } from 'react-native-masked-text';
+
 
 // import colors
 import Colors from '../../theme/colors';
-import { TextInput } from 'react-native-gesture-handler';
-import { firestore } from 'firebase';
 import AsyncStorage from '@react-native-community/async-storage';
+
+
+const PLACEHOLDER_TEXT_COLOR = 'rgba(255, 255, 255, 0.7)';
+const INPUT_BORDER_COLOR = 'rgba(255, 255, 255, 0.4)';
 
 // VerificationB Config
 const isRTL = I18nManager.isRTL;
@@ -74,7 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 5,
-    width: 103,
+    width: 133,
     height: 45,
     borderRadius: 4,
     backgroundColor: Color(Colors.onPrimaryColor).alpha(0.84),
@@ -93,47 +98,35 @@ const styles = StyleSheet.create({
 
 
 // VerificationEMAIL
-export default function SMSVerificacao () {
-  const route = useRoute();
-  const navigation = useNavigation();
-  let changePhone = '+55' + route.params.telefone;
+export default function TelaLoginSMS () {
+  let getPhoneFromAsync = AsyncStorage.getItem('phoneStorage', (err, item) => console.log(item))
+  let changePhone = '+55' + getPhoneFromAsync;
   let changePhone2 = changePhone.replace(' ', '');
   let changePhone3 = changePhone2.replace('-', '');
   let changePhone4 = changePhone3.replace('(', '');
   let changePhone5 = changePhone4.replace(')', '');
 
   const recaptchaVerifier = React.useRef(null);
+  const navigation = useNavigation();
   const [phoneNumber, setPhoneNumber] = React.useState(`${changePhone5}`);
+  const [phoneInput, setPhoneInput] = React.useState('');
+
+  let changePhoneInput = '+55' + phoneInput;
+  let changePhoneInput2 = changePhoneInput.replace(' ', '');
+  let changePhoneInput3 = changePhoneInput2.replace('-', '');
+  let changePhoneInput4 = changePhoneInput3.replace('(', '');
+  let changePhoneInput5 = changePhoneInput4.replace(')', '');
+
   const [verificationId, setVerificationId] = React.useState();
   const [verificationCode, setVerificationCode] = React.useState();
   const firebaseConfig = firebase.apps.length ? firebase.app().options : undefined;
-  const getNome = route.params.nome;
-  const getEmail = route.params.email;
-  const getSenha = route.params.senha;
-  const getTelefone = route.params.telefone;
-  const getDataNascimento = route.params.dataNascimento;
 
 
 
-  useEffect(() =>{
-    async function SendSMS() {
-      try {
-        const phoneProvider = new firebase.auth.PhoneAuthProvider();
-        const verificationId = await phoneProvider.verifyPhoneNumber(
-          phoneNumber,
-          recaptchaVerifier.current
-        );
-        setVerificationId(verificationId);
-        alert('O código de verificação foi enviado para o seu celular')
-      } catch (err) {
-        alert('Ocorreu um erro ao enviar o SMS: ' + err)
-      }
-    }
-    SendSMS();
-  }, [])
-
-
-
+  useEffect(() => {
+    console.log('telefone do asyncstorage: ' + phoneNumber)
+    console.log('telefone do estado: ' + phoneInput)
+  },[phoneInput])
 
 
     return (
@@ -149,21 +142,24 @@ export default function SMSVerificacao () {
       />
         <GradientContainer containerStyle={styles.container}>
           <View style={styles.instructionContainer}>
-            <Heading5 style={styles.heading}>Aguarde...</Heading5>
+            <Heading5 style={styles.heading}>Digite o seu Número para Logar</Heading5>
             <Paragraph style={styles.instruction}>
-                O SMS de confirmação foi enviado com o código de acesso. 
-                Ao receber, digite abaixo
+                Assim que confirmado, você entrará na sua conta
             </Paragraph>
 
 
             <View style={styles.codeContainer}>
               <View style={styles.digitContainer}>
-                <TextInput
-                  style={styles.digit}
-                  maxLength={6}
-                  autoFocus={true}
-                  keyboardType={'number-pad'}
-                  onChangeText={setVerificationCode}
+                <TextInputMask
+                  type={'cel-phone'}
+                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                  borderColor={INPUT_BORDER_COLOR}
+                  style={{padding:4, color:'gray'}}
+                  value={phoneInput}
+                  onChangeText={setPhoneInput}
+                  placeholderTextColor={'gray'}
+                  keyboardType={"phone-pad"}
+                  placeholder="Tel Numero"
                 />
               </View>
             </View>
@@ -177,25 +173,17 @@ export default function SMSVerificacao () {
             <Button
               onPress={async () => {
                 try {
-                  const credential = firebase.auth.PhoneAuthProvider.credential(
-                    verificationId,
-                    verificationCode
-                  );
-                  await firebase.auth().signInWithCredential(credential);
-                    var user = firebase.auth().currentUser;
-                    firebase.firestore().collection('usuarios').doc(user.uid).set({
-                      email: getEmail,
-                      nome: getNome,
-                      premium: false,
-                      dataNascimento: getDataNascimento,
-                      telefone: getTelefone
+                  if(phoneInput == phoneNumber) {
+                      console.log('ENTROU NO VERIFICATION')
+                    await firebase.auth().signInWithCredential(phoneNumber).then(() => {
+                        alert('Logado com sucesso')
+                        navigation.navigate('HomeNavigator')
+                    }).catch((err) => {
+                        console.log(err)
                     })
-                    AsyncStorage.setItem('phoneStorage', `${phoneNumber}`)
-                  navigation.navigate('HomeNavigator')
-                  alert('Você foi cadastrado com sucesso 👍')
+                  }
                 } catch (err) {
-                  navigation.navigate('HomeNavigator')
-                  alert('Erro ao confirmar código', err)
+                  alert('Erro ao logar com celular', err)
                 }
               }}
               disabled={false}

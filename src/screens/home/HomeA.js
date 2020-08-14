@@ -143,15 +143,8 @@ export default class HomeA extends Component {
 
 async componentDidMount() {
    let e = this;
-   let estado = await AsyncStorage.getItem('estadoLogout');
-
-   console.log('STATE DO LOGOUT: ' + estado)
-   firebase.auth().onAuthStateChanged((user) => {
-        if(estado == 'true') {
-          e.setState({status: false})
-        }
-
-        if(user != null) { 
+    await firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
           e.setState({status: true})
           let removeCharacters = user.email.replace('@', '')
           let removeCharacters2 = removeCharacters.replace('gmail.com', '')
@@ -164,7 +157,6 @@ async componentDidMount() {
         } else {
           e.setState({status: false})
         }
-      
 
     })
 

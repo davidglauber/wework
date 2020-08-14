@@ -18,12 +18,9 @@ import {
 } from 'react-native';
 import Color from 'color';
 
-//import AsyncStorage
-import AsyncStorage from '@react-native-community/async-storage';
+import firebase from '../../config/firebase';
 
 import {Paragraph} from '../../components/text/CustomText';
-
-import firebase from '../../config/firebase';
 
 
 // import colors
@@ -80,12 +77,17 @@ export default class TelaLogout extends Component {
     }
   }
 
+  // avoid memory leak
+  componentWillUnmount = () => {
+    clearTimeout(this.timeout);
+  };
+
+
   componentDidMount(){
     let e = this;
 
     e.timeout = setTimeout(async () => {
-        AsyncStorage.setItem('estadoLogout', 'true')
-        await firebase.auth().signOut();
+        await firebase.auth().signOut()
         e.props.navigation.navigate('HomeNavigator')
     }, 2000);
   };

@@ -23,7 +23,7 @@ import Button from '../../components/buttons/Button';
 import GradientContainer from '../../components/gradientcontainer/GradientContainer';
 import {Heading5, Paragraph} from '../../components/text/CustomText';
 import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 //import firebase
 import firebase from '../../config/firebase';
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
 // VerificationEMAIL
 export default function SMSVerificacao () {
   const route = useRoute();
+  const navigation = useNavigation();
   let changePhone = '+55' + route.params.telefone;
   let changePhone2 = changePhone.replace(' ', '');
   let changePhone3 = changePhone2.replace('-', '');
@@ -131,12 +132,6 @@ export default function SMSVerificacao () {
   }, [])
 
 
-
-
-  function navigateTo (screen) {
-    const {navigation} = this.props;
-    navigation.navigate(screen);
-  };
 
 
 
@@ -185,7 +180,7 @@ export default function SMSVerificacao () {
                     verificationId,
                     verificationCode
                   );
-                  firebase.auth().signInWithCredential(credential);
+                  await firebase.auth().signInWithCredential(credential);
                     var user = firebase.auth().currentUser;
                     firebase.firestore().collection('usuarios').doc(user.uid).set({
                       email: getEmail,
@@ -194,9 +189,10 @@ export default function SMSVerificacao () {
                       dataNascimento: getDataNascimento,
                       telefone: getTelefone
                     })
-                  navigateTo('HomeNavigator')
+                  navigation.navigate('HomeNavigator')
                   alert('Você foi cadastrado com sucesso 👍')
                 } catch (err) {
+                  navigation.navigate('HomeNavigator')
                   alert('Erro ao confirmar código', err)
                 }
               }}

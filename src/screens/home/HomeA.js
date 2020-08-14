@@ -142,6 +142,7 @@ export default class HomeA extends Component {
 
 
 async componentDidMount() {
+  console.reportErrorsAsExceptions = false;
    let e = this;
     await firebase.auth().onAuthStateChanged((user) => {
         if (user) {

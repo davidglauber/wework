@@ -22,8 +22,6 @@ import Favorites from '../screens/favorites/FavoritesA';
 // import Cart screen
 import Cart from '../screens/cartaoVisita/CartaoVisita';
 
-// import Settings screen
-import Settings from '../screens/settings/Configuracoes';
 
 // import colors
 import Colors from '../theme/colors';
@@ -57,8 +55,6 @@ function HomeNavigator() {
             iconName = `home${focused ? '' : '-outline'}`;
           } else if (route.name === 'Favorites') {
             iconName = `star${focused ? '' : '-outline'}`;
-          } else if (route.name === 'Settings') {
-            iconName = `settings${focused ? '' : '-outline'}`;
           }
 
           // You can return any component that you like here!
@@ -88,7 +84,6 @@ function HomeNavigator() {
         }}
       />
       <Tab.Screen name="Favorites" component={Favorites} />
-      <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );
 }

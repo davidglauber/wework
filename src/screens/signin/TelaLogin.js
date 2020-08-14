@@ -27,6 +27,9 @@ import UnderlineTextInput from '../../components/textinputs/UnderlineTextInput';
 import Colors from '../../theme/colors';
 import Layout from '../../theme/layout';
 
+//import firebase 
+import firebase from '../../config/firebase';
+
 // SignInB Config
 const PLACEHOLDER_TEXT_COLOR = 'rgba(255, 255, 255, 0.7)';
 const INPUT_TEXT_COLOR = '#fff';
@@ -100,8 +103,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// SignInB
-export default class SignInB extends Component {
+export default class TelaLogin extends Component {
   constructor(props) {
     super(props);
 
@@ -158,13 +160,21 @@ export default class SignInB extends Component {
     navigation.navigate(screen);
   };
 
-  signIn = () => {
+  async signIn(email, password){
+    console.log('entrou na funcao de login')
     this.setState(
       {
         emailFocused: false,
         passwordFocused: false,
       },
-      this.navigateTo('HomeNavigator'),
+
+      await firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+        this.props.navigation.navigate('HomeNavigator')
+        console.log('Logado com sucesso!')
+      }).catch((error) => {
+        alert('Algum dos campos estão incorretos')
+      })
+
     );
   };
 
@@ -202,7 +212,7 @@ export default class SignInB extends Component {
                   returnKeyType="next"
                   blurOnSubmit={false}
                   keyboardType="email-address"
-                  placeholder="E-mail or phone number"
+                  placeholder="E-mail"
                   placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
                   inputTextColor={INPUT_TEXT_COLOR}
                   borderColor={INPUT_BORDER_COLOR}
@@ -219,7 +229,7 @@ export default class SignInB extends Component {
                   inputFocused={passwordFocused}
                   onSubmitEditing={this.signIn}
                   returnKeyType="go"
-                  placeholder="Password"
+                  placeholder="Senha"
                   placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
                   inputTextColor={INPUT_TEXT_COLOR}
                   secureTextEntry={secureTextEntry}
@@ -233,9 +243,9 @@ export default class SignInB extends Component {
 
                 <View style={styles.buttonContainer}>
                   <ContainedButton
-                    onPress={this.signIn}
+                    onPress={() => this.signIn(this.state.email, this.state.password)}
                     color={Colors.accentColor}
-                    title={'Sign in'.toUpperCase()}
+                    title={'Logar'.toUpperCase()}
                   />
                 </View>
 
@@ -243,50 +253,27 @@ export default class SignInB extends Component {
                   <Text
                     onPress={this.navigateTo('ForgotPassword')}
                     style={styles.forgotPasswordText}>
-                    Forgot password?
+                      Esqueci minha senha
                   </Text>
                 </View>
 
-                <View style={styles.separator}>
-                  <View style={styles.line} />
-                  <Text style={styles.orText}>or</Text>
-                  <View style={styles.line} />
-                </View>
-
-                <View style={styles.buttonsGroup}>
-                  <ContainedButton
-                    onPress={this.signIn}
-                    color={Colors.surface}
-                    socialIconName="facebook-square"
-                    iconColor="#3b5998"
-                    title="Sign in with Facebook"
-                    titleColor="#3b5998"
-                  />
-                  <View style={styles.vSpacer} />
-                  <ContainedButton
-                    onPress={this.signIn}
-                    color={Colors.surface}
-                    socialIconName="google"
-                    iconColor="#db4437"
-                    title="Sign in with Google"
-                    titleColor="#db4437"
-                  />
-                </View>
+                  
+               
               </View>
 
               <TouchableWithoutFeedback
                 onPress={this.navigateTo('TermsConditions')}>
                 <View style={styles.footer}>
                   <Text style={styles.footerText}>
-                    By signing in, you accepts our
+                    Se registrando, você aceita nossos
                   </Text>
                   <View style={styles.termsContainer}>
                     <Text style={[styles.footerText, styles.footerLink]}>
-                      Terms & Conditions
+                      Termos & Condições
                     </Text>
                     <Text style={styles.footerText}> and </Text>
                     <Text style={[styles.footerText, styles.footerLink]}>
-                      Privacy Policy
+                      Política de Privacidade
                     </Text>
                     <Text style={styles.footerText}>.</Text>
                   </View>

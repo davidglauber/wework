@@ -199,7 +199,7 @@ export default class Configuracoes extends Component {
       } 
       
       if(user.uid == null || user.uid == undefined || user.uid == ''){
-        this.setState({status: false})
+        return null
       }
     })
 
@@ -229,8 +229,9 @@ export default class Configuracoes extends Component {
     });
   };
 
-  async sair() {
-    await firebase.auth().signOut().then(() => this.navigateTo('HomeNavigator')).catch(() => alert('Ocorreu um erro ao sair da conta'))
+  sair() {
+    const e = this;
+        e.props.navigation.navigate('TelaLogout')
   }
 
   logout = () => {

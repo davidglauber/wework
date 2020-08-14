@@ -23,16 +23,22 @@ import Welcome from '../screens/welcome/WelcomeA';
 // import SignUp screen
 import SignUp from '../screens/signup/Cadastro';
 
+// import Settings screen
+import Settings from '../screens/settings/Configuracoes';
+
 // import Verification screen
 import Verification from '../screens/verification/Verificação';
 import EmailVerificacao from '../screens/verification/EmailVerificacao';
 import SMSVerificacao from '../screens/verification/SMSVerificacao';
 
 // import SignIn screen
-import SignIn from '../screens/signin/SignInA';
+import TelaLogin from '../screens/signin/TelaLogin';
 
 // import ForgotPassword screen
 import ForgotPassword from '../screens/forgotpassword/ForgotPasswordA';
+
+//import Logout screen
+import TelaLogout from '../screens/signin/TelaLogout';
 
 // import TermsConditions screen
 import TermsConditions from '../screens/terms/TermsConditionsA';
@@ -172,14 +178,26 @@ function MainNavigatorA() {
         />
         <Stack.Screen
           name="SignIn"
-          component={SignIn}
-          options={{
-            title: 'Sign In',
+          component={TelaLogin}
+          options={({navigation}) => ({ 
+            headerTitleStyle: {
+              color:'white'
+            },
+            title: 'Entrar na Conta',
             headerStyle: {
               elevation: 0,
               shadowOpacity: 0,
+              backgroundColor: '#00b970'
             },
-          }}
+
+            headerLeft: () => (
+              <HeaderIconButton
+                onPress={() => navigation.goBack()}
+                name={'ios-arrow-back'}
+                color={'white'}
+              />
+            ),
+            })}
         />
         <Stack.Screen
           name="ForgotPassword"
@@ -202,6 +220,16 @@ function MainNavigatorA() {
         <Stack.Screen
           name="HomeNavigator"
           component={HomeNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TelaLogout"
+          component={TelaLogout}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
           options={{headerShown: false}}
         />
         <Stack.Screen

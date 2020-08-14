@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 });
 
 // SignInA
-export default class SignInA extends Component {
+export default class TelaLogin extends Component {
   constructor(props) {
     super(props);
 

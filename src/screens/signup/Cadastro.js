@@ -102,6 +102,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: Colors.white,
   },
+  footerText2: {
+    fontWeight: '300',
+    marginTop:10,
+    fontSize: 13,
+    color: Colors.white,
+  },
   footerLink: {
     fontWeight: '400',
     textDecorationLine: 'underline',
@@ -267,6 +273,16 @@ export default class Cadastro extends Component {
     }
   };
 
+
+  navigateToSignIn = screen => () => {
+    const {navigation} = this.props;
+        navigation.navigate(screen);
+  };
+
+  navigateToTerms = screen => () => {
+    const {navigation} = this.props;
+        navigation.navigate(screen);
+  };
   
 
   focusOn = nextFiled => () => {
@@ -428,13 +444,18 @@ export default class Cadastro extends Component {
                   >
                     <Text style={{fontWeight:'bold', textAlign:'center', fontSize:16, marginTop:4}}>Criar Conta</Text>
                   </TouchableOpacity>
+
+                  <TouchableOpacity onPress={this.navigateToSignIn('SignIn')}>
+                      <Text style={[styles.footerText2, styles.footerLink]}>Já tem uma conta? Faça login!</Text>
+                  </TouchableOpacity>
+
                 </View>
 
 
               </View>
 
               <TouchableWithoutFeedback
-                onPress={this.navigateTo('TermsConditions')}>
+                onPress={this.navigateToTerms('TermsConditions')}>
                 <View style={styles.footer}>
                   <Text style={styles.footerText}>
                     Se registrando, você aceita nossos

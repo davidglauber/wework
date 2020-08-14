@@ -138,18 +138,47 @@ export default class HomeA extends Component {
 
 
 
-  
 
 
- async componentDidMount() {
-   
+
+async componentDidMount() {
+   let e = this;
+   let estado = await AsyncStorage.getItem('estadoLogout');
+
+   console.log('STATE DO LOGOUT: ' + estado)
+   firebase.auth().onAuthStateChanged((user) => {
+        if(estado == 'true') {
+          e.setState({status: false})
+        }
+
+        if(user != null) { 
+          e.setState({status: true})
+          let removeCharacters = user.email.replace('@', '')
+          let removeCharacters2 = removeCharacters.replace('gmail.com', '')
+          let removeCharacters3 = removeCharacters2.replace('hotmail.com', '')
+          let removeCharacters4 = removeCharacters3.replace('outlook.com', '')
+          let removeCharacters5 = removeCharacters4.replace('live.com', '')
+          let removeCharacters6 = removeCharacters5.replace('yahoo.com', '')
+
+          e.setState({emailUserFunction: removeCharacters6})
+        } else {
+          e.setState({status: false})
+        }
+      
+
+    })
+
+
+
+
    let nomeUser = '';
    let emailUser = '';
    let senhaUser = '';
    let telefoneUser = '';
    let dataNascimentoUser = '';
 
-    await AsyncStorage.getItem('verified').then((value) => {
+
+    AsyncStorage.getItem('verified').then((value) => {
       if(value == 'true') {
         AsyncStorage.setItem('verified', JSON.stringify(true))
       }
@@ -178,23 +207,7 @@ export default class HomeA extends Component {
     })
 
 
-    await firebase.auth().onAuthStateChanged(user => {
-      if(user.uid !== null || user.uid !== undefined || user.uid !== '') {
-        let removeCharacters = user.email.replace('@', '')
-        let removeCharacters2 = removeCharacters.replace('gmail.com', '')
-        let removeCharacters3 = removeCharacters2.replace('hotmail.com', '')
-        let removeCharacters4 = removeCharacters3.replace('outlook.com', '')
-        let removeCharacters5 = removeCharacters4.replace('live.com', '')
-        let removeCharacters6 = removeCharacters5.replace('yahoo.com', '')
 
-        this.setState({status: true})
-        this.setState({emailUserFunction: removeCharacters6})
-      } 
-      
-      if(user.uid == null || user.uid == undefined || user.uid == ''){
-        this.setState({status: false})
-      }
-    })
   }
 
 
@@ -250,17 +263,17 @@ export default class HomeA extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-               
+              
                 {status == true ? 
-                    <View style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
+                    <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
                         <Text style={{color: '#70AD66', fontWeight: 'bold'}}>Olá, {emailUserFunction}</Text>
-                    </View>
+                    </TouchableOpacity>
                     :
                     <TouchableOpacity onPress={this.navigateTo('SignUp')} style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
                         <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
                     </TouchableOpacity>
                 }
-
+                    
                 <TouchableOpacity onPress={this.navigateTo('FilterB')} style={{width:20, height:20}}>
                     <FontAwesome5  name="sort-alpha-up" size={19} color={"#70AD66"} />
                 </TouchableOpacity>

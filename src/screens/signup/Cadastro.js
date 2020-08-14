@@ -324,6 +324,7 @@ export default class Cadastro extends Component {
                   inputFocused={this.state.nomeFocused}
                   onSubmitEditing={this.focusOn(this.email)}
                   returnKeyType="next"
+                  maxLength={32}
                   autoCapitalize={"words"}
                   blurOnSubmit={false}
                   keyboardType="default"

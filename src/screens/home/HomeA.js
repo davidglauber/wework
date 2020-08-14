@@ -123,80 +123,9 @@ export default class HomeA extends Component {
     super(props);
 
     this.state = {
-      categories: [
-        {
-          key: 1,
-          imageUri: require('../../assets/img/pizza_3.jpg'),
-          name: 'Pizza',
-        },
-        {
-          key: 2,
-          imageUri: require('../../assets/img/meat_1.jpg'),
-          name: 'Grill',
-        },
-        {
-          key: 3,
-          imageUri: require('../../assets/img/spaghetti_2.jpg'),
-          name: 'Pasta',
-        },
-        {
-          key: 4,
-          imageUri: require('../../assets/img/soup_1.jpg'),
-          name: 'Soups',
-        },
-        {
-          key: 5,
-          imageUri: require('../../assets/img/salad_1.jpg'),
-          name: 'Salads',
-        },
-      ],
-      products: [
-        {
-          imageUri: require('../../assets/img/pizza_4.png'),
-          name: 'Pizza Carbonara 35cm',
-          price: 10.99,
-          label: 'new',
-        },
-        {
-          imageUri: require('../../assets/img/sandwich_1.png'),
-          name: 'Breakfast toast sandwich',
-          price: 4.99,
-        },
-        {
-          imageUri: require('../../assets/img/cake_3.png'),
-          name: 'Cake Cherries Pie',
-          price: 8.49,
-          discountPercentage: 10,
-        },
-        {
-          imageUri: require('../../assets/img/soup_2.png'),
-          name: 'Broccoli Soup',
-          price: 6.49,
-          discountPercentage: 10,
-        },
-      ],
-      popularProducts: [
-        {
-          imageUri: require('../../assets/img/sandwich_2.jpg'),
-          name: 'Subway sandwich',
-          price: 8.49,
-          quantity: 0,
-          discountPercentage: 10,
-        },
-        {
-          imageUri: require('../../assets/img/pizza_1.jpg'),
-          name: 'Pizza Margarita 35cm',
-          price: 10.99,
-          quantity: 0,
-        },
-        {
-          imageUri: require('../../assets/img/cake_1.jpg'),
-          name: 'Chocolate cake',
-          price: 4.99,
-          quantity: 0,
-        },
-      ],
-      verified:false
+      verified:false,
+      status: null,
+      emailUserFunction:''
     };
   }
 
@@ -213,6 +142,7 @@ export default class HomeA extends Component {
 
 
  async componentDidMount() {
+   
    let nomeUser = '';
    let emailUser = '';
    let senhaUser = '';
@@ -247,46 +177,28 @@ export default class HomeA extends Component {
       console.log('VALOR DO ASYNC STORAGE: ' + value)
     })
 
+
+    await firebase.auth().onAuthStateChanged(user => {
+      if(user.uid !== null || user.uid !== undefined || user.uid !== '') {
+        let removeCharacters = user.email.replace('@', '')
+        let removeCharacters2 = removeCharacters.replace('gmail.com', '')
+        let removeCharacters3 = removeCharacters2.replace('hotmail.com', '')
+        let removeCharacters4 = removeCharacters3.replace('outlook.com', '')
+        let removeCharacters5 = removeCharacters4.replace('live.com', '')
+        let removeCharacters6 = removeCharacters5.replace('yahoo.com', '')
+
+        this.setState({status: true})
+        this.setState({emailUserFunction: removeCharacters6})
+      } 
+      
+      if(user.uid == null || user.uid == undefined || user.uid == ''){
+        this.setState({status: false})
+      }
+    })
   }
 
 
 
-
-
-
-
-
-
-
-
-  onPressRemove = item => () => {
-    let {quantity} = item;
-    quantity -= 1;
-
-    const {popularProducts} = this.state;
-    const index = popularProducts.indexOf(item);
-
-    if (quantity < 0) {
-      return;
-    }
-    popularProducts[index].quantity = quantity;
-
-    this.setState({
-      popularProducts: [...popularProducts],
-    });
-  };
-
-  onPressAdd = item => () => {
-    const {quantity} = item;
-    const {popularProducts} = this.state;
-
-    const index = popularProducts.indexOf(item);
-    popularProducts[index].quantity = quantity + 1;
-
-    this.setState({
-      popularProducts: [...popularProducts],
-    });
-  };
 
   keyExtractor = (item, index) => index.toString();
 
@@ -325,7 +237,7 @@ export default class HomeA extends Component {
 
  
   render() {
-    const {categories, products, popularProducts} = this.state;
+    const { status, emailUserFunction } = this.state
 
     return (
       <SafeAreaView style={styles.screenContainer}>
@@ -338,9 +250,16 @@ export default class HomeA extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-                <TouchableOpacity onPress={this.navigateTo('SignUp')} style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
-                    <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
-                </TouchableOpacity>
+               
+                {status == true ? 
+                    <View style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
+                        <Text style={{color: '#70AD66', fontWeight: 'bold'}}>Olá, {emailUserFunction}</Text>
+                    </View>
+                    :
+                    <TouchableOpacity onPress={this.navigateTo('SignUp')} style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
+                        <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
+                    </TouchableOpacity>
+                }
 
                 <TouchableOpacity onPress={this.navigateTo('FilterB')} style={{width:20, height:20}}>
                     <FontAwesome5  name="sort-alpha-up" size={19} color={"#70AD66"} />

@@ -29,6 +29,9 @@ import TouchableItem from '../../components/TouchableItem';
 // import colors
 import Colors from '../../theme/colors';
 
+//import firebase
+import firebase from '../../config/firebase';
+
 // SettingsB Config
 const isRTL = I18nManager.isRTL;
 const IOS = Platform.OS === 'ios';
@@ -173,8 +176,47 @@ export default class Configuracoes extends Component {
 
     this.state = {
       notificationsOn: true,
+      status:null,
+      emailUser:'',
+      nomeUser:'',
+      dataNascimento:''
     };
   }
+
+
+
+
+  async componentDidMount() {
+    await firebase.auth().onAuthStateChanged(user => {
+      if(user.uid !== null || user.uid !== undefined || user.uid !== '') {
+        firebase.firestore().collection('usuarios').doc(user.uid).onSnapshot(documentSnapshot => {
+          console.log('User data: ', documentSnapshot.data());
+          this.setState({status: true})
+          this.setState({emailUser: user.email})
+          this.setState({nomeUser: documentSnapshot.data().nome})
+          this.setState({dataNascimento: documentSnapshot.data().dataNascimento})
+        })
+      } 
+      
+      if(user.uid == null || user.uid == undefined || user.uid == ''){
+        this.setState({status: false})
+      }
+    })
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   navigateTo = (screen) => () => {
     const {navigation} = this.props;
@@ -187,20 +229,23 @@ export default class Configuracoes extends Component {
     });
   };
 
+  async sair() {
+    await firebase.auth().signOut().then(() => this.navigateTo('HomeNavigator')).catch(() => alert('Ocorreu um erro ao sair da conta'))
+  }
+
   logout = () => {
     Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
+      'Sair',
+      'Tem certeza que quer sair?',
       [
-        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-        {text: 'OK', onPress: () => {}},
+        {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
+        {text: 'Sim, quero sair', onPress: () => this.sair()}
       ],
       {cancelable: false},
     );
   };
 
   render() {
-    const {notificationsOn} = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -223,12 +268,12 @@ export default class Configuracoes extends Component {
                   rounded
                 />
                 <View style={styles.profileInfo}>
-                  <Subtitle1 style={styles.name}>Roberto Farias</Subtitle1>
+                  <Subtitle1 style={styles.name}>{this.state.nomeUser}</Subtitle1>
                   <Subtitle2 style={styles.email}>
-                    bebertofarias@gmail.com
+                    {this.state.emailUser}
                   </Subtitle2>
                   <Subtitle2 style={styles.email}>
-                    2/9/2002
+                    {this.state.dataNascimento}
                   </Subtitle2>
                 </View>
               </View>
@@ -319,9 +364,9 @@ export default class Configuracoes extends Component {
           <SectionHeader title="Sair" />
           {/* <Setting icon={ADD_ICON} setting="Add Account" /> */}
           <Setting
-            onPress={this.logout}
+            onPress={() => this.logout()}
             icon={LOGOUT_ICON}
-            setting="Log Out"
+            setting="Sair"
             type="logout"
           />
         </ScrollView>

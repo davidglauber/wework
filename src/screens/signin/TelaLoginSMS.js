@@ -27,7 +27,6 @@ import { useNavigation } from "@react-navigation/native";
 
 //import firebase
 import firebase from '../../config/firebase';
-import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaVerifier } from 'expo-firebase-recaptcha';
 
 //input mask
 import { TextInputMask } from 'react-native-masked-text';
@@ -99,33 +98,23 @@ const styles = StyleSheet.create({
 
 // VerificationEMAIL
 export default function TelaLoginSMS () {
-  let getPhoneFromAsync = AsyncStorage.getItem('phoneStorage', (err, item) => console.log(item))
-  let changePhone = '+55' + getPhoneFromAsync;
+  const [getPhoneFromAsync2, setGetPhoneFromAsync2] = React.useState('') 
+
+  let getPhoneFromAsync = AsyncStorage.getItem('phoneStorage', (err, item) => setGetPhoneFromAsync2(item))
+  const [phoneInput, setPhoneInput] = React.useState('');
+  const navigation = useNavigation();
+
+  let changePhone = '+55' + phoneInput;
   let changePhone2 = changePhone.replace(' ', '');
   let changePhone3 = changePhone2.replace('-', '');
   let changePhone4 = changePhone3.replace('(', '');
   let changePhone5 = changePhone4.replace(')', '');
 
-  const recaptchaVerifier = React.useRef(null);
-  const navigation = useNavigation();
-  const [phoneNumber, setPhoneNumber] = React.useState(`${changePhone5}`);
-  const [phoneInput, setPhoneInput] = React.useState('');
-
-  let changePhoneInput = '+55' + phoneInput;
-  let changePhoneInput2 = changePhoneInput.replace(' ', '');
-  let changePhoneInput3 = changePhoneInput2.replace('-', '');
-  let changePhoneInput4 = changePhoneInput3.replace('(', '');
-  let changePhoneInput5 = changePhoneInput4.replace(')', '');
-
-  const [verificationId, setVerificationId] = React.useState();
-  const [verificationCode, setVerificationCode] = React.useState();
-  const firebaseConfig = firebase.apps.length ? firebase.app().options : undefined;
-
-
-
   useEffect(() => {
-    console.log('telefone do asyncstorage: ' + phoneNumber)
-    console.log('telefone do estado: ' + phoneInput)
+        console.log('telefone do asyncstorage: ' + getPhoneFromAsync2)
+        
+        console.log('telefone do estado: ' + phoneInput)
+    
   },[phoneInput])
 
 
@@ -136,10 +125,6 @@ export default function TelaLoginSMS () {
           barStyle="light-content"
         />
 
-      <FirebaseRecaptchaVerifierModal
-        ref={recaptchaVerifier}
-        firebaseConfig={firebaseConfig}
-      />
         <GradientContainer containerStyle={styles.container}>
           <View style={styles.instructionContainer}>
             <Heading5 style={styles.heading}>Digite o seu Número para Logar</Heading5>
@@ -172,19 +157,19 @@ export default function TelaLoginSMS () {
           <View style={{marginBottom: 44}}>
             <Button
               onPress={async () => {
-                try {
-                  if(phoneInput == phoneNumber) {
+                const credential = firebase.auth.PhoneAuthProvider.credential(
+                    '1m12bjjb32321',
+                    getPhoneFromAsync2
+                  );
+                  if(changePhone5 == getPhoneFromAsync2) {
                       console.log('ENTROU NO VERIFICATION')
-                    await firebase.auth().signInWithCredential(phoneNumber).then(() => {
+                    await firebase.auth().signInWithCredential(credential).then(() => {
                         alert('Logado com sucesso')
                         navigation.navigate('HomeNavigator')
                     }).catch((err) => {
                         console.log(err)
                     })
                   }
-                } catch (err) {
-                  alert('Erro ao logar com celular', err)
-                }
               }}
               disabled={false}
               borderRadius={4}

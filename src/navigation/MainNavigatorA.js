@@ -211,13 +211,24 @@ function MainNavigatorA() {
         <Stack.Screen
           name="ForgotPassword"
           component={ForgotPassword}
-          options={{
+          options={({navigation}) => ({ 
+            headerTitleStyle: {
+              color:'#00b970'
+            },
             headerStyle: {
               elevation: 0,
               shadowOpacity: 0,
             },
-            title: 'Forgot Password?',
-          }}
+            title: 'Esqueci Minha Senha',
+
+            headerLeft: () => (
+              <HeaderIconButton
+                onPress={() => navigation.goBack()}
+                name={'ios-arrow-back'}
+                color={'#00b970'}
+              />
+            )
+          })}
         />
         <Stack.Screen
           name="TermsConditions"

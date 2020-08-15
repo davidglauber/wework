@@ -24,6 +24,8 @@ import Button from '../../components/buttons/Button';
 import {Paragraph} from '../../components/text/CustomText';
 import UnderlineTextInput from '../../components/textinputs/UnderlineTextInput';
 
+import firebase from '../../config/firebase';
+
 // import colors
 import Colors from '../../theme/colors';
 
@@ -128,20 +130,32 @@ export default class ForgotPasswordA extends Component {
     navigation.navigate(screen);
   };
 
-  resetPassword = () => {
+  async resetPassword(email) {
+    let e = this;
     Keyboard.dismiss();
-    this.setState(
-      {
-        modalVisible: true,
-        emailFocused: false,
-      },
-      () => {
-        // for demo purpose after 3s close modal
-        this.timeout = setTimeout(() => {
-          this.closeModal();
-        }, 3000);
-      },
-    );
+    await firebase.auth().sendPasswordResetEmail(email).then(function (user) {
+      e.setState(
+        {
+          modalVisible: true,
+          emailFocused: false,
+        },
+        () => {
+          // for demo purpose after 3s close modal
+          e.timeout = setTimeout(() => {
+            e.closeModal();
+            e.navigateTo('SignIn')
+          }, 3000);
+        },
+      );
+      console.log('senha enviada')
+    }).catch(function (error) {
+      if(error.code === 'auth/invalid-email') {
+        alert('O email fornecido é inválido')
+      }
+      if(error.code === 'auth/user-not-found') {
+        alert('O Usuário não foi encontrado')
+      }
+    })
   };
 
   closeModal = () => {
@@ -168,8 +182,7 @@ export default class ForgotPasswordA extends Component {
               <Icon name="lock-outline" size={36} color={Colors.primaryColor} />
             </View>
             <Paragraph style={styles.instruction}>
-              Enter your e-mail address below to receive your password reset
-              instruction
+              Puxa, que pena que esqueceu a sua senha, não tem problema! Redefina-a agora colocando o seu email
             </Paragraph>
           </View>
 
@@ -181,7 +194,7 @@ export default class ForgotPasswordA extends Component {
               returnKeyType="done"
               blurOnSubmit={false}
               keyboardType="email-address"
-              placeholder="E-mail address"
+              placeholder="Endereço de Email"
               placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
               inputTextColor={INPUT_TEXT_COLOR}
               borderColor={INPUT_BORDER_COLOR}
@@ -192,18 +205,18 @@ export default class ForgotPasswordA extends Component {
 
           <View style={styles.buttonContainer}>
             <Button
-              onPress={this.resetPassword}
+              onPress={() => this.resetPassword(this.state.email)}
               disabled={false}
               borderRadius={BUTTON_BORDER_RADIUS}
               small
-              title={'Reset password'.toUpperCase()}
+              title={'Redefinir Senha'.toUpperCase()}
             />
           </View>
 
           <ActivityIndicatorModal
-            message="Please wait . . ."
+            message="Espere um Momento"
             onRequestClose={this.closeModal}
-            title="Sending instructions"
+            title="Enviando email, verifique-o"
             visible={modalVisible}
           />
         </ScrollView>

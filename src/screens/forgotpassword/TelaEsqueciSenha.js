@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 });
 
 // ForgotPasswordA
-export default class ForgotPasswordA extends Component {
+export default class TelaEsqueciSenha extends Component {
   constructor(props) {
     super(props);
 

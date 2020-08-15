@@ -36,7 +36,7 @@ import TelaLoginSMS from '../screens/signin/TelaLoginSMS';
 import TelaLogin from '../screens/signin/TelaLogin';
 
 // import ForgotPassword screen
-import ForgotPassword from '../screens/forgotpassword/ForgotPasswordA';
+import ForgotPassword from '../screens/forgotpassword/TelaEsqueciSenha';
 
 //import Logout screen
 import TelaLogout from '../screens/signin/TelaLogout';

@@ -22,6 +22,9 @@ import {
 import {Caption, Subtitle1, Subtitle2} from '../../components/text/CustomText';
 import Layout from '../../theme/layout';
 
+//import firebase
+import firebase from '../../config/firebase';
+
 
 // import components
 import OrderItem from '../../components/cards/OrderItemB';
@@ -84,7 +87,8 @@ export default class CriarAnuncio extends Component {
 
     this.state = {
       type: 'Estabelecimento',
-      categoria: '',
+      categorias: [],
+      categoria:'',
       horarioOpen:'',
       horarioClose:'',
       phoneAuto:'',
@@ -104,71 +108,35 @@ export default class CriarAnuncio extends Component {
       sexta:false,
       sabado:false,
       domingo:false,
-      orders: [
-        {
-          orderNumber: '11',
-          orderDate: '22 July, 2019',
-          orderStatus: 'on-the-way',
-          orderItems: [
-            {
-              name: 'Pizza',
-              price: 4.99,
-            },
-            {
-              name: 'Grill',
-              price: 8.99,
-            },
-            {
-              name: 'Pasta',
-              price: 5.99,
-            },
-          ],
-        },
-        {
-          orderNumber: '10',
-          orderDate: '10 July, 2019',
-          orderStatus: 'pending',
-          orderItems: [
-            {
-              name: 'Pizza One',
-              price: 7.99,
-            },
-            {
-              name: 'Pizza Mozzarella',
-              price: 8.99,
-            },
-            {
-              name: 'Pizza Gorgonzola',
-              price: 6.99,
-            },
-            {
-              name: 'Pizza Funghi',
-              price: 9.99,
-            },
-          ],
-        },
-        {
-          orderNumber: '09',
-          orderDate: '05 July, 2019',
-          orderStatus: 'delivered',
-          orderItems: [
-            {
-              name: 'Pizza Mozzarella',
-              price: 8.99,
-            },
-            {
-              name: 'Pizza Gorgonzola',
-              price: 6.99,
-            },
-            {
-              name: 'Pizza Funghi',
-              price: 9.99,
-            },
-          ],
-        },
-      ],
     };
   }
+
+
+
+
+
+  async componentDidMount() {
+    let categoriaDidMount = []
+
+    this.setState({categorias: categoriaDidMount})
+    //getting categories
+    await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        categoriaDidMount.push(doc.data())
+      })
+    })
+
+    console.log('state de categorias: ' + this.state.categorias)
+  }
+
+
+
+
+
+
+
+
+
 
   goBack = () => {
     const {navigation} = this.props;
@@ -234,7 +202,6 @@ export default class CriarAnuncio extends Component {
 
 
   render() {
-    const {orders} = this.state;
 
     return (
       <Fragment>
@@ -593,13 +560,9 @@ export default class CriarAnuncio extends Component {
                               selectedValue={this.state.categoria}
                               onValueChange={(itemValue, itemIndex) => this.setState({categoria: itemValue})}
                               style={{marginLeft:10, width: 180, height:50}}>
-                              <Picker.Item label="Categoria" value=""/>
-                              <Picker.Item label="Mecânico(a)" value="Mecânico(a)"/>
-                              <Picker.Item label="Artesão" value="Artesão"/>
-                              <Picker.Item label="Doméstico" value="Doméstico"/>
-                              <Picker.Item label="Corredor" value="Corredor"/>
-                              <Picker.Item label="Criador de Aves" value="Criador de Aves"/>
-                              <Picker.Item label="Farmaceutico" value="Farmaceutico"/>
+                              {this.state.categorias.map(l => (
+                                      <Picker.Item  label={l.title} key={l.id} value={l.title} />
+                              ))}
                             </Picker>
                           </View>
                           

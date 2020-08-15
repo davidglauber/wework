@@ -261,6 +261,10 @@ export default class Cadastro extends Component {
     if (this.state.password.length < 6) {
         alert('A senha deve ter no mínimo 6 caracteres')
     } 
+
+    if (this.state.nome == '' || this.state.email == '' || this.state.password == '' || this.state.confirmPassword == '' || this.state.phone == '') {
+      alert('Todos os campos devem ser preenchidos!')
+    } 
     
     if(this.state.password == this.state.confirmPassword && this.state.password.length >= 6){  
         navigation.navigate(screen, {

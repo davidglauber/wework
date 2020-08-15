@@ -240,7 +240,7 @@ export default class OnboardingA extends Component {
                 </View>
               </TouchableItem>
             ) : (
-              <TouchableItem onPress={this.navigateTo('Welcome')}>
+              <TouchableItem onPress={this.navigateTo('HomeNavigator')}>
                 <View style={styles.actionButton}>
                   <Text style={styles.buttonText}>{'pular'.toUpperCase()}</Text>
                 </View>
@@ -274,7 +274,7 @@ export default class OnboardingA extends Component {
                 </View>
               </TouchableItem>
             ) : (
-              <TouchableItem onPress={this.navigateTo('Welcome')}>
+              <TouchableItem onPress={this.navigateTo('HomeNavigator')}>
                 <View style={styles.actionButton}>
                   <Text style={styles.buttonText}>{'Entrar'.toUpperCase()}</Text>
                 </View>

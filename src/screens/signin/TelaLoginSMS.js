@@ -13,6 +13,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  TextInput,
   Text,
   View,
 } from 'react-native';
@@ -27,6 +28,7 @@ import { useNavigation } from "@react-navigation/native";
 
 //import firebase
 import firebase from '../../config/firebase';
+import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaVerifier } from 'expo-firebase-recaptcha';
 
 //input mask
 import { TextInputMask } from 'react-native-masked-text';
@@ -98,24 +100,43 @@ const styles = StyleSheet.create({
 
 // VerificationEMAIL
 export default function TelaLoginSMS () {
-  const [getPhoneFromAsync2, setGetPhoneFromAsync2] = React.useState('') 
-
-  let getPhoneFromAsync = AsyncStorage.getItem('phoneStorage', (err, item) => setGetPhoneFromAsync2(item))
-  const [phoneInput, setPhoneInput] = React.useState('');
   const navigation = useNavigation();
+  const [phoneInput, setPhoneInput] = React.useState('');
 
   let changePhone = '+55' + phoneInput;
   let changePhone2 = changePhone.replace(' ', '');
   let changePhone3 = changePhone2.replace('-', '');
   let changePhone4 = changePhone3.replace('(', '');
   let changePhone5 = changePhone4.replace(')', '');
+  
+  const recaptchaVerifier = React.useRef(null);
+  const [phoneNumber, setPhoneNumber] = React.useState(`${changePhone5}`);
+  const [verificationId, setVerificationId] = React.useState();
+  const [verificationCode, setVerificationCode] = React.useState();
+  const firebaseConfig = firebase.apps.length ? firebase.app().options : undefined;
 
-  useEffect(() => {
-        console.log('telefone do asyncstorage: ' + getPhoneFromAsync2)
-        
-        console.log('telefone do estado: ' + phoneInput)
-    
-  },[phoneInput])
+    async function SendSMS(e) {
+      let changePhone = '+55' + e;
+      let changePhone2 = changePhone.replace(' ', '');
+      let changePhone3 = changePhone2.replace('-', '');
+      let changePhone4 = changePhone3.replace('(', '');
+      let changePhone5 = changePhone4.replace(')', '');
+
+      console.log('CHANGE PHONE 5: ' + changePhone5)
+
+
+      try {
+        const phoneProvider = new firebase.auth.PhoneAuthProvider();
+        const verificationId = await phoneProvider.verifyPhoneNumber(
+          changePhone5,
+          recaptchaVerifier.current
+        );
+        setVerificationId(verificationId);
+        alert('O código de verificação foi enviado para o seu celular')
+      } catch (err) {
+        alert('Ocorreu um erro ao enviar o SMS: ' + err)
+      }
+    }
 
 
     return (
@@ -123,6 +144,11 @@ export default function TelaLoginSMS () {
         <StatusBar
           backgroundColor={Colors.primaryColor}
           barStyle="light-content"
+        />
+
+        <FirebaseRecaptchaVerifierModal
+          ref={recaptchaVerifier}
+          firebaseConfig={firebaseConfig}
         />
 
         <GradientContainer containerStyle={styles.container}>
@@ -133,46 +159,76 @@ export default function TelaLoginSMS () {
             </Paragraph>
 
 
-            <View style={styles.codeContainer}>
-              <View style={styles.digitContainer}>
-                <TextInputMask
-                  type={'cel-phone'}
-                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                  borderColor={INPUT_BORDER_COLOR}
-                  style={{padding:4, color:'gray'}}
-                  value={phoneInput}
-                  onChangeText={setPhoneInput}
-                  placeholderTextColor={'gray'}
-                  keyboardType={"phone-pad"}
-                  placeholder="Tel Numero"
-                />
+          <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'column'}}>
+                  <View style={styles.codeContainer}>
+                    <View style={styles.digitContainer}>
+                      <TextInputMask
+                        type={'cel-phone'}
+                        placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                        borderColor={INPUT_BORDER_COLOR}
+                        style={{padding:4, color:'gray'}}
+                        value={phoneInput}
+                        onChangeText={setPhoneInput}
+                        placeholderTextColor={'gray'}
+                        keyboardType={"phone-pad"}
+                        placeholder="Tel Numero"
+                      />
+                    </View>
+                  </View>
+
+
+                  <View style={{paddingTop:27}}>
+                    <Button
+                      onPress={() => SendSMS(phoneInput)}
+                      disabled={false}
+                      borderRadius={4}
+                      color={Colors.onPrimaryColor}
+                      small
+                      title={'Enviar SMS'.toUpperCase()}
+                      titleColor={Colors.primaryColor}
+                    />
+                  </View>
+
+                </View>
+
+          </View>
+          </View>
+
+          <View style={{marginBottom: 44}}>
+            <View style={{marginBottom:20}}>
+              <View style={styles.codeContainer}>
+                  <View style={styles.digitContainer}>
+                    <TextInput
+                      placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                      borderColor={INPUT_BORDER_COLOR}
+                      maxLength={6}
+                      style={{padding:4, color:'gray'}}
+                      value={verificationCode}
+                      onChangeText={setVerificationCode}
+                      placeholderTextColor={'gray'}
+                      keyboardType={"number-pad"}
+                      placeholder="Digite o Código"
+                    />
+                  </View>
               </View>
             </View>
 
-          
-          </View>
-
-        
-
-          <View style={{marginBottom: 44}}>
             <Button
               onPress={async () => {
                 const credential = firebase.auth.PhoneAuthProvider.credential(
-                    '1m12bjjb32321',
-                    getPhoneFromAsync2
-                  );
-                  if(changePhone5 == getPhoneFromAsync2) {
-                      console.log('ENTROU NO VERIFICATION')
+                  verificationId,
+                  verificationCode
+                );
                     await firebase.auth().signInWithCredential(credential).then(() => {
                         alert('Logado com sucesso')
                         navigation.navigate('HomeNavigator')
                     }).catch((err) => {
                         console.log(err)
                     })
-                  }
               }}
               disabled={false}
-              borderRadius={4}
+              borderRadius={10}
               color={Colors.onPrimaryColor}
               small
               title={'Confirmar'.toUpperCase()}

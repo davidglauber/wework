@@ -190,7 +190,6 @@ export default function SMSVerificacao () {
                       dataNascimento: getDataNascimento,
                       telefone: getTelefone
                     })
-                    AsyncStorage.setItem('phoneStorage', `${phoneNumber}`)
                   navigation.navigate('HomeNavigator')
                   alert('Você foi cadastrado com sucesso 👍')
                 } catch (err) {

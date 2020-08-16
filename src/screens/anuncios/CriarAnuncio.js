@@ -211,6 +211,12 @@ export default class CriarAnuncio extends Component {
     modalizeRef.current?.open()
   }
 
+
+  getCategory(param) {
+    console.log('Categoria Selecionada: '  + param)
+    this.setState({categoria: param})
+  }
+
   render() {
     const { categorias, categoria } = this.state
     return (
@@ -594,8 +600,8 @@ export default class CriarAnuncio extends Component {
             <View style={{alignItems:'flex-start', marginTop:40}}>
             <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione a Categoria Desejada</Heading6>
               {categorias.map(l => (
-                <View style={{borderBottomWidth:0.2}} >
-                  <TouchableOpacity onPress={() => this.setState({categoria: l.title})}>
+                <View>
+                  <TouchableOpacity key={l.id} onPress={() => this.getCategory(l.title)}>
                       <Text style={{fontWeight:'700', color:'#70AD66', fontSize:14, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
                   </TouchableOpacity>
                 </View>

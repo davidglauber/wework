@@ -122,17 +122,35 @@ export default class CriarAnuncio extends Component {
     //getting categories
     await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        categoriaDidMount.push(doc.data())
+        categoriaDidMount.push({
+          id: doc.data().id,
+          title: doc.data().title
+        })
       })
     })
 
     console.log('state de categorias: ' + this.state.categorias)
+
   }
 
 
 
 
-
+  showCategories() {
+    return( 
+      <Picker
+          selectedValue={this.state.categoria}
+          onValueChange={(itemValue, itemIndex) => this.setState({categoria: itemValue})}
+          style={{marginLeft:10, width: 180, height:50}}>
+            
+          {this.state.categorias.map((i) => { 
+            return(   
+                  <Picker.Item  label={i.title} key={i.id} value={i.title} />
+            )
+          })}
+      </Picker>
+    )
+  }
 
 
 
@@ -202,7 +220,7 @@ export default class CriarAnuncio extends Component {
 
 
   render() {
-
+    const { categorias, categoria } = this.state
     return (
       <Fragment>
         <SafeAreaView style={styles.topArea} />
@@ -551,21 +569,26 @@ export default class CriarAnuncio extends Component {
                             </View>
                               
                             </View>
+
+
                           </View>
+
                         }
 
-                        <View style={{flexDirection:'row', paddingTop:50, alignItems:'center', justifyContent:'center'}}>
-                          <View style={{backgroundColor:'#70AD66', marginRight:5, borderRadius:10}}>
-                            <Picker
-                              selectedValue={this.state.categoria}
-                              onValueChange={(itemValue, itemIndex) => this.setState({categoria: itemValue})}
-                              style={{marginLeft:10, width: 180, height:50}}>
-                              {this.state.categorias.map(l => (
-                                      <Picker.Item  label={l.title} key={l.id} value={l.title} />
-                              ))}
-                            </Picker>
-                          </View>
-                          
+
+
+                        <View style={{flexDirection:'row', paddingTop:50, alignItems:'center', justifyContent:'center'}}>                          
+                              <View style={{backgroundColor:'#70AD66', marginRight:5, borderRadius:10}}>
+                              <Picker
+                                  selectedValue={categoria}
+                                  onValueChange={(itemValue, itemIndex) => this.setState({categoria: itemValue})}
+                                  style={{marginLeft:10, width: 180, height:50}}>
+                                    
+                                  {categorias.map((item, index) => {
+                                    return (< Picker.Item label={item.title} value={item.title} key={index} />);
+                                  })}   
+                              </Picker>
+                              </View>
                             <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
                               <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
                                 Publicar

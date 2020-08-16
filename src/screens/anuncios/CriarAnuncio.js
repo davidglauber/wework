@@ -12,19 +12,31 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Image,
   TouchableOpacity,
-  Picker,
   TextInput,
   View,
   Text,
+  YellowBox
 } from 'react-native';
 
-import {Caption, Subtitle1, Subtitle2} from '../../components/text/CustomText';
+YellowBox.ignoreWarnings(['Setting a timer']);
+
+import {Subtitle2} from '../../components/text/CustomText';
 import { Modalize } from 'react-native-modalize';
 import Layout from '../../theme/layout';
 
 //import firebase
 import firebase from '../../config/firebase';
+
+//import image picker
+import * as ImagePicker from 'expo-image-picker';
+
+//import Constants
+import Constants from 'expo-constants';
+
+//import Permissions
+import * as Permissions from 'expo-permissions';
 
 
 import {Heading6} from '../../components/text/CustomText';
@@ -113,7 +125,8 @@ export default class CriarAnuncio extends Component {
       domingo:false,
       modalizeRef: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
-      modalizeRefFechamento: React.createRef(null)
+      modalizeRefFechamento: React.createRef(null),
+      image:null
     };
   }
 
@@ -253,6 +266,36 @@ export default class CriarAnuncio extends Component {
   }
 
 
+
+  async imagePickerGetPhoto() {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Desculpa, nós precisamos do acesso a permissão da câmera');
+      }
+    }
+
+
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (!result.cancelled) {
+        this.setState({ image: result.uri });
+      }
+
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
+
+  }
+
+
+
   render() {
     const { categorias, categoria } = this.state
     return (
@@ -294,12 +337,19 @@ export default class CriarAnuncio extends Component {
                         </View>
 
 
-
-                        <View>
-                          <TouchableOpacity style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
-                              <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
-                          </TouchableOpacity>
-                        </View>
+                        {this.state.image == null ?
+                          <View>
+                            <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                                <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
+                            </TouchableOpacity>
+                          </View>
+                          :
+                          <View>
+                            <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                                <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}} source={{uri: this.state.image}}/>
+                            </TouchableOpacity>
+                          </View>
+                        }
               </View>
 
                      {this.state.type == 'Autonomo' ?     

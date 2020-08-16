@@ -126,7 +126,8 @@ export default class CriarAnuncio extends Component {
       modalizeRef: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
-      image:null
+      image:null,
+      imageName:''
     };
   }
 
@@ -154,7 +155,15 @@ export default class CriarAnuncio extends Component {
   }
 
 
-
+  makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
 
 
   goBack = () => {
@@ -282,9 +291,11 @@ export default class CriarAnuncio extends Component {
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
+
       });
       if (!result.cancelled) {
-        this.setState({ image: result.uri });
+        this.setState({ image: result.uri })
+        this.setState({imageName: result.uri})
       }
 
       console.log(result);
@@ -292,6 +303,29 @@ export default class CriarAnuncio extends Component {
       console.log(E);
     }
 
+  }
+
+
+  uploadFormToFirebase() {
+    var getFileBlob = function (url, cb) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url);
+      xhr.responseType = "blob";
+      xhr.addEventListener('load', function() {
+        cb(xhr.response);
+      });
+      xhr.send();
+    };
+
+    let userUID = firebase.auth().currentUser.uid;
+    let storageUrl = userUID;
+    let imageId = this.makeid(17)
+
+    getFileBlob(this.state.image, blob => {
+      firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then(function(snapshot) {
+         console.log('A imagem foi salva no Storage!');
+      })
+    })
   }
 
 
@@ -342,7 +376,7 @@ export default class CriarAnuncio extends Component {
                             <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
                                 <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
                             </TouchableOpacity>
-                          </View>
+                          </View> 
                           :
                           <View>
                             <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
@@ -645,13 +679,13 @@ export default class CriarAnuncio extends Component {
                             </View>
                             
                             {this.state.categoria !== '' ?
-                              <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30, marginRight:50}}>
+                              <TouchableOpacity onPress={() => this.uploadFormToFirebase()} style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30, marginRight:50}}>
                                 <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
                                   Publicar
                                 </Text>
                               </TouchableOpacity>
                               :
-                              <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
+                              <TouchableOpacity onPress={() => this.uploadFormToFirebase()} style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
                                 <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
                                   Publicar
                                 </Text>

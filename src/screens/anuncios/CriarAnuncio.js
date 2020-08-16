@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 
 import {Caption, Subtitle1, Subtitle2} from '../../components/text/CustomText';
+import { Modalize } from 'react-native-modalize';
 import Layout from '../../theme/layout';
 
 //import firebase
@@ -108,6 +109,7 @@ export default class CriarAnuncio extends Component {
       sexta:false,
       sabado:false,
       domingo:false,
+      modalizeRef: React.createRef(null)
     };
   }
 
@@ -218,6 +220,12 @@ export default class CriarAnuncio extends Component {
     console.log('endereco estab'  + this.state.enderecoEstab)
   }
 
+
+  openModalize() {
+    const modalizeRef = this.state.modalizeRef;
+
+    modalizeRef.current?.open()
+  }
 
   render() {
     const { categorias, categoria } = this.state
@@ -577,18 +585,14 @@ export default class CriarAnuncio extends Component {
 
 
 
-                        <View style={{flexDirection:'row', paddingTop:50, alignItems:'center', justifyContent:'center'}}>                          
-                              <View style={{backgroundColor:'#70AD66', marginRight:5, borderRadius:10}}>
-                              <Picker
-                                  selectedValue={categoria}
-                                  onValueChange={(itemValue, itemIndex) => this.setState({categoria: itemValue})}
-                                  style={{marginLeft:10, width: 180, height:50}}>
-                                    
-                                  {categorias.map((item, index) => {
-                                    return (< Picker.Item label={item.title} value={item.title} key={index} />);
-                                  })}   
-                              </Picker>
-                              </View>
+                        <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
+                            <View style={{marginRight:120}}>
+                              <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginRight:5, borderRadius:10}}>
+                                <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
+                                <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>
+                              </TouchableOpacity>
+                            </View>
+
                             <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
                               <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
                                 Publicar
@@ -599,6 +603,14 @@ export default class CriarAnuncio extends Component {
 
             </View>
           </View>
+          <Modalize
+            ref={this.state.modalizeRef}
+            snapPoint={200}
+          >
+            <View>
+              <Text>TESTE DO MODALIZE</Text>
+            </View>
+          </Modalize>
         </SafeAreaView>
       </Fragment>
     );

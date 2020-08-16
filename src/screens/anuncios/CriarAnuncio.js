@@ -27,6 +27,8 @@ import Layout from '../../theme/layout';
 import firebase from '../../config/firebase';
 
 
+import {Heading6} from '../../components/text/CustomText';
+
 // import components
 import OrderItem from '../../components/cards/OrderItemB';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -118,40 +120,22 @@ export default class CriarAnuncio extends Component {
 
 
   async componentDidMount() {
-    let categoriaDidMount = []
+    let e = this;
 
-    this.setState({categorias: categoriaDidMount})
     //getting categories
     await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
+      let categoriaDidMount = []
       querySnapshot.forEach(function(doc) {
         categoriaDidMount.push({
           id: doc.data().id,
           title: doc.data().title
         })
       })
+      e.setState({categorias: categoriaDidMount})
     })
 
     console.log('state de categorias: ' + this.state.categorias)
 
-  }
-
-
-
-
-  showCategories() {
-    return( 
-      <Picker
-          selectedValue={this.state.categoria}
-          onValueChange={(itemValue, itemIndex) => this.setState({categoria: itemValue})}
-          style={{marginLeft:10, width: 180, height:50}}>
-            
-          {this.state.categorias.map((i) => { 
-            return(   
-                  <Picker.Item  label={i.title} key={i.id} value={i.title} />
-            )
-          })}
-      </Picker>
-    )
   }
 
 
@@ -587,7 +571,7 @@ export default class CriarAnuncio extends Component {
 
                         <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
                             <View style={{marginRight:120}}>
-                              <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginRight:5, borderRadius:10}}>
+                              <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
                                 <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
                                 <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>
                               </TouchableOpacity>
@@ -607,8 +591,15 @@ export default class CriarAnuncio extends Component {
             ref={this.state.modalizeRef}
             snapPoint={200}
           >
-            <View>
-              <Text>TESTE DO MODALIZE</Text>
+            <View style={{alignItems:'flex-start', marginTop:40}}>
+            <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione a Categoria Desejada</Heading6>
+              {categorias.map(l => (
+                <View style={{borderBottomWidth:0.2}} >
+                  <TouchableOpacity onPress={() => this.setState({categoria: l.title})}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:14, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
             </View>
           </Modalize>
         </SafeAreaView>

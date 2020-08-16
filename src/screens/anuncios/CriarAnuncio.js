@@ -111,7 +111,9 @@ export default class CriarAnuncio extends Component {
       sexta:false,
       sabado:false,
       domingo:false,
-      modalizeRef: React.createRef(null)
+      modalizeRef: React.createRef(null),
+      modalizeRefAbertura: React.createRef(null),
+      modalizeRefFechamento: React.createRef(null)
     };
   }
 
@@ -212,10 +214,44 @@ export default class CriarAnuncio extends Component {
   }
 
 
-  getCategory(param) {
-    console.log('Categoria Selecionada: '  + param)
-    this.setState({categoria: param})
+  openModalizeAbertura() {
+    const modalizeRefAbertura = this.state.modalizeRefAbertura;
+
+    modalizeRefAbertura.current?.open()
   }
+
+  openModalizeFechamento() {
+    const modalizeRefFechamento = this.state.modalizeRefFechamento;
+
+    modalizeRefFechamento.current?.open()
+  }
+
+
+  getCategory(param) {
+    const modalizeRef = this.state.modalizeRef;
+    this.setState({categoria: param})
+    modalizeRef.current?.close()
+
+    console.log('Categoria Selecionada: '  + param)
+  }
+
+  getHorarioOpen(param) {
+    const modalizeRefAbertura = this.state.modalizeRefAbertura;
+    this.setState({horarioOpen: param})
+    modalizeRefAbertura.current?.close()
+
+    console.log('Horario open Selecionado: '  + param)
+
+  }
+
+  getHorarioClose(param) {
+    const modalizeRefFechamento = this.state.modalizeRefFechamento;
+    this.setState({horarioClose: param})
+    modalizeRefFechamento.current?.close()
+
+    console.log('Horario close Selecionado: '  + param)
+  }
+
 
   render() {
     const { categorias, categoria } = this.state
@@ -507,62 +543,28 @@ export default class CriarAnuncio extends Component {
                             <View style={{flexDirection:'row'}}>
                               <View>
                                 <Text style={{color:Colors.primaryColorDark,  fontWeight:'bold', paddingLeft: 15, marginTop:20}}>Horário de Abertura</Text>
-                                  <Picker
-                                    selectedValue={this.state.horarioOpen}
-                                    onValueChange={(itemValue, itemIndex) => this.setState({horarioOpen: itemValue})}
-                                    style={{marginLeft:8, width: 130, height:30}}>
-                                    <Picker.Item label="4:00" value=""/>
-                                    <Picker.Item label="5:00" value="5:00"/>
-                                    <Picker.Item label="6:00" value="6:00"/>
-                                    <Picker.Item label="7:00" value="7:00"/>
-                                    <Picker.Item label="8:00" value="8:00"/>
-                                    <Picker.Item label="9:00" value="9:00"/>
-                                    <Picker.Item label="10:00" value="10:00"/>
-                                    <Picker.Item label="11:00" value="11:00"/>
-                                    <Picker.Item label="12:00" value="12:00"/>
-                                    <Picker.Item label="13:00" value="13:00"/>
-                                    <Picker.Item label="14:00" value="14:00"/>
-                                    <Picker.Item label="15:00" value="15:00"/>
-                                    <Picker.Item label="16:00" value="16:00"/>
-                                    <Picker.Item label="17:00" value="17:00"/>
-                                    <Picker.Item label="18:00" value="18:00"/>
-                                    <Picker.Item label="19:00" value="19:00"/>
-                                    <Picker.Item label="20:00" value="20:00"/>
-                                    <Picker.Item label="21:00" value="21:00"/>
-                                    <Picker.Item label="22:00" value="22:00"/>
-                                    <Picker.Item label="23:00" value="23:00"/>
-                                    <Picker.Item label="00:00" value="00:00"/>
-                                  </Picker>
+                                  <View style={{marginLeft:14, width: 130, height:30}}>
+                                      <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeAbertura()}> 
+                                        <FontAwesome5 name="clock" size={24} color={'#9A9A9A'}/>
+                                        {this.state.horarioOpen == '' ? 
+                                          <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>Abertura</Text> 
+                                        : <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>{this.state.horarioOpen}</Text> 
+                                        }
+                                      </TouchableOpacity>
+                                  </View>
                               </View>
 
                                 <View>
                                   <Text style={{color:Colors.primaryColorDark,  fontWeight:'bold', paddingLeft: 35, marginTop:20}}>Horário de Fechamento</Text>
-                                  <Picker
-                                    selectedValue={this.state.horarioClose}
-                                    onValueChange={(itemValue, itemIndex) => this.setState({horarioClose: itemValue})}
-                                    style={{marginLeft:28, width: 130, height:30}}>
-                                    <Picker.Item label="3:00" value=""/>
-                                    <Picker.Item label="5:00" value="5:00"/>
-                                    <Picker.Item label="6:00" value="6:00"/>
-                                    <Picker.Item label="7:00" value="7:00"/>
-                                    <Picker.Item label="8:00" value="8:00"/>
-                                    <Picker.Item label="9:00" value="9:00"/>
-                                    <Picker.Item label="10:00" value="10:00"/>
-                                    <Picker.Item label="11:00" value="11:00"/>
-                                    <Picker.Item label="12:00" value="12:00"/>
-                                    <Picker.Item label="13:00" value="13:00"/>
-                                    <Picker.Item label="14:00" value="14:00"/>
-                                    <Picker.Item label="15:00" value="15:00"/>
-                                    <Picker.Item label="16:00" value="16:00"/>
-                                    <Picker.Item label="17:00" value="17:00"/>
-                                    <Picker.Item label="18:00" value="18:00"/>
-                                    <Picker.Item label="19:00" value="19:00"/>
-                                    <Picker.Item label="20:00" value="20:00"/>
-                                    <Picker.Item label="21:00" value="21:00"/>
-                                    <Picker.Item label="22:00" value="22:00"/>
-                                    <Picker.Item label="23:00" value="23:00"/>
-                                    <Picker.Item label="00:00" value="00:00"/>
-                                  </Picker>
+                                    <View style={{marginLeft:44, width: 130, height:30}}>
+                                        <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeFechamento()}> 
+                                          <FontAwesome5 name="stopwatch" size={24} color={'#9A9A9A'}/>
+                                          {this.state.horarioClose == '' ?
+                                            <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>Fechamento</Text>
+                                          : <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>{this.state.horarioClose}</Text>
+                                          }
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>
                               
@@ -576,36 +578,276 @@ export default class CriarAnuncio extends Component {
 
 
                         <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
-                            <View style={{marginRight:120}}>
+                            <View style={{marginRight:70}}>
                               <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
-                                <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
-                                <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>
+                                {this.state.categoria == '' ?
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
+                                    <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>
+                                </View>
+                                :
+                                <View style={{flexDirection:'row', alignItems:'center', marginLeft:50}}>
+                                    <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
+                                    <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Selecionada ;)</Text>
+                                </View>
+                                }
                               </TouchableOpacity>
                             </View>
-
-                            <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
-                              <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
-                                Publicar
-                              </Text>
-                            </TouchableOpacity>
+                            
+                            {this.state.categoria !== '' ?
+                              <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30, marginRight:50}}>
+                                <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
+                                  Publicar
+                                </Text>
+                              </TouchableOpacity>
+                              :
+                              <TouchableOpacity style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
+                                <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
+                                  Publicar
+                                </Text>
+                              </TouchableOpacity>
+                            }
                         </View>
                     </View>
 
             </View>
           </View>
+
+          {/*Modalize da categoria*/}
           <Modalize
             ref={this.state.modalizeRef}
-            snapPoint={200}
+            snapPoint={500}
           >
             <View style={{alignItems:'flex-start', marginTop:40}}>
             <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione a Categoria Desejada</Heading6>
               {categorias.map(l => (
                 <View>
                   <TouchableOpacity key={l.id} onPress={() => this.getCategory(l.title)}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:14, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
                   </TouchableOpacity>
                 </View>
               ))}
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize do horario de abertura*/}
+          <Modalize
+            ref={this.state.modalizeRefAbertura}
+            snapPoint={500}
+          >
+            <View style={{alignItems:'flex-start', marginTop:40}}>
+            <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione o Horário de Abertura</Heading6>
+                <View>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('1:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>1:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('2:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>2:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('3:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>3:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('4:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>4:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('5:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>5:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('6:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>6:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('7:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>7:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('8:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>8:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('9:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>9:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('10:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>10:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('11:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>11:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('12:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>12:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('13:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>13:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('14:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>14:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('15:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>15:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('16:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>16:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('17:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>17:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('18:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>18:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('19:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>19:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('20:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>20:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('21:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>21:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('22:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>22:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('23:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>23:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioOpen('00:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>00:00</Text>
+                  </TouchableOpacity>
+                </View>
+            </View>
+          </Modalize>
+
+
+
+
+           {/*Modalize do horario de FECHAMENTO*/}
+           <Modalize
+            ref={this.state.modalizeRefFechamento}
+            snapPoint={500}
+          >
+            <View style={{alignItems:'flex-start', marginTop:40}}>
+            <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione o Horário de Fechamento</Heading6>
+                <View>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('1:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>1:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('2:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>2:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('3:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>3:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('4:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>4:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('5:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>5:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('6:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>6:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('7:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>7:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('8:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>8:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('9:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>9:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('10:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>10:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('11:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>11:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('12:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>12:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('13:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>13:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('14:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>14:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('15:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>15:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('16:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>16:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('17:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>17:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('18:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>18:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('19:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>19:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('20:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>20:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('21:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>21:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('22:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>22:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('23:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>23:00</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => this.getHorarioClose('00:00')}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>00:00</Text>
+                  </TouchableOpacity>
+                </View>
             </View>
           </Modalize>
         </SafeAreaView>

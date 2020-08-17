@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import {
   SafeAreaView,
   StatusBar,
+  Alert,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -161,6 +162,18 @@ export default class TelaLogin extends Component {
     navigation.navigate(screen);
   };
 
+  confirmIfUserHasBeenSignUp() {
+    Alert.alert(
+      'AVISO',
+      'Você se cadastrou? Senão o fez, o processo de login dará errado! ',
+      [
+        {text: 'Vou me cadastrar', onPress: () => this.props.navigation.navigate('SignUp'), style: 'cancel'},
+        {text: 'Sim, já me cadastrei', onPress: () => this.props.navigation.navigate('TelaLoginSMS')}
+      ],
+      {cancelable: false},
+    );
+  }
+
   async signIn(email, password){
     console.log('entrou na funcao de login')
     this.setState(
@@ -252,7 +265,7 @@ export default class TelaLogin extends Component {
 
                 <View style={styles.buttonContainer}>
                   <ContainedButton
-                    onPress={this.navigateTo('TelaLoginSMS')}
+                    onPress={() => this.confirmIfUserHasBeenSignUp()}
                     color={Colors.accentColor}
                     title={'Logar com Telefone'.toUpperCase()}
                   />

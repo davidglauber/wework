@@ -127,7 +127,8 @@ export default class CriarAnuncio extends Component {
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
       image:null,
-      imageName:''
+      imageName:'',
+      imageIdStorageState:''
     };
   }
 
@@ -306,7 +307,17 @@ export default class CriarAnuncio extends Component {
   }
 
 
-  uploadFormToFirebase() {
+  async uploadFormToFirebase() {
+    let segunda = this.state.segunda;
+    let terca = this.state.terca;
+    let quarta = this.state.quarta;
+    let quinta = this.state.quinta;
+    let sexta = this.state.sexta;
+    let sabado = this.state.sabado;
+    let domingo = this.state.domingo;
+    let e = this;
+
+
     var getFileBlob = function (url, cb) {
       var xhr = new XMLHttpRequest();
       xhr.open("GET", url);
@@ -319,13 +330,41 @@ export default class CriarAnuncio extends Component {
 
     let userUID = firebase.auth().currentUser.uid;
     let storageUrl = userUID;
+    let type = this.state.type;
     let imageId = this.makeid(17)
+    let imageIdStorageState = this.state.imageIdStorageState;
+    e.setState({imageIdStorageState: imageId})
 
     getFileBlob(this.state.image, blob => {
-      firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then(function(snapshot) {
-         console.log('A imagem foi salva no Storage!');
+      await firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).put(blob).then(function(snapshot) {
+          console.log('A imagem foi salva no Storage!');
+          console.log('IMAGE STATE: ' + imageIdStorageState);
       })
     })
+
+
+    if(type == 'Estabelecimento'){
+      firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
+       firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc().set({
+          titleEstab: e.state.tituloEstab,
+          idUser: userUID,
+          descriptionEstab: e.state.descricaoEstab,
+          valueServiceEstab: e.state.precoEstab,
+          type: 'Estabelecimento',
+          verifiedPublish: false,
+          phoneNumberEstab: e.state.phoneEstab,
+          localEstab: e.state.enderecoEstab,
+          categoryEstab: e.state.categoria,
+          photoPublish: urlImage,
+          workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+          timeOpen: e.state.horarioOpen,
+          timeClose: e.state.horarioClose
+        })
+      }).catch(function(error) {
+        console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
+      })
+    }
+
   }
 
 

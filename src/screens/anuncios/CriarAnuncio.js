@@ -342,20 +342,25 @@ export default class CriarAnuncio extends Component {
           xhr.send();
       }
       
-      getFileBlob(this.state.image, blob => {
-        firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
-            imageIdStorageState = imageId
-            console.log('A imagem foi salva no Storage!');
-            console.log('Valor image state: ' + imageIdStorageState);
-        }).catch((error) => {
-          console.log('IMAGE UPLOAD ERROR: ' + error)
+      if(this.state.image !== null) {
+        getFileBlob(this.state.image, blob => {
+          firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
+              imageIdStorageState = imageId
+              console.log('A imagem foi salva no Storage!');
+              console.log('Valor image state: ' + imageIdStorageState);
+          }).catch((error) => {
+            console.log('IMAGE UPLOAD ERROR: ' + error)
+          })
         })
-      })
+      } else {
+        alert('Por favor, selecione uma imagem para o anúncio')
+      }
 
         
 
     if(type == 'Estabelecimento'){
-      this.sleep(2000).then(() => { 
+      if(this.state.tituloEstab !== '' || this.state.descricaoEstab !== '' || this.state.precoEstab !== '' || this.state.phoneEstab !== '' || this.state.enderecoEstab !== '' || this.state.horarioOpen !== '' || this.state.horarioClose !== '' || this.state.categoria !== '' || this.state.segunda !== false || this.state.terca !== false || this.state.quarta !== false || this.state.quinta !== false || this.state.sexta !== false || this.state.sabado !== false || this.state.domingo !== false || this.state.image !== null) {
+        this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc().set({
               titleEstab: e.state.tituloEstab,
@@ -376,7 +381,36 @@ export default class CriarAnuncio extends Component {
             console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
           })
 
-      })
+        })
+      } else {
+        alert('Todos os campos devem ser preenchidos!')
+      }
+    }
+
+
+    if(type == 'Autonomo') {
+      if(this.state.tituloAuto !== '' || this.state.descricaoAuto !== '' || this.state.precoAuto !== '' || this.state.phoneAuto !== '' || this.state.categoria !== '' || this.state.segunda !== false || this.state.terca !== false || this.state.quarta !== false || this.state.quinta !== false || this.state.sexta !== false || this.state.sabado !== false || this.state.domingo !== false || this.state.image !== null || this.state.nomeAuto !== '') {
+        this.sleep(2000).then(() => { 
+          firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
+          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc().set({
+              titleAuto: e.state.tituloAuto,
+              idUser: userUID,
+              descriptionAuto: e.state.descricaoAuto,
+              valueServiceAuto: e.state.precoAuto,
+              type: 'Autonomo',
+              verifiedPublish: false,
+              phoneNumberAuto: e.state.phoneAuto,
+              categoryAuto: e.state.categoria,
+              photoPublish: urlImage,
+            })
+          }).catch(function(error) {
+            console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
+          })
+          
+        })
+      } else {
+        alert('Todos os campos devem ser preenchidos!')
+      }
     }
 
   }
@@ -479,7 +513,7 @@ export default class CriarAnuncio extends Component {
                                 value={this.state.tituloAuto}
                                 onChangeText={text => this.onChangeTituloAuto(text)}
                                 maxLength={21}
-                                placeholder="Título do Anúncio                                                        "
+                                placeholder="Título Breve do Anúncio                                                        "
                               />
                           </View>
 
@@ -535,7 +569,7 @@ export default class CriarAnuncio extends Component {
                                 value={this.state.tituloEstab}
                                 onChangeText={text => this.onChangeTituloEstab(text)}
                                 maxLength={21}
-                                placeholder="Título do Anúncio                                                        "
+                                placeholder="Título Breve do Anúncio                                                        "
                               />
                             </View>
 

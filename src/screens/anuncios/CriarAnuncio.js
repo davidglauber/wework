@@ -15,6 +15,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Modal,
   View,
   Text,
   YellowBox
@@ -38,8 +39,9 @@ import Constants from 'expo-constants';
 //import Permissions
 import * as Permissions from 'expo-permissions';
 
-
 import {Heading6} from '../../components/text/CustomText';
+
+import { PulseIndicator } from 'react-native-indicators';
 
 // import components
 import OrderItem from '../../components/cards/OrderItemB';
@@ -128,6 +130,8 @@ export default class CriarAnuncio extends Component {
       modalizeRefFechamento: React.createRef(null),
       image:null,
       imageName:'',
+      animated: true,
+      modalVisible: false
     };
   }
 
@@ -314,6 +318,11 @@ export default class CriarAnuncio extends Component {
 
   }
 
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
+
+
 
   uploadFormToFirebase() {
     let segunda = this.state.segunda;
@@ -406,11 +415,19 @@ export default class CriarAnuncio extends Component {
           }).catch(function(error) {
             console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
           })
-          
         })
+
+          this.sleep(4000).then(() => { 
+            this.setModalVisible(true)
+          })
+
+          this.sleep(6000).then(() => { 
+            this.props.navigation.navigate('TelaPrincipalAnuncio')
+          })
       } else {
         alert('Todos os campos devem ser preenchidos!')
       }
+      
     }
 
   }
@@ -434,9 +451,25 @@ export default class CriarAnuncio extends Component {
             marginHorizontal: 12,
             borderRadius: 16,
             backgroundColor: Colors.background}}>
-          
+              
             <View style={{ width: Layout.SCREEN_WIDTH - 2 * 12}}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',padding: 16}}>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() => {
+                          Alert.alert("Modal has been closed.");
+                        }}
+                      >
+                      <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
+                        <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
+                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Enviando o Seu Anúncio para a Análise</Text>
+                          <PulseIndicator color='#00b970'/>
+                        </View>
+                      </View>
+                    </Modal>
+                        
                         <View style={{flexDirection:'row', alignItems:'center'}}>
                           { this.state.type == 'Estabelecimento' ?
                             <View style={{flexDirection:'row'}}>

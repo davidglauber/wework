@@ -139,7 +139,8 @@ export default class TelaPrincipalAnuncio extends Component {
           photo: doc.data().photoPublish,
           title: doc.data().titleAuto,
           description: doc.data().descriptionAuto,
-          type: doc.data().type
+          type: doc.data().type,
+          verified: doc.data().verifiedPublish
         })
       })
       e.setState({anunciosAuto: anunciosAutoDidMount})
@@ -153,7 +154,8 @@ export default class TelaPrincipalAnuncio extends Component {
           photo: doc.data().photoPublish,
           title: doc.data().titleEstab,
           description: doc.data().descriptionEstab,
-          type: doc.data().type
+          type: doc.data().type,
+          verified: doc.data().verifiedPublish
         })
       })
       e.setState({anunciosEstab: anunciosEstabDidMount})
@@ -184,25 +186,24 @@ export default class TelaPrincipalAnuncio extends Component {
   };
 
 
-  renderCategoryItem = ({item, index}) => (
-    <ImageBackground
-      key={index}
-      defaultSource={imgHolder}
-      source={getImgSource(item.imageUri)}
-      imageStyle={styles.cardImg}
-      style={styles.card}>
-      <View style={styles.cardOverlay}>
-        <TouchableItem
-          onPress={this.navigateTo('Category')}
-          style={styles.cardContainer}
-          // borderless
-        >
-          <Text style={styles.cardTitle}>{item.name}</Text>
-        </TouchableItem>
-      </View>
-    </ImageBackground>
-  );
+  cutDescription(text) {
+    if(text.length > 40) {
+      let shortDescription = text.substr(0, 40)
 
+      return(
+        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription}</Text>
+        </View>
+      );
+    } else {
+      return(
+        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{text}</Text>
+        </View>
+      );
+    }
+  }
+  
  
   render() {
     const {anunciosEstab, anunciosAuto} = this.state;
@@ -248,10 +249,8 @@ export default class TelaPrincipalAnuncio extends Component {
                                   
                                   <View style={{flexDirection:'column'}}>
                                     <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>{item.title}</Text>
-                                    
-                                    <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                      <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{item.description}</Text>
-                                    </View>
+
+                                    {this.cutDescription(item.description)}
                                   </View>
                               </View>  
 
@@ -292,9 +291,7 @@ export default class TelaPrincipalAnuncio extends Component {
                                     <View style={{flexDirection:'column'}}>
                                         <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>{item.title}</Text>
                                       
-                                      <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                        <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{item.description}</Text>
-                                      </View>
+                                        {this.cutDescription(item.description)}
                                     </View>
                                 </View>  
 

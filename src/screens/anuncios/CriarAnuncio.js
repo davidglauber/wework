@@ -550,7 +550,7 @@ export default class CriarAnuncio extends Component {
                                 style={styles.inputStyle}
                                 value={this.state.tituloAuto}
                                 onChangeText={text => this.onChangeTituloAuto(text)}
-                                maxLength={21}
+                                maxLength={18}
                                 placeholder="Título Breve do Anúncio                                                        "
                               />
                           </View>
@@ -606,7 +606,7 @@ export default class CriarAnuncio extends Component {
                                 style={styles.inputStyle}
                                 value={this.state.tituloEstab}
                                 onChangeText={text => this.onChangeTituloEstab(text)}
-                                maxLength={21}
+                                maxLength={18}
                                 placeholder="Título Breve do Anúncio                                                        "
                               />
                             </View>

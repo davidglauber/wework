@@ -392,11 +392,9 @@ export default class CriarAnuncio extends Component {
 
         })
 
-        this.sleep(4000).then(() => { 
           this.setModalVisible(true)
-        })
 
-        this.sleep(6000).then(() => { 
+        this.sleep(8000).then(() => { 
           this.props.navigation.navigate('TelaPrincipalAnuncio')
         })
 
@@ -426,11 +424,9 @@ export default class CriarAnuncio extends Component {
           })
         })
 
-          this.sleep(4000).then(() => { 
             this.setModalVisible(true)
-          })
 
-          this.sleep(6000).then(() => { 
+          this.sleep(8000).then(() => { 
             this.props.navigation.navigate('TelaPrincipalAnuncio')
           })
       } else {

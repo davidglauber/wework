@@ -31,6 +31,8 @@ import Colors from '../../theme/colors';
 // HomeA Config
 const imgHolder = require('../../assets/img/imgholder.png');
 
+import firebase from '../../config/firebase'; 
+
 
 //Import images
 const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
@@ -115,117 +117,72 @@ export default class TelaPrincipalAnuncio extends Component {
     super(props);
 
     this.state = {
-      categories: [
-        {
-          key: 1,
-          imageUri: require('../../assets/img/pizza_3.jpg'),
-          name: 'Pizza',
-        },
-        {
-          key: 2,
-          imageUri: require('../../assets/img/meat_1.jpg'),
-          name: 'Grill',
-        },
-        {
-          key: 3,
-          imageUri: require('../../assets/img/spaghetti_2.jpg'),
-          name: 'Pasta',
-        },
-        {
-          key: 4,
-          imageUri: require('../../assets/img/soup_1.jpg'),
-          name: 'Soups',
-        },
-        {
-          key: 5,
-          imageUri: require('../../assets/img/salad_1.jpg'),
-          name: 'Salads',
-        },
-      ],
-      products: [
-        {
-          imageUri: require('../../assets/img/pizza_4.png'),
-          name: 'Pizza Carbonara 35cm',
-          price: 10.99,
-          label: 'new',
-        },
-        {
-          imageUri: require('../../assets/img/sandwich_1.png'),
-          name: 'Breakfast toast sandwich',
-          price: 4.99,
-        },
-        {
-          imageUri: require('../../assets/img/cake_3.png'),
-          name: 'Cake Cherries Pie',
-          price: 8.49,
-          discountPercentage: 10,
-        },
-        {
-          imageUri: require('../../assets/img/soup_2.png'),
-          name: 'Broccoli Soup',
-          price: 6.49,
-          discountPercentage: 10,
-        },
-      ],
-      popularProducts: [
-        {
-          imageUri: require('../../assets/img/sandwich_2.jpg'),
-          name: 'Subway sandwich',
-          price: 8.49,
-          quantity: 0,
-          discountPercentage: 10,
-        },
-        {
-          imageUri: require('../../assets/img/pizza_1.jpg'),
-          name: 'Pizza Margarita 35cm',
-          price: 10.99,
-          quantity: 0,
-        },
-        {
-          imageUri: require('../../assets/img/cake_1.jpg'),
-          name: 'Chocolate cake',
-          price: 4.99,
-          quantity: 0,
-        },
-      ],
+      anunciosEstab: [],
+      anunciosAuto:[],
     };
   }
+
+
+
+
+
+
+  async componentDidMount() {
+    let e = this;
+    let currentUserUID = firebase.auth().currentUser.uid;
+
+    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Autonomo") .get().then(function(querySnapshot){
+      let anunciosAutoDidMount = []
+      querySnapshot.forEach(function(doc) {
+        anunciosAutoDidMount.push({
+          idUser: doc.data().idUser,
+          photo: doc.data().photoPublish,
+          title: doc.data().titleAuto,
+          description: doc.data().descriptionAuto,
+          type: doc.data().type
+        })
+      })
+      e.setState({anunciosAuto: anunciosAutoDidMount})
+    })
+
+    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Estabelecimento") .get().then(function(querySnapshot){
+      let anunciosEstabDidMount = []
+      querySnapshot.forEach(function(doc) {
+        anunciosEstabDidMount.push({
+          idUser: doc.data().idUser,
+          photo: doc.data().photoPublish,
+          title: doc.data().titleEstab,
+          description: doc.data().descriptionEstab,
+          type: doc.data().type
+        })
+      })
+      e.setState({anunciosEstab: anunciosEstabDidMount})
+    })
+
+  }
+
+
+
+
+  makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
+
+
+
+
 
   navigateTo = screen => () => {
     const {navigation} = this.props;
     navigation.navigate(screen);
   };
 
-  onPressRemove = item => () => {
-    let {quantity} = item;
-    quantity -= 1;
-
-    const {popularProducts} = this.state;
-    const index = popularProducts.indexOf(item);
-
-    if (quantity < 0) {
-      return;
-    }
-    popularProducts[index].quantity = quantity;
-
-    this.setState({
-      popularProducts: [...popularProducts],
-    });
-  };
-
-  onPressAdd = item => () => {
-    const {quantity} = item;
-    const {popularProducts} = this.state;
-
-    const index = popularProducts.indexOf(item);
-    popularProducts[index].quantity = quantity + 1;
-
-    this.setState({
-      popularProducts: [...popularProducts],
-    });
-  };
-
-  keyExtractor = (item, index) => index.toString();
 
   renderCategoryItem = ({item, index}) => (
     <ImageBackground
@@ -246,23 +203,9 @@ export default class TelaPrincipalAnuncio extends Component {
     </ImageBackground>
   );
 
-  renderProductItem = ({item, index}) => (
-    <ActionProductCard
-      onPress={this.navigateTo('Product')}
-      key={index}
-      imageUri={item.imageUri}
-      title={item.name}
-      description={item.description}
-      rating={item.rating}
-      price={item.price}
-      discountPercentage={item.discountPercentage}
-      label={item.label}
-    />
-  );
-
  
   render() {
-    const {categories, products, popularProducts} = this.state;
+    const {anunciosEstab, anunciosAuto} = this.state;
 
     return (
       <SafeAreaView style={styles.screenContainer}>
@@ -288,186 +231,96 @@ export default class TelaPrincipalAnuncio extends Component {
                 </TouchableOpacity>
               </View>
 
-              {/*<FlatList
-                data={categories}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                alwaysBounceHorizontal={false}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderCategoryItem}
-                contentContainerStyle={styles.categoriesList}
-              />
-              */}
 
             </View>
 
 
-           {/*  <FlatList
-              data={products}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderProductItem}
-              contentContainerStyle={styles.productsList}
-            />
-
-           */}
-
 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                        <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
-                            <View style={{flexDirection:'row'}}>
-                                <Image source={fotoAnuncio} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
-                                
-                                <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>Forneço Cupcakes</Text>
+                      <FlatList
+                        keyExtractor={() => this.makeid(17)}
+                        data={anunciosAuto}
+                        renderItem={({item}) => 
+                            <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                              <View style={{flexDirection:'row'}}>
+                                  <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
-                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Sou confeiteiro Profissional, tenho variedades de sabores</Text>
+                                  <View style={{flexDirection:'column'}}>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>{item.title}</Text>
+                                    
+                                    <View style={{justifyContent: 'center', alignItems: 'center',}}>
+                                      <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{item.description}</Text>
+                                    </View>
                                   </View>
+                              </View>  
+
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                  <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                                  </TouchableOpacity>
+
+                                  <View style={{marginTop: 24, marginRight: 10}}>
+                                      <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
+                                  </View>
+
+                                  <View style={{marginTop: 24, marginRight: 10}}>
+                                      <FontAwesome5  name="trash" size={19} color={"grey"} />
+                                  </View>
+
+                                  <View style={{marginTop: 24, marginRight: 30}}>
+                                      <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
                                 </View>
-                            </View>  
+                              </View> 
 
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
-                                </View>
-                            </View> 
-
-                        </View>
+                            </View>
+                        }
+                      />
                     </View>
                 </View>
-
-
 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
-                            <View style={{flexDirection:'row'}}>
-                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
-                                
-                                <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
-                                  
-                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
-                                  </View>
-                                </View>
-                            </View>  
+                      <FlatList
+                        keyExtractor={() => this.makeid(17)}
+                        data={anunciosEstab}
+                        renderItem={({item}) => 
+                            <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                                <View style={{flexDirection:'row'}}>
+                                    <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                                    
+                                    <View style={{flexDirection:'column'}}>
+                                        <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>{item.title}</Text>
+                                      
+                                      <View style={{justifyContent: 'center', alignItems: 'center',}}>
+                                        <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{item.description}</Text>
+                                      </View>
+                                    </View>
+                                </View>  
 
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                        <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                                    </TouchableOpacity>
 
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                </View>
+                                    <View style={{marginTop: 24, marginRight: 10}}>
+                                        <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
+                                    </View>
 
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                </View>
+                                    <View style={{marginTop: 24, marginRight: 10}}>
+                                        <FontAwesome5  name="trash" size={19} color={"grey"} />
+                                    </View>
+                                    
+                                    <View style={{marginTop: 24, marginRight: 30}}>
+                                        <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                    </View>
+                                </View> 
 
-                                <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
-                                </View>
-                            </View> 
-
-                        </View>
+                            </View>
+                        }
+                      />
                     </View>
-                </View>
-
-
-
-                <View style={{flex:1, alignItems: 'center'}}>
-                    <View>
-                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
-                            <View style={{flexDirection:'row'}}>
-                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
-                                
-                                <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
-                                  
-                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
-                                  </View>
-                                </View>
-                            </View>  
-
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
-                                </View>
-                            </View> 
-
-                        </View>
-                    </View>
-                </View>
-
-
-                <View style={{flex:1, alignItems: 'center'}}>
-                    <View>
-                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
-                            <View style={{flexDirection:'row'}}>
-                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
-                                
-                                <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
-                                  
-                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
-                                  </View>
-                                </View>
-                            </View>  
-
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                </View>
-                                
-                                <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
-                                </View>
-                            </View> 
-
-                        </View>
-                    </View>
-                </View>
-
+                  </View>
           </ScrollView>
         </View>
       </SafeAreaView>

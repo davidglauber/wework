@@ -51,6 +51,7 @@ import TelaPrincipalAnuncio from '../screens/anuncios/TelaPrincipalAnuncio';
 
 // import Product screen
 import TelaAnuncio from '../screens/telasAnuncios/TelaAnuncio';
+import TelaAnunciosPendentes from '../screens/anuncios/TelaAnunciosPendentes';
 
 import TelaCartaoVisita from '../screens/cartaoVisita/TelaCartaoVisita';
 
@@ -255,6 +256,11 @@ function MainNavigatorA() {
         <Stack.Screen
           name="TelaPrincipalAnuncio"
           component={TelaPrincipalAnuncio}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TelaAnunciosPendentes"
+          component={TelaAnunciosPendentes}
           options={{headerShown: false}}
         />
         <Stack.Screen

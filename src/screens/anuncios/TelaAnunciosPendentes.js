@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TelaPrincipalAnuncio extends Component {
+export default class TelaAnunciosPendentes extends Component {
   constructor(props) {
     super(props);
 
@@ -132,7 +132,7 @@ export default class TelaPrincipalAnuncio extends Component {
     let e = this;
     let currentUserUID = firebase.auth().currentUser.uid;
 
-    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Autonomo").where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Autonomo").where("verifiedPublish", "==", false).onSnapshot(documentSnapshot => {
       let anunciosAutoDidMount = []
       documentSnapshot.forEach(function(doc) {
         anunciosAutoDidMount.push({
@@ -147,7 +147,7 @@ export default class TelaPrincipalAnuncio extends Component {
       e.setState({anunciosAuto: anunciosAutoDidMount})
     })
 
-    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Estabelecimento").where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Estabelecimento").where("verifiedPublish", "==", false).onSnapshot(documentSnapshot => {
       let anunciosEstabDidMount = []
       documentSnapshot.forEach(function(doc) {
         anunciosEstabDidMount.push({
@@ -225,17 +225,7 @@ export default class TelaPrincipalAnuncio extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-                <TouchableOpacity  style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#e3e3e3"}}>
-                    <Text style={{color: 'black', fontWeight: 'bold'}}>Ativos</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={this.navigateTo('Orders')} style={{marginRight:5, borderRadius:25, alignItems:'center', justifyContent:'center', width:40, height:40, backgroundColor: "#70AD66"}}>
-                        <FontAwesome5  name="plus" size={19} color={"#fff"} />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={this.navigateTo('TelaAnunciosPendentes')} style={{marginRight:5, borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#e3e3e3"}}>
-                    <Text style={{color: 'black', fontWeight: 'bold'}}>Pendentes</Text>
-                </TouchableOpacity>
+                <Heading6 style={styles.titleText}>Anúncios Pendentes</Heading6>
               </View>
 
 

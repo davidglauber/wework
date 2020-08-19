@@ -8,7 +8,6 @@
 // import node modules
 import React, {Component, Fragment} from 'react';
 import {
-  FlatList,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -44,7 +43,6 @@ import {Heading6} from '../../components/text/CustomText';
 import { PulseIndicator } from 'react-native-indicators';
 
 // import components
-import OrderItem from '../../components/cards/OrderItemB';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import { TextInputMask } from 'react-native-masked-text';
@@ -368,7 +366,7 @@ export default class CriarAnuncio extends Component {
         
 
     if(type == 'Estabelecimento'){
-      if(this.state.tituloEstab !== '' || this.state.descricaoEstab !== '' || this.state.precoEstab !== '' || this.state.phoneEstab !== '' || this.state.enderecoEstab !== '' || this.state.horarioOpen !== '' || this.state.horarioClose !== '' || this.state.categoria !== '' || this.state.segunda !== false || this.state.terca !== false || this.state.quarta !== false || this.state.quinta !== false || this.state.sexta !== false || this.state.sabado !== false || this.state.domingo !== false || this.state.image !== null) {
+      if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.segunda !== false && this.state.terca !== false && this.state.quarta !== false && this.state.quinta !== false && this.state.sexta !== false && this.state.sabado !== false && this.state.domingo !== false && this.state.image !== null) {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc().set({
@@ -405,7 +403,7 @@ export default class CriarAnuncio extends Component {
 
 
     if(type == 'Autonomo') {
-      if(this.state.tituloAuto !== '' || this.state.descricaoAuto !== '' || this.state.precoAuto !== '' || this.state.phoneAuto !== '' || this.state.categoria !== '' || this.state.segunda !== false || this.state.terca !== false || this.state.quarta !== false || this.state.quinta !== false || this.state.sexta !== false || this.state.sabado !== false || this.state.domingo !== false || this.state.image !== null || this.state.nomeAuto !== '') {
+      if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.segunda !== false && this.state.terca !== false && this.state.quarta !== false && this.state.quinta !== false && this.state.sexta !== false && this.state.sabado !== false && this.state.domingo !== false && this.state.image !== null && this.state.nomeAuto !== '') {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc().set({
@@ -831,7 +829,7 @@ export default class CriarAnuncio extends Component {
             <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione a Categoria Desejada</Heading6>
               {categorias.map(l => (
                 <View>
-                  <TouchableOpacity key={l.id} onPress={() => this.getCategory(l.title)}>
+                  <TouchableOpacity key={this.makeid(10)} onPress={() => this.getCategory(l.title)}>
                       <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
                   </TouchableOpacity>
                 </View>

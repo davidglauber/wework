@@ -132,7 +132,7 @@ export default class TelaPrincipalAnuncio extends Component {
     let e = this;
     let currentUserUID = firebase.auth().currentUser.uid;
 
-    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Autonomo").where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
       let anunciosAutoDidMount = []
       documentSnapshot.forEach(function(doc) {
         anunciosAutoDidMount.push({
@@ -147,7 +147,7 @@ export default class TelaPrincipalAnuncio extends Component {
       e.setState({anunciosAuto: anunciosAutoDidMount})
     })
 
-    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Estabelecimento").where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
       let anunciosEstabDidMount = []
       documentSnapshot.forEach(function(doc) {
         anunciosEstabDidMount.push({

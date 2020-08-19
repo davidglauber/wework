@@ -292,19 +292,6 @@ async componentDidMount() {
               <Heading6 style={styles.titleText}>Anúncios</Heading6>
             </View>
 
-           {/*  <FlatList
-              data={products}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderProductItem}
-              contentContainerStyle={styles.productsList}
-            />
-
-           */}
-
-
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
                         <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>

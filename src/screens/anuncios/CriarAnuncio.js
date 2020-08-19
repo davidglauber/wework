@@ -366,6 +366,9 @@ export default class CriarAnuncio extends Component {
         alert('Por favor, selecione uma imagem para o anúncio')
       }
 
+    if(this.state.phoneAuto.length <= 10 || this.state.phoneEstab.length <= 10){
+      alert('O número de telefone deve ter no mínimo 11 caracteres')
+    }
         
 
     if(type == 'Estabelecimento'){

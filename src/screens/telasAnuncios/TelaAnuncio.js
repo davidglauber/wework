@@ -14,7 +14,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  Picker,
+  FlatList,
   StyleSheet,
   Text,
   View,
@@ -183,6 +183,7 @@ export default class TelaAnuncio extends Component {
     this.state = {
       horario: '',
       anuncioAuto:[],
+      anuncioEstab:[],
       product: {
         images: [
           require('../../assets/img/confeiteira.jpeg'),
@@ -245,72 +246,21 @@ export default class TelaAnuncio extends Component {
     });
   };
 
-  onPressIncreaseAmount = () => {
-    const {product} = this.state;
-    let {quantity} = product;
-    const {servingSize} = product;
+  makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
 
-    quantity += 1;
-    product.quantity = quantity;
-
-    const total = quantity * product.price * servingSize;
-    product.total = total;
-
-    this.setState({
-      product,
-    });
-  };
-
-  onPressDecreaseAmount = () => {
-    const {product} = this.state;
-    let {quantity} = product;
-    const {servingSize} = product;
-
-    quantity -= 1;
-    quantity = quantity < 1 ? 1 : quantity;
-    product.quantity = quantity;
-
-    const total = quantity * product.price * servingSize;
-    product.total = total;
-
-    this.setState({
-      product,
-    });
-  };
-
-  setServingSize = (servingSize) => () => {
-    const {product} = this.state;
-    const {quantity} = product;
-
-    product.servingSize = servingSize;
-
-    const total = quantity * product.price * servingSize;
-    product.total = total;
-
-    this.setState({
-      product,
-    });
-  };
-
-  setSideDish = (sideDish) => () => {
-    const {product} = this.state;
-    product.sideDish = sideDish;
-
-    this.setState({
-      product,
-    });
-  };
 
   render() {
-    const {product, favorite} = this.state;
+    const {product, favorite, anuncioAuto} = this.state;
     const {
       images,
-      price,
-      description,
-      quantity,
-      servingSize,
-      sideDish,
-      total,
     } = product;
 
     return (
@@ -321,67 +271,97 @@ export default class TelaAnuncio extends Component {
         />
 
         <ScrollView>
-          <View style={styles.swiperContainer}>
-            <Swiper
-              loop={false}
-              paginationStyle={styles.paginationStyle}
-              activeDotStyle={styles.activeDot}
-              dotStyle={styles.dot}
-              index={isRTL ? images.length - 1 : 0}>
-              {images.map((item, i) => (
-                <Image
-                  key={`image_${i}`}
-                  defaultSource={imgHolder}
-                  source={getImgSource(item)}
-                  style={styles.slideImg}
-                />
-              ))}
-            </Swiper>
 
-            <View style={[styles.topButton, styles.left]}>
-              <TouchableItem onPress={this.goBack} borderless>
-                <View style={styles.buttonIconContainer}>
-                  <Icon
-                    name={CLOSE_ICON}
-                    size={22}
-                    color={Colors.secondaryText}
-                  />
+        <FlatList
+            keyExtractor={() => this.makeid(17)}
+            data={anuncioAuto}
+            renderItem={({item}) => 
+              <View>
+                <View style={styles.swiperContainer}>
+                  <Swiper
+                    loop={false}
+                    paginationStyle={styles.paginationStyle}
+                    activeDotStyle={styles.activeDot}
+                    dotStyle={styles.dot}
+                    index={isRTL ? images.length - 1 : 0}>
+                      <Image
+                        source={{uri: item.photo}}
+                        style={styles.slideImg}
+                      />
+                  </Swiper>
+
+                  <View style={[styles.topButton, styles.left]}>
+                    <TouchableItem onPress={this.goBack} borderless>
+                      <View style={styles.buttonIconContainer}>
+                        <Icon
+                          name={CLOSE_ICON}
+                          size={22}
+                          color={Colors.secondaryText}
+                        />
+                      </View>
+                    </TouchableItem>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.topButton,
+                      styles.right,
+                      favorite && styles.favorite,
+                    ]}>
+                    <TouchableItem onPress={this.onPressAddToFavorites} borderless>
+                      <View style={styles.buttonIconContainer}>
+                        <Icon
+                          name={FAVORITE_ICON}
+                          size={22}
+                          color={
+                            favorite ? Colors.onSecondaryColor : Colors.secondaryText
+                          }
+                        />
+                      </View>
+                    </TouchableItem>
+                  </View>
                 </View>
-              </TouchableItem>
-            </View>
 
-            <View
-              style={[
-                styles.topButton,
-                styles.right,
-                favorite && styles.favorite,
-              ]}>
-              <TouchableItem onPress={this.onPressAddToFavorites} borderless>
-                <View style={styles.buttonIconContainer}>
-                  <Icon
-                    name={FAVORITE_ICON}
-                    size={22}
-                    color={
-                      favorite ? Colors.onSecondaryColor : Colors.secondaryText
-                    }
-                  />
+                  <View style={styles.descriptionContainer}>
+                      <View style={styles.productTitleContainer}>
+                            <Heading5 style={styles.productTitle}>{item.title}</Heading5>
+                          <Text style={styles.priceText}>{item.value}</Text>
+                      </View>
+                  </View>
+
+                  <View style={styles.descriptionContainer}>
+                    <SmallText style={styles.shortDescription}>{item.description}</SmallText>
+                  </View>
+
+
+
+                  <View style={styles.pickerGroup}>
+                    <View style={styles.pickerContainer}>
+                      <Caption style={styles.caption}>Informações do Autônomo:</Caption>
+                    </View>
+                  </View>
+
+
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                      <FontAwesome5 name="user-tie" size={25} color={"#70AD66"}/>
+                      <Text style={{fontSize:15, marginLeft: 15}}>{item.nome}</Text>
+                  </View>
+
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                        <FontAwesome5 name="phone-square" size={30} color={"#70AD66"}/>
+                        <Text style={{fontSize:15, marginLeft: 15}}>{item.phone}</Text>
+                  </View>
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
+                        <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
+                        <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria}</Text>
+                  </View>
+          
                 </View>
-              </TouchableItem>
-            </View>
-          </View>
-
-          <View style={styles.descriptionContainer}>
-            <View style={styles.productTitleContainer}>
-                  <Heading5 style={styles.productTitle}>{product.name}</Heading5>
-              <Text style={styles.priceText}>{`R$ ${(
-                price * servingSize
-              ).toFixed(2)}`}</Text>
-            </View>
-          </View>
-
-          <View style={styles.descriptionContainer}>
-            <SmallText style={styles.shortDescription}>{description}</SmallText>
-          </View>
+            }
+          />
 
         {/* INFO ESTAB
           <View style={styles.pickerGroup}>
@@ -391,12 +371,6 @@ export default class TelaAnuncio extends Component {
           </View>
         */}
 
-          <View style={styles.pickerGroup}>
-            <View style={styles.pickerContainer}>
-              <Caption style={styles.caption}>Informações do Autônomo:</Caption>
-            </View>
-          </View>
-        
 
         {/* PICKER ESTAB <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                 <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
@@ -416,27 +390,12 @@ export default class TelaAnuncio extends Component {
 
         */}
 
-
-          <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                <FontAwesome5 name="user-tie" size={25} color={"#70AD66"}/>
-                <Text style={{fontSize:15, marginLeft: 15}}>João Figueiredo</Text>
-          </View>
-
         {/* LOCALIZACAO ESTAB   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                 <FontAwesome5 name="map-marked-alt" size={25} color={"#70AD66"}/>
                 <Text style={{fontSize:15, marginLeft: 15}}>Rua Domingues, 203</Text>
           </View>
         */}
 
-          <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                <FontAwesome5 name="phone-square" size={30} color={"#70AD66"}/>
-                <Text style={{fontSize:15, marginLeft: 15}}>(11) 98107-3287</Text>
-          </View>
-
-          <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
-                <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
-                <Text style={{fontSize:15, marginLeft: 15}}>Chefe de Cozinha</Text>
-          </View>
         </ScrollView>
 
           

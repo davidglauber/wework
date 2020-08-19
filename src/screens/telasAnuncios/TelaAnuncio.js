@@ -210,7 +210,7 @@ export default class TelaAnuncio extends Component {
 
     console.log('ID DO ANUNCIO: ' + idDoAnuncio)
 
-    await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('anuncios').where("idAnuncio", "==", idDoAnuncio).get().then(function(querySnapshot){
+    await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('anuncios').where("idAnuncio", "==", idDoAnuncio).where("type", "==", "Autonomo").get().then(function(querySnapshot){
       let anuncioAutoDidMount = []
       querySnapshot.forEach(function(doc) {
         anuncioAutoDidMount.push({
@@ -230,7 +230,32 @@ export default class TelaAnuncio extends Component {
       e.setState({anuncioAuto: anuncioAutoDidMount})
     })
 
-    console.log('ARRAY ANUNCIO: ' + this.state.anuncioAuto)
+
+    await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('anuncios').where("idAnuncio", "==", idDoAnuncio).where("type", "==", "Estabelecimento").get().then(function(querySnapshot){
+      let anuncioEstabDidMount = []
+      querySnapshot.forEach(function(doc) {
+        anuncioEstabDidMount.push({
+          idUser: doc.data().idUser,
+          value: doc.data().valueServiceEstab,
+          idAnuncio: doc.data().idAnuncio,
+          photo: doc.data().photoPublish,
+          phone: doc.data().phoneNumberEstab,
+          title: doc.data().titleEstab,
+          categoria: doc.data().categoryEstab,
+          description: doc.data().descriptionEstab,
+          type: doc.data().type,
+          verified: doc.data().verifiedPublish,
+          timeToOpen: doc.data().timeOpen,
+          timeToClose: doc.data().timeClose,
+          local: doc.data().localEstab,
+          workDays: doc.data().workDays
+        })
+      })
+      e.setState({anuncioEstab: anuncioEstabDidMount})
+    })
+
+    console.log('ARRAY ANUNCIO anuncioEstab: ' + this.state.anuncioEstab)
+    console.log('ARRAY ANUNCIO autonomo: ' + this.state.anuncioAuto)
   }
 
   goBack = () => {
@@ -258,7 +283,7 @@ export default class TelaAnuncio extends Component {
 
 
   render() {
-    const {product, favorite, anuncioAuto} = this.state;
+    const {product, favorite, anuncioAuto, anuncioEstab} = this.state;
     const {
       images,
     } = product;
@@ -363,16 +388,125 @@ export default class TelaAnuncio extends Component {
             }
           />
 
-        {/* INFO ESTAB
-          <View style={styles.pickerGroup}>
-            <View style={styles.pickerContainer}>
-              <Caption style={styles.caption}>Informações do Estabelecimento:</Caption>
-            </View>
-          </View>
-        */}
+        </ScrollView>
 
 
-        {/* PICKER ESTAB <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <ScrollView>
+
+        <FlatList
+            keyExtractor={() => this.makeid(17)}
+            data={anuncioEstab}
+            renderItem={({item}) => 
+              <View>
+                <View style={styles.swiperContainer}>
+                  <Swiper
+                    loop={false}
+                    paginationStyle={styles.paginationStyle}
+                    activeDotStyle={styles.activeDot}
+                    dotStyle={styles.dot}
+                    index={isRTL ? images.length - 1 : 0}>
+                      <Image
+                        source={{uri: item.photo}}
+                        style={styles.slideImg}
+                      />
+                  </Swiper>
+
+                  <View style={[styles.topButton, styles.left]}>
+                    <TouchableItem onPress={this.goBack} borderless>
+                      <View style={styles.buttonIconContainer}>
+                        <Icon
+                          name={CLOSE_ICON}
+                          size={22}
+                          color={Colors.secondaryText}
+                        />
+                      </View>
+                    </TouchableItem>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.topButton,
+                      styles.right,
+                      favorite && styles.favorite,
+                    ]}>
+                    <TouchableItem onPress={this.onPressAddToFavorites} borderless>
+                      <View style={styles.buttonIconContainer}>
+                        <Icon
+                          name={FAVORITE_ICON}
+                          size={22}
+                          color={
+                            favorite ? Colors.onSecondaryColor : Colors.secondaryText
+                          }
+                        />
+                      </View>
+                    </TouchableItem>
+                  </View>
+                </View>
+
+                  <View style={styles.descriptionContainer}>
+                      <View style={styles.productTitleContainer}>
+                            <Heading5 style={styles.productTitle}>{item.title}</Heading5>
+                          <Text style={styles.priceText}>{item.value}</Text>
+                      </View>
+                  </View>
+
+                  <View style={styles.descriptionContainer}>
+                    <SmallText style={styles.shortDescription}>{item.description}</SmallText>
+                  </View>
+
+
+
+                  <View style={styles.pickerGroup}>
+                    <View style={styles.pickerContainer}>
+                      <Caption style={styles.caption}>Informações do Estabelecimento:</Caption>
+                    </View>
+                  </View>
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                      <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
+                      <Text style={{fontSize:15, marginLeft: 15}}>Aberto durante {item.workDays} dias na semana</Text>
+                  </View>
+
+
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                      <FontAwesome5 name="map-marked-alt" size={25} color={"#70AD66"}/>
+                        <Text style={{fontSize:15, marginLeft: 15}}>{item.local}</Text>
+                  </View>
+
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                        <FontAwesome5 name="phone-square" size={30} color={"#70AD66"}/>
+                        <Text style={{fontSize:15, marginLeft: 15}}>{item.phone}</Text>
+                  </View>
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
+                        <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
+                        <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria}</Text>
+                  </View>
+          
+                </View>
+            }
+          />
+
+
+        {/* <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                 <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
                 <Picker
                   selectedValue={this.state.horario}
@@ -386,58 +520,19 @@ export default class TelaAnuncio extends Component {
                   <Picker.Item label="Sábado: De: 8:00 às 21:00" value=""/>
                   <Picker.Item label="Domingo: De: 8:00 às 21:00" value=""/>
                 </Picker>
-          </View>
+            </View>
 
         */}
 
-        {/* LOCALIZACAO ESTAB   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+        {/* <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                 <FontAwesome5 name="map-marked-alt" size={25} color={"#70AD66"}/>
                 <Text style={{fontSize:15, marginLeft: 15}}>Rua Domingues, 203</Text>
-          </View>
+            </View>
         */}
 
         </ScrollView>
 
           
-
-      {/*  <View style={styles.amountContainer}>
-          <View style={styles.amountButtonsContainer}>
-            <TouchableItem onPress={this.onPressDecreaseAmount} borderless>
-              <View style={styles.iconContainer}>
-                <Icon
-                  name={MINUS_ICON}
-                  size={20}
-                  color={Colors.onPrimaryColor}
-                />
-              </View>
-            </TouchableItem>
-
-            <Text style={styles.quantity}>{quantity}</Text>
-
-            <TouchableItem onPress={this.onPressIncreaseAmount} borderless>
-              <View style={styles.iconContainer}>
-                <Icon
-                  name={PLUS_ICON}
-                  size={20}
-                  color={Colors.onPrimaryColor}
-                />
-              </View>
-            </TouchableItem>
-          </View>
-        </View>
-
-        */}
-
-       {/*  <View style={styles.bottomButtonContainer}>
-          <Button onPress={this.goBack} title={'Add to Cart'.toUpperCase()} />
-          <View style={styles.buttonPriceContainer}>
-            <Text style={styles.buttonPriceText}>
-              {`$ ${total.toFixed(2)}`}
-            </Text>
-          </View>
-        </View>
-      */}
-
         <View style={{flex: 1, flexDirection:'row', marginBottom:50, bottom:50}}>
             <View style={{flexDirection:'row', justifyContent:'space-between', width: 329, height:80, left:16, padding:20,  backgroundColor: '#E3FAE5', borderRadius:20}}>
                 <TouchableOpacity style={{flexDirection:'row', padding:10, alignItems:'center', width: '100%', height:'100%', borderRadius: 20, backgroundColor: '#70AD66'}}>

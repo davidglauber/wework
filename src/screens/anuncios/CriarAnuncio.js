@@ -332,6 +332,9 @@ export default class CriarAnuncio extends Component {
     let domingo = this.state.domingo;
     let e = this;
 
+    let publishId = e.makeid(17);
+    let getSameIdToDocument = '';
+        getSameIdToDocument = publishId;
 
     let imageId = e.makeid(17)
     let userUID = firebase.auth().currentUser.uid;
@@ -366,11 +369,12 @@ export default class CriarAnuncio extends Component {
         
 
     if(type == 'Estabelecimento'){
-      if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.segunda !== false && this.state.terca !== false && this.state.quarta !== false && this.state.quinta !== false && this.state.sexta !== false && this.state.sabado !== false && this.state.domingo !== false && this.state.image !== null) {
+      if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc().set({
+          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
               titleEstab: e.state.tituloEstab,
+              idAnuncio: getSameIdToDocument,
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
               valueServiceEstab: e.state.precoEstab,
@@ -403,12 +407,14 @@ export default class CriarAnuncio extends Component {
 
 
     if(type == 'Autonomo') {
-      if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.segunda !== false && this.state.terca !== false && this.state.quarta !== false && this.state.quinta !== false && this.state.sexta !== false && this.state.sabado !== false && this.state.domingo !== false && this.state.image !== null && this.state.nomeAuto !== '') {
+      if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc().set({
+          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
               titleAuto: e.state.tituloAuto,
+              idAnuncio: getSameIdToDocument,
               idUser: userUID,
+              nome: e.state.nomeAuto,
               descriptionAuto: e.state.descricaoAuto,
               valueServiceAuto: e.state.precoAuto,
               type: 'Autonomo',
@@ -548,7 +554,7 @@ export default class CriarAnuncio extends Component {
                                 style={styles.inputStyle}
                                 value={this.state.tituloAuto}
                                 onChangeText={text => this.onChangeTituloAuto(text)}
-                                maxLength={18}
+                                maxLength={20}
                                 placeholder="Título Breve do Anúncio                                                        "
                               />
                           </View>
@@ -604,7 +610,7 @@ export default class CriarAnuncio extends Component {
                                 style={styles.inputStyle}
                                 value={this.state.tituloEstab}
                                 onChangeText={text => this.onChangeTituloEstab(text)}
-                                maxLength={18}
+                                maxLength={20}
                                 placeholder="Título Breve do Anúncio                                                        "
                               />
                             </View>

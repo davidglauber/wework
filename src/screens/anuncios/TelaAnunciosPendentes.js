@@ -232,6 +232,15 @@ export default class TelaAnunciosPendentes extends Component {
             </View>
 
 
+                  {anunciosEstab.length == 0 && anunciosAuto.length == 0 &&
+                    <View style={{flex:1, alignItems:'center', paddingTop:"50%"}}>
+                      <View>
+                        <Image style={{width:200, height:200, marginLeft:30}} source={require("../../assets/img/notfound.gif")} />
+                        <Text style={{fontWeight:'bold'}}>Nenhum Anúncio Pendente Foi Encontrado</Text>
+                      </View>
+                    </View>
+                  }
+
 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>

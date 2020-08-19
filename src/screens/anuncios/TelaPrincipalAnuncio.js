@@ -137,6 +137,8 @@ export default class TelaPrincipalAnuncio extends Component {
       documentSnapshot.forEach(function(doc) {
         anunciosAutoDidMount.push({
           idUser: doc.data().idUser,
+          nome: doc.data().nome,
+          idAnuncio: doc.data().idAnuncio,
           photo: doc.data().photoPublish,
           title: doc.data().titleAuto,
           description: doc.data().descriptionAuto,
@@ -152,6 +154,7 @@ export default class TelaPrincipalAnuncio extends Component {
       documentSnapshot.forEach(function(doc) {
         anunciosEstabDidMount.push({
           idUser: doc.data().idUser,
+          idAnuncio: doc.data().idAnuncio,
           photo: doc.data().photoPublish,
           title: doc.data().titleEstab,
           description: doc.data().descriptionEstab,
@@ -241,6 +244,15 @@ export default class TelaPrincipalAnuncio extends Component {
 
             </View>
 
+                {anunciosEstab.length == 0 && anunciosAuto.length == 0 &&
+                    <View style={{flex:1, alignItems:'center', paddingTop:"50%"}}>
+                        <View>
+                          <Image style={{width:200, height:200, marginLeft:20}} source={require("../../assets/img/notfound.gif")} />
+                          <Text style={{fontWeight:'bold'}}>Nenhum Anúncio Ativo Foi Encontrado</Text>
+                        </View>
+                    </View>
+                }
+
 
 
                 <View style={{flex:1, alignItems: 'center'}}>
@@ -261,7 +273,7 @@ export default class TelaPrincipalAnuncio extends Component {
                               </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
@@ -302,7 +314,7 @@ export default class TelaPrincipalAnuncio extends Component {
                                 </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                         <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                     </TouchableOpacity>
 

@@ -34,6 +34,9 @@ import TouchableItem from '../../components/TouchableItem';
 // import colors
 import Colors from '../../theme/colors';
 
+//import firebase
+import firebase from '../../config/firebase';
+
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
@@ -179,6 +182,7 @@ export default class TelaAnuncio extends Component {
     super(props);
     this.state = {
       horario: '',
+      anuncioAuto:[],
       product: {
         images: [
           require('../../assets/img/confeiteira.jpeg'),
@@ -196,6 +200,36 @@ export default class TelaAnuncio extends Component {
       },
       favorite: false,
     };
+  }
+
+  async componentDidMount() {
+    let e = this;
+    let idDoAnuncio = this.props.route.params.idDoAnuncio;
+    let currentUserUID = firebase.auth().currentUser.uid;
+
+    console.log('ID DO ANUNCIO: ' + idDoAnuncio)
+
+    await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('anuncios').where("idAnuncio", "==", idDoAnuncio).get().then(function(querySnapshot){
+      let anuncioAutoDidMount = []
+      querySnapshot.forEach(function(doc) {
+        anuncioAutoDidMount.push({
+          idUser: doc.data().idUser,
+          value: doc.data().valueServiceAuto,
+          idAnuncio: doc.data().idAnuncio,
+          nome: doc.data().nome,
+          photo: doc.data().photoPublish,
+          phone: doc.data().phoneNumberAuto,
+          title: doc.data().titleAuto,
+          categoria: doc.data().categoryAuto,
+          description: doc.data().descriptionAuto,
+          type: doc.data().type,
+          verified: doc.data().verifiedPublish
+        })
+      })
+      e.setState({anuncioAuto: anuncioAutoDidMount})
+    })
+
+    console.log('ARRAY ANUNCIO: ' + this.state.anuncioAuto)
   }
 
   goBack = () => {

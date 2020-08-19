@@ -21,8 +21,12 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
+
+//import linking
+import * as Linking from 'expo-linking';
+
+
 // import utils
-import getImgSource from '../../utils/getImgSource.js';
 
 // import components
 import Button from '../../components/buttons/Button';
@@ -200,15 +204,18 @@ export default class TelaAnuncio extends Component {
         total: 10.9,
       },
       favorite: false,
+      phoneNavigator: this.props.route.params.phoneNumberNavigator
     };
   }
 
   async componentDidMount() {
     let e = this;
     let idDoAnuncio = this.props.route.params.idDoAnuncio;
+    
     let currentUserUID = firebase.auth().currentUser.uid;
 
     console.log('ID DO ANUNCIO: ' + idDoAnuncio)
+    console.log('Numero de telefone: ' + this.state.phoneNavigator)
 
     await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('anuncios').where("idAnuncio", "==", idDoAnuncio).where("type", "==", "Autonomo").get().then(function(querySnapshot){
       let anuncioAutoDidMount = []
@@ -281,6 +288,10 @@ export default class TelaAnuncio extends Component {
     return result;
   }
 
+
+  openPhoneApp(phone) {
+    Linking.openURL(`tel:${phone}`)
+  }
 
   render() {
     const {product, favorite, anuncioAuto, anuncioEstab} = this.state;
@@ -535,7 +546,7 @@ export default class TelaAnuncio extends Component {
           
         <View style={{flex: 1, flexDirection:'row', marginBottom:50, bottom:50}}>
             <View style={{flexDirection:'row', justifyContent:'space-between', width: 329, height:80, left:16, padding:20,  backgroundColor: '#E3FAE5', borderRadius:20}}>
-                <TouchableOpacity style={{flexDirection:'row', padding:10, alignItems:'center', width: '100%', height:'100%', borderRadius: 20, backgroundColor: '#70AD66'}}>
+                <TouchableOpacity onPress={() => this.openPhoneApp(this.state.phoneNavigator)} style={{flexDirection:'row', padding:10, alignItems:'center', width: '100%', height:'100%', borderRadius: 20, backgroundColor: '#70AD66'}}>
                     <Text style={{fontWeight:'bold', color:'white', marginRight:20}}>Telefonar</Text>
                     <FontAwesome5 name="mobile" size={20} color={"white"}/>
                 </TouchableOpacity>   

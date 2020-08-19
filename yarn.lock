@@ -3506,7 +3506,7 @@ expo-linear-gradient@~8.2.1:
   dependencies:
     prop-types "15.7.2"
 
-expo-linking@~1.0.3:
+expo-linking@^1.0.3, expo-linking@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-1.0.3.tgz#8c0f68e89262d09d4b280479010ac21ccfa1e971"
   integrity sha512-Bzm8qVlSRBmoQcnveBBLO4ea/AEW4t10WFiJ18m/w8OnEXbsP7WT39UyhTuFsrnjYSLMjW4/JXkfmswBOhISuA==
@@ -6432,6 +6432,13 @@ react-native-gesture-handler@^1.6.1:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-indicators@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/react-native-indicators/-/react-native-indicators-0.17.0.tgz#92f95efaf5fb53be576dfe4e1980a25655a93f55"
+  integrity sha512-s23em477GHGxWeGczWrixScAZD6tQU4mx1fttlrwhEGKOxhBgp55Kh3RoD9Wj4yna4e5W35xQNoPqoJAT6QW5A==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"

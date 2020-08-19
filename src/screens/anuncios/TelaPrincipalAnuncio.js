@@ -143,6 +143,7 @@ export default class TelaPrincipalAnuncio extends Component {
           title: doc.data().titleAuto,
           description: doc.data().descriptionAuto,
           type: doc.data().type,
+          phone: doc.data().phoneNumberAuto,
           verified: doc.data().verifiedPublish
         })
       })
@@ -158,6 +159,7 @@ export default class TelaPrincipalAnuncio extends Component {
           photo: doc.data().photoPublish,
           title: doc.data().titleEstab,
           description: doc.data().descriptionEstab,
+          phone: doc.data().phoneNumberEstab,
           type: doc.data().type,
           verified: doc.data().verifiedPublish
         })
@@ -273,7 +275,7 @@ export default class TelaPrincipalAnuncio extends Component {
                               </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
@@ -314,7 +316,7 @@ export default class TelaPrincipalAnuncio extends Component {
                                 </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                         <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                     </TouchableOpacity>
 

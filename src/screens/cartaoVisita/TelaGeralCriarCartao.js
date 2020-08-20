@@ -263,7 +263,7 @@ export default class TelaGeralCriarCartao extends Component {
 
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription}</Text>
+          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription} ...</Text>
         </View>
       );
     } else {
@@ -396,22 +396,27 @@ export default class TelaGeralCriarCartao extends Component {
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>{item.title}</Text>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:15, color:'#70AD66'}}>{item.nome}</Text>
 
                                     {this.cutDescription(item.description)}
+
+                                    <View style={{flexDirection:'row'}}>
+                                      <Text style={{marginLeft:70, paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
+                                      <FontAwesome5 style={{position:'absolute', left:147, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
+                                    </View>
                                   </View>
                               </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                   </TouchableOpacity>
 
-                                  <TouchableOpacity onPress={() => this.deletePublish(item.idAnuncio)} style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.deletePublish(item.idCartao)} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="trash" size={19} color={"grey"} />
                                   </TouchableOpacity>
 
@@ -430,115 +435,47 @@ export default class TelaGeralCriarCartao extends Component {
 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
-                            <View style={{flexDirection:'row'}}>
-                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
-                                
-                                <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
+                    <FlatList
+                        keyExtractor={() => this.makeid(17)}
+                        data={cartoesEstab}
+                        renderItem={({item}) => 
+                            <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                              <View style={{flexDirection:'row'}}>
+                                  <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
-                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
+                                  <View style={{flexDirection:'column', }}>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:15, color:'#70AD66'}}>{item.title}</Text>
+
+                                    {this.cutDescription(item.description)}
+
+                                    <View style={{flexDirection:'row'}}>
+                                      <Text style={{marginLeft:40, paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
+                                      <FontAwesome5 style={{position:'absolute', left:147, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
+                                    </View>
                                   </View>
+                              </View>  
+
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                                  </TouchableOpacity>
+
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
+                                      <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
+                                  </TouchableOpacity>
+
+                                  <TouchableOpacity onPress={() => this.deletePublish(item.idCartao)} style={{marginTop: 24, marginRight: 10}}>
+                                      <FontAwesome5  name="trash" size={19} color={"grey"} />
+                                  </TouchableOpacity>
+
+                                  <View style={{marginTop: 24, marginRight: 30}}>
+                                      <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
                                 </View>
-                            </View>  
+                              </View> 
 
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
-                                </View>
-                            </View> 
-
-                        </View>
-                    </View>
-                </View>
-
-
-
-                <View style={{flex:1, alignItems: 'center'}}>
-                    <View>
-                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
-                            <View style={{flexDirection:'row'}}>
-                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
-                                
-                                <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
-                                  
-                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
-                                  </View>
-                                </View>
-                            </View>  
-
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
-                                </View>
-                            </View> 
-
-                        </View>
-                    </View>
-                </View>
-
-
-                <View style={{flex:1, alignItems: 'center'}}>
-                    <View>
-                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
-                            <View style={{flexDirection:'row'}}>
-                                <Image source={fotoAnuncioEst} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
-                                
-                                <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>Tradução Profissional</Text>
-                                  
-                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Transcrevo qualquer documento em qualquer língua</Text>
-                                  </View>
-                                </View>
-                            </View>  
-
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                </View>
-
-                                <View style={{marginTop: 24, marginRight: 10}}>
-                                    <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                </View>
-                                
-                                <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
-                                </View>
-                            </View> 
-
-                        </View>
+                            </View>
+                        }
+                      />
                     </View>
                 </View>
 

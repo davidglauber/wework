@@ -157,6 +157,7 @@ async componentDidMount() {
 
               e.setState({emailUserFunction: removeCharacters6})
 
+
         })
         } else {
           e.setState({status: false})

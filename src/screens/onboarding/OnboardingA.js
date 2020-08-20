@@ -20,6 +20,8 @@ import {MaterialCommunityIcons as Icon} from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
 
 
+//import firebase
+import firebase from '../../config/firebase';
 
 // import components
 import {Heading5, Paragraph} from '../../components/text/CustomText';
@@ -165,6 +167,18 @@ export default class OnboardingA extends Component {
     this.state = {
       activeIndex: 0,
     };
+  }
+
+
+
+   componentDidMount() {
+      firebase.auth().onAuthStateChanged((user) => {
+          if(user) {
+            this.props.navigation.navigate('HomeNavigator')
+          } else {
+            return null
+          }
+      })
   }
 
   onIndexChanged = (index) => {

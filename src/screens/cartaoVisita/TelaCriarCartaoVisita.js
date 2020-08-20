@@ -108,9 +108,7 @@ export default class TelaCriarCartaoVisita extends Component {
       horarioClose:'',
       phoneAuto:'',
       phoneEstab:'',
-      precoEstab:'',
       nomeAuto:'',
-      tituloAuto:'',
       tituloEstab:'',
       descricaoAuto:'',
       descricaoEstab:'',
@@ -198,15 +196,7 @@ export default class TelaCriarCartaoVisita extends Component {
     console.log('estab phone: '  + this.state.phoneEstab)
   }
 
-  onChangePrecoEstab(text) {
-    this.setState({precoEstab: text})
-    console.log('preco estab'  + this.state.precoEstab)
-  }
 
-  onChangeTituloAuto(text) {
-    this.setState({tituloAuto: text})
-    console.log('title auto'  + this.state.tituloAuto)
-  }
 
   onChangeTituloEstab(text) {
     this.setState({tituloEstab: text})
@@ -362,15 +352,14 @@ export default class TelaCriarCartaoVisita extends Component {
 
    
     if(type == 'Estabelecimento'){
-      if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
+      if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
               titleEstab: e.state.tituloEstab,
-              idAnuncio: getSameIdToDocument,
+              idCartao: getSameIdToDocument,
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
-              valueServiceEstab: e.state.precoEstab,
               type: 'Estabelecimento',
               verifiedPublish: false,
               phoneNumberEstab: e.state.phoneEstab,
@@ -404,8 +393,7 @@ export default class TelaCriarCartaoVisita extends Component {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
-              titleAuto: e.state.tituloAuto,
-              idAnuncio: getSameIdToDocument,
+              idCartao: getSameIdToDocument,
               idUser: userUID,
               nome: e.state.nomeAuto,
               descriptionAuto: e.state.descricaoAuto,
@@ -582,7 +570,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                 value={this.state.tituloEstab}
                                 onChangeText={text => this.onChangeTituloEstab(text)}
                                 maxLength={20}
-                                placeholder="Título Breve do Anúncio                                                        "
+                                placeholder="Nome da Empresa                                                        "
                               />
                             </View>
 
@@ -591,18 +579,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                 style={styles.inputStyle}
                                 value={this.state.descricaoEstab}
                                 onChangeText={text => this.onChangeDescricaoEstab(text)}
-                                placeholder="Descrição do Anúncio                                                    "
-                              />
-                            </View>
-
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInputMask
-                                type={'money'}
-                                style={styles.inputStyle}
-                                value={this.state.precoEstab}
-                                onChangeText={text => this.onChangePrecoEstab(text)}
-                                keyboardType={"number-pad"}
-                                placeholder="Valor do Serviço                                                          "
+                                placeholder="Dê uma descrição detelhada                                                    "
                               />
                             </View>
 

@@ -15,28 +15,13 @@ import {
 } from 'react-native';
 import Color from 'color';
 
-// import utils
-import getImgSource from '../../utils/getImgSource.js';
 
-// import components
-import ActionProductCard from '../../components/cards/ActionProductCard';
-//import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
-import LinkButton from '../../components/buttons/LinkButton';
 import {Heading6} from '../../components/text/CustomText';
-import TouchableItem from '../../components/TouchableItem';
 
 // import colors
 import Colors from '../../theme/colors';
 
-// HomeA Config
-const imgHolder = require('../../assets/img/imgholder.png');
-
 import firebase from '../../config/firebase'; 
-
-
-//Import images
-const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
-const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 
 //import icons
@@ -120,7 +105,6 @@ export default class TelaPrincipalAnuncio extends Component {
     this.state = {
       anunciosEstab: [],
       anunciosAuto:[],
-      statusVerified: false
     };
   }
 

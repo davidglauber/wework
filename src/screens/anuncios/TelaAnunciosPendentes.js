@@ -140,6 +140,8 @@ export default class TelaAnunciosPendentes extends Component {
           photo: doc.data().photoPublish,
           title: doc.data().titleAuto,
           description: doc.data().descriptionAuto,
+          idAnuncio: doc.data().idAnuncio,
+          phone: doc.data().phoneNumberAuto,
           type: doc.data().type,
           verified: doc.data().verifiedPublish
         })
@@ -154,6 +156,8 @@ export default class TelaAnunciosPendentes extends Component {
           idUser: doc.data().idUser,
           photo: doc.data().photoPublish,
           title: doc.data().titleEstab,
+          idAnuncio: doc.data().idAnuncio,
+          phone: doc.data().phoneNumberEstab,
           description: doc.data().descriptionEstab,
           type: doc.data().type,
           verified: doc.data().verifiedPublish
@@ -205,11 +209,6 @@ export default class TelaAnunciosPendentes extends Component {
     }
   }
 
-
-  async renderNoVerifiedPublishes() {
-    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("verifiedPublish", "==", "false")
-  }
-  
  
   render() {
     const {anunciosEstab, anunciosAuto} = this.state;
@@ -227,8 +226,6 @@ export default class TelaAnunciosPendentes extends Component {
               <View style={styles.titleContainer}>
                 <Heading6 style={styles.titleText}>Anúncios Pendentes</Heading6>
               </View>
-
-
             </View>
 
 
@@ -260,7 +257,7 @@ export default class TelaAnunciosPendentes extends Component {
                               </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
@@ -301,7 +298,7 @@ export default class TelaAnunciosPendentes extends Component {
                                 </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                         <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                     </TouchableOpacity>
 

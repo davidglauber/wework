@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontWeight: '700',
+    marginRight:30
   },
   viewAllText: {
     color: Colors.primaryColor,
@@ -210,11 +211,6 @@ export default class TelaPrincipalAnuncio extends Component {
     }
   }
 
-
-  async renderNoVerifiedPublishes() {
-    await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("verifiedPublish", "==", "false")
-  }
-  
  
   render() {
     const {anunciosEstab, anunciosAuto} = this.state;
@@ -230,9 +226,9 @@ export default class TelaPrincipalAnuncio extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-                <TouchableOpacity  style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#e3e3e3"}}>
-                    <Text style={{color: 'black', fontWeight: 'bold'}}>Ativos</Text>
-                </TouchableOpacity>
+                <View style={styles.titleContainer}>
+                  <Heading6 style={styles.titleText}>Ativos</Heading6>
+                </View>
 
                 <TouchableOpacity onPress={this.navigateTo('Orders')} style={{marginRight:5, borderRadius:25, alignItems:'center', justifyContent:'center', width:40, height:40, backgroundColor: "#70AD66"}}>
                         <FontAwesome5  name="plus" size={19} color={"#fff"} />
@@ -279,9 +275,9 @@ export default class TelaPrincipalAnuncio extends Component {
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
-                                  <View style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                  </View>
+                                  </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="trash" size={19} color={"grey"} />
@@ -320,9 +316,9 @@ export default class TelaPrincipalAnuncio extends Component {
                                         <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                     </TouchableOpacity>
 
-                                    <View style={{marginTop: 24, marginRight: 10}}>
+                                    <TouchableOpacity onPress={() => this.this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                         <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                    </View>
+                                    </TouchableOpacity>
 
                                     <View style={{marginTop: 24, marginRight: 10}}>
                                         <FontAwesome5  name="trash" size={19} color={"grey"} />

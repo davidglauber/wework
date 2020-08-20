@@ -49,6 +49,8 @@ import HomeNavigator from './HomeNavigatorA';
 
 import TelaPrincipalAnuncio from '../screens/anuncios/TelaPrincipalAnuncio';
 
+import EditarAnuncio from '../screens/anuncios/EditarAnuncio';
+
 // import Product screen
 import TelaAnuncio from '../screens/telasAnuncios/TelaAnuncio';
 import TelaAnunciosPendentes from '../screens/anuncios/TelaAnunciosPendentes';
@@ -258,6 +260,12 @@ function MainNavigatorA() {
           component={TelaPrincipalAnuncio}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="EditarAnuncio"
+          component={EditarAnuncio}
+          options={{headerShown: false}}
+        />
+
         <Stack.Screen
           name="TelaAnunciosPendentes"
           component={TelaAnunciosPendentes}

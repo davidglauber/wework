@@ -130,6 +130,7 @@ export default class EditarAnuncio extends Component {
       imageName:'',
       animated: true,
       modalVisible: false,
+      modalLoadVisible: false,
       idAnuncio: ''
     };
   }
@@ -144,6 +145,12 @@ export default class EditarAnuncio extends Component {
     let routeIdAnuncio = this.props.route.params.idAnuncio;
     let userUID = firebase.auth().currentUser.uid;
 
+
+    this.setModalLoadVisible(true)
+
+    this.sleep(2000).then(() => { 
+        this.setModalLoadVisible(false)
+    })
 
     //getting categories
     await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
@@ -417,6 +424,10 @@ export default class EditarAnuncio extends Component {
     this.setState({ modalVisible: visible });
   }
 
+  setModalLoadVisible = (visible) => {
+    this.setState({ modalLoadVisible: visible });
+  }
+
 
 
   uploadFormToFirebase() {
@@ -572,6 +583,23 @@ export default class EditarAnuncio extends Component {
                       <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
                         <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
                           <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Enviando o Seu Anúncio para a Análise</Text>
+                          <PulseIndicator color='#00b970'/>
+                        </View>
+                      </View>
+                    </Modal>
+
+
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={this.state.modalLoadVisible}
+                        onRequestClose={() => {
+                          Alert.alert("Modal has been closed.");
+                        }}
+                      >
+                      <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
+                        <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
+                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
                           <PulseIndicator color='#00b970'/>
                         </View>
                       </View>

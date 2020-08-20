@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {
   FlatList,
-  ImageBackground,
+  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -211,6 +211,25 @@ export default class TelaPrincipalAnuncio extends Component {
     }
   }
 
+
+
+  deletePublish(itemToBeDeleted) {
+    let userUID = firebase.auth().currentUser.uid;
+    
+    Alert.alert(
+      'Atenção!!!',
+      'Você tem certeza que quer deletar este anúncio?',
+      [
+        {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeleted).get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc){
+            doc.ref.delete();
+          })
+        })},
+        {text: 'Não', onPress: () => {}}
+      ]
+    )
+  }
+
  
   render() {
     const {anunciosEstab, anunciosAuto} = this.state;
@@ -279,9 +298,9 @@ export default class TelaPrincipalAnuncio extends Component {
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                   </TouchableOpacity>
 
-                                  <View style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.deletePublish(item.idAnuncio)} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                  </View>
+                                  </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
                                       <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
@@ -320,9 +339,9 @@ export default class TelaPrincipalAnuncio extends Component {
                                         <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                     </TouchableOpacity>
 
-                                    <View style={{marginTop: 24, marginRight: 10}}>
+                                    <TouchableOpacity onPress={() => this.deletePublish(item.idAnuncio)} style={{marginTop: 24, marginRight: 10}}>
                                         <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                    </View>
+                                    </TouchableOpacity>
                                     
                                     <View style={{marginTop: 24, marginRight: 30}}>
                                         <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />

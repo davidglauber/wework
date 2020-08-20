@@ -187,6 +187,62 @@ export default class EditarAnuncio extends Component {
 
             e.setState({idAnuncio: idAnuncio})
             e.setState({tituloAuto: titulo})
+            e.setState({descricaoAuto: descricao})
+            e.setState({categoria: categoria})
+            e.setState({precoAuto: valor})
+            e.setState({nomeAuto: nome})
+            e.setState({phoneAuto: telefone})
+            e.setState({image: imagem})
+        })
+
+    }
+
+
+    if(routeType == 'Estabelecimento') { 
+        this.setState({type: 'Estabelecimento'})
+        await firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", routeIdAnuncio).get().then(function(querySnapshot) {
+            let idAnuncio = ''
+            let categoria = ''
+            let descricao = ''
+            let idUser = ''
+            let nome = ''
+            let telefone = ''
+            let valor = ''
+            let imagem = ''
+            let titulo = ''
+            let verificado = false
+            let local = ''
+            let abertura = ''
+            let fechamento = ''
+            let workDays = ''
+
+            querySnapshot.forEach(function(doc) {
+                idAnuncio = doc.data().id,
+                titulo = doc.data().titleEstab,
+                categoria = doc.data().categoryEstab,
+                descricao = doc.data().descriptionEstab,
+                idUser = doc.data().idUser,
+                telefone = doc.data().phoneNumberEstab,
+                valor = doc.data().valueServiceEstab,
+                imagem = doc.data().photoPublish,
+                verificado = false,
+                local = doc.data().localEstab,
+                abertura = doc.data().timeOpen,
+                fechamento = doc.data().timeClose,
+                workDays = doc.data().workDays
+            })
+
+            e.setState({idAnuncio: idAnuncio})
+            e.setState({tituloEstab: titulo})
+            e.setState({descricaoEstab: descricao})
+            e.setState({categoria: categoria})
+            e.setState({precoEstab: valor})
+            e.setState({phoneEstab: telefone})
+            e.setState({image: imagem})
+            e.setState({enderecoEstab: local})
+            e.setState({horarioOpen: abertura})
+            e.setState({horarioClose: fechamento})
+            e.setState({workDays: workDays})
         })
 
     }
@@ -364,6 +420,7 @@ export default class EditarAnuncio extends Component {
 
 
   uploadFormToFirebase() {
+    let routeIdAnuncio = this.props.route.params.idAnuncio;
     let segunda = this.state.segunda;
     let terca = this.state.terca;
     let quarta = this.state.quarta;
@@ -407,18 +464,15 @@ export default class EditarAnuncio extends Component {
         alert('Por favor, selecione uma imagem para o anúncio')
       }
 
-    if(this.state.phoneAuto.length <= 10 || this.state.phoneEstab.length <= 10){
-      alert('O número de telefone deve ter no mínimo 11 caracteres')
-    }
         
 
     if(type == 'Estabelecimento'){
       if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
-        this.sleep(2000).then(() => { 
+        this.sleep(3000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(routeIdAnuncio).update({
               titleEstab: e.state.tituloEstab,
-              idAnuncio: getSameIdToDocument,
+              idAnuncio: routeIdAnuncio,
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
               valueServiceEstab: e.state.precoEstab,
@@ -452,11 +506,11 @@ export default class EditarAnuncio extends Component {
 
     if(type == 'Autonomo') {
       if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
-        this.sleep(2000).then(() => { 
+        this.sleep(3000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(routeIdAnuncio).update({
               titleAuto: e.state.tituloAuto,
-              idAnuncio: getSameIdToDocument,
+              idAnuncio: routeIdAnuncio,
               idUser: userUID,
               nome: e.state.nomeAuto,
               descriptionAuto: e.state.descricaoAuto,

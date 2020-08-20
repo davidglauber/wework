@@ -261,9 +261,9 @@ export default class TelaAnunciosPendentes extends Component {
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
-                                  <View style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                  </View>
+                                  </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="trash" size={19} color={"grey"} />
@@ -302,9 +302,9 @@ export default class TelaAnunciosPendentes extends Component {
                                         <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                     </TouchableOpacity>
 
-                                    <View style={{marginTop: 24, marginRight: 10}}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                         <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
-                                    </View>
+                                    </TouchableOpacity>
 
                                     <View style={{marginTop: 24, marginRight: 10}}>
                                         <FontAwesome5  name="trash" size={19} color={"grey"} />

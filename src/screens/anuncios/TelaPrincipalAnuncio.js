@@ -316,7 +316,7 @@ export default class TelaPrincipalAnuncio extends Component {
                                         <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={() => this.this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                         <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                     </TouchableOpacity>
 

@@ -215,17 +215,16 @@ export default class TelaPrincipalAnuncio extends Component {
 
   deletePublish(itemToBeDeleted) {
     let userUID = firebase.auth().currentUser.uid;
-    
     Alert.alert(
       'Atenção!!!',
       'Você tem certeza que quer deletar este anúncio?',
       [
-        {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeleted).get().then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc){
-            doc.ref.delete();
-          })
-        })},
-        {text: 'Não', onPress: () => {}}
+        {text: 'Não', onPress: () => {}},
+          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeleted).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc){
+              doc.ref.delete();
+            })
+          })}
       ]
     )
   }

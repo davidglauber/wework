@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {
   FlatList,
-  ImageBackground,
+  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -15,28 +15,14 @@ import {
 } from 'react-native';
 import Color from 'color';
 
-// import utils
-import getImgSource from '../../utils/getImgSource.js';
 
 // import components
-import ActionProductCard from '../../components/cards/ActionProductCard';
-//import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
-import LinkButton from '../../components/buttons/LinkButton';
 import {Heading6} from '../../components/text/CustomText';
-import TouchableItem from '../../components/TouchableItem';
 
 // import colors
 import Colors from '../../theme/colors';
 
-// HomeA Config
-const imgHolder = require('../../assets/img/imgholder.png');
-
 import firebase from '../../config/firebase'; 
-
-
-//Import images
-const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
-const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 
 //import icons
@@ -209,7 +195,25 @@ export default class TelaAnunciosPendentes extends Component {
     }
   }
 
- 
+
+  deletePublish(itemToBeDeleted) {
+    let userUID = firebase.auth().currentUser.uid;
+    Alert.alert(
+      'Atenção!!!',
+      'Você tem certeza que quer deletar este anúncio?',
+      [
+        {text: 'Não', onPress: () => {}},
+          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeleted).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc){
+              doc.ref.delete();
+            })
+          })}
+      ]
+    )
+  }
+
+
+
   render() {
     const {anunciosEstab, anunciosAuto} = this.state;
 
@@ -265,9 +269,9 @@ export default class TelaAnunciosPendentes extends Component {
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                   </TouchableOpacity>
 
-                                  <View style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.deletePublish(item.idAnuncio)} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                  </View>
+                                  </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
                                       <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
@@ -306,9 +310,9 @@ export default class TelaAnunciosPendentes extends Component {
                                         <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                     </TouchableOpacity>
 
-                                    <View style={{marginTop: 24, marginRight: 10}}>
+                                    <TouchableOpacity onPress={() => this.deletePublish(item.idAnuncio)} style={{marginTop: 24, marginRight: 10}}>
                                         <FontAwesome5  name="trash" size={19} color={"grey"} />
-                                    </View>
+                                    </TouchableOpacity>
                                     
                                     <View style={{marginTop: 24, marginRight: 30}}>
                                         <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />

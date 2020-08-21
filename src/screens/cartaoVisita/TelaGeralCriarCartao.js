@@ -306,7 +306,7 @@ export default class TelaGeralCriarCartao extends Component {
 
                                     {this.cutDescription(item.description)}
 
-                                    <View style={{flexDirection:'row', paddingHorizontal:65}}>
+                                    <View style={{flexDirection:'row', paddingHorizontal:'25%'}}>
                                       <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
                                       <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
                                     </View>
@@ -318,7 +318,7 @@ export default class TelaGeralCriarCartao extends Component {
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarCartao', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                   </TouchableOpacity>
 
@@ -366,7 +366,7 @@ export default class TelaGeralCriarCartao extends Component {
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarCartao', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                   </TouchableOpacity>
 

@@ -59,6 +59,8 @@ import TelaCartaoPendente from '../screens/cartaoVisita/TelaCartaoPendente';
 
 import MostrarCartao from '../screens/cartaoVisita/MostrarCartao';
 
+import EditarCartao from '../screens/cartaoVisita/EditarCartao';
+
 import TelaCartaoVisita from '../screens/cartaoVisita/TelaCartaoVisita';
 
 import TelaGeralCriarCartao from '../screens/cartaoVisita/TelaGeralCriarCartao';
@@ -285,6 +287,12 @@ function MainNavigatorA() {
         <Stack.Screen
           name="MostrarCartao"
           component={MostrarCartao}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="EditarCartao"
+          component={EditarCartao}
           options={{headerShown: false}}
         />
 

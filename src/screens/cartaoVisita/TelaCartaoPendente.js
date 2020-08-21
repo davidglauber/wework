@@ -204,6 +204,12 @@ export default class TelaCartaoPendente extends Component {
   }
 
 
+  goBack = () => {
+    const {navigation} = this.props;
+    navigation.goBack();
+  };
+
+
   deletePublish(itemToBeDeleted) {
     let userUID = firebase.auth().currentUser.uid;
     Alert.alert(
@@ -211,7 +217,7 @@ export default class TelaCartaoPendente extends Component {
       'Você tem certeza que quer deletar este anúncio?',
       [
         {text: 'Não', onPress: () => {}},
-          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeleted).get().then(function(querySnapshot) {
+          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').where("idCartao", "==", itemToBeDeleted).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc){
               doc.ref.delete();
             })
@@ -249,6 +255,7 @@ export default class TelaCartaoPendente extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
+                <FontAwesome5 onPress={() => this.goBack()} style={{color:'white'}} name="arrow-left" size={20}/>                
                 <Heading6 style={styles.titleText}>Anúncios Pendentes</Heading6>
               </View>
             </View>
@@ -258,13 +265,13 @@ export default class TelaCartaoPendente extends Component {
                     <View style={{flex:1, alignItems:'center', paddingTop:"50%"}}>
                       <View>
                         <Image style={{width:200, height:200, marginLeft:30}} source={require("../../assets/img/notfoundnoback.gif")} />
-                        <Text style={{fontWeight:'bold'}}>Nenhum Cartão Pendente Foi Encontrado</Text>
+                        <Text style={{fontWeight:'bold', color:'white'}}>Nenhum Cartão Pendente Foi Encontrado</Text>
                       </View>
                     </View>
                   }
 
 
-<View style={{flex:1, alignItems: 'center'}}>
+                  <View style={{flex:1, alignItems: 'center'}}>
                     <View>
                     <FlatList
                         keyExtractor={() => this.makeid(17)}
@@ -279,7 +286,7 @@ export default class TelaCartaoPendente extends Component {
 
                                     {this.cutDescription(item.description)}
 
-                                    <View style={{flexDirection:'row', paddingHorizontal:65}}>
+                                    <View style={{flexDirection:'row', paddingHorizontal:'25%'}}>
                                       <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
                                       <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
                                     </View>
@@ -291,7 +298,7 @@ export default class TelaCartaoPendente extends Component {
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarCartao', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                   </TouchableOpacity>
 
@@ -337,7 +344,7 @@ export default class TelaCartaoPendente extends Component {
                                       <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                   </TouchableOpacity>
 
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarCartao', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
                                   </TouchableOpacity>
 

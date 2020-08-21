@@ -177,6 +177,7 @@ export default class EditarAnuncio extends Component {
             let valor = ''
             let imagem = ''
             let titulo = ''
+            let type = ''
             let verificado = false
 
             querySnapshot.forEach(function(doc) {
@@ -188,6 +189,7 @@ export default class EditarAnuncio extends Component {
                 nome = doc.data().nome
                 telefone = doc.data().phoneNumberAuto,
                 valor = doc.data().valueServiceAuto,
+                type = doc.data().type,
                 imagem = doc.data().photoPublish,
                 verificado = false
             })
@@ -198,6 +200,7 @@ export default class EditarAnuncio extends Component {
             e.setState({categoria: categoria})
             e.setState({precoAuto: valor})
             e.setState({nomeAuto: nome})
+            e.setState({type: type})
             e.setState({phoneAuto: telefone})
             e.setState({image: imagem})
         })
@@ -212,7 +215,6 @@ export default class EditarAnuncio extends Component {
             let categoria = ''
             let descricao = ''
             let idUser = ''
-            let nome = ''
             let telefone = ''
             let valor = ''
             let imagem = ''
@@ -222,6 +224,7 @@ export default class EditarAnuncio extends Component {
             let abertura = ''
             let fechamento = ''
             let workDays = ''
+            let type = ''
 
             querySnapshot.forEach(function(doc) {
                 idAnuncio = doc.data().id,
@@ -233,6 +236,7 @@ export default class EditarAnuncio extends Component {
                 valor = doc.data().valueServiceEstab,
                 imagem = doc.data().photoPublish,
                 verificado = false,
+                type = doc.data().type,
                 local = doc.data().localEstab,
                 abertura = doc.data().timeOpen,
                 fechamento = doc.data().timeClose,
@@ -246,6 +250,7 @@ export default class EditarAnuncio extends Component {
             e.setState({precoEstab: valor})
             e.setState({phoneEstab: telefone})
             e.setState({image: imagem})
+            e.setState({type: type})
             e.setState({enderecoEstab: local})
             e.setState({horarioOpen: abertura})
             e.setState({horarioClose: fechamento})
@@ -582,7 +587,7 @@ export default class EditarAnuncio extends Component {
                       >
                       <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
                         <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
-                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Enviando o Seu Anúncio para a Análise</Text>
+                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Enviando o Seu Cartão para a Análise</Text>
                           <PulseIndicator color='#00b970'/>
                         </View>
                       </View>

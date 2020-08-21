@@ -212,6 +212,11 @@ export default class TelaAnunciosPendentes extends Component {
     )
   }
 
+  goBack = () => {
+    const {navigation} = this.props;
+    navigation.goBack();
+  };
+
 
 
   render() {
@@ -228,6 +233,7 @@ export default class TelaAnunciosPendentes extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
+                <FontAwesome5 onPress={() => this.goBack()} style={{color:'black'}} name="arrow-left" size={20}/>
                 <Heading6 style={styles.titleText}>Anúncios Pendentes</Heading6>
               </View>
             </View>

@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 });
 
 // OrdersB
-export default class TelaCriarCartaoVisita extends Component {
+export default class EditarCartao extends Component {
   constructor(props) {
     super(props);
 
@@ -126,7 +126,8 @@ export default class TelaCriarCartaoVisita extends Component {
       image:null,
       imageName:'',
       animated: true,
-      modalVisible: false
+      modalVisible: false,
+      modalLoadVisible:false
     };
   }
 
@@ -136,7 +137,16 @@ export default class TelaCriarCartaoVisita extends Component {
 
   async componentDidMount() {
     let e = this;
+    let userUID = firebase.auth().currentUser.uid;
+    let routeType = this.props.route.params.type;
+    let routeIdCartao = this.props.route.params.idCartao;
 
+
+    this.setModalLoadVisible(true)
+    this.sleep(2000).then(() => { 
+        this.setModalLoadVisible(false)
+    })
+    
     //getting categories
     await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
       let categoriaDidMount = []
@@ -149,10 +159,103 @@ export default class TelaCriarCartaoVisita extends Component {
       e.setState({categorias: categoriaDidMount})
     })
 
+
+    if(routeType == 'Autonomo') { 
+        this.setState({type: 'Autonomo'})
+        await firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').where("idCartao", "==", routeIdCartao).get().then(function(querySnapshot) {
+            let idCartao = ''
+            let idUser = ''
+            let categoria = ''
+            let descricao = ''
+            let nome = ''
+            let telefone = ''
+            let imagem = ''
+            let type = ''
+            let verificado = false
+
+            querySnapshot.forEach(function(doc) {
+                idCartao = doc.data().id,
+                idUser = doc.data().idUser,
+                categoria = doc.data().categoryAuto,
+                descricao = doc.data().descriptionAuto,
+                nome = doc.data().nome,
+                telefone = doc.data().phoneNumberAuto,
+                imagem = doc.data().photoPublish,
+                type = doc.data().type,
+                verificado = false
+            })
+
+            e.setState({idCartao: idCartao})
+            e.setState({categoria: categoria})
+            e.setState({descricaoAuto: descricao})
+            e.setState({nomeAuto: nome})
+            e.setState({phoneAuto: telefone})
+            e.setState({image: imagem})
+            e.setState({type: type})
+        })
+
+    }
+
+
+    if(routeType == 'Estabelecimento') { 
+        this.setState({type: 'Estabelecimento'})
+        await firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').where("idCartao", "==", routeIdCartao).get().then(function(querySnapshot) {
+            let idCartao = ''
+            let categoria = ''
+            let descricao = ''
+            let idUser = ''
+            let telefone = ''
+            let imagem = ''
+            let titulo = ''
+            let verificado = false
+            let local = ''
+            let abertura = ''
+            let fechamento = ''
+            let workDays = ''
+            let type = ''
+
+            querySnapshot.forEach(function(doc) {
+                idCartao = doc.data().id,
+                titulo = doc.data().titleEstab,
+                categoria = doc.data().categoryEstab,
+                descricao = doc.data().descriptionEstab,
+                idUser = doc.data().idUser,
+                telefone = doc.data().phoneNumberEstab,
+                imagem = doc.data().photoPublish,
+                verificado = false,
+                type = doc.data().type,
+                local = doc.data().localEstab,
+                abertura = doc.data().timeOpen,
+                fechamento = doc.data().timeClose,
+                workDays = doc.data().workDays
+            })
+
+            e.setState({idCartao: idCartao})
+            e.setState({tituloEstab: titulo})
+            e.setState({descricaoEstab: descricao})
+            e.setState({categoria: categoria})
+            e.setState({phoneEstab: telefone})
+            e.setState({image: imagem})
+            e.setState({type: type})
+            e.setState({enderecoEstab: local})
+            e.setState({horarioOpen: abertura})
+            e.setState({horarioClose: fechamento})
+            e.setState({workDays: workDays})
+        })
+
+    }
+
     console.log('state de categorias: ' + this.state.categorias)
 
   }
 
+
+
+  setModalLoadVisible = (visible) => {
+    this.setState({ modalLoadVisible: visible });
+  }
+
+  
 
   makeid(length) {
     var result           = '';
@@ -307,6 +410,7 @@ export default class TelaCriarCartaoVisita extends Component {
 
 
   uploadFormToFirebase() {
+    let routeIdCartao = this.props.route.params.idCartao;
     let segunda = this.state.segunda;
     let terca = this.state.terca;
     let quarta = this.state.quarta;
@@ -355,9 +459,9 @@ export default class TelaCriarCartaoVisita extends Component {
       if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
+          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).set({
               titleEstab: e.state.tituloEstab,
-              idCartao: getSameIdToDocument,
+              idCartao: routeIdCartao,
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
               type: 'Estabelecimento',
@@ -392,8 +496,8 @@ export default class TelaCriarCartaoVisita extends Component {
       if(this.state.descricaoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
-              idCartao: getSameIdToDocument,
+          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).set({
+              idCartao: routeIdCartao,
               idUser: userUID,
               nome: e.state.nomeAuto,
               descriptionAuto: e.state.descricaoAuto,
@@ -458,6 +562,25 @@ export default class TelaCriarCartaoVisita extends Component {
                         </View>
                       </View>
                     </Modal>
+
+
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={this.state.modalLoadVisible}
+                        onRequestClose={() => {
+                          Alert.alert("Modal has been closed.");
+                        }}
+                      >
+                      <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
+                        <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
+                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+                          <PulseIndicator color='#00b970'/>
+                        </View>
+                      </View>
+                    </Modal>
+
+
                         
                         <View style={{flexDirection:'row', alignItems:'center'}}>
                           { this.state.type == 'Estabelecimento' ?

@@ -127,15 +127,26 @@ export default class EditarCartao extends Component {
       imageName:'',
       animated: true,
       modalVisible: false,
-      modalLoadVisible:false
+      modalLoadVisible:false,
+      currentDate: new Date(),
+      date: ''
     };
   }
 
 
+  convertDate() {
+    let day = this.state.currentDate.getDate();
+    let month = this.state.currentDate.getMonth() + 1;
+    let year = this.state.currentDate.getFullYear();
+    let fullDate = day + '/' + month + '/' + year;
 
+    this.setState({date: fullDate});
+  }
 
 
   async componentDidMount() {
+    this.convertDate();
+
     let e = this;
     let userUID = firebase.auth().currentUser.uid;
     let routeType = this.props.route.params.type;
@@ -464,6 +475,7 @@ export default class EditarCartao extends Component {
               idCartao: routeIdCartao,
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
+              publishData: e.state.date,
               type: 'Estabelecimento',
               verifiedPublish: false,
               phoneNumberEstab: e.state.phoneEstab,
@@ -500,6 +512,7 @@ export default class EditarCartao extends Component {
               idCartao: routeIdCartao,
               idUser: userUID,
               nome: e.state.nomeAuto,
+              publishData: e.state.date,
               descriptionAuto: e.state.descricaoAuto,
               type: 'Autonomo',
               verifiedPublish: false,

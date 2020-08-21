@@ -204,7 +204,9 @@ export default class MostrarCartao extends Component {
         total: 10.9,
       },
       favorite: false,
-      phoneNavigator: this.props.route.params.phoneNumberNavigator
+      phoneNavigator: this.props.route.params.phoneNumberNavigator,
+      dateAuto:'',
+      dateEstab:''
     };
   }
 
@@ -219,10 +221,12 @@ export default class MostrarCartao extends Component {
 
     await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('cartoes').where("idCartao", "==", idCartao).where("type", "==", "Autonomo").get().then(function(querySnapshot){
       let cartaoAutoDidMount = []
+      let dataAtual = ''
       querySnapshot.forEach(function(doc) {
         cartaoAutoDidMount.push({
           idUser: doc.data().idUser,
           idAnuncio: doc.data().idAnuncio,
+          publishData: e.state.date,
           nome: doc.data().nome,
           photo: doc.data().photoPublish,
           phone: doc.data().phoneNumberAuto,
@@ -231,18 +235,22 @@ export default class MostrarCartao extends Component {
           type: doc.data().type,
           verified: doc.data().verifiedPublish
         })
+        dataAtual = doc.data().publishData
       })
       e.setState({cartaoAuto: cartaoAutoDidMount})
+      e.setState({dateAuto: dataAtual})
     })
 
 
     await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('cartoes').where("idCartao", "==", idCartao).where("type", "==", "Estabelecimento").get().then(function(querySnapshot){
       let cartaoEstabDidMount = []
+      let dataAtual = ''
       querySnapshot.forEach(function(doc) {
         cartaoEstabDidMount.push({
           idUser: doc.data().idUser,
           value: doc.data().valueServiceEstab,
           idAnuncio: doc.data().idAnuncio,
+          publishData: e.state.date,
           photo: doc.data().photoPublish,
           phone: doc.data().phoneNumberEstab,
           title: doc.data().titleEstab,
@@ -255,8 +263,10 @@ export default class MostrarCartao extends Component {
           local: doc.data().localEstab,
           workDays: doc.data().workDays
         })
+        dataAtual = doc.data().publishData
       })
       e.setState({cartaoEstab: cartaoEstabDidMount})
+      e.setState({dateEstab: dataAtual})
     })
 
     console.log('ARRAY ANUNCIO cartaoEstab: ' + this.state.cartaoEstab)
@@ -549,6 +559,18 @@ export default class MostrarCartao extends Component {
             </View>
 
         </View>
+
+
+        {this.state.dateAuto == '' ? 
+            <View style={{alignItems:'center'}}>
+              <Text style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</Text>
+            </View>
+          :
+            <View style={{alignItems:'center'}}>
+              <Text style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</Text>
+            </View>
+        }
+        
       </SafeAreaView>
     );
   }

@@ -126,15 +126,25 @@ export default class TelaCriarCartaoVisita extends Component {
       image:null,
       imageName:'',
       animated: true,
-      modalVisible: false
+      modalVisible: false,
+      currentDate: new Date(),
+      date: ''
     };
   }
 
 
+  convertDate() {
+    let day = this.state.currentDate.getDate();
+    let month = this.state.currentDate.getMonth() + 1;
+    let year = this.state.currentDate.getFullYear();
+    let fullDate = day + '/' + month + '/' + year;
 
+    this.setState({date: fullDate});
+  }
 
 
   async componentDidMount() {
+    this.convertDate();
     let e = this;
 
     //getting categories
@@ -358,6 +368,7 @@ export default class TelaCriarCartaoVisita extends Component {
           firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
               titleEstab: e.state.tituloEstab,
               idCartao: getSameIdToDocument,
+              publishData: e.state.date,
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
               type: 'Estabelecimento',
@@ -395,6 +406,7 @@ export default class TelaCriarCartaoVisita extends Component {
           firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
               idCartao: getSameIdToDocument,
               idUser: userUID,
+              publishData: e.state.date,
               nome: e.state.nomeAuto,
               descriptionAuto: e.state.descricaoAuto,
               type: 'Autonomo',

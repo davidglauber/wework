@@ -55,6 +55,10 @@ import EditarAnuncio from '../screens/anuncios/EditarAnuncio';
 import TelaAnuncio from '../screens/telasAnuncios/TelaAnuncio';
 import TelaAnunciosPendentes from '../screens/anuncios/TelaAnunciosPendentes';
 
+import TelaCartaoPendente from '../screens/cartaoVisita/TelaCartaoPendente';
+
+import MostrarCartao from '../screens/cartaoVisita/MostrarCartao';
+
 import TelaCartaoVisita from '../screens/cartaoVisita/TelaCartaoVisita';
 
 import TelaGeralCriarCartao from '../screens/cartaoVisita/TelaGeralCriarCartao';
@@ -271,6 +275,19 @@ function MainNavigatorA() {
           component={TelaAnunciosPendentes}
           options={{headerShown: false}}
         />
+
+        <Stack.Screen
+          name="TelaCartaoPendente"
+          component={TelaCartaoPendente}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="MostrarCartao"
+          component={MostrarCartao}
+          options={{headerShown: false}}
+        />
+
         <Stack.Screen
           name="Categories"
           component={Categories}

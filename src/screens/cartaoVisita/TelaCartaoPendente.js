@@ -3,9 +3,8 @@
 import React, {Component} from 'react';
 import {
   FlatList,
-  ImageBackground,
-  SafeAreaView,
   Alert,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -16,32 +15,17 @@ import {
 } from 'react-native';
 import Color from 'color';
 
-// import utils
-import getImgSource from '../../utils/getImgSource.js';
 
 // import components
-import ActionProductCard from '../../components/cards/ActionProductCard';
-//import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
-import LinkButton from '../../components/buttons/LinkButton';
 import {Heading6} from '../../components/text/CustomText';
-
-import firebase from '../../config/firebase';
-
-import TouchableItem from '../../components/TouchableItem';
 
 // import colors
 import Colors from '../../theme/colors';
 
+import firebase from '../../config/firebase'; 
+
 //import gradient
 import  { LinearGradient } from 'expo-linear-gradient';
-
-// HomeA Config
-const imgHolder = require('../../assets/img/imgholder.png');
-
-
-//Import images
-const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
-const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 
 //import icons
@@ -69,6 +53,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontWeight: '700',
+    color: 'white'
   },
   viewAllText: {
     color: Colors.primaryColor,
@@ -117,20 +102,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TelaGeralCriarCartao extends Component {
+export default class TelaCartaoPendente extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       cartoesEstab: [],
-      cartoesAuto: []
+      cartoesAuto:[],
+      statusVerified: false
     };
   }
 
-  //sleep function
-  sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
+
+
 
 
 
@@ -138,46 +122,47 @@ export default class TelaGeralCriarCartao extends Component {
     let e = this;
     let currentUserUID = firebase.auth().currentUser.uid;
 
-    await firebase.firestore().collection(`usuarios/${currentUserUID}/cartoes`).where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
-      let cartoesAutoDidMount = []
-      documentSnapshot.forEach(function(doc) {
-        cartoesAutoDidMount.push({
-          idUser: doc.data().idUser,
-          nome: doc.data().nome,
-          idCartao: doc.data().idCartao,
-          photo: doc.data().photoPublish,
-          description: doc.data().descriptionAuto,
-          type: doc.data().type,
-          categoria: doc.data().categoryAuto,
-          phone: doc.data().phoneNumberAuto,
+    await firebase.firestore().collection(`usuarios/${currentUserUID}/cartoes`).where("type", "==", "Autonomo").where("verifiedPublish", "==", false).onSnapshot(documentSnapshot => {
+        let cartoesAutoDidMount = []
+        documentSnapshot.forEach(function(doc) {
+          cartoesAutoDidMount.push({
+            idUser: doc.data().idUser,
+            nome: doc.data().nome,
+            idCartao: doc.data().idCartao,
+            photo: doc.data().photoPublish,
+            description: doc.data().descriptionAuto,
+            type: doc.data().type,
+            categoria: doc.data().categoryAuto,
+            phone: doc.data().phoneNumberAuto,
+          })
         })
+        e.setState({cartoesAuto: cartoesAutoDidMount})
       })
-      e.setState({cartoesAuto: cartoesAutoDidMount})
-    })
-
-    await firebase.firestore().collection(`usuarios/${currentUserUID}/cartoes`).where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
-      let cartoesEstabDidMount = []
-      documentSnapshot.forEach(function(doc) {
-        cartoesEstabDidMount.push({
-          idUser: doc.data().idUser,
-          idCartao: doc.data().idCartao,
-          photo: doc.data().photoPublish,
-          local: doc.data().localEstab,
-          title: doc.data().titleEstab,
-          description: doc.data().descriptionEstab,
-          phone: doc.data().phoneNumberEstab,
-          timeOpen: doc.data().timeOpen,
-          timeClose: doc.data().timeClose,
-          type: doc.data().type,
-          verified: doc.data().verifiedPublish,
-          categoria: doc.data().categoryEstab,
-          workDays: doc.data().workDays
+  
+      await firebase.firestore().collection(`usuarios/${currentUserUID}/cartoes`).where("type", "==", "Estabelecimento").where("verifiedPublish", "==", false).onSnapshot(documentSnapshot => {
+        let cartoesEstabDidMount = []
+        documentSnapshot.forEach(function(doc) {
+          cartoesEstabDidMount.push({
+            idUser: doc.data().idUser,
+            idCartao: doc.data().idCartao,
+            photo: doc.data().photoPublish,
+            local: doc.data().localEstab,
+            title: doc.data().titleEstab,
+            description: doc.data().descriptionEstab,
+            phone: doc.data().phoneNumberEstab,
+            timeOpen: doc.data().timeOpen,
+            timeClose: doc.data().timeClose,
+            type: doc.data().type,
+            verified: doc.data().verifiedPublish,
+            categoria: doc.data().categoryEstab,
+            workDays: doc.data().workDays
+          })
         })
+        e.setState({cartoesEstab: cartoesEstabDidMount})
       })
-      e.setState({cartoesEstab: cartoesEstabDidMount})
-    })
-
   }
+
+
 
 
   makeid(length) {
@@ -191,7 +176,16 @@ export default class TelaGeralCriarCartao extends Component {
  }
 
 
- cutDescription(text) {
+
+
+
+  navigateTo = screen => () => {
+    const {navigation} = this.props;
+    navigation.navigate(screen);
+  };
+
+
+  cutDescription(text) {
     if(text.length > 40) {
       let shortDescription = text.substr(0, 40)
 
@@ -207,7 +201,6 @@ export default class TelaGeralCriarCartao extends Component {
         </View>
       );
     }
-  
   }
 
 
@@ -218,7 +211,7 @@ export default class TelaGeralCriarCartao extends Component {
       'Você tem certeza que quer deletar este anúncio?',
       [
         {text: 'Não', onPress: () => {}},
-          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').where("idCartao", "==", itemToBeDeleted).get().then(function(querySnapshot) {
+          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeleted).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc){
               doc.ref.delete();
             })
@@ -228,30 +221,13 @@ export default class TelaGeralCriarCartao extends Component {
   }
 
 
-  navigateTo = screen => () => {
-    const {navigation} = this.props;
-    navigation.navigate(screen);
-  };
 
-
-  waitQueryToShowNotFoundGIF() {
-    if(this.state.cartoesAuto.length == 0 && this.state.cartoesEstab.length == 0) {
-        return( 
-          <View style={{flex:1, alignItems:'center', paddingTop:"50%"}}>
-            <View>
-              <Image style={{width:200, height:200, marginLeft:20}} source={require("../../assets/img/notfoundnoback.gif")} />
-              <Text style={{fontWeight:'bold', color:'white'}}>Nenhum Cartão Ativo Foi Encontrado</Text>
-            </View>
-          </View>
-        );
-    }
-  }
- 
   render() {
-    const {cartoesAuto, cartoesEstab} = this.state;
+    const {cartoesEstab, cartoesAuto} = this.state;
 
     return (
       <SafeAreaView style={styles.screenContainer}>
+
         <LinearGradient
           // Background Linear Gradient
           colors={['#00b970', '#00b9a7', '#00b9a7']}
@@ -263,8 +239,9 @@ export default class TelaGeralCriarCartao extends Component {
             height: '100%',
           }}
         />
+
         <StatusBar
-          backgroundColor={"#00b970"}
+          backgroundColor={'#00b970'}
           barStyle="white-content"
         />
 
@@ -272,26 +249,22 @@ export default class TelaGeralCriarCartao extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-                <TouchableOpacity  style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#e3e3e3"}}>
-                    <Text style={{color: 'black', fontWeight: 'bold'}}>Ativos</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={this.navigateTo('TelaCriarCartaoVisita')} style={{marginRight:5, borderRadius:25, alignItems:'center', justifyContent:'center', width:40, height:40}}>
-                        <FontAwesome5  name="plus" size={19} color={"#fff"} />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={this.navigateTo('TelaCartaoPendente')} style={{marginRight:5, borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#e3e3e3"}}>
-                    <Text style={{color: 'black', fontWeight: 'bold'}}>Pendentes</Text>
-                </TouchableOpacity>
+                <Heading6 style={styles.titleText}>Anúncios Pendentes</Heading6>
               </View>
-
-
             </View>
 
-                {this.waitQueryToShowNotFoundGIF()}
+
+                  {cartoesEstab.length == 0 && cartoesAuto.length == 0 &&
+                    <View style={{flex:1, alignItems:'center', paddingTop:"50%"}}>
+                      <View>
+                        <Image style={{width:200, height:200, marginLeft:30}} source={require("../../assets/img/notfoundnoback.gif")} />
+                        <Text style={{fontWeight:'bold'}}>Nenhum Cartão Pendente Foi Encontrado</Text>
+                      </View>
+                    </View>
+                  }
 
 
-                <View style={{flex:1, alignItems: 'center'}}>
+<View style={{flex:1, alignItems: 'center'}}>
                     <View>
                     <FlatList
                         keyExtractor={() => this.makeid(17)}
@@ -336,8 +309,6 @@ export default class TelaGeralCriarCartao extends Component {
                       />
                     </View>
                 </View>
-
-
 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
@@ -385,6 +356,7 @@ export default class TelaGeralCriarCartao extends Component {
                     </View>
                 </View>
 
+                
           </ScrollView>
         </View>
       </SafeAreaView>

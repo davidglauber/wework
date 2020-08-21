@@ -131,15 +131,27 @@ export default class EditarAnuncio extends Component {
       animated: true,
       modalVisible: false,
       modalLoadVisible: false,
-      idAnuncio: ''
+      idAnuncio: '',
+      currentDate: new Date(),
+      date: ''
     };
   }
 
 
+  convertDate() {
+    let day = this.state.currentDate.getDate();
+    let month = this.state.currentDate.getMonth() + 1;
+    let year = this.state.currentDate.getFullYear();
+    let fullDate = day + '/' + month + '/' + year;
+
+    this.setState({date: fullDate});
+  }
 
 
 
   async componentDidMount() {
+    this.convertDate();
+
     let e = this;
     let routeType = this.props.route.params.type;
     let routeIdAnuncio = this.props.route.params.idAnuncio;
@@ -492,6 +504,7 @@ export default class EditarAnuncio extends Component {
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
               valueServiceEstab: e.state.precoEstab,
+              publishData: e.state.date,
               type: 'Estabelecimento',
               verifiedPublish: false,
               phoneNumberEstab: e.state.phoneEstab,
@@ -529,6 +542,7 @@ export default class EditarAnuncio extends Component {
               idAnuncio: routeIdAnuncio,
               idUser: userUID,
               nome: e.state.nomeAuto,
+              publishData: e.state.date,
               descriptionAuto: e.state.descricaoAuto,
               valueServiceAuto: e.state.precoAuto,
               type: 'Autonomo',

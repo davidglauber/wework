@@ -15,15 +15,7 @@ import {
 } from 'react-native';
 import Color from 'color';
 
-// import utils
-import getImgSource from '../../utils/getImgSource.js';
-
-// import components
-import ActionProductCard from '../../components/cards/ActionProductCard';
-//import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
-import LinkButton from '../../components/buttons/LinkButton';
 import {Heading6} from '../../components/text/CustomText';
-import TouchableItem from '../../components/TouchableItem';
 
 // import colors
 import Colors from '../../theme/colors';
@@ -212,40 +204,6 @@ async componentDidMount() {
 
   keyExtractor = (item, index) => index.toString();
 
-  renderCategoryItem = ({item, index}) => (
-    <ImageBackground
-      key={index}
-      defaultSource={imgHolder}
-      source={getImgSource(item.imageUri)}
-      imageStyle={styles.cardImg}
-      style={styles.card}>
-      <View style={styles.cardOverlay}>
-        <TouchableItem
-          onPress={this.navigateTo('Category')}
-          style={styles.cardContainer}
-          // borderless
-        >
-          <Text style={styles.cardTitle}>{item.name}</Text>
-        </TouchableItem>
-      </View>
-    </ImageBackground>
-  );
-
-  renderProductItem = ({item, index}) => (
-    <ActionProductCard
-      onPress={this.navigateTo('Product')}
-      key={index}
-      imageUri={item.imageUri}
-      title={item.name}
-      description={item.description}
-      rating={item.rating}
-      price={item.price}
-      discountPercentage={item.discountPercentage}
-      label={item.label}
-    />
-  );
-
- 
   render() {
     const { status, emailUserFunction } = this.state
 
@@ -276,16 +234,7 @@ async componentDidMount() {
                 </TouchableOpacity>
               </View>
 
-              {/*<FlatList
-                data={categories}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                alwaysBounceHorizontal={false}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderCategoryItem}
-                contentContainerStyle={styles.categoriesList}
-              />
-              */}
+            
 
             </View>
 

@@ -129,15 +129,25 @@ export default class CriarAnuncio extends Component {
       image:null,
       imageName:'',
       animated: true,
-      modalVisible: false
+      modalVisible: false,
+      currentDate: new Date(),
+      date: ''
     };
   }
 
 
 
+  convertDate() {
+    let day = this.state.currentDate.getDate();
+    let month = this.state.currentDate.getMonth() + 1;
+    let year = this.state.currentDate.getFullYear();
+    let fullDate = day + '/' + month + '/' + year;
 
+    this.setState({date: fullDate});
+  }
 
   async componentDidMount() {
+    this.convertDate();
     let e = this;
 
     //getting categories
@@ -379,6 +389,7 @@ export default class CriarAnuncio extends Component {
               titleEstab: e.state.tituloEstab,
               idAnuncio: getSameIdToDocument,
               idUser: userUID,
+              publishData: e.state.date,
               descriptionEstab: e.state.descricaoEstab,
               valueServiceEstab: e.state.precoEstab,
               type: 'Estabelecimento',
@@ -417,6 +428,7 @@ export default class CriarAnuncio extends Component {
               titleAuto: e.state.tituloAuto,
               idAnuncio: getSameIdToDocument,
               idUser: userUID,
+              publishData: e.state.date,
               nome: e.state.nomeAuto,
               descriptionAuto: e.state.descricaoAuto,
               valueServiceAuto: e.state.precoAuto,

@@ -204,24 +204,28 @@ export default class TelaAnuncio extends Component {
         total: 10.9,
       },
       favorite: false,
-      phoneNavigator: this.props.route.params.phoneNumberNavigator
+      phoneNavigator: this.props.route.params.phoneNumberNavigator,
+      dateAuto:'',
+      dateEstab:''
     };
   }
 
   async componentDidMount() {
     let e = this;
     let idDoAnuncio = this.props.route.params.idDoAnuncio;
-    
     let currentUserUID = firebase.auth().currentUser.uid;
 
     console.log('ID DO ANUNCIO: ' + idDoAnuncio)
     console.log('Numero de telefone: ' + this.state.phoneNavigator)
+    console.log('DATA ATUAL: ' + this.state.dateAuto)
 
     await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('anuncios').where("idAnuncio", "==", idDoAnuncio).where("type", "==", "Autonomo").get().then(function(querySnapshot){
       let anuncioAutoDidMount = []
+      let dataAtual = ''
       querySnapshot.forEach(function(doc) {
         anuncioAutoDidMount.push({
           idUser: doc.data().idUser,
+          publishData: e.state.date,
           value: doc.data().valueServiceAuto,
           idAnuncio: doc.data().idAnuncio,
           nome: doc.data().nome,
@@ -233,17 +237,21 @@ export default class TelaAnuncio extends Component {
           type: doc.data().type,
           verified: doc.data().verifiedPublish
         })
+        dataAtual = doc.data().publishData
       })
       e.setState({anuncioAuto: anuncioAutoDidMount})
+      e.setState({dateAuto: dataAtual})
     })
 
 
     await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('anuncios').where("idAnuncio", "==", idDoAnuncio).where("type", "==", "Estabelecimento").get().then(function(querySnapshot){
       let anuncioEstabDidMount = []
+      let dataAtual = ''
       querySnapshot.forEach(function(doc) {
         anuncioEstabDidMount.push({
           idUser: doc.data().idUser,
           value: doc.data().valueServiceEstab,
+          publishData: e.state.date,
           idAnuncio: doc.data().idAnuncio,
           photo: doc.data().photoPublish,
           phone: doc.data().phoneNumberEstab,
@@ -257,8 +265,10 @@ export default class TelaAnuncio extends Component {
           local: doc.data().localEstab,
           workDays: doc.data().workDays
         })
+        dataAtual = doc.data().publishData
       })
       e.setState({anuncioEstab: anuncioEstabDidMount})
+      e.setState({dateEstab: dataAtual})
     })
 
     console.log('ARRAY ANUNCIO anuncioEstab: ' + this.state.anuncioEstab)
@@ -511,35 +521,10 @@ export default class TelaAnuncio extends Component {
                         <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
                         <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria}</Text>
                   </View>
-          
                 </View>
             }
           />
 
-
-        {/* <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
-                <Picker
-                  selectedValue={this.state.horario}
-                  onValueChange={(itemValue, itemIndex) => this.setState({horario: itemValue})}
-                  style={{marginLeft:10, width: 300, height:50}}>
-                  <Picker.Item label="Segunda: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Terça: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Quarta: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Quinta: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Sexta: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Sábado: De: 8:00 às 21:00" value=""/>
-                  <Picker.Item label="Domingo: De: 8:00 às 21:00" value=""/>
-                </Picker>
-            </View>
-
-        */}
-
-        {/* <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                <FontAwesome5 name="map-marked-alt" size={25} color={"#70AD66"}/>
-                <Text style={{fontSize:15, marginLeft: 15}}>Rua Domingues, 203</Text>
-            </View>
-        */}
 
         </ScrollView>
 
@@ -556,8 +541,19 @@ export default class TelaAnuncio extends Component {
                     <FontAwesome5 name="comment-alt" size={20} color={"white"}/>
                 </TouchableOpacity>            
             </View>
-
         </View>
+
+        {this.state.dateAuto == '' ? 
+            <View style={{alignItems:'center'}}>
+              <Text style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</Text>
+            </View>
+          :
+            <View style={{alignItems:'center'}}>
+              <Text style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</Text>
+            </View>
+        }
+
+
       </SafeAreaView>
     );
   }

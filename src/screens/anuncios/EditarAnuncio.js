@@ -185,6 +185,7 @@ export default class EditarAnuncio extends Component {
         await firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", routeIdAnuncio).get().then(function(querySnapshot) {
             let idAnuncio = ''
             let categoria = ''
+            let subcategoria = ''
             let descricao = ''
             let idUser = ''
             let nome = ''
@@ -199,6 +200,7 @@ export default class EditarAnuncio extends Component {
                 idAnuncio = doc.data().id,
                 titulo = doc.data().titleAuto,
                 categoria = doc.data().categoryAuto,
+                subcategoria = doc.data().subcategoryAuto,
                 descricao = doc.data().descriptionAuto,
                 idUser = doc.data().idUser,
                 nome = doc.data().nome
@@ -213,6 +215,7 @@ export default class EditarAnuncio extends Component {
             e.setState({tituloAuto: titulo})
             e.setState({descricaoAuto: descricao})
             e.setState({categoria: categoria})
+            e.setState({subcategoria: subcategoria})
             e.setState({precoAuto: valor})
             e.setState({nomeAuto: nome})
             e.setState({type: type})
@@ -228,6 +231,7 @@ export default class EditarAnuncio extends Component {
         await firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", routeIdAnuncio).get().then(function(querySnapshot) {
             let idAnuncio = ''
             let categoria = ''
+            let subcategoria = ''
             let descricao = ''
             let idUser = ''
             let telefone = ''
@@ -245,6 +249,7 @@ export default class EditarAnuncio extends Component {
                 idAnuncio = doc.data().id,
                 titulo = doc.data().titleEstab,
                 categoria = doc.data().categoryEstab,
+                subcategoria = doc.data().subcategoryEstab,
                 descricao = doc.data().descriptionEstab,
                 idUser = doc.data().idUser,
                 telefone = doc.data().phoneNumberEstab,
@@ -262,6 +267,7 @@ export default class EditarAnuncio extends Component {
             e.setState({tituloEstab: titulo})
             e.setState({descricaoEstab: descricao})
             e.setState({categoria: categoria})
+            e.setState({subcategoria: subcategoria})
             e.setState({precoEstab: valor})
             e.setState({phoneEstab: telefone})
             e.setState({image: imagem})

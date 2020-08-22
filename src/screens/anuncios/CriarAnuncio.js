@@ -308,8 +308,8 @@ export default class CriarAnuncio extends Component {
     modalizeRef.current?.close()
 
     this.getSubCategoryFromFirebase(id, param)
-
     this.openModalizeSubCategoria()
+    
     console.log('Categoria Selecionada: '  + param)
   }
 

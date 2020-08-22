@@ -121,6 +121,7 @@ export default class EditarCartao extends Component {
       sabado:false,
       domingo:false,
       modalizeRef: React.createRef(null),
+      modalizeRefSub: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
       image:null,
@@ -129,7 +130,9 @@ export default class EditarCartao extends Component {
       modalVisible: false,
       modalLoadVisible:false,
       currentDate: new Date(),
-      date: ''
+      date: '',
+      subcategorias:[],
+      subcategoria:''
     };
   }
 
@@ -177,6 +180,7 @@ export default class EditarCartao extends Component {
             let idCartao = ''
             let idUser = ''
             let categoria = ''
+            let subcategoria = ''
             let descricao = ''
             let nome = ''
             let telefone = ''
@@ -188,6 +192,7 @@ export default class EditarCartao extends Component {
                 idCartao = doc.data().id,
                 idUser = doc.data().idUser,
                 categoria = doc.data().categoryAuto,
+                subcategoria = doc.data().subcategoryAuto,
                 descricao = doc.data().descriptionAuto,
                 nome = doc.data().nome,
                 telefone = doc.data().phoneNumberAuto,
@@ -198,6 +203,7 @@ export default class EditarCartao extends Component {
 
             e.setState({idCartao: idCartao})
             e.setState({categoria: categoria})
+            e.setState({subcategoria: subcategoria})
             e.setState({descricaoAuto: descricao})
             e.setState({nomeAuto: nome})
             e.setState({phoneAuto: telefone})
@@ -213,6 +219,7 @@ export default class EditarCartao extends Component {
         await firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').where("idCartao", "==", routeIdCartao).get().then(function(querySnapshot) {
             let idCartao = ''
             let categoria = ''
+            let subcategoria = ''
             let descricao = ''
             let idUser = ''
             let telefone = ''
@@ -229,6 +236,7 @@ export default class EditarCartao extends Component {
                 idCartao = doc.data().id,
                 titulo = doc.data().titleEstab,
                 categoria = doc.data().categoryEstab,
+                subcategoria = doc.data().subcategoryEstab,
                 descricao = doc.data().descriptionEstab,
                 idUser = doc.data().idUser,
                 telefone = doc.data().phoneNumberEstab,
@@ -245,6 +253,7 @@ export default class EditarCartao extends Component {
             e.setState({tituloEstab: titulo})
             e.setState({descricaoEstab: descricao})
             e.setState({categoria: categoria})
+            e.setState({subcategoria: subcategoria})
             e.setState({phoneEstab: telefone})
             e.setState({image: imagem})
             e.setState({type: type})
@@ -267,6 +276,28 @@ export default class EditarCartao extends Component {
   }
 
   
+
+  async getSubCategoryFromFirebase(id, title) {
+    let e = this;
+    let passToLoweCase = title.toLowerCase();
+    
+    //getting subcategories
+    await firebase.firestore().collection('categorias').doc(id).collection(passToLoweCase).get().then(function(querySnapshot){
+      let subcategoriasDidMount = [];
+      querySnapshot.forEach(function(doc) {
+        subcategoriasDidMount.push({
+          id: doc.data().id,
+          title: doc.data().title
+        })
+        console.log('SUBCATEGORIA:' + doc.data().title)
+      })
+      e.setState({subcategorias: subcategoriasDidMount})
+    })
+    console.log('state de SUBcategorias: ' + this.state.subcategorias)
+    console.log('SUBcategoria obtida: ' + title)
+
+  }
+
 
   makeid(length) {
     var result           = '';
@@ -345,6 +376,13 @@ export default class EditarCartao extends Component {
   }
 
 
+  openModalizeSubCategoria() {
+    const modalizeRefSub = this.state.modalizeRefSub;
+
+    modalizeRefSub.current?.open()
+  }
+
+
   openModalizeAbertura() {
     const modalizeRefAbertura = this.state.modalizeRefAbertura;
 
@@ -358,13 +396,25 @@ export default class EditarCartao extends Component {
   }
 
 
-  getCategory(param) {
+  getCategory(id, param) {
     const modalizeRef = this.state.modalizeRef;
     this.setState({categoria: param})
     modalizeRef.current?.close()
 
+    this.getSubCategoryFromFirebase(id, param)
+    this.openModalizeSubCategoria()
+
     console.log('Categoria Selecionada: '  + param)
   }
+
+  getSubCategory(param) {
+    const modalizeRefSub = this.state.modalizeRefSub;
+    this.setState({subcategoria: param})
+    modalizeRefSub.current?.close()
+
+    console.log('SUBCATEGORIA Selecionada: '  + param)
+  }
+
 
   getHorarioOpen(param) {
     const modalizeRefAbertura = this.state.modalizeRefAbertura;
@@ -481,6 +531,7 @@ export default class EditarCartao extends Component {
               phoneNumberEstab: e.state.phoneEstab,
               localEstab: e.state.enderecoEstab,
               categoryEstab: e.state.categoria,
+              subcategoryEstab: e.state.subcategoria,
               photoPublish: urlImage,
               workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
               timeOpen: e.state.horarioOpen,
@@ -518,6 +569,7 @@ export default class EditarCartao extends Component {
               verifiedPublish: false,
               phoneNumberAuto: e.state.phoneAuto,
               categoryAuto: e.state.categoria,
+              subcategoryAuto: e.state.subcategoria,
               photoPublish: urlImage,
             })
           }).catch(function(error) {
@@ -919,7 +971,7 @@ export default class EditarCartao extends Component {
             <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione a Categoria Desejada</Heading6>
               {categorias.map(l => (
                 <View>
-                  <TouchableOpacity key={this.makeid(10)} onPress={() => this.getCategory(l.title)}>
+                  <TouchableOpacity key={this.makeid(10)} onPress={() => this.getCategory(l.id, l.title)}>
                       <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
                   </TouchableOpacity>
                 </View>
@@ -927,6 +979,23 @@ export default class EditarCartao extends Component {
             </View>
           </Modalize>
 
+
+          {/*Modalize da subcategoria*/}
+          <Modalize
+            ref={this.state.modalizeRefSub}
+            snapPoint={500}
+          >
+            <View style={{alignItems:'flex-start', marginTop:40}}>
+            <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione a SubCategoria Desejada</Heading6>
+              {this.state.subcategorias.map(l => (
+                <View>
+                  <TouchableOpacity key={this.makeid(10)} onPress={() => this.getSubCategory(l.title)}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </Modalize>
 
 
           {/*Modalize do horario de abertura*/}

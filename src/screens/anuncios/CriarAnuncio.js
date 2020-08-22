@@ -419,10 +419,6 @@ export default class CriarAnuncio extends Component {
         alert('Por favor, selecione uma imagem para o anúncio')
       }
 
-    if(this.state.phoneAuto.length <= 10 || this.state.phoneEstab.length <= 10){
-      alert('O número de telefone deve ter no mínimo 11 caracteres')
-    }
-        
 
     if(type == 'Estabelecimento'){
       if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
@@ -440,6 +436,7 @@ export default class CriarAnuncio extends Component {
               phoneNumberEstab: e.state.phoneEstab,
               localEstab: e.state.enderecoEstab,
               categoryEstab: e.state.categoria,
+              subcategoryEstab: e.state.subcategoria,
               photoPublish: urlImage,
               workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
               timeOpen: e.state.horarioOpen,
@@ -479,6 +476,7 @@ export default class CriarAnuncio extends Component {
               verifiedPublish: false,
               phoneNumberAuto: e.state.phoneAuto,
               categoryAuto: e.state.categoria,
+              subcategoryAuto: e.state.subcategoria,
               photoPublish: urlImage,
             })
           }).catch(function(error) {

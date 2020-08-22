@@ -157,21 +157,6 @@ export default class CriarAnuncio extends Component {
     await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
       let categoriaDidMount = []
       querySnapshot.forEach(function(doc) {
-        let passToLoweCase = doc.data().title.toLowerCase();
-        
-        //getting subcategories
-        firebase.firestore().collection('categorias').doc(doc.data().id).collection(passToLoweCase).get().then(function(querySnapshot){
-          let subcategoriasDidMount = [];
-          querySnapshot.forEach(function(doc) {
-            subcategoriasDidMount.push({
-              id: doc.data().id,
-              title: doc.data().title
-            })
-            console.log('SUBCATEGORIA:' + doc.data().title)
-          })
-          e.setState({subcategorias: subcategoriasDidMount})
-        })
-
         categoriaDidMount.push({
           id: doc.data().id,
           title: doc.data().title
@@ -180,8 +165,29 @@ export default class CriarAnuncio extends Component {
       e.setState({categorias: categoriaDidMount})
     })
 
-    console.log('state de SUBcategorias: ' + this.state.subcategorias)
     console.log('state de categorias: ' + this.state.categorias)
+    
+  }
+  
+  
+  async getSubCategoryFromFirebase(id, title) {
+    let e = this;
+    let passToLoweCase = title.toLowerCase();
+    
+    //getting subcategories
+    await firebase.firestore().collection('categorias').doc(id).collection(passToLoweCase).get().then(function(querySnapshot){
+      let subcategoriasDidMount = [];
+      querySnapshot.forEach(function(doc) {
+        subcategoriasDidMount.push({
+          id: doc.data().id,
+          title: doc.data().title
+        })
+        console.log('SUBCATEGORIA:' + doc.data().title)
+      })
+      e.setState({subcategorias: subcategoriasDidMount})
+    })
+    console.log('state de SUBcategorias: ' + this.state.subcategorias)
+    console.log('SUBcategoria obtida: ' + title)
 
   }
 
@@ -296,10 +302,12 @@ export default class CriarAnuncio extends Component {
   }
 
 
-  getCategory(param) {
+  getCategory(id, param) {
     const modalizeRef = this.state.modalizeRef;
     this.setState({categoria: param})
     modalizeRef.current?.close()
+
+    this.getSubCategoryFromFirebase(id, param)
 
     this.openModalizeSubCategoria()
     console.log('Categoria Selecionada: '  + param)
@@ -310,7 +318,7 @@ export default class CriarAnuncio extends Component {
     this.setState({subcategoria: param})
     modalizeRefSub.current?.close()
 
-    console.log('Categoria Selecionada: '  + param)
+    console.log('SUBCATEGORIA Selecionada: '  + param)
   }
 
   getHorarioOpen(param) {
@@ -885,7 +893,7 @@ export default class CriarAnuncio extends Component {
             <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione a Categoria Desejada</Heading6>
               {categorias.map(l => (
                 <View>
-                  <TouchableOpacity key={this.makeid(10)} onPress={() => this.getCategory(l.title)}>
+                  <TouchableOpacity key={this.makeid(10)} onPress={() => this.getCategory(l.id, l.title)}>
                       <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
                   </TouchableOpacity>
                 </View>

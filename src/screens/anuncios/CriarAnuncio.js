@@ -124,6 +124,7 @@ export default class CriarAnuncio extends Component {
       sabado:false,
       domingo:false,
       modalizeRef: React.createRef(null),
+      modalizeRefSub: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
       image:null,
@@ -131,7 +132,9 @@ export default class CriarAnuncio extends Component {
       animated: true,
       modalVisible: false,
       currentDate: new Date(),
-      date: ''
+      date: '',
+      subcategorias:[],
+      subcategoria:''
     };
   }
 
@@ -154,6 +157,21 @@ export default class CriarAnuncio extends Component {
     await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
       let categoriaDidMount = []
       querySnapshot.forEach(function(doc) {
+        let passToLoweCase = doc.data().title.toLowerCase();
+        
+        //getting subcategories
+        firebase.firestore().collection('categorias').doc(doc.data().id).collection(passToLoweCase).get().then(function(querySnapshot){
+          let subcategoriasDidMount = [];
+          querySnapshot.forEach(function(doc) {
+            subcategoriasDidMount.push({
+              id: doc.data().id,
+              title: doc.data().title
+            })
+            console.log('SUBCATEGORIA:' + doc.data().title)
+          })
+          e.setState({subcategorias: subcategoriasDidMount})
+        })
+
         categoriaDidMount.push({
           id: doc.data().id,
           title: doc.data().title
@@ -162,6 +180,7 @@ export default class CriarAnuncio extends Component {
       e.setState({categorias: categoriaDidMount})
     })
 
+    console.log('state de SUBcategorias: ' + this.state.subcategorias)
     console.log('state de categorias: ' + this.state.categorias)
 
   }
@@ -256,6 +275,13 @@ export default class CriarAnuncio extends Component {
     modalizeRef.current?.open()
   }
 
+  openModalizeSubCategoria() {
+    const modalizeRefSub = this.state.modalizeRefSub;
+
+    modalizeRefSub.current?.open()
+  }
+
+
 
   openModalizeAbertura() {
     const modalizeRefAbertura = this.state.modalizeRefAbertura;
@@ -274,6 +300,15 @@ export default class CriarAnuncio extends Component {
     const modalizeRef = this.state.modalizeRef;
     this.setState({categoria: param})
     modalizeRef.current?.close()
+
+    this.openModalizeSubCategoria()
+    console.log('Categoria Selecionada: '  + param)
+  }
+
+  getSubCategory(param) {
+    const modalizeRefSub = this.state.modalizeRefSub;
+    this.setState({subcategoria: param})
+    modalizeRefSub.current?.close()
 
     console.log('Categoria Selecionada: '  + param)
   }
@@ -851,6 +886,25 @@ export default class CriarAnuncio extends Component {
               {categorias.map(l => (
                 <View>
                   <TouchableOpacity key={this.makeid(10)} onPress={() => this.getCategory(l.title)}>
+                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize da subcategoria*/}
+          <Modalize
+            ref={this.state.modalizeRefSub}
+            snapPoint={500}
+          >
+            <View style={{alignItems:'flex-start', marginTop:40}}>
+            <Heading6 style={{fontWeight:'bold', marginLeft: 10}}>Selecione a SubCategoria Desejada</Heading6>
+              {this.state.subcategorias.map(l => (
+                <View>
+                  <TouchableOpacity key={this.makeid(10)} onPress={() => this.getSubCategory(l.title)}>
                       <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
                   </TouchableOpacity>
                 </View>

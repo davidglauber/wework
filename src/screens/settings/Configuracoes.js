@@ -14,6 +14,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Image,
   StyleSheet,
   Switch,
   View,
@@ -179,7 +180,8 @@ export default class Configuracoes extends Component {
       status:null,
       emailUser:'',
       nomeUser:'',
-      dataNascimento:''
+      dataNascimento:'',
+      fotoPerfil:''
     };
   }
 
@@ -195,6 +197,7 @@ export default class Configuracoes extends Component {
           this.setState({emailUser: documentSnapshot.data().email})
           this.setState({nomeUser: documentSnapshot.data().nome})
           this.setState({dataNascimento: documentSnapshot.data().dataNascimento})
+          this.setState({fotoPerfil: documentSnapshot.data().photoProfile})
         })
       } 
       
@@ -263,11 +266,15 @@ export default class Configuracoes extends Component {
           <TouchableItem useForeground onPress={this.navigateTo('EditProfile')}>
             <View style={[styles.row, styles.profileContainer]}>
               <View style={styles.leftSide}>
-                <Avatar
-                  imageUri={require('../../assets/img/profile_1.jpeg')}
-                  size={60}
-                  rounded
-                />
+                {this.state.fotoPerfil == '' ?
+                  <Image style={{borderRadius:50, width:60, height:60}} source={require('../../assets/img/profile_1.jpeg')}
+                  />
+                  :
+                  <Image
+                    source={{uri: this.state.fotoPerfil}}
+                    style={{borderRadius:50, width:60, height:60}}
+                  />
+                }
                 <View style={styles.profileInfo}>
                   <Subtitle1 style={styles.name}>{this.state.nomeUser}</Subtitle1>
                   <Subtitle2 style={styles.email}>

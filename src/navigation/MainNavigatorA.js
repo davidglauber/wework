@@ -76,7 +76,7 @@ import Category from '../screens/categories/CategoryA';
 import Checkout from '../screens/checkout/CheckoutA';
 
 // import EditProfile screen
-import EditProfile from '../screens/profile/EditProfileA';
+import EditProfile from '../screens/profile/EditarPerfil';
 
 // import DeliveryAddress screen
 import DeliveryAddress from '../screens/address/DeliveryAddressA';
@@ -347,20 +347,15 @@ function MainNavigatorA() {
             },
           }}
         />
+        
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
           options={({navigation}) => ({
-            title: 'Edit Profile',
-            headerRight: () => (
-              <HeaderIconButton
-                onPress={() => navigation.goBack()}
-                name={SAVE_ICON}
-                color={Colors.primaryColor}
-              />
-            ),
+            title: 'Editar Perfil'
           })}
         />
+
         <Stack.Screen
           name="DeliveryAddress"
           component={DeliveryAddress}

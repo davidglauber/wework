@@ -50,7 +50,6 @@ const isRTL = I18nManager.isRTL;
 const IOS = Platform.OS === 'ios';
 const MINUS_ICON = IOS ? 'ios-remove' : 'md-remove';
 const PLUS_ICON = IOS ? 'ios-add' : 'md-add';
-const FAVORITE_ICON = IOS ? 'ios-star' : 'md-star';
 const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
 const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
@@ -346,24 +345,6 @@ export default class MostrarCartao extends Component {
                     </TouchableItem>
                   </View>
 
-                  <View
-                    style={[
-                      styles.topButton,
-                      styles.right,
-                      favorite && styles.favorite,
-                    ]}>
-                    <TouchableItem onPress={this.onPressAddToFavorites} borderless>
-                      <View style={styles.buttonIconContainer}>
-                        <Icon
-                          name={FAVORITE_ICON}
-                          size={22}
-                          color={
-                            favorite ? Colors.onSecondaryColor : Colors.secondaryText
-                          }
-                        />
-                      </View>
-                    </TouchableItem>
-                  </View>
                 </View>
 
                   <View style={styles.descriptionContainer}>
@@ -446,25 +427,6 @@ export default class MostrarCartao extends Component {
                           name={CLOSE_ICON}
                           size={22}
                           color={Colors.secondaryText}
-                        />
-                      </View>
-                    </TouchableItem>
-                  </View>
-
-                  <View
-                    style={[
-                      styles.topButton,
-                      styles.right,
-                      favorite && styles.favorite,
-                    ]}>
-                    <TouchableItem onPress={this.onPressAddToFavorites} borderless>
-                      <View style={styles.buttonIconContainer}>
-                        <Icon
-                          name={FAVORITE_ICON}
-                          size={22}
-                          color={
-                            favorite ? Colors.onSecondaryColor : Colors.secondaryText
-                          }
                         />
                       </View>
                     </TouchableItem>

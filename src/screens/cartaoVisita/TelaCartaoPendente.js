@@ -286,7 +286,7 @@ export default class TelaCartaoPendente extends Component {
 
                                     {this.cutDescription(item.description)}
 
-                                    <View style={{flexDirection:'row', paddingHorizontal:'25%'}}>
+                                    <View style={{flexDirection:'row', paddingHorizontal:45}}>
                                       <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
                                       <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
                                     </View>
@@ -332,7 +332,7 @@ export default class TelaCartaoPendente extends Component {
 
                                     {this.cutDescription(item.description)}
 
-                                    <View style={{flexDirection:'row', paddingHorizontal:65}}>
+                                    <View style={{flexDirection:'row', paddingHorizontal:45}}>
                                       <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
                                       <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
                                     </View>

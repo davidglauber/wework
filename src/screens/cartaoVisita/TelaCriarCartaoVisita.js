@@ -169,10 +169,9 @@ export default class TelaCriarCartaoVisita extends Component {
 
   async getSubCategoryFromFirebase(id, title) {
     let e = this;
-    let passToLoweCase = title.toLowerCase();
     
     //getting subcategories
-    await firebase.firestore().collection('categorias').doc(id).collection(passToLoweCase).get().then(function(querySnapshot){
+    await firebase.firestore().collection('categorias').doc(id).collection(title).get().then(function(querySnapshot){
       let subcategoriasDidMount = [];
       querySnapshot.forEach(function(doc) {
         subcategoriasDidMount.push({
@@ -335,7 +334,7 @@ export default class TelaCriarCartaoVisita extends Component {
 
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,

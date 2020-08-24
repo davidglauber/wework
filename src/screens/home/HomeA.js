@@ -3,7 +3,6 @@
 import React, {Component} from 'react';
 import {
   FlatList,
-  ImageBackground,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -117,7 +116,9 @@ export default class HomeA extends Component {
     this.state = {
       verified:false,
       status: null,
-      emailUserFunction:''
+      emailUserFunction:'',
+      activesPublishesAuto: [],
+      activesPublishesEstab: []
     };
   }
 
@@ -136,6 +137,7 @@ export default class HomeA extends Component {
 async componentDidMount() {
   console.reportErrorsAsExceptions = false;
    let e = this;
+
     await firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           e.setState({status: true})
@@ -156,6 +158,54 @@ async componentDidMount() {
         }
 
     })
+
+
+    //obter anuncios ativos autonomo 
+    await firebase.firestore().collection('anuncios').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+      let anunciosAtivosAuto = [];
+      documentSnapshot.forEach(function(doc) {
+        anunciosAtivosAuto.push({
+          idUser: doc.data().idUser,
+          nome: doc.data().nome,
+          idAnuncio: doc.data().idAnuncio,
+          photo: doc.data().photoPublish,
+          title: doc.data().titleAuto,
+          description: doc.data().descriptionAuto,
+          type: doc.data().type,
+          phone: doc.data().phoneNumberAuto,
+          verified: doc.data().verifiedPublish,
+          value: doc.data().valueServiceAuto
+        })
+      })
+
+
+      e.setState({activesPublishesAuto: anunciosAtivosAuto})
+      console.log('ANUNCIOS ATIVOS FIREBASE AUTO: ' + e.state.activesPublishesAuto)  
+    })
+
+
+    //obter anuncios ativos estabelecimento
+    await firebase.firestore().collection('anuncios').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+      let anunciosAtivosEstab = [];
+      documentSnapshot.forEach(function(doc) {
+        anunciosAtivosEstab.push({
+          idUser: doc.data().idUser,
+          idAnuncio: doc.data().idAnuncio,
+          photo: doc.data().photoPublish,
+          title: doc.data().titleEstab,
+          description: doc.data().descriptionEstab,
+          phone: doc.data().phoneNumberEstab,
+          type: doc.data().type,
+          verified: doc.data().verifiedPublish,
+          value: doc.data().valueServiceEstab
+        })
+      })
+
+
+      e.setState({activesPublishesEstab: anunciosAtivosEstab})
+      console.log('ANUNCIOS ATIVOS FIREBASE ESTAB: ' + e.state.activesPublishesEstab)  
+    })
+
 
 
 
@@ -200,12 +250,38 @@ async componentDidMount() {
   }
 
 
+  makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
 
 
-  keyExtractor = (item, index) => index.toString();
+
+  cutDescription(text) {
+    if(text.length > 40) {
+      let shortDescription = text.substr(0, 40)
+
+      return(
+        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription} ...</Text>
+        </View>
+      );
+    } else {
+      return(
+        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{text}</Text>
+        </View>
+      );
+    }
+  }
 
   render() {
-    const { status, emailUserFunction } = this.state
+    const { status, emailUserFunction, activesPublishesAuto, activesPublishesEstab } = this.state
 
     return (
       <SafeAreaView style={styles.screenContainer}>
@@ -241,19 +317,22 @@ async componentDidMount() {
             <View style={styles.titleContainer}>
               <Heading6 style={styles.titleText}>Anúncios</Heading6>
             </View>
-
+              
+              <FlatList 
+                keyExtractor={() => this.makeid(17)}
+                data={activesPublishesAuto}
+                renderItem={({item}) =>
+                
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
                         <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
                             <View style={{flexDirection:'row'}}>
-                                <Image source={fotoAnuncio} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                                <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                 
                                 <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>Forneço Cupcakes</Text>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>{item.title}</Text>
                                   
-                                  <View style={{justifyContent: 'center', alignItems: 'center',}}>
-                                    <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>Sou confeiteiro Profissional, tenho variedades de sabores</Text>
-                                  </View>
+                                    {this.cutDescription(item.description)}
                                 </View>
                             </View>  
 
@@ -261,6 +340,10 @@ async componentDidMount() {
                                 <TouchableOpacity onPress={this.navigateTo('TelaAnuncio')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
                                     <Text style={{color: 'white'}}>Ver Detalhes</Text>
                                 </TouchableOpacity>
+
+                                <View style={{marginTop: 24}}>
+                                    <Text style={{color:'#70AD66'}}>{item.value}</Text>
+                                </View>
 
                                 <View style={{marginTop: 24, marginRight: 30}}>
                                     <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
@@ -270,6 +353,10 @@ async componentDidMount() {
                         </View>
                     </View>
                 </View>
+                
+                }
+              >
+              </FlatList>
 
 
 

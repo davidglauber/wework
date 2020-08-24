@@ -421,7 +421,7 @@ export default class CriarAnuncio extends Component {
 
     if(type == 'Estabelecimento'){
       if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
-        this.sleep(2000).then(() => { 
+        this.sleep(3000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
               titleEstab: e.state.tituloEstab,
@@ -481,7 +481,7 @@ export default class CriarAnuncio extends Component {
 
     if(type == 'Autonomo') {
       if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
-        this.sleep(2000).then(() => { 
+        this.sleep(3000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
               titleAuto: e.state.tituloAuto,

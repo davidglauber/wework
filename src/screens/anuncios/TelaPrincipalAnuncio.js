@@ -165,7 +165,7 @@ export default class TelaPrincipalAnuncio extends Component {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
- }
+  }
 
 
 
@@ -195,6 +195,20 @@ export default class TelaPrincipalAnuncio extends Component {
     }
   }
 
+  deletePublishOfMainRoute(itemToBeDeletedFunction){
+    let userUID = firebase.auth().currentUser.uid;
+    firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeletedFunction).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc){
+        doc.ref.delete();
+      })
+    })
+
+    firebase.firestore().collection('anuncios').where("idAnuncio", "==", itemToBeDeletedFunction).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc){
+        doc.ref.delete();
+      })
+    })
+  }
 
 
   deletePublish(itemToBeDeleted) {
@@ -204,11 +218,7 @@ export default class TelaPrincipalAnuncio extends Component {
       'Você tem certeza que quer deletar este anúncio?',
       [
         {text: 'Não', onPress: () => {}},
-          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeleted).get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc){
-              doc.ref.delete();
-            })
-          })}
+          {text: 'Sim', onPress: () => this.deletePublishOfMainRoute(itemToBeDeleted)}
       ]
     )
   }

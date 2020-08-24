@@ -195,19 +195,28 @@ export default class TelaAnunciosPendentes extends Component {
     }
   }
 
+  deletePublishOfMainRoute(itemToBeDeletedFunction){
+    let userUID = firebase.auth().currentUser.uid;
+    firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeletedFunction).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc){
+        doc.ref.delete();
+      })
+    })
+
+    firebase.firestore().collection('anuncios').where("idAnuncio", "==", itemToBeDeletedFunction).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc){
+        doc.ref.delete();
+      })
+    })
+  }
 
   deletePublish(itemToBeDeleted) {
-    let userUID = firebase.auth().currentUser.uid;
     Alert.alert(
       'Atenção!!!',
       'Você tem certeza que quer deletar este anúncio?',
       [
         {text: 'Não', onPress: () => {}},
-          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').where("idAnuncio", "==", itemToBeDeleted).get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc){
-              doc.ref.delete();
-            })
-          })}
+          {text: 'Sim', onPress: () => this.deletePublishOfMainRoute(itemToBeDeleted)}
       ]
     )
   }

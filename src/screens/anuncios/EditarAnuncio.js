@@ -565,6 +565,26 @@ export default class EditarAnuncio extends Component {
               timeOpen: e.state.horarioOpen,
               timeClose: e.state.horarioClose
             })
+
+            //editar anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
+            firebase.firestore().collection('anuncios').doc(routeIdAnuncio).update({
+              titleEstab: e.state.tituloEstab,
+              idAnuncio: routeIdAnuncio,
+              idUser: userUID,
+              descriptionEstab: e.state.descricaoEstab,
+              valueServiceEstab: e.state.precoEstab,
+              publishData: e.state.date,
+              type: 'Estabelecimento',
+              verifiedPublish: false,
+              phoneNumberEstab: e.state.phoneEstab,
+              localEstab: e.state.enderecoEstab,
+              categoryEstab: e.state.categoria,
+              subcategoryEstab: e.state.subcategoria,
+              photoPublish: urlImage,
+              workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+              timeOpen: e.state.horarioOpen,
+              timeClose: e.state.horarioClose
+            })
           }).catch(function(error) {
             console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
           })
@@ -588,6 +608,23 @@ export default class EditarAnuncio extends Component {
         this.sleep(3000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(routeIdAnuncio).update({
+              titleAuto: e.state.tituloAuto,
+              idAnuncio: routeIdAnuncio,
+              idUser: userUID,
+              nome: e.state.nomeAuto,
+              publishData: e.state.date,
+              descriptionAuto: e.state.descricaoAuto,
+              valueServiceAuto: e.state.precoAuto,
+              type: 'Autonomo',
+              verifiedPublish: false,
+              phoneNumberAuto: e.state.phoneAuto,
+              categoryAuto: e.state.categoria,
+              subcategoryAuto: e.state.subcategoria,
+              photoPublish: urlImage,
+            })
+
+            //editar anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
+            firebase.firestore().collection('anuncios').doc(routeIdAnuncio).update({
               titleAuto: e.state.tituloAuto,
               idAnuncio: routeIdAnuncio,
               idUser: userUID,

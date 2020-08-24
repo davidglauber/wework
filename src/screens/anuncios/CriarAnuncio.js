@@ -441,6 +441,26 @@ export default class CriarAnuncio extends Component {
               timeOpen: e.state.horarioOpen,
               timeClose: e.state.horarioClose
             })
+
+            //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
+            firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
+              titleEstab: e.state.tituloEstab,
+              idAnuncio: getSameIdToDocument,
+              idUser: userUID,
+              publishData: e.state.date,
+              descriptionEstab: e.state.descricaoEstab,
+              valueServiceEstab: e.state.precoEstab,
+              type: 'Estabelecimento',
+              verifiedPublish: false,
+              phoneNumberEstab: e.state.phoneEstab,
+              localEstab: e.state.enderecoEstab,
+              categoryEstab: e.state.categoria,
+              subcategoryEstab: e.state.subcategoria,
+              photoPublish: urlImage,
+              workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+              timeOpen: e.state.horarioOpen,
+              timeClose: e.state.horarioClose
+            })
           }).catch(function(error) {
             console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
           })
@@ -464,6 +484,23 @@ export default class CriarAnuncio extends Component {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+              titleAuto: e.state.tituloAuto,
+              idAnuncio: getSameIdToDocument,
+              idUser: userUID,
+              publishData: e.state.date,
+              nome: e.state.nomeAuto,
+              descriptionAuto: e.state.descricaoAuto,
+              valueServiceAuto: e.state.precoAuto,
+              type: 'Autonomo',
+              verifiedPublish: false,
+              phoneNumberAuto: e.state.phoneAuto,
+              categoryAuto: e.state.categoria,
+              subcategoryAuto: e.state.subcategoria,
+              photoPublish: urlImage,
+            })
+
+            //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
+            firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
               titleAuto: e.state.tituloAuto,
               idAnuncio: getSameIdToDocument,
               idUser: userUID,

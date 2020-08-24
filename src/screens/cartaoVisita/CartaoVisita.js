@@ -12,8 +12,8 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  ScrollView,
   Text,
-  I18nManager,
   TouchableOpacity,
   Image,
   FlatList,
@@ -22,15 +22,11 @@ import {
 import remove from 'lodash/remove';
 
 // import components
-import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
-import Button from '../../components/buttons/Button';
 import {Heading6, SmallText} from '../../components/text/CustomText';
-import Divider from '../../components/divider/Divider';
 import EmptyState from '../../components/emptystate/EmptyState';
 
 
 //import GestureHandler
-import { RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 //import gradient
@@ -38,9 +34,11 @@ import  { LinearGradient } from 'expo-linear-gradient';
 
 import { FontAwesome5 } from '@expo/vector-icons';
 
+//import firebase
+import firebase from '../../config/firebase';
+
 
 const fotoCartaoVisita = require('../../assets/img/smile.jpg');
-const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 // import colors
 import Colors from '../../theme/colors';
@@ -103,6 +101,8 @@ export default class CartaoVisita extends Component {
     this.state = {
       total: 0.0,
       favorite: false,
+      cartoesEstab: [],
+      cartoesAuto: [],
       products: [
         {
           id: 'product1',
@@ -130,8 +130,47 @@ export default class CartaoVisita extends Component {
     };
   }
 
-  componentDidMount = () => {
-    console.log('favorito: ' + this.state.favorite);
+  async componentDidMount() {
+    let e = this;
+
+    await firebase.firestore().collection('cartoes').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+      let cartoesAutoDidMount = []
+      documentSnapshot.forEach(function(doc) {
+        cartoesAutoDidMount.push({
+          idUser: doc.data().idUser,
+          nome: doc.data().nome,
+          idCartao: doc.data().idCartao,
+          photo: doc.data().photoPublish,
+          description: doc.data().descriptionAuto,
+          type: doc.data().type,
+          categoria: doc.data().categoryAuto,
+          phone: doc.data().phoneNumberAuto,
+        })
+      })
+      e.setState({cartoesAuto: cartoesAutoDidMount})
+    })
+
+    await firebase.firestore().collection('cartoes').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+      let cartoesEstabDidMount = []
+      documentSnapshot.forEach(function(doc) {
+        cartoesEstabDidMount.push({
+          idUser: doc.data().idUser,
+          idCartao: doc.data().idCartao,
+          photo: doc.data().photoPublish,
+          local: doc.data().localEstab,
+          title: doc.data().titleEstab,
+          description: doc.data().descriptionEstab,
+          phone: doc.data().phoneNumberEstab,
+          timeOpen: doc.data().timeOpen,
+          timeClose: doc.data().timeClose,
+          type: doc.data().type,
+          verified: doc.data().verifiedPublish,
+          categoria: doc.data().categoryEstab,
+          workDays: doc.data().workDays
+        })
+      })
+      e.setState({cartoesEstab: cartoesEstabDidMount})
+    })
   };
 
   navigateTo = (screen) => () => {
@@ -139,84 +178,16 @@ export default class CartaoVisita extends Component {
     navigation.navigate(screen);
   };
 
-  swipeoutOnPressRemove = (item) => () => {
-    let {products} = this.state;
-    const index = products.indexOf(item);
 
-    products = remove(products, (n) => products.indexOf(n) !== index);
-
-    this.setState(
-      {
-        products,
-      },
-      () => {
-        this.updateTotalAmount();
-      },
-    );
-  };
-
-  onPressRemove = (item) => () => {
-    let {quantity} = item;
-    quantity -= 1;
-
-    let {products} = this.state;
-    const index = products.indexOf(item);
-
-    if (quantity === 0) {
-      products = remove(products, (n) => products.indexOf(n) !== index);
-    } else {
-      products[index].quantity = quantity;
+  makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-
-    this.setState(
-      {
-        products: [...products],
-      },
-      () => {
-        this.updateTotalAmount();
-      },
-    );
-  };
-
-  onPressAdd = (item) => () => {
-    const {quantity} = item;
-    const {products} = this.state;
-
-    const index = products.indexOf(item);
-    products[index].quantity = quantity + 1;
-
-    this.setState(
-      {
-        products: [...products],
-      },
-      () => {
-        this.updateTotalAmount();
-      },
-    );
-  };
-
-
-  updateTotalAmount = () => {
-    const {products} = this.state;
-    let total = 0.0;
-
-    products.forEach((product) => {
-      let {price} = product;
-      const {discountPercentage, quantity} = product;
-
-      if (typeof discountPercentage !== 'undefined') {
-        price -= price * discountPercentage * 0.01;
-      }
-      total += price * quantity;
-    });
-
-    this.setState({
-      total,
-    });
-  };
-
-  keyExtractor = (item) => item.id.toString();
-
+    return result;
+ }
 
 
   RightAction() {
@@ -228,64 +199,26 @@ export default class CartaoVisita extends Component {
       );
   }
 
-  renderProductItem = ({item}) => (
 
-    <Swipeable
-      renderRightActions={this.RightAction}
-    >
-    <View style={{flex:1, alignItems: 'center'}}>
-        <View>
+  cutDescription(text) {
+    if(text.length > 40) {
+      let shortDescription = text.substr(0, 40)
 
-            <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
-                <View style={{flexDirection:'row'}}>
-                    <Image source={fotoCartaoVisita} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
-                    
-                    <View style={{flexDirection:'column', width:165}}>
-                        <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>Roberto Carlos</Text>
-                      
-                      <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <Text style={{textAlign:'center', fontSize:12, marginTop:20, fontWeight: '500',  marginLeft:25, color:'#888888'}}>Confeitaria</Text>
-                            
-                            <View style={{marginTop:20}}>
-                                <TouchableWithoutFeedback style={{width:25, height:25,  backgroundColor: '#00b9a7', borderRadius:5}}>
-                                    <FontAwesome5 style={{marginLeft:3}} name="briefcase" size={19} color={'#E3E3E3'}/>
-                                </TouchableWithoutFeedback>
-                            </View>
-                      </View>
-
-
-                      <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <Text style={{textAlign:'center', fontSize:12, marginTop:7, fontWeight: '500',  marginLeft:25, color:'#888888'}}>(82) 99203-4312</Text>
-                            
-                            <View style={{marginTop:0}}>
-                                <TouchableWithoutFeedback style={{width:25, height:25, marginTop:7,  backgroundColor: '#00b9a7', borderRadius:5}}>
-                                    <FontAwesome5 style={{marginLeft:3, marginTop: 2}} name="phone" size={19} color={'#E3E3E3'}/>
-                                </TouchableWithoutFeedback>
-                            </View>
-                      </View>
-
-                      
-                    </View>
-                </View>  
-
-                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <TouchableOpacity onPress={this.navigateTo('TelaCartaoVisita')} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 20, marginLeft: 31}}>
-                        <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                    </TouchableOpacity>
-
-                    <View style={{marginTop: 20, marginRight: 30}}>
-                        <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
-                    </View>
-                </View> 
-
-            </View>
+      return(
+        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription} ...</Text>
         </View>
-      </View>
-    </Swipeable>
-  );
-
+      );
+    } else {
+      return(
+        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{text}</Text>
+        </View>
+      );
+    }
+  }
   render() {
-    const {total, products} = this.state;
+    const {cartoesAuto, cartoesEstab, products} = this.state;
 
     return (
 
@@ -321,35 +254,96 @@ export default class CartaoVisita extends Component {
           )}
         </View>
 
-        {products.length === 0 ? (
-          <EmptyState
-            showIcon
-            iconName={EMPTY_STATE_ICON}
-            title="Your Cart is Empty"
-            message="Looks like you haven't added anything to your cart yet"
-          />
-        ) : (
-          <Fragment>
-            <View style={styles.flex1}>
+          <ScrollView>
+            <View>
               <FlatList
-                data={products}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderProductItem}
+                data={cartoesAuto}
+                keyExtractor={() => this.makeid(17)}
+                renderItem={({item}) => 
+                  <Swipeable
+                    renderRightActions={this.RightAction}
+                  > 
+                    <View style={{width: 336, height: 180, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2, }}>
+                          <View style={{flexDirection:'row'}}>
+                              <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                              
+                              <View style={{flexDirection:'column'}}>
+                                <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:15, color:'#70AD66'}}>{item.nome}</Text>
+
+                                {this.cutDescription(item.description)}
+
+                              </View>
+                          </View>  
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                              <TouchableOpacity onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                  <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                              </TouchableOpacity>
+
+                              <View style={{flexDirection:'row', marginTop:15}}>
+                                  <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
+                                  <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
+                              </View>
+
+                              <View style={{marginTop: 24, marginRight: 30}}>
+                                  <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
+                            </View>
+                          </View> 
+
+                    </View>
+                  </Swipeable>
+                }
                 contentContainerStyle={styles.productList}
               />
+
             </View>
 
-
-           {/* 
             <View>
-              <View style={styles.bottomButtonContainer}>
-                <Button
-                  onPress={this.navigateTo('Checkout')}
-                  title="Checkout"
-                />
-              </View>
+              <FlatList
+                data={cartoesEstab}
+                keyExtractor={() => this.makeid(17)}
+                renderItem={({item}) => 
+                  <Swipeable
+                    renderRightActions={this.RightAction}
+                  > 
+                    <View style={{width: 336, height: 180, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                              <View style={{flexDirection:'row'}}>
+                                  <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                                  
+                                  <View style={{flexDirection:'column', }}>
+                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:15, color:'#70AD66'}}>{item.title}</Text>
+
+                                    {this.cutDescription(item.description)}
+
+                                  </View>
+                              </View>  
+
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
+                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
+                                  </TouchableOpacity>
+
+                                  <View style={{flexDirection:'row', marginTop:15}}>
+                                      <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
+                                      <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
+                                  </View>
+
+                                  <View style={{marginTop: 24, marginRight: 30}}>
+                                      <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                </View>
+                              </View> 
+
+                            </View>
+                  </Swipeable>
+                }
+                contentContainerStyle={styles.productList}
+              />
+
             </View>
-            */}
+
+          </ScrollView>
+
+
           <View style={{justifyContent: 'center',alignItems: 'center', padding: 8}}>
             <View style={{borderTopWidth:0,justifyContent: 'center', alignItems: 'center', height: 28,borderRadius: 4,  paddingHorizontal: 8, backgroundColor: '#f1f1f1'}}>
                 <SmallText>
@@ -357,8 +351,6 @@ export default class CartaoVisita extends Component {
                 </SmallText>
             </View>
           </View>
-          </Fragment>
-        )}
       </SafeAreaView>
     );
   }

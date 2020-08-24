@@ -62,8 +62,6 @@ import MostrarCartao from '../screens/cartaoVisita/MostrarCartao';
 
 import EditarCartao from '../screens/cartaoVisita/EditarCartao';
 
-import TelaCartaoVisita from '../screens/cartaoVisita/TelaCartaoVisita';
-
 import TelaGeralCriarCartao from '../screens/cartaoVisita/TelaGeralCriarCartao';
 
 import TelaCriarCartaoVisita from '../screens/cartaoVisita/TelaCriarCartaoVisita';
@@ -270,7 +268,9 @@ function MainNavigatorA() {
         <Stack.Screen
           name="EditarAnuncio"
           component={EditarAnuncio}
-          options={{headerShown: false}}
+          options={{
+            title: 'Editar Anúncio'
+          }}
         />
 
         <Stack.Screen
@@ -294,7 +294,9 @@ function MainNavigatorA() {
         <Stack.Screen
           name="EditarCartao"
           component={EditarCartao}
-          options={{headerShown: false}}
+          options={{
+            title: 'Editar Cartão'
+          }}
         />
 
         <Stack.Screen
@@ -317,11 +319,6 @@ function MainNavigatorA() {
           options={{headerShown: false}}
         />
 
-        <Stack.Screen
-          name="TelaCartaoVisita"
-          component={TelaCartaoVisita}
-          options={{headerShown: false}}
-        />
         <Stack.Screen
           name="TelaGeralCriarCartao"
           component={TelaGeralCriarCartao}

@@ -405,9 +405,27 @@ export default class TelaCriarCartaoVisita extends Component {
    
     if(type == 'Estabelecimento'){
       if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
-        this.sleep(2000).then(() => { 
+        this.sleep(3000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
+              titleEstab: e.state.tituloEstab,
+              idCartao: getSameIdToDocument,
+              publishData: e.state.date,
+              idUser: userUID,
+              descriptionEstab: e.state.descricaoEstab,
+              type: 'Estabelecimento',
+              verifiedPublish: false,
+              phoneNumberEstab: e.state.phoneEstab,
+              localEstab: e.state.enderecoEstab,
+              categoryEstab: e.state.categoria,
+              subcategoryEstab: e.state.subcategoria,
+              photoPublish: urlImage,
+              workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+              timeOpen: e.state.horarioOpen,
+              timeClose: e.state.horarioClose
+            })
+
+            firebase.firestore().collection('cartoes').doc(getSameIdToDocument).set({
               titleEstab: e.state.tituloEstab,
               idCartao: getSameIdToDocument,
               publishData: e.state.date,
@@ -444,9 +462,24 @@ export default class TelaCriarCartaoVisita extends Component {
 
     if(type == 'Autonomo') {
       if(this.state.descricaoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
-        this.sleep(2000).then(() => { 
+        this.sleep(3000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
+              idCartao: getSameIdToDocument,
+              idUser: userUID,
+              publishData: e.state.date,
+              nome: e.state.nomeAuto,
+              descriptionAuto: e.state.descricaoAuto,
+              type: 'Autonomo',
+              verifiedPublish: false,
+              phoneNumberAuto: e.state.phoneAuto,
+              categoryAuto: e.state.categoria,
+              subcategoryAuto: e.state.subcategoria,
+              photoPublish: urlImage,
+            })
+
+
+            firebase.firestore().collection('cartoes').doc(getSameIdToDocument).set({
               idCartao: getSameIdToDocument,
               idUser: userUID,
               publishData: e.state.date,

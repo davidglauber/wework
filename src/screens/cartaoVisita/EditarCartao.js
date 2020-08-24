@@ -519,7 +519,26 @@ export default class EditarCartao extends Component {
       if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).set({
+          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
+              titleEstab: e.state.tituloEstab,
+              idCartao: routeIdCartao,
+              idUser: userUID,
+              descriptionEstab: e.state.descricaoEstab,
+              publishData: e.state.date,
+              type: 'Estabelecimento',
+              verifiedPublish: false,
+              phoneNumberEstab: e.state.phoneEstab,
+              localEstab: e.state.enderecoEstab,
+              categoryEstab: e.state.categoria,
+              subcategoryEstab: e.state.subcategoria,
+              photoPublish: urlImage,
+              workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+              timeOpen: e.state.horarioOpen,
+              timeClose: e.state.horarioClose
+            })
+
+            //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
+            firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
               titleEstab: e.state.tituloEstab,
               idCartao: routeIdCartao,
               idUser: userUID,
@@ -558,7 +577,22 @@ export default class EditarCartao extends Component {
       if(this.state.descricaoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
         this.sleep(2000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).set({
+          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
+              idCartao: routeIdCartao,
+              idUser: userUID,
+              nome: e.state.nomeAuto,
+              publishData: e.state.date,
+              descriptionAuto: e.state.descricaoAuto,
+              type: 'Autonomo',
+              verifiedPublish: false,
+              phoneNumberAuto: e.state.phoneAuto,
+              categoryAuto: e.state.categoria,
+              subcategoryAuto: e.state.subcategoria,
+              photoPublish: urlImage,
+            })
+
+            //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
+            firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
               idCartao: routeIdCartao,
               idUser: userUID,
               nome: e.state.nomeAuto,

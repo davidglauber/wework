@@ -211,6 +211,21 @@ export default class TelaGeralCriarCartao extends Component {
   }
 
 
+  deletePublishOfMainRoute(itemToBeDeletedFunction){
+    let userUID = firebase.auth().currentUser.uid;
+      firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').where("idCartao", "==", itemToBeDeletedFunction).get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc){
+          doc.ref.delete();
+      })
+    })
+
+    firebase.firestore().collection('cartoes').where("idAnuncio", "==", itemToBeDeletedFunction).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc){
+        doc.ref.delete();
+      })
+    })
+  }
+
   deletePublish(itemToBeDeleted) {
     let userUID = firebase.auth().currentUser.uid;
     Alert.alert(
@@ -218,11 +233,7 @@ export default class TelaGeralCriarCartao extends Component {
       'Você tem certeza que quer deletar este anúncio?',
       [
         {text: 'Não', onPress: () => {}},
-          {text: 'Sim', onPress: () => firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').where("idCartao", "==", itemToBeDeleted).get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc){
-              doc.ref.delete();
-            })
-          })}
+        {text: 'Sim', onPress: () => this.deletePublishOfMainRoute(itemToBeDeleted)}
       ]
     )
   }
@@ -306,7 +317,7 @@ export default class TelaGeralCriarCartao extends Component {
 
                                     {this.cutDescription(item.description)}
 
-                                    <View style={{flexDirection:'row', paddingHorizontal:'25%'}}>
+                                    <View style={{flexDirection:'row', paddingHorizontal:'15%'}}>
                                       <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
                                       <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
                                     </View>

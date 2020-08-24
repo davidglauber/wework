@@ -187,17 +187,7 @@ export default class TelaAnuncio extends Component {
       product: {
         images: [
           require('../../assets/img/confeiteira.jpeg'),
-          require('../../assets/img/confeiteira.jpeg'),
-          require('../../assets/img/confeiteira.jpeg'),
         ],
-        name: 'Forneço Cupcakes',
-        description:
-          'Sou confeiteiro Profissional, tenho variedades de sabores, entrego em todo país. Encomenda a combinar por chat. Peça já o seu!',
-        price: 56.7,
-        quantity: 1,
-        servingSize: 1,
-        sideDish: 20,
-        total: 10.9,
       },
       phoneNavigator: this.props.route.params.phoneNumberNavigator,
       dateAuto:'',

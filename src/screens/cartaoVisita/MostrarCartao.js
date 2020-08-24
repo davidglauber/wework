@@ -480,30 +480,6 @@ export default class MostrarCartao extends Component {
           />
 
 
-        {/* <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
-                <Picker
-                  selectedValue={this.state.horario}
-                  onValueChange={(itemValue, itemIndex) => this.setState({horario: itemValue})}
-                  style={{marginLeft:10, width: 300, height:50}}>
-                  <Picker.Item label="Segunda: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Terça: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Quarta: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Quinta: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Sexta: De: 8:00 às 23:00" value=""/>
-                  <Picker.Item label="Sábado: De: 8:00 às 21:00" value=""/>
-                  <Picker.Item label="Domingo: De: 8:00 às 21:00" value=""/>
-                </Picker>
-            </View>
-
-        */}
-
-        {/* <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                <FontAwesome5 name="map-marked-alt" size={25} color={"#70AD66"}/>
-                <Text style={{fontSize:15, marginLeft: 15}}>Rua Domingues, 203</Text>
-            </View>
-        */}
-
         </ScrollView>
 
           

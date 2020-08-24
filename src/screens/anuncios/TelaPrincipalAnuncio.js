@@ -218,7 +218,7 @@ export default class TelaPrincipalAnuncio extends Component {
       'Você tem certeza que quer deletar este anúncio?',
       [
         {text: 'Não', onPress: () => {}},
-          {text: 'Sim', onPress: () => this.deletePublishOfMainRoute(itemToBeDeleted)}
+        {text: 'Sim', onPress: () => this.deletePublishOfMainRoute(itemToBeDeleted)}
       ]
     )
   }

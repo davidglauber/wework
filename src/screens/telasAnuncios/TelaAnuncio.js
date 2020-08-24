@@ -50,7 +50,6 @@ const isRTL = I18nManager.isRTL;
 const IOS = Platform.OS === 'ios';
 const MINUS_ICON = IOS ? 'ios-remove' : 'md-remove';
 const PLUS_ICON = IOS ? 'ios-add' : 'md-add';
-const FAVORITE_ICON = IOS ? 'ios-star' : 'md-star';
 const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
 const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
@@ -90,9 +89,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 36,
     height: 36,
-  },
-  favorite: {
-    backgroundColor: Colors.secondaryColor,
   },
   descriptionContainer: {
     paddingHorizontal: 16,
@@ -203,7 +199,6 @@ export default class TelaAnuncio extends Component {
         sideDish: 20,
         total: 10.9,
       },
-      favorite: false,
       phoneNavigator: this.props.route.params.phoneNumberNavigator,
       dateAuto:'',
       dateEstab:''
@@ -280,14 +275,6 @@ export default class TelaAnuncio extends Component {
     navigation.goBack();
   };
 
-  onPressAddToFavorites = () => {
-    const {favorite} = this.state;
-
-    this.setState({
-      favorite: !favorite,
-    });
-  };
-
   makeid(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -304,7 +291,7 @@ export default class TelaAnuncio extends Component {
   }
 
   render() {
-    const {product, favorite, anuncioAuto, anuncioEstab} = this.state;
+    const {product, anuncioAuto, anuncioEstab} = this.state;
     const {
       images,
     } = product;
@@ -348,24 +335,6 @@ export default class TelaAnuncio extends Component {
                     </TouchableItem>
                   </View>
 
-                  <View
-                    style={[
-                      styles.topButton,
-                      styles.right,
-                      favorite && styles.favorite,
-                    ]}>
-                    <TouchableItem onPress={this.onPressAddToFavorites} borderless>
-                      <View style={styles.buttonIconContainer}>
-                        <Icon
-                          name={FAVORITE_ICON}
-                          size={22}
-                          color={
-                            favorite ? Colors.onSecondaryColor : Colors.secondaryText
-                          }
-                        />
-                      </View>
-                    </TouchableItem>
-                  </View>
                 </View>
 
                   <View style={styles.descriptionContainer}>
@@ -460,24 +429,6 @@ export default class TelaAnuncio extends Component {
                     </TouchableItem>
                   </View>
 
-                  <View
-                    style={[
-                      styles.topButton,
-                      styles.right,
-                      favorite && styles.favorite,
-                    ]}>
-                    <TouchableItem onPress={this.onPressAddToFavorites} borderless>
-                      <View style={styles.buttonIconContainer}>
-                        <Icon
-                          name={FAVORITE_ICON}
-                          size={22}
-                          color={
-                            favorite ? Colors.onSecondaryColor : Colors.secondaryText
-                          }
-                        />
-                      </View>
-                    </TouchableItem>
-                  </View>
                 </View>
 
                   <View style={styles.descriptionContainer}>

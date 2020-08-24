@@ -53,6 +53,7 @@ import EditarAnuncio from '../screens/anuncios/EditarAnuncio';
 
 // import Product screen
 import TelaAnuncio from '../screens/telasAnuncios/TelaAnuncio';
+
 import TelaAnunciosPendentes from '../screens/anuncios/TelaAnunciosPendentes';
 
 import TelaCartaoPendente from '../screens/cartaoVisita/TelaCartaoPendente';
@@ -315,6 +316,7 @@ function MainNavigatorA() {
           component={TelaAnuncio}
           options={{headerShown: false}}
         />
+
         <Stack.Screen
           name="TelaCartaoVisita"
           component={TelaCartaoVisita}

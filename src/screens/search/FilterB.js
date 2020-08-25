@@ -124,7 +124,6 @@ export default class FilterB extends Component {
         {title: 'Estabelecimento', picked: true}
       ],
       categorias: [],
-      filters:[],
       selected:[],
       type:'Estabelecimento'
     };
@@ -144,7 +143,6 @@ export default class FilterB extends Component {
         categoriaDidMount.push({
           id: doc.data().id,
           title: doc.data().title,
-          picked: false
         })
       })
       e.setState({categorias: categoriaDidMount})
@@ -169,6 +167,15 @@ export default class FilterB extends Component {
     const {navigation} = this.props;
     navigation.goBack();
   };
+
+
+  renderAndSelectCategory(itemTitle) {
+    let selected = this.state.selected;
+
+    this.setState({selected: selected + itemTitle})
+
+    console.log('id selecionado: ' + selected)
+  }
 
 
   render() {
@@ -222,10 +229,12 @@ export default class FilterB extends Component {
 
             <Subtitle1 style={[styles.subtitle, styles.mt8]}>Escolha a categoria abaixo</Subtitle1>
             <View style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
-              {categorias.map((item, index) => (
-                <TouchableOpacity>
-                  <Text>{item.title}</Text>
-                </TouchableOpacity>
+              {categorias.map((item) => (
+                <View>
+                  <TouchableOpacity onPress={() => this.renderAndSelectCategory(item.title)} style={{borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                    <Text style={{padding:10}}>{item.title}</Text>
+                  </TouchableOpacity>
+                </View>
               ))}
             </View>
           </View>

@@ -13,8 +13,10 @@ import {
   Platform,
   SafeAreaView,
   StatusBar,
+  TouchableOpacity,
+  Text,
   StyleSheet,
-  TextInput,
+  FlatList,
   View,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -23,6 +25,11 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Button from '../../components/buttons/Button';
 import FilterPicker from '../../components/pickers/FilterPicker';
 import {Subtitle1} from '../../components/text/CustomText';
+
+
+//import firebase
+import firebase from '../../config/firebase';
+
 
 import {Heading6} from '../../components/text/CustomText';
 
@@ -116,31 +123,33 @@ export default class FilterB extends Component {
         {title: 'Autônomo', picked: false},
         {title: 'Estabelecimento', picked: true}
       ],
-      cuisine: [
-        {title: 'Professor', picked: true},
-        {title: 'Motorista', picked: false},
-        {title: 'Caminhoneiro', picked: false},
-        {title: 'Jogador', picked: false},
-        {title: 'Encanador', picked: false},
-        {title: 'Músico', picked: false},
-        {title: 'Ator', picked: false},
-        {title: 'Tradutor', picked: false},
-        {title: 'Caminhoneiro', picked: false},
-        {title: 'Jogador', picked: false},
-        {title: 'Caminhoneiro', picked: false},
-        {title: 'Jogador', picked: false},
-        {title: 'Caminhoneiro', picked: false},
-        {title: 'Jogador', picked: false},
-        
-      ],
+      categorias: [],
+      filters:[],
+      selected:[],
+      type:'Estabelecimento'
     };
   }
 
-  componentDidMount = () => {
+ async componentDidMount() {
+    let e = this;
     this.keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       this.keyboardDidHide,
     );
+
+    //getting categories
+    await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
+      let categoriaDidMount = []
+      querySnapshot.forEach(function(doc) {
+        categoriaDidMount.push({
+          id: doc.data().id,
+          title: doc.data().title,
+          picked: false
+        })
+      })
+      e.setState({categorias: categoriaDidMount})
+    })
+
   };
 
   // avoid memory leak
@@ -161,57 +170,12 @@ export default class FilterB extends Component {
     navigation.goBack();
   };
 
-  onChangeText = (key) => (text) => {
-    this.setState({
-      [key]: text,
-    });
-  };
-
-  onFocus = (key) => () => {
-    let focusedInputs = {
-      fromPriceFocused: false,
-      toPriceFocused: false,
-    };
-    focusedInputs[key] = true;
-
-    this.setState({
-      ...focusedInputs,
-    });
-  };
-
-  focusOn = (nextFiled) => () => {
-    if (nextFiled) {
-      nextFiled.focus();
-    }
-  };
-
-  handleFilterPress = (filters, item) => () => {
-    const index = filters.indexOf(item);
-
-    filters[index].picked = !filters[index].picked;
-
-    this.setState({
-      filters: [...filters],
-    });
-  };
-
-  renderFilterItem = ({item, index}, filterArr) => (
-    <FilterPicker
-      key={index}
-      onPress={this.handleFilterPress(filterArr, item)}
-      picked={item.picked}
-      title={item.title}
-    />
-  );
 
   render() {
     const {
-      fromPrice,
-      fromPriceFocused,
-      toPrice,
-      toPriceFocused,
       menu,
-      cuisine,
+      categorias,
+      selected
     } = this.state;
 
     return (
@@ -229,20 +193,39 @@ export default class FilterB extends Component {
             </View>
             <Subtitle1 style={styles.subtitle}>Qual tipo de Profissional?</Subtitle1>
             <View style={styles.rowWrap}>
-              {menu.map((item, index) =>
-                this.renderFilterItem({item, index}, menu),
-              )}
+                <View>
+                  { this.state.type == 'Estabelecimento' &&
+                    <View style={{flexDirection:'row'}}>
+                      <TouchableOpacity onPress={() => this.setState({type: 'Autônomo'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                        <Text style={{padding:10, color:'black'}}>Autônomo</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
+                        <Text style={{padding:10, color:'#00b970'}}>Estabelecimento</Text>
+                      </TouchableOpacity>
+                    </View>
+                  }
+
+                  { this.state.type == 'Autônomo' &&
+                    <View style={{flexDirection:'row'}}>
+                      <TouchableOpacity  style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
+                        <Text style={{padding:10, color:'#00b970'}}>Autônomo</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                        <Text style={{padding:10, color:'black'}}>Estabelecimento</Text>
+                      </TouchableOpacity>
+                    </View>
+                  }
+                </View>
             </View>
 
             <Subtitle1 style={[styles.subtitle, styles.mt8]}>Escolha a categoria abaixo</Subtitle1>
             <View style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
-              {cuisine.map((item, index) => (
-                <FilterPicker
-                  key={index}
-                  onPress={this.handleFilterPress(cuisine, item)}
-                  picked={item.picked}
-                  title={item.title}
-                />
+              {categorias.map((item, index) => (
+                <TouchableOpacity>
+                  <Text>{item.title}</Text>
+                </TouchableOpacity>
               ))}
             </View>
           </View>

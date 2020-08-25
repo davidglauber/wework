@@ -15,6 +15,7 @@ import {
   StatusBar,
   TouchableOpacity,
   Text,
+  ScrollView,
   StyleSheet,
   FlatList,
   View,
@@ -23,7 +24,6 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 // import components
 import Button from '../../components/buttons/Button';
-import FilterPicker from '../../components/pickers/FilterPicker';
 import {Subtitle1} from '../../components/text/CustomText';
 
 
@@ -143,6 +143,7 @@ export default class FilterB extends Component {
         categoriaDidMount.push({
           id: doc.data().id,
           title: doc.data().title,
+          picked: false
         })
       })
       e.setState({categorias: categoriaDidMount})
@@ -169,11 +170,18 @@ export default class FilterB extends Component {
   };
 
 
-  renderAndSelectCategory(itemTitle) {
+  renderAndSelectCategory(itemTitle, itemPicked) {
     let selected = this.state.selected;
+    let array = [];
 
-    this.setState({selected: selected + itemTitle})
+    itemPicked = true
+    array.push({title: itemTitle, picked: itemPicked});
 
+    if(selected.length <= 0) {
+      this.setState({selected: array})
+    } else {
+      this.setState({selected: selected.concat(array)})
+    }
     console.log('id selecionado: ' + selected)
   }
 
@@ -216,7 +224,7 @@ export default class FilterB extends Component {
                   { this.state.type == 'Autônomo' &&
                     <View style={{flexDirection:'row'}}>
                       <TouchableOpacity  style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
-                        <Text style={{padding:10, color:'#00b970'}}>Autônomo</Text>
+                        <Text style={{padding:10, color:'#00b970'}}>Autônomo</Text> 
                       </TouchableOpacity>
 
                       <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
@@ -231,15 +239,31 @@ export default class FilterB extends Component {
             <View style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
               {categorias.map((item) => (
                 <View>
-                  <TouchableOpacity onPress={() => this.renderAndSelectCategory(item.title)} style={{borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
-                    <Text style={{padding:10}}>{item.title}</Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.renderAndSelectCategory(item.title, item.picked)} style={{borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                      <Text style={{padding:10}}>{item.title}</Text>
+                    </TouchableOpacity>
                 </View>
               ))}
             </View>
           </View>
 
+
           <View style={styles.buttonContainer}>
+            <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+                {selected.map((item) => (
+                  <View>
+                      <TouchableOpacity style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
+                        <Text style={{padding:10, color:'#00b970'}}>{item.title}</Text>
+                      </TouchableOpacity>
+                  </View>
+                ))}
+            </ScrollView>
+
+            {selected.length == 1 ?
+              <Text style={{marginBottom:17, color:'#00b970', fontWeight: "bold"}}>{selected.length} categoria selecionada</Text>
+              :
+              <Text style={{marginBottom:17, color:'#00b970', fontWeight: "bold"}}>{selected.length} categorias selecionadas</Text>
+            }
             <Button onPress={this.goBack} title="Aplicar Filtros" rounded />
           </View>
         </KeyboardAwareScrollView>

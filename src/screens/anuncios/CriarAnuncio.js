@@ -12,6 +12,7 @@ import {
   StatusBar,
   StyleSheet,
   Image,
+  ScrollView,
   TouchableOpacity,
   TextInput,
   Modal,
@@ -46,6 +47,7 @@ import { PulseIndicator } from 'react-native-indicators';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import { TextInputMask } from 'react-native-masked-text';
+
 
 // import colors
 import Colors from '../../theme/colors';
@@ -124,6 +126,8 @@ export default class CriarAnuncio extends Component {
       sabado:false,
       domingo:false,
       modalizeRef: React.createRef(null),
+      modalizeRefDescription: React.createRef(null),
+      modalizeRefDescriptionEstab: React.createRef(null),
       modalizeRefSub: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
@@ -286,6 +290,19 @@ export default class CriarAnuncio extends Component {
     modalizeRefSub.current?.open()
   }
 
+  openModalizeDescricao() {
+    const modalizeRefDescription = this.state.modalizeRefDescription;
+
+    modalizeRefDescription.current?.open()
+  }
+
+  openModalizeDescricaoEstab() {
+    const modalizeRefDescriptionEstab = this.state.modalizeRefDescriptionEstab;
+
+    modalizeRefDescriptionEstab.current?.open()
+  }
+
+
 
 
   openModalizeAbertura() {
@@ -318,6 +335,19 @@ export default class CriarAnuncio extends Component {
     modalizeRefSub.current?.close()
 
     console.log('SUBCATEGORIA Selecionada: '  + param)
+  }
+
+
+  closeDescriptionModal(){
+    const modalizeRefDescription = this.state.modalizeRefDescription;
+
+    modalizeRefDescription.current?.close()
+  }
+
+  closeDescriptionEstabModal(){
+    const modalizeRefDescriptionEstab = this.state.modalizeRefDescriptionEstab;
+
+    modalizeRefDescriptionEstab.current?.close()
   }
 
   getHorarioOpen(param) {
@@ -651,14 +681,15 @@ export default class CriarAnuncio extends Component {
                               />
                           </View>
 
-                          <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                          <TouchableOpacity onPress={() => this.openModalizeDescricao()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInput
                                 value={this.state.descricaoAuto}
                                 onChangeText={text => this.onChangeDescricaoAuto(text)}
                                 style={styles.inputStyle}
                                 placeholder="Descrição do Anúncio                                                    "
+                                editable={false}
                               />
-                          </View>
+                          </TouchableOpacity>
 
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInputMask
@@ -707,14 +738,15 @@ export default class CriarAnuncio extends Component {
                               />
                             </View>
 
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TouchableOpacity onPress={() => this.openModalizeDescricaoEstab()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInput
                                 style={styles.inputStyle}
                                 value={this.state.descricaoEstab}
+                                editable={false}
                                 onChangeText={text => this.onChangeDescricaoEstab(text)}
                                 placeholder="Descrição do Anúncio                                                    "
                               />
-                            </View>
+                            </TouchableOpacity>
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInputMask
@@ -885,7 +917,7 @@ export default class CriarAnuncio extends Component {
                         <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
                             <View style={{marginRight:70}}>
                               <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
-                                {this.state.categoria == '' ?
+                                {this.state.subcategoria == '' ?
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
                                     <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
                                     <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>
@@ -954,6 +986,68 @@ export default class CriarAnuncio extends Component {
             </View>
           </Modalize>
 
+
+          {/*Modalize da descrição Autonomo*/}
+          <Modalize
+            ref={this.state.modalizeRefDescription}
+            snapPoint={500}
+          >
+            <View>
+                  <ScrollView>
+                      <TextInput
+                        multiline={true}
+                        underlineColorAndroid="transparent"
+                        value={this.state.descricaoAuto}
+                        onChangeText={text => this.onChangeDescricaoAuto(text)}
+                        style={{padding: 20}}
+                        placeholder="Digite uma descrição detalhada para o anúncio"
+                      />
+
+                      <View style={{alignItems:'center'}}>
+                        <TouchableOpacity
+                          onPress={() => this.closeDescriptionModal()}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                        >
+                          <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                        </TouchableOpacity>
+                      </View>
+
+                  </ScrollView>
+                  
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize da descrição Estabelecimento*/}
+          <Modalize
+            ref={this.state.modalizeRefDescriptionEstab}
+            snapPoint={500}
+          >
+            <View>
+                  <ScrollView>
+                      <TextInput
+                        multiline={true}
+                        underlineColorAndroid="transparent"
+                        value={this.state.descricaoEstab}
+                        onChangeText={text => this.onChangeDescricaoEstab(text)}
+                        style={{padding: 20}}
+                        placeholder="Digite uma descrição detalhada para o anúncio"
+                      />
+
+                      <View style={{alignItems:'center'}}>
+                        <TouchableOpacity
+                          onPress={() => this.closeDescriptionEstabModal()}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                        >
+                          <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                        </TouchableOpacity>
+                      </View>
+
+                  </ScrollView>
+                  
+            </View>
+          </Modalize>
 
 
           {/*Modalize do horario de abertura*/}

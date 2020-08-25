@@ -1026,7 +1026,7 @@ export default class EditarAnuncio extends Component {
                         <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
                             <View style={{marginRight:70}}>
                               <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
-                                {this.state.categoria == '' ?
+                                {this.state.subcategoria == '' ?
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
                                     <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
                                     <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>

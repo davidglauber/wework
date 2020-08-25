@@ -172,6 +172,7 @@ export default class FilterB extends Component {
 
   renderAndSelectCategory(itemTitle, itemPicked) {
     let selected = this.state.selected;
+    let categorias = this.state.categorias;
     let array = [];
 
     itemPicked = true
@@ -180,7 +181,20 @@ export default class FilterB extends Component {
     if(selected.length <= 0) {
       this.setState({selected: array})
     } else {
-      this.setState({selected: selected.concat(array)})
+      selected.map((item) => {
+        if(item.title == itemTitle) {
+          alert('Você não pode repetir categorias')
+          this.setState({selected: selected})
+        } else {
+          this.setState({selected: selected.concat(array)})
+
+          categorias.map((item) => {
+            if(item.title == itemTitle){
+              delete item.title
+            }
+          })
+        }
+      })
     }
     console.log('id selecionado: ' + selected)
   }

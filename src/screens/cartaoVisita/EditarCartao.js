@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  ScrollView,
   Image,
   TouchableOpacity,
   TextInput,
@@ -122,6 +123,8 @@ export default class EditarCartao extends Component {
       domingo:false,
       modalizeRef: React.createRef(null),
       modalizeRefSub: React.createRef(null),
+      modalizeRefDescription: React.createRef(null),
+      modalizeRefDescriptionEstab: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
       image:null,
@@ -387,6 +390,34 @@ export default class EditarCartao extends Component {
 
     modalizeRefAbertura.current?.open()
   }
+
+
+
+  openModalizeDescricao() {
+    const modalizeRefDescription = this.state.modalizeRefDescription;
+
+    modalizeRefDescription.current?.open()
+  }
+
+  openModalizeDescricaoEstab() {
+    const modalizeRefDescriptionEstab = this.state.modalizeRefDescriptionEstab;
+
+    modalizeRefDescriptionEstab.current?.open()
+  }
+
+  
+  closeDescriptionModal(){
+    const modalizeRefDescription = this.state.modalizeRefDescription;
+
+    modalizeRefDescription.current?.close()
+  }
+
+  closeDescriptionEstabModal(){
+    const modalizeRefDescriptionEstab = this.state.modalizeRefDescriptionEstab;
+
+    modalizeRefDescriptionEstab.current?.close()
+  }
+
 
   openModalizeFechamento() {
     const modalizeRefFechamento = this.state.modalizeRefFechamento;
@@ -760,14 +791,15 @@ export default class EditarCartao extends Component {
                               />
                           </View>
 
-                          <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                          <TouchableOpacity onPress={() => this.openModalizeDescricao()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInput
+                                editable={false}
                                 value={this.state.descricaoAuto}
                                 onChangeText={text => this.onChangeDescricaoAuto(text)}
                                 style={styles.inputStyle}
-                                placeholder="Dê a sua melhor descrição das suas habilidades                                                    "
+                                placeholder="Dê a melhor descrição das suas habilidades, detalhe-as                                                    "
                               />
-                          </View>
+                          </TouchableOpacity>
 
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInputMask
@@ -795,14 +827,15 @@ export default class EditarCartao extends Component {
                               />
                             </View>
 
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TouchableOpacity onPress={() => this.openModalizeDescricaoEstab()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInput
+                                editable={false}
                                 style={styles.inputStyle}
                                 value={this.state.descricaoEstab}
                                 onChangeText={text => this.onChangeDescricaoEstab(text)}
-                                placeholder="Dê uma descrição detelhada                                                    "
+                                placeholder="Dê a melhor descrição do seu negócio                                                    "
                               />
-                            </View>
+                            </TouchableOpacity>
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInputMask
@@ -962,7 +995,7 @@ export default class EditarCartao extends Component {
                         <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
                             <View style={{marginRight:70}}>
                               <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
-                                {this.state.categoria == '' ?
+                                {this.state.subcategoria == '' ?
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
                                     <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
                                     <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>
@@ -1029,6 +1062,74 @@ export default class EditarCartao extends Component {
               ))}
             </View>
           </Modalize>
+
+
+
+
+
+          {/*Modalize da descrição Autonomo*/}
+          <Modalize
+            ref={this.state.modalizeRefDescription}
+            snapPoint={500}
+          >
+            <View>
+                  <ScrollView>
+                      <TextInput
+                        multiline={true}
+                        underlineColorAndroid="transparent"
+                        value={this.state.descricaoAuto}
+                        onChangeText={text => this.onChangeDescricaoAuto(text)}
+                        style={{padding: 20}}
+                        placeholder="Dê a melhor descrição das suas habilidades, detalhe-as"
+                      />
+
+                      <View style={{alignItems:'center'}}>
+                        <TouchableOpacity
+                          onPress={() => this.closeDescriptionModal()}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                        >
+                          <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                        </TouchableOpacity>
+                      </View>
+
+                  </ScrollView>
+                  
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize da descrição Estabelecimento*/}
+          <Modalize
+            ref={this.state.modalizeRefDescriptionEstab}
+            snapPoint={500}
+          >
+            <View>
+                  <ScrollView>
+                      <TextInput
+                        multiline={true}
+                        underlineColorAndroid="transparent"
+                        value={this.state.descricaoEstab}
+                        onChangeText={text => this.onChangeDescricaoEstab(text)}
+                        style={{padding: 20}}
+                        placeholder="Dê a melhor descrição do seu negócio"
+                      />
+
+                      <View style={{alignItems:'center'}}>
+                        <TouchableOpacity
+                          onPress={() => this.closeDescriptionEstabModal()}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                        >
+                          <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                        </TouchableOpacity>
+                      </View>
+
+                  </ScrollView>
+                  
+            </View>
+          </Modalize>
+
+
 
 
           {/*Modalize do horario de abertura*/}

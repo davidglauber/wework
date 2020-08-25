@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  ScrollView,
   Image,
   TouchableOpacity,
   TextInput,
@@ -124,6 +125,8 @@ export default class EditarAnuncio extends Component {
       sabado:false,
       domingo:false,
       modalizeRef: React.createRef(null),
+      modalizeRefDescription: React.createRef(null),
+      modalizeRefDescriptionEstab: React.createRef(null),
       modalizeRefSub: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
@@ -399,6 +402,20 @@ export default class EditarAnuncio extends Component {
   }
 
 
+  openModalizeDescricao() {
+    const modalizeRefDescription = this.state.modalizeRefDescription;
+
+    modalizeRefDescription.current?.open()
+  }
+
+  openModalizeDescricaoEstab() {
+    const modalizeRefDescriptionEstab = this.state.modalizeRefDescriptionEstab;
+
+    modalizeRefDescriptionEstab.current?.open()
+  }
+
+
+
   openModalizeSubCategoria() {
     const modalizeRefSub = this.state.modalizeRefSub;
 
@@ -493,6 +510,21 @@ export default class EditarAnuncio extends Component {
   setModalLoadVisible = (visible) => {
     this.setState({ modalLoadVisible: visible });
   }
+
+
+
+  closeDescriptionModal(){
+    const modalizeRefDescription = this.state.modalizeRefDescription;
+
+    modalizeRefDescription.current?.close()
+  }
+
+  closeDescriptionEstabModal(){
+    const modalizeRefDescriptionEstab = this.state.modalizeRefDescriptionEstab;
+
+    modalizeRefDescriptionEstab.current?.close()
+  }
+
 
 
 
@@ -792,14 +824,15 @@ export default class EditarAnuncio extends Component {
                               />
                           </View>
 
-                          <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                          <TouchableOpacity onPress={() => this.openModalizeDescricao()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInput
+                                editable={false}
                                 value={this.state.descricaoAuto}
                                 onChangeText={text => this.onChangeDescricaoAuto(text)}
                                 style={styles.inputStyle}
                                 placeholder="Descrição do Anúncio                                                    "
                               />
-                          </View>
+                          </TouchableOpacity>
 
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInputMask
@@ -848,14 +881,15 @@ export default class EditarAnuncio extends Component {
                               />
                             </View>
 
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TouchableOpacity onPress={() => this.openModalizeDescricaoEstab()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInput
+                                editable={false}
                                 style={styles.inputStyle}
                                 value={this.state.descricaoEstab}
                                 onChangeText={text => this.onChangeDescricaoEstab(text)}
                                 placeholder="Descrição do Anúncio                                                    "
                               />
-                            </View>
+                            </TouchableOpacity>
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <TextInputMask
@@ -1091,6 +1125,70 @@ export default class EditarAnuncio extends Component {
                   </TouchableOpacity>
                 </View>
               ))}
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize da descrição Autonomo*/}
+          <Modalize
+            ref={this.state.modalizeRefDescription}
+            snapPoint={500}
+          >
+            <View>
+                  <ScrollView>
+                      <TextInput
+                        multiline={true}
+                        underlineColorAndroid="transparent"
+                        value={this.state.descricaoAuto}
+                        onChangeText={text => this.onChangeDescricaoAuto(text)}
+                        style={{padding: 20}}
+                        placeholder="Digite uma descrição detalhada para o anúncio"
+                      />
+
+                      <View style={{alignItems:'center'}}>
+                        <TouchableOpacity
+                          onPress={() => this.closeDescriptionModal()}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                        >
+                          <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                        </TouchableOpacity>
+                      </View>
+
+                  </ScrollView>
+                  
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize da descrição Estabelecimento*/}
+          <Modalize
+            ref={this.state.modalizeRefDescriptionEstab}
+            snapPoint={500}
+          >
+            <View>
+                  <ScrollView>
+                      <TextInput
+                        multiline={true}
+                        underlineColorAndroid="transparent"
+                        value={this.state.descricaoEstab}
+                        onChangeText={text => this.onChangeDescricaoEstab(text)}
+                        style={{padding: 20}}
+                        placeholder="Digite uma descrição detalhada para o anúncio"
+                      />
+
+                      <View style={{alignItems:'center'}}>
+                        <TouchableOpacity
+                          onPress={() => this.closeDescriptionEstabModal()}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                        >
+                          <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                        </TouchableOpacity>
+                      </View>
+
+                  </ScrollView>
+                  
             </View>
           </Modalize>
 

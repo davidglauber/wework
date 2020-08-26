@@ -47,6 +47,8 @@ import TermsConditions from '../screens/terms/TermsConditionsA';
 // import HomeNavigator
 import HomeNavigator from './HomeNavigatorA';
 
+import HomeFiltro from '../screens/home/HomeFiltro';
+
 import TelaPrincipalAnuncio from '../screens/anuncios/TelaPrincipalAnuncio';
 
 import EditarAnuncio from '../screens/anuncios/EditarAnuncio';
@@ -106,7 +108,7 @@ import AboutUs from '../screens/about/AboutUsA';
 
 // import colors
 import Colors from '../theme/colors';
-import FilterB from '../screens/search/FilterB';
+import Filtro from '../screens/search/Filtro';
 import FilterCartao from '../screens/search/FilterCartao'
 
 // MainNavigatorA Config
@@ -250,6 +252,13 @@ function MainNavigatorA() {
           component={HomeNavigator}
           options={{headerShown: false}}
         />
+
+        <Stack.Screen
+          name="HomeFiltro"
+          component={HomeFiltro}
+          options={{headerShown: false}}
+        />
+
         <Stack.Screen
           name="TelaLogout"
           component={TelaLogout}
@@ -325,8 +334,8 @@ function MainNavigatorA() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="FilterB"
-          component={FilterB}
+          name="Filtro"
+          component={Filtro}
           options={{headerShown: false}}
         />
         <Stack.Screen

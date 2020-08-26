@@ -111,18 +111,10 @@ const styles = StyleSheet.create({
 });
 
 // SearchFilterB
-export default class FilterB extends Component {
+export default class Filtro extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fromPrice: '',
-      toPrice: '',
-      fromPriceFocused: false,
-      toPriceFocused: false,
-      menu: [
-        {title: 'Autônomo', picked: false},
-        {title: 'Estabelecimento', picked: true}
-      ],
       categorias: [],
       selected:[],
       type:'Estabelecimento'
@@ -154,13 +146,6 @@ export default class FilterB extends Component {
   };
   
 
-  keyboardDidHide = () => {
-    this.setState({
-      fromPriceFocused: false,
-      toPriceFocused: false,
-    });
-  };
-
   goBack = () => {
     const {navigation} = this.props;
     navigation.goBack();
@@ -183,7 +168,7 @@ export default class FilterB extends Component {
     } else {
       this.setState({selected: selected.concat(array)})
     }
-    console.log('id selecionado: ' + selected)
+    console.log('LISTA DE SELECIONADOS: ' + selected)
   }
 
 
@@ -209,7 +194,6 @@ export default class FilterB extends Component {
 
   render() {
     const {
-      menu,
       categorias,
       selected
     } = this.state;
@@ -285,7 +269,9 @@ export default class FilterB extends Component {
               :
               <Text style={{marginBottom:17, color:'#00b970', fontWeight: "bold"}}>{selected.length} categorias selecionadas</Text>
             }
-            <Button onPress={this.goBack} title="Aplicar Filtros" rounded />
+            <Button onPress={() => this.props.navigation.navigate('HomeFiltro', {
+              categoriasFiltradas: this.state.selected
+            })} title="Aplicar Filtros" rounded />
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>

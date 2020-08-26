@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class HomeA extends Component {
+export default class HomeFiltro extends Component {
   constructor(props) {
     super(props);
 
@@ -136,7 +136,9 @@ export default class HomeA extends Component {
 
 async componentDidMount() {
   console.reportErrorsAsExceptions = false;
-   let e = this;
+    let arrayOfSelectedCategories = this.props.route.params.categoriasFiltradas;
+    console.log('ARRAY RECEBIDO DO NAVIGATOR: ' + arrayOfSelectedCategories)
+    let e = this;
 
     await firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -157,29 +159,6 @@ async componentDidMount() {
           e.setState({status: false})
         }
 
-    })
-
-
-    //obter anuncios ativos autonomo 
-    await firebase.firestore().collection('anuncios').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
-      let anunciosAtivosAuto = [];
-      documentSnapshot.forEach(function(doc) {
-        anunciosAtivosAuto.push({
-          idUser: doc.data().idUser,
-          nome: doc.data().nome,
-          idAnuncio: doc.data().idAnuncio,
-          photo: doc.data().photoPublish,
-          title: doc.data().titleAuto,
-          description: doc.data().descriptionAuto,
-          type: doc.data().type,
-          phone: doc.data().phoneNumberAuto,
-          verified: doc.data().verifiedPublish,
-          value: doc.data().valueServiceAuto
-        })
-      })
-
-
-      e.setState({activesPublishesAuto: anunciosAtivosAuto})
     })
 
 
@@ -244,6 +223,34 @@ async componentDidMount() {
     })
 
 
+
+    //Pegando lista de categorias selecionadas
+    arrayOfSelectedCategories.forEach(function(doc) {
+        firebase.firestore().collection('anuncios').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).where("categoryAuto", "==", doc).onSnapshot(documentSnapshot => {
+            let anunciosAtivosAuto = [];
+            documentSnapshot.forEach(function(doc) {
+              anunciosAtivosAuto.push({
+                idUser: doc.data().idUser,
+                nome: doc.data().nome,
+                idAnuncio: doc.data().idAnuncio,
+                photo: doc.data().photoPublish,
+                title: doc.data().titleAuto,
+                description: doc.data().descriptionAuto,
+                type: doc.data().type,
+                phone: doc.data().phoneNumberAuto,
+                verified: doc.data().verifiedPublish,
+                value: doc.data().valueServiceAuto
+              })
+            })
+      
+      
+            e.setState({activesPublishesAuto: anunciosAtivosAuto})
+          })
+      
+        console.log('foreach: ' + doc)
+
+        firebase
+    })
 
 
 

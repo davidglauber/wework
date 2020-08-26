@@ -10,8 +10,6 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MaterialCommunityIcons as Icon} from '@expo/vector-icons';
 
-// import components
-import TabBadgeIcon from '../components/navigation/TabBadgeIcon';
 
 // import Home screen
 import Home from '../screens/home/HomeA';

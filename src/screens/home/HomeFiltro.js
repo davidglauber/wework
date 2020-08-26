@@ -137,7 +137,11 @@ export default class HomeFiltro extends Component {
 async componentDidMount() {
   console.reportErrorsAsExceptions = false;
     let arrayOfSelectedCategories = this.props.route.params.categoriasFiltradas;
+    let typeRoute = this.props.route.params.type;
+
     console.log('ARRAY RECEBIDO DO NAVIGATOR: ' + arrayOfSelectedCategories)
+    console.log('type RECEBIDO DO NAVIGATOR: ' + typeRoute)
+
     let e = this;
 
     await firebase.auth().onAuthStateChanged((user) => {
@@ -203,12 +207,12 @@ async componentDidMount() {
     if(arrayOfSelectedCategories.length == 0) {
         this.props.navigation.navigate('HomeNavigator')
     }
-    
+
     //Pegando lista de categorias selecionadas
     for(var i = 0; i < arrayOfSelectedCategories.length; i++) {
         console.log('Elementos: ' + arrayOfSelectedCategories)
 
-        firebase.firestore().collection('anuncios').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+        firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
             let anunciosAtivosAuto = [];
             documentSnapshot.forEach(function(doc) {
               anunciosAtivosAuto.push({
@@ -230,7 +234,7 @@ async componentDidMount() {
           })
 
           //obter anuncios ativos estabelecimento
-        await firebase.firestore().collection('anuncios').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+        await firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
             let anunciosAtivosEstab = [];
             documentSnapshot.forEach(function(doc) {
                 anunciosAtivosEstab.push({

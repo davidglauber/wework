@@ -165,6 +165,10 @@ export default class Filtro extends Component {
 
     if(selected.length <= 0) {
       this.setState({selected: array})
+    } 
+
+    else if(selected.length >= 10) {
+      alert('Você só pode escolher até 10 categorias diferentes!')
     } else {
       this.setState({selected: selected.concat(array)})
     }
@@ -216,7 +220,7 @@ export default class Filtro extends Component {
                 <View>
                   { this.state.type == 'Estabelecimento' &&
                     <View style={{flexDirection:'row'}}>
-                      <TouchableOpacity onPress={() => this.setState({type: 'Autônomo'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                      <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
                         <Text style={{padding:10, color:'black'}}>Autônomo</Text>
                       </TouchableOpacity>
 
@@ -226,7 +230,7 @@ export default class Filtro extends Component {
                     </View>
                   }
 
-                  { this.state.type == 'Autônomo' &&
+                  { this.state.type == 'Autonomo' &&
                     <View style={{flexDirection:'row'}}>
                       <TouchableOpacity  style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
                         <Text style={{padding:10, color:'#00b970'}}>Autônomo</Text> 
@@ -270,7 +274,8 @@ export default class Filtro extends Component {
               <Text style={{marginBottom:17, color:'#00b970', fontWeight: "bold"}}>{selected.length} categorias selecionadas</Text>
             }
             <Button onPress={() => this.props.navigation.navigate('HomeFiltro', {
-              categoriasFiltradas: this.state.selected
+              categoriasFiltradas: this.state.selected,
+              type: this.state.type
             })} title="Aplicar Filtros" rounded />
           </View>
         </KeyboardAwareScrollView>

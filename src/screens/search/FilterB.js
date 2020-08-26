@@ -140,11 +140,7 @@ export default class FilterB extends Component {
     await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
       let categoriaDidMount = []
       querySnapshot.forEach(function(doc) {
-        categoriaDidMount.push({
-          id: doc.data().id,
-          title: doc.data().title,
-          picked: false
-        })
+        categoriaDidMount.push(doc.data().title)
       })
       e.setState({categorias: categoriaDidMount})
     })
@@ -156,6 +152,7 @@ export default class FilterB extends Component {
     clearTimeout(this.timeout);
     this.keyboardDidHideListener.remove();
   };
+  
 
   keyboardDidHide = () => {
     this.setState({
@@ -170,13 +167,35 @@ export default class FilterB extends Component {
   };
 
 
-  renderAndSelectCategory(itemTitle, itemPicked) {
+  renderAndSelectCategory(itemTitle) {
     let selected = this.state.selected;
     let categorias = this.state.categorias;
     let array = [];
 
-    itemPicked = true
-    array.push({title: itemTitle, picked: itemPicked});
+    var index = categorias.indexOf(itemTitle)
+
+
+    categorias.splice(index, 1)
+
+    array.push(itemTitle);
+
+    if(selected.length <= 0) {
+      this.setState({selected: array})
+    } else {
+      this.setState({selected: selected.concat(array)})
+
+    }
+    console.log('id selecionado: ' + selected)
+  }
+
+
+  reuploadCategoriesToList(itemTitle, itemId) {
+    let selected = this.state.selected;
+    let categorias = this.state.categorias;
+
+    let array = [];
+
+    array.push({title: itemTitle, id: itemId});
 
     if(selected.length <= 0) {
       this.setState({selected: array})
@@ -186,9 +205,9 @@ export default class FilterB extends Component {
           alert('Você não pode repetir categorias')
           this.setState({selected: selected})
         } else {
-          this.setState({selected: selected.concat(array)})
+          this.setState({categorias: categorias.concat(array)})
 
-          categorias.map((item) => {
+          selected.map((item) => {
             if(item.title == itemTitle){
               delete item.title
             }
@@ -196,7 +215,6 @@ export default class FilterB extends Component {
         }
       })
     }
-    console.log('id selecionado: ' + selected)
   }
 
 
@@ -253,8 +271,8 @@ export default class FilterB extends Component {
             <View style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
               {categorias.map((item) => (
                 <View>
-                    <TouchableOpacity onPress={() => this.renderAndSelectCategory(item.title, item.picked)} style={{borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
-                      <Text style={{padding:10}}>{item.title}</Text>
+                    <TouchableOpacity onPress={() => this.renderAndSelectCategory(item)} style={{borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                      <Text style={{padding:10}}>{item}</Text>
                     </TouchableOpacity>
                 </View>
               ))}
@@ -266,8 +284,8 @@ export default class FilterB extends Component {
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
                 {selected.map((item) => (
                   <View>
-                      <TouchableOpacity style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
-                        <Text style={{padding:10, color:'#00b970'}}>{item.title}</Text>
+                      <TouchableOpacity key={item.id} onPress={() => this.reuploadCategoriesToList(item)} style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
+                        <Text style={{padding:10, color:'#00b970'}}>{item}</Text>
                       </TouchableOpacity>
                   </View>
                 ))}

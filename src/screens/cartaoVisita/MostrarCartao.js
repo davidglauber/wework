@@ -212,10 +212,10 @@ export default class MostrarCartao extends Component {
   async componentDidMount() {
     let e = this;
     let idCartao = this.props.route.params.idDoCartao;
-    
-    let currentUserUID = firebase.auth().currentUser.uid;
+    let currentUserUID = this.props.route.params.idUserCartao;
 
     console.log('ID DO ANUNCIO: ' + idCartao)
+    console.log('ROUTE ID USER: ' + currentUserUID)
     console.log('Numero de telefone: ' + this.state.phoneNavigator)
 
     await firebase.firestore().collection(`usuarios`).doc(`${currentUserUID}`).collection('cartoes').where("idCartao", "==", idCartao).where("type", "==", "Autonomo").get().then(function(querySnapshot){

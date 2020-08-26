@@ -198,7 +198,7 @@ export default class TelaAnuncio extends Component {
   async componentDidMount() {
     let e = this;
     let idDoAnuncio = this.props.route.params.idDoAnuncio;
-    let currentUserUID = firebase.auth().currentUser.uid;
+    let currentUserUID = this.props.route.params.idUserCartao;;
 
     console.log('ID DO ANUNCIO: ' + idDoAnuncio)
     console.log('Numero de telefone: ' + this.state.phoneNavigator)

@@ -291,7 +291,7 @@ async componentDidMount() {
         />
 
         <View style={styles.container}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
               

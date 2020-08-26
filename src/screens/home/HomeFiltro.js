@@ -225,8 +225,10 @@ async componentDidMount() {
 
 
     //Pegando lista de categorias selecionadas
-    arrayOfSelectedCategories.forEach(function(doc) {
-        firebase.firestore().collection('anuncios').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).where("categoryAuto", "==", doc).onSnapshot(documentSnapshot => {
+    for(var i = 0; i < arrayOfSelectedCategories.length; i++) {
+        console.log('Elementos: ' + arrayOfSelectedCategories)
+
+        firebase.firestore().collection('anuncios').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
             let anunciosAtivosAuto = [];
             documentSnapshot.forEach(function(doc) {
               anunciosAtivosAuto.push({
@@ -246,13 +248,7 @@ async componentDidMount() {
       
             e.setState({activesPublishesAuto: anunciosAtivosAuto})
           })
-      
-        console.log('foreach: ' + doc)
-
-        firebase
-    })
-
-
+    }
 
   }
 
@@ -298,7 +294,7 @@ async componentDidMount() {
         />
 
         <View style={styles.container}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
               

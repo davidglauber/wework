@@ -162,30 +162,6 @@ async componentDidMount() {
     })
 
 
-    //obter anuncios ativos estabelecimento
-    await firebase.firestore().collection('anuncios').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
-      let anunciosAtivosEstab = [];
-      documentSnapshot.forEach(function(doc) {
-        anunciosAtivosEstab.push({
-          idUser: doc.data().idUser,
-          idAnuncio: doc.data().idAnuncio,
-          photo: doc.data().photoPublish,
-          title: doc.data().titleEstab,
-          description: doc.data().descriptionEstab,
-          phone: doc.data().phoneNumberEstab,
-          type: doc.data().type,
-          verified: doc.data().verifiedPublish,
-          value: doc.data().valueServiceEstab
-        })
-      })
-
-
-      e.setState({activesPublishesEstab: anunciosAtivosEstab})
-    })
-
-
-
-
 
    let nomeUser = '';
    let emailUser = '';
@@ -224,6 +200,10 @@ async componentDidMount() {
 
 
 
+    if(arrayOfSelectedCategories.length == 0) {
+        this.props.navigation.navigate('HomeNavigator')
+    }
+    
     //Pegando lista de categorias selecionadas
     for(var i = 0; i < arrayOfSelectedCategories.length; i++) {
         console.log('Elementos: ' + arrayOfSelectedCategories)
@@ -248,6 +228,28 @@ async componentDidMount() {
       
             e.setState({activesPublishesAuto: anunciosAtivosAuto})
           })
+
+          //obter anuncios ativos estabelecimento
+        await firebase.firestore().collection('anuncios').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+            let anunciosAtivosEstab = [];
+            documentSnapshot.forEach(function(doc) {
+                anunciosAtivosEstab.push({
+                    idUser: doc.data().idUser,
+                    idAnuncio: doc.data().idAnuncio,
+                    photo: doc.data().photoPublish,
+                    title: doc.data().titleEstab,
+                    description: doc.data().descriptionEstab,
+                    phone: doc.data().phoneNumberEstab,
+                    type: doc.data().type,
+                    verified: doc.data().verifiedPublish,
+                    value: doc.data().valueServiceEstab
+                })
+            })
+  
+  
+        e.setState({activesPublishesEstab: anunciosAtivosEstab})
+      })
+
     }
 
   }

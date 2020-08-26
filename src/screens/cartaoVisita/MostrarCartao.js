@@ -230,6 +230,7 @@ export default class MostrarCartao extends Component {
           photo: doc.data().photoPublish,
           phone: doc.data().phoneNumberAuto,
           categoria: doc.data().categoryAuto,
+          subcategoria: doc.data().subcategoryAuto,
           description: doc.data().descriptionAuto,
           type: doc.data().type,
           verified: doc.data().verifiedPublish
@@ -254,6 +255,7 @@ export default class MostrarCartao extends Component {
           phone: doc.data().phoneNumberEstab,
           title: doc.data().titleEstab,
           categoria: doc.data().categoryEstab,
+          subcategoria: doc.data().subcategoryEstab,
           description: doc.data().descriptionEstab,
           type: doc.data().type,
           verified: doc.data().verifiedPublish,
@@ -374,7 +376,7 @@ export default class MostrarCartao extends Component {
 
                   <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
                         <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
-                        <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria}</Text>
+                        <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</Text>
                   </View>
           
                 </View>
@@ -472,7 +474,7 @@ export default class MostrarCartao extends Component {
 
                   <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
                         <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
-                        <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria}</Text>
+                        <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</Text>
                   </View>
           
                 </View>

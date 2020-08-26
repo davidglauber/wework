@@ -47,7 +47,10 @@ import TermsConditions from '../screens/terms/TermsConditionsA';
 // import HomeNavigator
 import HomeNavigator from './HomeNavigatorA';
 
+
+//screen of filter
 import HomeFiltro from '../screens/home/HomeFiltro';
+import CartaoFiltro from '../screens/cartaoVisita/CartaoFiltro'; 
 
 import TelaPrincipalAnuncio from '../screens/anuncios/TelaPrincipalAnuncio';
 
@@ -256,6 +259,12 @@ function MainNavigatorA() {
         <Stack.Screen
           name="HomeFiltro"
           component={HomeFiltro}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="CartaoFiltro"
+          component={CartaoFiltro}
           options={{headerShown: false}}
         />
 

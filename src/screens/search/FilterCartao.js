@@ -13,16 +13,22 @@ import {
   Platform,
   SafeAreaView,
   StatusBar,
+  TouchableOpacity,
+  Text,
+  ScrollView,
   StyleSheet,
-  TextInput,
   View,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 // import components
 import Button from '../../components/buttons/Button';
-import FilterPicker from '../../components/pickers/FilterPicker';
 import {Subtitle1} from '../../components/text/CustomText';
+
+
+//import firebase
+import firebase from '../../config/firebase';
+
 
 import {Heading6} from '../../components/text/CustomText';
 
@@ -108,39 +114,28 @@ export default class FilterCartao extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fromPrice: '',
-      toPrice: '',
-      fromPriceFocused: false,
-      toPriceFocused: false,
-      menu: [
-        {title: 'Autônomo', picked: false},
-        {title: 'Estabelecimento', picked: true}
-      ],
-      cuisine: [
-        {title: 'Professor', picked: true},
-        {title: 'Motorista', picked: false},
-        {title: 'Caminhoneiro', picked: false},
-        {title: 'Jogador', picked: false},
-        {title: 'Encanador', picked: false},
-        {title: 'Músico', picked: false},
-        {title: 'Ator', picked: false},
-        {title: 'Tradutor', picked: false},
-        {title: 'Caminhoneiro', picked: false},
-        {title: 'Jogador', picked: false},
-        {title: 'Caminhoneiro', picked: false},
-        {title: 'Jogador', picked: false},
-        {title: 'Caminhoneiro', picked: false},
-        {title: 'Jogador', picked: false},
-        
-      ],
+      categorias: [],
+      selected:[],
+      type:'Estabelecimento'
     };
   }
 
-  componentDidMount = () => {
+ async componentDidMount() {
+    let e = this;
     this.keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       this.keyboardDidHide,
     );
+
+    //getting categories
+    await firebase.firestore().collection('categorias').get().then(function(querySnapshot) {
+      let categoriaDidMount = []
+      querySnapshot.forEach(function(doc) {
+        categoriaDidMount.push(doc.data().title)
+      })
+      e.setState({categorias: categoriaDidMount})
+    })
+
   };
 
   // avoid memory leak
@@ -148,70 +143,62 @@ export default class FilterCartao extends Component {
     clearTimeout(this.timeout);
     this.keyboardDidHideListener.remove();
   };
-
-  keyboardDidHide = () => {
-    this.setState({
-      fromPriceFocused: false,
-      toPriceFocused: false,
-    });
-  };
+  
 
   goBack = () => {
     const {navigation} = this.props;
     navigation.goBack();
   };
 
-  onChangeText = (key) => (text) => {
-    this.setState({
-      [key]: text,
-    });
-  };
 
-  onFocus = (key) => () => {
-    let focusedInputs = {
-      fromPriceFocused: false,
-      toPriceFocused: false,
-    };
-    focusedInputs[key] = true;
+  renderAndSelectCategory(itemTitle) {
+    let selected = this.state.selected;
+    let categorias = this.state.categorias;
+    let array = [];
 
-    this.setState({
-      ...focusedInputs,
-    });
-  };
+    var index = categorias.indexOf(itemTitle)
 
-  focusOn = (nextFiled) => () => {
-    if (nextFiled) {
-      nextFiled.focus();
+
+    categorias.splice(index, 1)
+    array.push(itemTitle);
+
+    if(selected.length <= 0) {
+      this.setState({selected: array})
+    } 
+
+    else if(selected.length >= 10) {
+      alert('Você só pode escolher até 10 categorias diferentes!')
+    } else {
+      this.setState({selected: selected.concat(array)})
     }
-  };
+    console.log('LISTA DE SELECIONADOS: ' + selected)
+  }
 
-  handleFilterPress = (filters, item) => () => {
-    const index = filters.indexOf(item);
 
-    filters[index].picked = !filters[index].picked;
+  reuploadCategoriesToList(itemTitle) {
+    let selected = this.state.selected;
+    let categorias = this.state.categorias;
+    let array = [];
 
-    this.setState({
-      filters: [...filters],
-    });
-  };
+    var index = selected.indexOf(itemTitle)
 
-  renderFilterItem = ({item, index}, filterArr) => (
-    <FilterPicker
-      key={index}
-      onPress={this.handleFilterPress(filterArr, item)}
-      picked={item.picked}
-      title={item.title}
-    />
-  );
+
+    selected.splice(index, 1)
+    array.push(itemTitle);
+    
+    if(categorias.length <= 0) {
+      this.setState({categorias: array})
+    } else {
+      this.setState({categorias: categorias.concat(array)})
+    }
+
+  }
+
 
   render() {
     const {
-      fromPrice,
-      fromPriceFocused,
-      toPrice,
-      toPriceFocused,
-      menu,
-      cuisine,
+      categorias,
+      selected
     } = this.state;
 
     return (
@@ -225,30 +212,70 @@ export default class FilterCartao extends Component {
           contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.formContainer}>
             <View style={styles.titleContainer}>
-              <Heading6 style={{fontWeight: '700'}}>Filtro de Cartão de Visita</Heading6>
+              <Heading6 style={{fontWeight: '700'}}>Filtro de Anúncio</Heading6>
             </View>
             <Subtitle1 style={styles.subtitle}>Qual tipo de Profissional?</Subtitle1>
             <View style={styles.rowWrap}>
-              {menu.map((item, index) =>
-                this.renderFilterItem({item, index}, menu),
-              )}
+                <View>
+                  { this.state.type == 'Estabelecimento' &&
+                    <View style={{flexDirection:'row'}}>
+                      <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                        <Text style={{padding:10, color:'black'}}>Autônomo</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
+                        <Text style={{padding:10, color:'#00b970'}}>Estabelecimento</Text>
+                      </TouchableOpacity>
+                    </View>
+                  }
+
+                  { this.state.type == 'Autonomo' &&
+                    <View style={{flexDirection:'row'}}>
+                      <TouchableOpacity  style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
+                        <Text style={{padding:10, color:'#00b970'}}>Autônomo</Text> 
+                      </TouchableOpacity>
+
+                      <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                        <Text style={{padding:10, color:'black'}}>Estabelecimento</Text>
+                      </TouchableOpacity>
+                    </View>
+                  }
+                </View>
             </View>
 
             <Subtitle1 style={[styles.subtitle, styles.mt8]}>Escolha a categoria abaixo</Subtitle1>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
-              {cuisine.map((item, index) => (
-                <FilterPicker
-                  key={index}
-                  onPress={this.handleFilterPress(cuisine, item)}
-                  picked={item.picked}
-                  title={item.title}
-                />
+            <View showsVerticalScrollIndicator={false} style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
+              {categorias.map((item) => (
+                <View>
+                    <TouchableOpacity onPress={() => this.renderAndSelectCategory(item)} style={{borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
+                      <Text style={{padding:10}}>{item}</Text>
+                    </TouchableOpacity>
+                </View>
               ))}
             </View>
           </View>
 
+
           <View style={styles.buttonContainer}>
-            <Button onPress={this.goBack} title="Aplicar Filtros" rounded />
+            <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+                {selected.map((item) => (
+                  <View>
+                      <TouchableOpacity key={item.id} onPress={() => this.reuploadCategoriesToList(item)} style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
+                        <Text style={{padding:10, color:'#00b970'}}>{item}</Text>
+                      </TouchableOpacity>
+                  </View>
+                ))}
+            </ScrollView>
+
+            {selected.length == 1 ?
+              <Text style={{marginBottom:17, color:'#00b970', fontWeight: "bold"}}>{selected.length} categoria selecionada</Text>
+              :
+              <Text style={{marginBottom:17, color:'#00b970', fontWeight: "bold"}}>{selected.length} categorias selecionadas</Text>
+            }
+            <Button onPress={() => this.props.navigation.navigate('CartaoFiltro', {
+              categoriasFiltradas: this.state.selected,
+              type: this.state.type
+            })} title="Aplicar Filtros" rounded />
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>

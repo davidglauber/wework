@@ -212,29 +212,33 @@ async componentDidMount() {
     for(var i = 0; i < arrayOfSelectedCategories.length; i++) {
         console.log('Elementos: ' + arrayOfSelectedCategories)
 
-        firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
-            let anunciosAtivosAuto = [];
-            documentSnapshot.forEach(function(doc) {
-              anunciosAtivosAuto.push({
-                idUser: doc.data().idUser,
-                nome: doc.data().nome,
-                idAnuncio: doc.data().idAnuncio,
-                photo: doc.data().photoPublish,
-                title: doc.data().titleAuto,
-                description: doc.data().descriptionAuto,
-                type: doc.data().type,
-                phone: doc.data().phoneNumberAuto,
-                verified: doc.data().verifiedPublish,
-                value: doc.data().valueServiceAuto
+        if(typeRoute == 'Autonomo') {
+          firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+              let anunciosAtivosAuto = [];
+              documentSnapshot.forEach(function(doc) {
+                anunciosAtivosAuto.push({
+                  idUser: doc.data().idUser,
+                  nome: doc.data().nome,
+                  idAnuncio: doc.data().idAnuncio,
+                  photo: doc.data().photoPublish,
+                  title: doc.data().titleAuto,
+                  description: doc.data().descriptionAuto,
+                  type: doc.data().type,
+                  phone: doc.data().phoneNumberAuto,
+                  verified: doc.data().verifiedPublish,
+                  value: doc.data().valueServiceAuto
+                })
               })
+        
+        
+              e.setState({activesPublishesAuto: anunciosAtivosAuto})
             })
-      
-      
-            e.setState({activesPublishesAuto: anunciosAtivosAuto})
-          })
+        }
 
+        
+        if(typeRoute == 'Estabelecimento') {
           //obter anuncios ativos estabelecimento
-        await firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+          await firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
             let anunciosAtivosEstab = [];
             documentSnapshot.forEach(function(doc) {
                 anunciosAtivosEstab.push({
@@ -251,8 +255,10 @@ async componentDidMount() {
             })
   
   
-        e.setState({activesPublishesEstab: anunciosAtivosEstab})
-      })
+          e.setState({activesPublishesEstab: anunciosAtivosEstab})
+        })
+        }
+
 
     }
 

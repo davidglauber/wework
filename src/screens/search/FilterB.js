@@ -176,45 +176,34 @@ export default class FilterB extends Component {
 
 
     categorias.splice(index, 1)
-
     array.push(itemTitle);
 
     if(selected.length <= 0) {
       this.setState({selected: array})
     } else {
       this.setState({selected: selected.concat(array)})
-
     }
     console.log('id selecionado: ' + selected)
   }
 
 
-  reuploadCategoriesToList(itemTitle, itemId) {
+  reuploadCategoriesToList(itemTitle) {
     let selected = this.state.selected;
     let categorias = this.state.categorias;
-
     let array = [];
 
-    array.push({title: itemTitle, id: itemId});
+    var index = selected.indexOf(itemTitle)
 
-    if(selected.length <= 0) {
-      this.setState({selected: array})
+
+    selected.splice(index, 1)
+    array.push(itemTitle);
+    
+    if(categorias.length <= 0) {
+      this.setState({categorias: array})
     } else {
-      selected.map((item) => {
-        if(item.title == itemTitle) {
-          alert('Você não pode repetir categorias')
-          this.setState({selected: selected})
-        } else {
-          this.setState({categorias: categorias.concat(array)})
-
-          selected.map((item) => {
-            if(item.title == itemTitle){
-              delete item.title
-            }
-          })
-        }
-      })
+      this.setState({categorias: categorias.concat(array)})
     }
+
   }
 
 

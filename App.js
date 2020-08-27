@@ -7,10 +7,12 @@
 
 // import dependencies
 import 'react-native-gesture-handler';
-import React from 'react';
-import {YellowBox} from 'react-native';
+import React , {useState}from 'react';
+import {YellowBox, StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {enableScreens} from 'react-native-screens';
+import { ThemeProvider } from 'styled-components';
+import themes from './src/theme';
 
 enableScreens();
 
@@ -25,10 +27,18 @@ import MainNavigator from './src/navigation/MainNavigatorA';
 
 // APP
 function App() {
+  const [dark, setDark] = useState(true)
+
   return (
-    <SafeAreaProvider>
-      <MainNavigator />
-    </SafeAreaProvider>
+    <ThemeProvider theme={dark ? themes.dark: themes.light}>
+      <StatusBar
+        barStyle={dark ? "light-content" : "dark-content"}
+        backgroundColor={dark ? themes.dark.background : themes.light.background}
+      />
+      <SafeAreaProvider>
+        <MainNavigator />
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
 

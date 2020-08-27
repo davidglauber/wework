@@ -8,7 +8,7 @@
 // import dependencies
 import React from 'react';
 import {Platform} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DarkTheme, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // import components
@@ -111,8 +111,10 @@ import AboutUs from '../screens/about/AboutUsA';
 
 // import colors
 import Colors from '../theme/colors';
+
 import Filtro from '../screens/search/Filtro';
 import FilterCartao from '../screens/search/FilterCartao'
+
 
 // MainNavigatorA Config
 const SAVE_ICON = Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark';
@@ -120,10 +122,12 @@ const SAVE_ICON = Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark';
 // create stack navigator
 const Stack = createStackNavigator();
 
+
+
 // MainNavigatorA
 function MainNavigatorA() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator
         screenOptions={{
           cardOverlayEnabled: false,

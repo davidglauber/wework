@@ -14,7 +14,10 @@ import {
 } from 'react-native';
 import Color from 'color';
 
+import { Appearance } from 'react-native-appearance';
+
 import {Heading6} from '../../components/text/CustomText';
+
 
 // import colors
 import Colors from '../../theme/colors';
@@ -27,17 +30,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 //import firebase 
 import firebase from '../../config/firebase';
 
-// HomeA Config
-const imgHolder = require('../../assets/img/imgholder.png');
-
-
-//Import images
-const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
-const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
+
+
+import { SafeBackground, AnuncioContainer } from './styles';
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -284,11 +283,7 @@ async componentDidMount() {
     const { status, emailUserFunction, activesPublishesAuto, activesPublishesEstab } = this.state
 
     return (
-      <SafeAreaView style={styles.screenContainer}>
-        <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
-        />
+      <SafeBackground>
 
         <View style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -325,7 +320,7 @@ async componentDidMount() {
                 
                   <View style={{flex:1, alignItems: 'center'}}>
                       <View>
-                          <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                          <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
@@ -349,7 +344,7 @@ async componentDidMount() {
                                   </View>
                               </View> 
 
-                          </View>
+                          </AnuncioContainer>
                       </View>
                   </View>
                 
@@ -365,7 +360,7 @@ async componentDidMount() {
                 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                        <AnuncioContainer>
                             <View style={{flexDirection:'row'}}>
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                 
@@ -390,7 +385,7 @@ async componentDidMount() {
                                 </View>
                             </View> 
 
-                        </View>
+                        </AnuncioContainer>
                     </View>
                 </View>
                 
@@ -400,7 +395,7 @@ async componentDidMount() {
 
           </ScrollView>
         </View>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
 }

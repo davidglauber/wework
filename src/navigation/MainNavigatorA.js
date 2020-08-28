@@ -16,6 +16,7 @@ import HeaderIconButton from '../components/navigation/HeaderIconButton';
 
 // import Onboarding screen
 import Onboarding from '../screens/onboarding/OnboardingA';
+import OnboardingD from '../screens/onboarding/OnboardingD';
 
 // import Welcome screen
 import Welcome from '../screens/welcome/WelcomeA';
@@ -127,7 +128,7 @@ const Stack = createStackNavigator();
 // MainNavigatorA
 function MainNavigatorA({isDarkEnabled}) {
   return (
-    <NavigationContainer theme={DarkTheme}>
+    <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           cardOverlayEnabled: false,
@@ -142,11 +143,20 @@ function MainNavigatorA({isDarkEnabled}) {
           headerTintColor: Colors.onBackground,
           headerTitleAlign: 'center',
         }}>
-        <Stack.Screen
-          name="Onboarding"
-          component={Onboarding}
-          options={{headerShown: false}}
-        />
+
+        { isDarkEnabled == false ?
+          <Stack.Screen
+            name="Onboarding"
+            component={Onboarding}
+            options={{headerShown: false}}
+          />
+          :
+          <Stack.Screen
+            name="OnboardingD"
+            component={OnboardingD}
+            options={{headerShown: false}}
+          />
+        }
         <Stack.Screen
           name="Welcome"
           component={Welcome}

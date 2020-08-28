@@ -16,7 +16,6 @@ import {
   StatusBar,
   Image,
   StyleSheet,
-  Switch,
   View,
 } from 'react-native';
 
@@ -26,6 +25,10 @@ import Divider from '../../components/divider/Divider';
 import Icon from '../../components/icon/Icon';
 import {Heading6, Subtitle1, Subtitle2} from '../../components/text/CustomText';
 import TouchableItem from '../../components/TouchableItem';
+
+
+//import switch
+import Switch from 'expo-dark-mode-switch';
 
 // import colors
 import Colors from '../../theme/colors';
@@ -181,7 +184,8 @@ export default class Configuracoes extends Component {
       emailUser:'',
       nomeUser:'',
       dataNascimento:'',
-      fotoPerfil:''
+      fotoPerfil:'',
+      value: false
     };
   }
 
@@ -290,50 +294,6 @@ export default class Configuracoes extends Component {
 
           <Divider />
 
-         {/*
-          <SectionHeader title="Notificações" />
-          <TouchableItem onPress={this.navigateTo('Notifications')}>
-            <View style={[styles.row, styles.setting]}>
-              <View style={styles.leftSide}>
-                <View style={styles.iconContainer}>
-                  {notificationsOn ? (
-                    <Icon
-                      name={NOTIFICATION_ICON}
-                      size={20}
-                      color={Colors.primaryColor}
-                    />
-                  ) : (
-                    <Icon
-                      name={NOTIFICATION_OFF_ICON}
-                      size={20}
-                      color={Colors.primaryColor}
-                    />
-                  )}
-                </View>
-                <Subtitle2>Notifications</Subtitle2>
-              </View>
-
-              <Switch
-                trackColor={{
-                  true: IOS && Colors.primaryColor,
-                }}
-                thumbColor={IOS ? Colors.onPrimaryColor : Colors.primaryColor}
-                value={notificationsOn}
-                onValueChange={this.toggleNotifications}
-              />
-            </View>
-          </TouchableItem>
-
-          */}
-
-        {/*  <SectionHeader title="Address" />
-          <Setting
-            onPress={this.navigateTo('DeliveryAddress')}
-            icon={ADDRESS_ICON}
-            setting="Set Delivery Address"
-          />
-        */}
-        
 
           <SectionHeader title="Planos" />
           <Setting
@@ -377,6 +337,8 @@ export default class Configuracoes extends Component {
             setting="Sair"
             type="logout"
           />
+
+          <Switch useNativeDriver={true} style={{marginLeft: 18, marginTop:20}} value={this.state.value} onChange={(value) => this.setState({value: value})}/>
         </ScrollView>
       </SafeAreaView>
     );

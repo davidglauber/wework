@@ -12,6 +12,8 @@ import {
   I18nManager,
   Platform,
   SafeAreaView,
+  BackHandler,
+  TouchableOpacity,
   ScrollView,
   StatusBar,
   Image,
@@ -60,10 +62,12 @@ const TERMS_ICON = IOS ? 'ios-paper' : 'md-paper';
 const ADD_ICON = IOS ? 'ios-add-circle-outline' : 'md-add-circle-outline';
 const LOGOUT_ICON = IOS ? 'ios-exit' : 'md-exit';
 
+//import icons
+import { FontAwesome5 } from '@expo/vector-icons';
+
 //CSS responsivo
 import { SafeBackground, SetTextUserSetting, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
 import { ThemeContext } from '../../../App';
-
 
 // SettingsB Styles
 const styles = StyleSheet.create({
@@ -75,6 +79,9 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   titleContainer: {
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 16,
   },
   titleText: {
@@ -193,7 +200,6 @@ export default function Configuracoes() {
 
 
   useEffect(() => {
-
     async function callFirebase() {
       console.log('tema: ' + dark)
       await firebase.auth().onAuthStateChanged(user => {
@@ -221,10 +227,9 @@ export default function Configuracoes() {
 
 
 
-
-
-
-
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', function() {return true})
+  }, [])
 
 
   function sair () {
@@ -253,6 +258,15 @@ export default function Configuracoes() {
 
         <ScrollView contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.titleContainer}>
+            {dark == true ?
+                <TouchableOpacity onPress={() => navigation.navigate('HomeNavigatorC')}>
+                    <FontAwesome5 style={{color:'black', marginRight: 24}} name="arrow-left" size={20}/>
+                </TouchableOpacity>
+            :
+                <TouchableOpacity onPress={() => navigation.navigate('HomeNavigator')}>
+                    <FontAwesome5 style={{color:'black', marginRight: 24}} name="arrow-left" size={20}/>
+                </TouchableOpacity>
+            }
             <HeadingSetting>Configurações</HeadingSetting>
           </View>
 

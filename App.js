@@ -7,7 +7,7 @@
 
 // import dependencies
 import 'react-native-gesture-handler';
-import React , {useState}from 'react';
+import React , {useState, createContext}from 'react';
 import {YellowBox, StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {enableScreens} from 'react-native-screens';
@@ -29,15 +29,20 @@ import MainNavigator from './src/navigation/MainNavigatorA';
 
 // APP
 function App() {
-  const [dark, setDark] = useState(true)
-
+  const [dark, setDark] = useState(false)
+  
   return (
     <ThemeProvider theme={dark ? themes.dark: themes.light}>
-      <SafeAreaProvider>
-        <MainNavigator isDarkEnabled={dark}/>
-      </SafeAreaProvider>
+      <ThemeContext.Provider value={dark}>
+          <SafeAreaProvider>
+              <MainNavigator isDarkEnabled={dark}/>
+          </SafeAreaProvider>
+      </ThemeContext.Provider>
     </ThemeProvider>
   );
 }
+
+export const ThemeContext = React.createContext();
+
 
 export default App;

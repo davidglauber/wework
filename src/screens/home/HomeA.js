@@ -34,7 +34,7 @@ import firebase from '../../config/firebase';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 //CSS responsivo
-import { SafeBackground, IconResponsive, AnuncioContainer, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
+import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -307,7 +307,7 @@ async componentDidMount() {
             </View>
 
             <View style={styles.titleContainer}>
-              <Heading6 style={styles.titleText}>Anúncios</Heading6>
+              <Heading>Anúncios</Heading>
             </View>
               
               <FlatList 

@@ -6,7 +6,7 @@
  */
 
 // import dependencies
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   Alert,
   I18nManager,
@@ -62,6 +62,8 @@ const LOGOUT_ICON = IOS ? 'ios-exit' : 'md-exit';
 
 //CSS responsivo
 import { SafeBackground, SetTextUserSetting, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
+import { ThemeContext } from '../../../App';
+
 
 // SettingsB Styles
 const styles = StyleSheet.create({
@@ -177,23 +179,23 @@ const Setting = ({onPress, icon, setting, type}: SettingProps) => (
 );
 
 // SetingsB
-export default function Configuracoes({darkModeState, setDarkModeState}) {
+export default function Configuracoes() {
   const navigation = useNavigation();
-  const [notificationsOn, setNotificationsOn] = useState(true)
-  const [status, setStatus] = useState(null);
-  const [emailUser, setEmailUser] = useState('');
-  const [nomeUser, setNomeUser] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
-  const [fotoPerfil, setFotoPerfil] = useState('');
-  const [value, setValue] = useState(false);
-
+  const [notificationsOn, setNotificationsOn] = React.useState(true)
+  const [status, setStatus] = React.useState(null);
+  const [emailUser, setEmailUser] = React.useState('');
+  const [nomeUser, setNomeUser] = React.useState('');
+  const [dataNascimento, setDataNascimento] = React.useState('');
+  const [fotoPerfil, setFotoPerfil] = React.useState('');
+  const [value, setValue] = React.useState(false);
+  const theme = useContext(ThemeContext)
 
 
 
   useEffect(() => {
 
-    console.log('valor do parametro: ' + darkModeState)
     async function callFirebase() {
+      console.log('tema: ' + theme)
       await firebase.auth().onAuthStateChanged(user => {
         if(user.uid !== null || user.uid !== undefined || user.uid !== '') {
           firebase.firestore().collection('usuarios').doc(user.uid).onSnapshot(documentSnapshot => {

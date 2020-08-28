@@ -227,9 +227,36 @@ export default function Configuracoes() {
 
 
 
+ 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', function() {return true})
-  }, [])
+    const backAction = () => {
+        if (navigation.isFocused()) {
+            if(dark == true) {
+              Alert.alert("Atenção", "Você quer mesmo voltar para a tela principal?", [
+                  {
+                      text: "Não",
+                      onPress: () => null,
+                      style: "cancel"
+                  },
+                  { text: "Sim", onPress: () => navigation.navigate('HomeNavigatorC') }
+              ]);
+              return true;
+          } else {
+            Alert.alert("Atenção", "Você quer mesmo voltar para a tela principal?", [
+              {
+                  text: "Não",
+                  onPress: () => null,
+                  style: "cancel"
+              },
+                { text: "Sim", onPress: () => navigation.navigate('HomeNavigator') }
+            ]);
+            return true;
+          }
+        }
+    };
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+    return () => backHandler.remove();
+}, [])
 
 
   function sair () {

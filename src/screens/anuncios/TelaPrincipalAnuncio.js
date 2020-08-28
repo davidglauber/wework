@@ -153,7 +153,7 @@ export default class TelaPrincipalAnuncio extends Component {
       e.setState({anunciosEstab: anunciosEstabDidMount})
     })
 
-    BackHandler.addEventListener('hardwareBackPress', function() {return false})
+    
   }
 
 

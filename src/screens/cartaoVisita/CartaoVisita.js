@@ -23,14 +23,9 @@ import remove from 'lodash/remove';
 
 // import components
 import {Heading6, SmallText} from '../../components/text/CustomText';
-import EmptyState from '../../components/emptystate/EmptyState';
-
 
 //import GestureHandler
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-
-//import gradient
-import  { LinearGradient } from 'expo-linear-gradient';
 
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -42,10 +37,12 @@ const fotoCartaoVisita = require('../../assets/img/smile.jpg');
 
 // import colors
 import Colors from '../../theme/colors';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 // CartA Config
 const EMPTY_STATE_ICON = 'cart-remove';
+
+//CSS responsivo
+import { IconResponsive, ViewCartao, TextDetails, TouchableDetails, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
 
 // CartA Styles
 const styles = StyleSheet.create({
@@ -224,30 +221,20 @@ export default class CartaoVisita extends Component {
 
       <SafeAreaView style={styles.container}>
 
-        <LinearGradient
-          // Background Linear Gradient
-          colors={['#DAA520', '#DAA520', '#DAA520']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            height: '100%',
-          }}
-        />
+        <ViewCartao/>
 
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={"#121212"}
+          barStyle="white-content"
         />
         
 
         <View style={styles.titleContainer}>
-          <Heading6 style={styles.titleText}>Cartões de Visita</Heading6>
+          <Heading>Cartões de Visita</Heading>
           {products.length > 0 && (
             <View style={styles.inline}>
               <TouchableOpacity onPress={this.navigateTo('FilterCartao')} style={{marginRight:5}}>
-                    <FontAwesome5  name="sort-alpha-up" size={19} color={"#fff"} />
+                    <IconResponsive  name="sort-alpha-up" size={19} />
               </TouchableOpacity>
             
             </View>
@@ -263,12 +250,12 @@ export default class CartaoVisita extends Component {
                   <Swipeable
                     renderRightActions={this.RightAction}
                   > 
-                    <View style={{width: 336, height: 180, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2, }}>
+                    <AnuncioContainer>
                           <View style={{flexDirection:'row'}}>
                               <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                               
                               <View style={{flexDirection:'column'}}>
-                                <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:15, color:'#70AD66'}}>{item.nome}</Text>
+                                <Title>{item.nome}</Title>
 
                                 {this.cutDescription(item.description)}
 
@@ -276,21 +263,21 @@ export default class CartaoVisita extends Component {
                           </View>  
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                              <TouchableOpacity onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                  <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                              </TouchableOpacity>
+                              <TouchableDetails onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                  <TextDetails>Ver Detalhes</TextDetails>
+                              </TouchableDetails>
 
                               <View style={{flexDirection:'row', marginTop:15}}>
-                                  <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
-                                  <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
+                                  <ValueField style={{paddingTop:10, fontSize:12}}>{item.categoria}</ValueField>
+                                  <IconResponsive style={{marginLeft:15, marginTop:10}} name="clone" size={19}/>
                               </View>
 
                               <View style={{marginTop: 24, marginRight: 30}}>
-                                  <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
+                                  <IconResponsive  name="user-tie" size={19}/>
                             </View>
                           </View> 
 
-                    </View>
+                    </AnuncioContainer>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}
@@ -306,12 +293,12 @@ export default class CartaoVisita extends Component {
                   <Swipeable
                     renderRightActions={this.RightAction}
                   > 
-                    <View style={{width: 336, height: 180, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                    <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column', }}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:15, color:'#70AD66'}}>{item.title}</Text>
+                                    <Title>{item.title}</Title>
 
                                     {this.cutDescription(item.description)}
 
@@ -319,21 +306,21 @@ export default class CartaoVisita extends Component {
                               </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                  </TouchableOpacity>
+                                  <TouchableDetails onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                      <TextDetails>Ver Detalhes</TextDetails>
+                                  </TouchableDetails>
 
                                   <View style={{flexDirection:'row', marginTop:15}}>
-                                      <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
-                                      <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
+                                      <ValueField style={{paddingTop:10, fontSize:12}}>{item.categoria}</ValueField>
+                                      <IconResponsive style={{marginLeft:15, marginTop:10}} name="clone" size={19}/>
                                   </View>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
-                                      <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                      <IconResponsive  name="briefcase" size={19}/>
                                 </View>
                               </View> 
 
-                            </View>
+                    </AnuncioContainer>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}
@@ -345,11 +332,11 @@ export default class CartaoVisita extends Component {
 
 
           <View style={{justifyContent: 'center',alignItems: 'center', padding: 8}}>
-            <View style={{borderTopWidth:0,justifyContent: 'center', alignItems: 'center', height: 28,borderRadius: 4,  paddingHorizontal: 8, backgroundColor: '#f1f1f1'}}>
+            <SwipeLeft>
                 <SmallText>
                       {`Deslize para a esquerda para favoritar`}
                 </SmallText>
-            </View>
+            </SwipeLeft>
           </View>
       </SafeAreaView>
     );

@@ -28,7 +28,7 @@ import MainNavigator from './src/navigation/MainNavigatorA';
 
 // APP
 function App() {
-  const [dark, setDark] = useState(false)
+  const [dark, setDark] = useState(true)
 
   return (
     <ThemeProvider theme={dark ? themes.dark: themes.light}>

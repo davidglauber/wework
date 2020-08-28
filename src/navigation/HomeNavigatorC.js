@@ -65,7 +65,7 @@ function HomeNavigatorC() {
       screenProps={{backgroundColor:'blue'}}
       tabBarOptions={{
         keyboardHidesTabBar: true,
-        activeTintColor: '#DAA520',
+        activeTintColor: '#FFD700',
         inactiveTintColor: Colors.secondaryText,
         showLabel: false, // hide labels
         style: {

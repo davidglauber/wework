@@ -2,7 +2,9 @@ import styled from 'styled-components/native';
 
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// import components
+import {Heading6} from '../../components/text/CustomText';
 
 
 export const SafeBackground = styled.SafeAreaView`
@@ -11,15 +13,15 @@ export const SafeBackground = styled.SafeAreaView`
 `;
 
 export const AnuncioContainer = styled.View`
-    width: 336;
-    height: 170; 
-    marginBottom:5; 
-    marginTop: 10; 
-    borderRadius: 10; 
+    width: 336px;
+    height: 170px; 
+    marginBottom:5px; 
+    marginTop: 10px; 
+    borderRadius: 10px; 
     backgroundColor: ${props => props.theme.backgroundColor}; 
     elevation:5; 
     shadowColor: black; 
-    shadowOffset:{width:2, height:4}; 
+    shadowOffset:{width:2px, height:4px}; 
     shadowOpacity: 0.2
 `
 
@@ -49,6 +51,16 @@ export const TextDetails = styled.Text`
     color: ${props => props.theme.background}
 `
 
+export const SwipeLeft = styled.View`
+    borderTopWidth: 0px;
+    justifyContent: center; 
+    alignItems: center;
+    height: 28px;
+    borderRadius: 4px;  
+    paddingHorizontal: 8px; 
+    backgroundColor: ${props => props.theme.color}
+`
+
 export const SignUpBottom = styled.TouchableOpacity`
     borderRadius:5px;
     alignItems: center; 
@@ -69,5 +81,18 @@ export const TextBoldGolden = styled.Text`
 `
 
 export const IconResponsive = styled(FontAwesome5)`
+    color: ${props => props.theme.color}
+`
+export const ViewCartao = styled.View`
+    position: absolute;
+    left: 0;
+    backgroundColor: ${props => props.theme.background};
+    right: 0;
+    top: 0;
+    height: 100%;
+`
+
+export const Heading = styled(Heading6)`
+    fontWeight: 700,
     color: ${props => props.theme.color}
 `

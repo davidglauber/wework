@@ -25,6 +25,7 @@ YellowBox.ignoreWarnings([
 // import MainNavigatorA or MainNavigatorB to preview design differnces
 import MainNavigator from './src/navigation/MainNavigatorA';
 
+
 // APP
 function App() {
   const [dark, setDark] = useState(true)
@@ -32,7 +33,7 @@ function App() {
   return (
     <ThemeProvider theme={dark ? themes.dark: themes.light}>
       <SafeAreaProvider>
-        <MainNavigator />
+        <MainNavigator isDarkEnabled={dark}/>
       </SafeAreaProvider>
     </ThemeProvider>
   );

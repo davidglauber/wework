@@ -43,7 +43,7 @@ type Props = {
 const Tab = createBottomTabNavigator();
 
 // HomeNavigator
-function HomeNavigator() {
+function HomeNavigatorC() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -69,7 +69,7 @@ function HomeNavigator() {
         inactiveTintColor: Colors.secondaryText,
         showLabel: false, // hide labels
         style: {
-          backgroundColor: 'white' // TabBar background
+          backgroundColor: 'black' // TabBar background
         },
       }}>
       <Tab.Screen name="Home" component={Home} />
@@ -90,4 +90,4 @@ function HomeNavigator() {
   );
 }
 
-export default HomeNavigator;
+export default HomeNavigatorC;

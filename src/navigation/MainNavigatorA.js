@@ -46,7 +46,7 @@ import TermsConditions from '../screens/terms/TermsConditionsA';
 
 // import HomeNavigator
 import HomeNavigator from './HomeNavigatorA';
-
+import HomeNavigatorC from './HomeNavigatorC';
 
 //screen of filter
 import HomeFiltro from '../screens/home/HomeFiltro';
@@ -125,7 +125,7 @@ const Stack = createStackNavigator();
 
 
 // MainNavigatorA
-function MainNavigatorA() {
+function MainNavigatorA({isDarkEnabled}) {
   return (
     <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator
@@ -254,11 +254,19 @@ function MainNavigatorA() {
             title: 'Termos e Condições',
           }}
         />
-        <Stack.Screen
-          name="HomeNavigator"
-          component={HomeNavigator}
-          options={{headerShown: false}}
-        />
+        { isDarkEnabled == false ?
+          <Stack.Screen
+            name="HomeNavigator"
+            component={HomeNavigator}
+            options={{headerShown: false}}
+          />
+          :
+          <Stack.Screen
+            name="HomeNavigatorC"
+            component={HomeNavigatorC}
+            options={{headerShown: false}}
+          />
+        }
 
         <Stack.Screen
           name="HomeFiltro"

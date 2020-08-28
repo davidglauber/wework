@@ -36,13 +36,13 @@ export const ValueField = styled.Text`
 `
 
 export const TouchableDetails = styled.TouchableOpacity`
-    paddingLeft: 10; 
+    paddingLeft: 10px; 
     backgroundColor: ${props => props.theme.color}; 
-    width:100; 
-    height:20; 
-    borderRadius: 5;
-    marginTop: 24;
-    marginLeft: 31
+    width:100px; 
+    height:20px; 
+    borderRadius: 5px;
+    marginTop: 24px;
+    marginLeft: 31px
 `
 
 export const TextDetails = styled.Text`
@@ -70,12 +70,4 @@ export const TextBoldGolden = styled.Text`
 
 export const IconResponsive = styled(FontAwesome5)`
     color: ${props => props.theme.color}
-`
-
-export const NavTab = styled(createBottomTabNavigator)`
-    keyboardHidesTabBar: true;
-    activeTintColor: ${props => props.theme.color} !important;
-    inactiveTintColor: ${props => props.theme.backgroundColor} !important;
-    showLabel: false;
-    backgroundColor: ${props => props.theme.background} !important
 `

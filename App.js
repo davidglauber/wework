@@ -14,6 +14,7 @@ import {enableScreens} from 'react-native-screens';
 import { ThemeProvider } from 'styled-components';
 import themes from './src/theme';
 
+
 enableScreens();
 
 // TODO: Remove when fixed
@@ -28,7 +29,7 @@ import MainNavigator from './src/navigation/MainNavigatorA';
 
 // APP
 function App() {
-  const [dark, setDark] = useState(false)
+  const [dark, setDark] = useState(true)
 
   return (
     <ThemeProvider theme={dark ? themes.dark: themes.light}>

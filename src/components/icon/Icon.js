@@ -10,6 +10,9 @@ import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import type { ColorProp } from "react-native/Libraries/StyleSheet/ColorPropType";
 import { Ionicons as Ionicon } from "@expo/vector-icons";
+//CSS responsivo
+import { IconSetting } from '../../screens/home/styles';
+
 
 // import colors, fonts
 import Colors from "../../theme/colors";
@@ -38,9 +41,8 @@ const Icon = ({ color = ICON_COLOR, name, size = ICON_SIZE }: Props) => {
   const iconSize = Platform.OS === "ios" ? size + 2 : size;
 
   return (
-    <Ionicon
+    <IconSetting
       name={name}
-      color={color}
       size={iconSize}
       style={[
         {

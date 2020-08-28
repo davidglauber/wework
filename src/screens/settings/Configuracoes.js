@@ -6,7 +6,7 @@
  */
 
 // import dependencies
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   I18nManager,
@@ -26,6 +26,7 @@ import Icon from '../../components/icon/Icon';
 import {Heading6, Subtitle1, Subtitle2} from '../../components/text/CustomText';
 import TouchableItem from '../../components/TouchableItem';
 
+console.disableYellowBox = true;
 
 //import switch
 import Switch from 'expo-dark-mode-switch';
@@ -39,6 +40,8 @@ import firebase from '../../config/firebase';
 // SettingsB Config
 const isRTL = I18nManager.isRTL;
 const IOS = Platform.OS === 'ios';
+
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 const NOTIFICATION_OFF_ICON = IOS
   ? 'ios-notifications-off'
@@ -56,6 +59,9 @@ const TERMS_ICON = IOS ? 'ios-paper' : 'md-paper';
 
 const ADD_ICON = IOS ? 'ios-add-circle-outline' : 'md-add-circle-outline';
 const LOGOUT_ICON = IOS ? 'ios-exit' : 'md-exit';
+
+//CSS responsivo
+import { SafeBackground, SetTextUserSetting, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
 
 // SettingsB Styles
 const styles = StyleSheet.create({
@@ -136,7 +142,7 @@ type SettingProps = {
 // SettingsB Components
 const SectionHeader = ({title}: SectionHeadreProps) => (
   <View style={styles.sectionHeader}>
-    <Subtitle1 style={styles.sectionHeaderText}>{title}</Subtitle1>
+    <SectionHeaderTextSetting style={styles.sectionHeaderText}>{title}</SectionHeaderTextSetting>
   </View>
 );
 
@@ -149,15 +155,13 @@ const Setting = ({onPress, icon, setting, type}: SettingProps) => (
             <Icon
               name={icon}
               size={20}
-              color={
-                type === 'logout' ? Colors.secondaryColor : Colors.primaryColor
-              }
+              
             />
           </View>
         )}
-        <Subtitle2 style={type === 'logout' && {color: Colors.secondaryColor}}>
+        <SetTextUserSetting>
           {setting}
-        </Subtitle2>
+        </SetTextUserSetting>
       </View>
 
       {type !== 'logout' && (
@@ -165,7 +169,6 @@ const Setting = ({onPress, icon, setting, type}: SettingProps) => (
           <Icon
             name="ios-arrow-forward"
             size={16}
-            color="rgba(0, 0, 0, 0.16)"
           />
         </View>
       )}
@@ -174,89 +177,73 @@ const Setting = ({onPress, icon, setting, type}: SettingProps) => (
 );
 
 // SetingsB
-export default class Configuracoes extends Component {
-  constructor(props) {
-    super(props);
+export default function Configuracoes({darkModeState, setDarkModeState}) {
+  const navigation = useNavigation();
+  const [notificationsOn, setNotificationsOn] = useState(true)
+  const [status, setStatus] = useState(null);
+  const [emailUser, setEmailUser] = useState('');
+  const [nomeUser, setNomeUser] = useState('');
+  const [dataNascimento, setDataNascimento] = useState('');
+  const [fotoPerfil, setFotoPerfil] = useState('');
+  const [value, setValue] = useState(false);
 
-    this.state = {
-      notificationsOn: true,
-      status:null,
-      emailUser:'',
-      nomeUser:'',
-      dataNascimento:'',
-      fotoPerfil:'',
-      value: false
-    };
+
+
+
+  useEffect(() => {
+
+    console.log('valor do parametro: ' + darkModeState)
+    async function callFirebase() {
+      await firebase.auth().onAuthStateChanged(user => {
+        if(user.uid !== null || user.uid !== undefined || user.uid !== '') {
+          firebase.firestore().collection('usuarios').doc(user.uid).onSnapshot(documentSnapshot => {
+            console.log('User data: ', documentSnapshot.data());
+            setStatus(true)
+            setEmailUser(documentSnapshot.data().email)
+            setNomeUser(documentSnapshot.data().nome)
+            setDataNascimento(documentSnapshot.data().dataNascimento)
+            setFotoPerfil(documentSnapshot.data().photoProfile)
+          })
+        } 
+        
+        if(user.uid == null || user.uid == undefined || user.uid == ''){
+          return null
+        }
+      })
+    }
+
+    callFirebase();
+  },[])
+
+
+
+
+
+
+
+
+
+
+
+  function sair () {
+        navigation.navigate('TelaLogout')
   }
 
-
-
-
-  async componentDidMount() {
-    await firebase.auth().onAuthStateChanged(user => {
-      if(user.uid !== null || user.uid !== undefined || user.uid !== '') {
-        firebase.firestore().collection('usuarios').doc(user.uid).onSnapshot(documentSnapshot => {
-          console.log('User data: ', documentSnapshot.data());
-          this.setState({status: true})
-          this.setState({emailUser: documentSnapshot.data().email})
-          this.setState({nomeUser: documentSnapshot.data().nome})
-          this.setState({dataNascimento: documentSnapshot.data().dataNascimento})
-          this.setState({fotoPerfil: documentSnapshot.data().photoProfile})
-        })
-      } 
-      
-      if(user.uid == null || user.uid == undefined || user.uid == ''){
-        return null
-      }
-    })
-
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  navigateTo = (screen) => () => {
-    const {navigation} = this.props;
-    navigation.navigate(screen);
-  };
-
-  toggleNotifications = (value) => {
-    this.setState({
-      notificationsOn: value,
-    });
-  };
-
-  sair() {
-    const e = this;
-        e.props.navigation.navigate('TelaLogout')
-  }
-
-  logout = () => {
+  function logout () {
     Alert.alert(
       'Sair',
       'Tem certeza que quer sair?',
       [
         {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
-        {text: 'Sim, quero sair', onPress: () => this.sair()}
+        {text: 'Sim, quero sair', onPress: () => sair()}
       ],
       {cancelable: false},
     );
   };
 
-  render() {
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeBackground>
         <StatusBar
           backgroundColor={Colors.statusBarColor}
           barStyle="dark-content"
@@ -264,29 +251,29 @@ export default class Configuracoes extends Component {
 
         <ScrollView contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.titleContainer}>
-            <Heading6 style={styles.titleText}>Configurações</Heading6>
+            <HeadingSetting>Configurações</HeadingSetting>
           </View>
 
-          <TouchableItem useForeground onPress={this.navigateTo('EditProfile')}>
+          <TouchableItem useForeground onPress={() => navigation.navigate('EditProfile')}>
             <View style={[styles.row, styles.profileContainer]}>
               <View style={styles.leftSide}>
-                {this.state.fotoPerfil == '' ?
+                {fotoPerfil == '' ?
                   <Image style={{borderRadius:50, width:60, height:60}} source={require('../../assets/img/profile_1.jpeg')}
                   />
                   :
                   <Image
-                    source={{uri: this.state.fotoPerfil}}
+                    source={{uri: fotoPerfil}}
                     style={{borderRadius:50, width:60, height:60}}
                   />
                 }
                 <View style={styles.profileInfo}>
-                  <Subtitle1 style={styles.name}>{this.state.nomeUser}</Subtitle1>
-                  <Subtitle2 style={styles.email}>
-                    {this.state.emailUser}
-                  </Subtitle2>
-                  <Subtitle2 style={styles.email}>
-                    {this.state.dataNascimento}
-                  </Subtitle2>
+                  <NameUserSetting>{nomeUser}</NameUserSetting>
+                  <EmailUserSetting style={styles.email}>
+                    {emailUser}
+                  </EmailUserSetting>
+                  <EmailUserSetting style={styles.email}>
+                    {dataNascimento}
+                  </EmailUserSetting>
                 </View>
               </View>
             </View>
@@ -297,26 +284,26 @@ export default class Configuracoes extends Component {
 
           <SectionHeader title="Planos" />
           <Setting
-            onPress={this.navigateTo('PaymentMethod')}
+            onPress={() => navigation.navigate('PaymentMethod')}
             icon={PAYMENT_ICON}
             setting="Escolha o Seu Plano"
           />
 
           <SectionHeader title="Anúncios & Cartões de Visita" />
           <Setting
-            onPress={this.navigateTo('TelaPrincipalAnuncio')}
+            onPress={() => navigation.navigate('TelaPrincipalAnuncio')}
             icon={ORDERS_ICON}
             setting="Meus Anúncios"
           />
           <Setting
-            onPress={this.navigateTo('TelaGeralCriarCartao')}
+            onPress={() => navigation.navigate('TelaGeralCriarCartao')}
             icon={VISIT_CARD}
             setting="Meus Cartões de Visita"
           />
 
           <SectionHeader title="Sobre" />
           <Setting
-            onPress={this.navigateTo('AboutUs')}
+            onPress={() => navigation.navigate('AboutUs')}
             icon={ABOUT_ICON}
             setting="Quem Nós Somos"
           />
@@ -324,7 +311,7 @@ export default class Configuracoes extends Component {
         {/* <Setting icon={UPDATE_ICON} setting="App Updates" /> */}
 
           <Setting
-            onPress={this.navigateTo('TermsConditions')}
+            onPress={() => navigation.navigate('TermsConditions')}
             icon={TERMS_ICON}
             setting="Termos & Condições"
           />
@@ -332,15 +319,14 @@ export default class Configuracoes extends Component {
           <SectionHeader title="Sair" />
           {/* <Setting icon={ADD_ICON} setting="Add Account" /> */}
           <Setting
-            onPress={() => this.logout()}
+            onPress={() => logout()}
             icon={LOGOUT_ICON}
             setting="Sair"
             type="logout"
           />
 
-          <Switch useNativeDriver={true} style={{marginLeft: 18, marginTop:20}} value={this.state.value} onChange={(value) => this.setState({value: value})}/>
+          <Switch style={{marginLeft: 18, marginTop:75}} value={value} onChange={(value) => setValue(value)}/>
         </ScrollView>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
-}

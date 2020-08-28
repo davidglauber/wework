@@ -4,7 +4,8 @@ import styled from 'styled-components/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 // import components
-import {Heading6} from '../../components/text/CustomText';
+import {Heading6, Subtitle1} from '../../components/text/CustomText';
+import { Ionicons as Ionicon } from "@expo/vector-icons";
 
 
 export const SafeBackground = styled.SafeAreaView`
@@ -96,3 +97,38 @@ export const Heading = styled(Heading6)`
     fontWeight: 700,
     color: ${props => props.theme.color}
 `
+
+export const HeadingSetting = styled(Heading6)`
+    fontWeight: 700;
+    paddingTop: 16;
+    paddingBottom: 16;
+    fontWeight: 700;
+    textAlign: left;
+    color: ${props => props.theme.color}
+`
+
+export const NameUserSetting = styled(Subtitle1)`
+    fontWeight: 500;
+    textAlign: left;
+    color: ${props => props.theme.color}
+`
+
+export const EmailUserSetting = styled(Subtitle1)`
+    paddingVertical: 2;
+    color: ${props => props.theme.inversePallete}
+`
+export const SetTextUserSetting = styled(Subtitle1)`
+    paddingVertical: 2;
+    fontSize: 14px
+    color: ${props => props.theme.inversePallete}
+`
+export const SectionHeaderTextSetting = styled(Subtitle1)`
+    paddingVertical: 2;
+    textAlign: left;
+    color: ${props => props.theme.color}
+`
+
+export const IconSetting = styled(Ionicon)`
+    color: ${props => props.theme.colorSetting}
+`
+

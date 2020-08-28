@@ -14,8 +14,6 @@ import {
 } from 'react-native';
 import Color from 'color';
 
-import { Appearance } from 'react-native-appearance';
-
 import {Heading6} from '../../components/text/CustomText';
 
 
@@ -35,8 +33,8 @@ import firebase from '../../config/firebase';
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
-
-import { SafeBackground, AnuncioContainer } from './styles';
+//CSS responsivo
+import { SafeBackground, IconResponsive, AnuncioContainer, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -284,7 +282,6 @@ async componentDidMount() {
 
     return (
       <SafeBackground>
-
         <View style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.categoriesContainer}>
@@ -292,16 +289,16 @@ async componentDidMount() {
               
                 {status == true ? 
                     <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
-                        <Text style={{color: '#70AD66', fontWeight: 'bold'}}>Olá, {emailUserFunction}</Text>
+                        <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
                     </TouchableOpacity>
                     :
-                    <TouchableOpacity onPress={this.navigateTo('SignUp')} style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
-                        <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
-                    </TouchableOpacity>
+                    <SignUpBottom onPress={this.navigateTo('SignUp')}>
+                        <TextBold>Criar Conta</TextBold>
+                    </SignUpBottom>
                 }
                     
                 <TouchableOpacity onPress={this.navigateTo('Filtro')} style={{width:20, height:20}}>
-                    <FontAwesome5  name="sort-alpha-up" size={19} color={"#70AD66"} />
+                    <IconResponsive  name="sort-alpha-up" size={19}/>
                 </TouchableOpacity>
               </View>
 
@@ -325,22 +322,22 @@ async componentDidMount() {
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column'}}>
-                                      <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>{item.title}</Text>
+                                      <Title>{item.title}</Title>
                                       {this.cutDescription(item.description)}
                                   </View>
                               </View>  
 
                               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                  </TouchableOpacity>
+                                  <TouchableDetails onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                      <TextDetails>Ver Detalhes</TextDetails>
+                                  </TouchableDetails>
 
                                   <View style={{marginTop: 24}}>
-                                      <Text style={{color:'#70AD66'}}>{item.value}</Text>
+                                      <ValueField>{item.value}</ValueField>
                                   </View>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
-                                      <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
+                                      <IconResponsive  name="user-tie" size={19}/>
                                   </View>
                               </View> 
 
@@ -365,23 +362,23 @@ async componentDidMount() {
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                 
                                 <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>{item.title}</Text>
+                                    <Title>{item.title}</Title>
                                     {this.cutDescription(item.description)}
                                 </View>
                             </View>  
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
+                                <TouchableDetails onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                    <TextDetails>Ver Detalhes</TextDetails>
+                                </TouchableDetails>
 
 
                                 <View style={{marginTop: 24}}>
-                                      <Text style={{color:'#70AD66'}}>{item.value}</Text>
+                                      <ValueField>{item.value}</ValueField>
                                 </View>
 
                                 <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                    <IconResponsive  name="briefcase" size={19}/>
                                 </View>
                             </View> 
 

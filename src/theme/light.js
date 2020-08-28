@@ -1,5 +1,6 @@
 export default {
     background: '#fff',
     backgroundColor: '#FFFDFD',
-    statusBarColor: '#fff',
+    color:'#DAA520',
+    barStyle: 'dark-content'
 }

@@ -31,10 +31,6 @@ function App() {
 
   return (
     <ThemeProvider theme={dark ? themes.dark: themes.light}>
-      <StatusBar
-        barStyle={dark ? "light-content" : "dark-content"}
-        backgroundColor={dark ? themes.dark.background : themes.light.background}
-      />
       <SafeAreaProvider>
         <MainNavigator />
       </SafeAreaProvider>

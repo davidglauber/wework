@@ -226,7 +226,7 @@ export default class CartaoVisita extends Component {
 
         <LinearGradient
           // Background Linear Gradient
-          colors={['#00b970', '#00b9a7', '#00b9a7']}
+          colors={['#DAA520', '#FFD700', '#FFD700']}
           style={{
             position: 'absolute',
             left: 0,

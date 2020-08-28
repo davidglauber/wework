@@ -27,7 +27,7 @@ import Colors from '../theme/colors';
 //import ICON
 import { FontAwesome5 } from '@expo/vector-icons';
 
-
+import { } from '../screens/home/styles';
 // HomeNavigator Config
 
 type Props = {
@@ -61,7 +61,7 @@ function HomeNavigator() {
       })}
       tabBarOptions={{
         keyboardHidesTabBar: true,
-        activeTintColor: Colors.primaryColor,
+        activeTintColor: '#DAA520',
         inactiveTintColor: Colors.secondaryText,
         showLabel: false, // hide labels
         style: {

@@ -116,7 +116,6 @@ import Colors from '../theme/colors';
 import Filtro from '../screens/search/Filtro';
 import FilterCartao from '../screens/search/FilterCartao'
 
-
 // MainNavigatorA Config
 const SAVE_ICON = Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark';
 

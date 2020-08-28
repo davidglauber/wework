@@ -188,14 +188,14 @@ export default function Configuracoes() {
   const [dataNascimento, setDataNascimento] = React.useState('');
   const [fotoPerfil, setFotoPerfil] = React.useState('');
   const [value, setValue] = React.useState(false);
-  const theme = useContext(ThemeContext)
+  const {dark, setDark} = useContext(ThemeContext)
 
 
 
   useEffect(() => {
 
     async function callFirebase() {
-      console.log('tema: ' + theme)
+      console.log('tema: ' + dark)
       await firebase.auth().onAuthStateChanged(user => {
         if(user.uid !== null || user.uid !== undefined || user.uid !== '') {
           firebase.firestore().collection('usuarios').doc(user.uid).onSnapshot(documentSnapshot => {
@@ -327,7 +327,7 @@ export default function Configuracoes() {
             type="logout"
           />
 
-          <Switch style={{marginLeft: 18, marginTop:75}} value={value} onChange={(value) => setValue(value)}/>
+          <Switch style={{marginLeft: 18, marginTop:75}} value={dark} onChange={(value) => setDark(value)}/>
         </ScrollView>
       </SafeBackground>
     );

@@ -33,11 +33,11 @@ function App() {
   
   return (
     <ThemeProvider theme={dark ? themes.dark: themes.light}>
-      <ThemeContext.Provider value={dark}>
-          <SafeAreaProvider>
-              <MainNavigator isDarkEnabled={dark}/>
-          </SafeAreaProvider>
-      </ThemeContext.Provider>
+      <SafeAreaProvider>
+        <ThemeContext.Provider value={{dark, setDark}}>
+          <MainNavigator isDarkEnabled={dark}/>
+        </ThemeContext.Provider>
+      </SafeAreaProvider>
     </ThemeProvider>
   );
 }

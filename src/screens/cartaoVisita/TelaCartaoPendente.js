@@ -31,6 +31,8 @@ import  { LinearGradient } from 'expo-linear-gradient';
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
+import { SafeBackground, Title, AnuncioContainer, ValueField, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
+
 // HomeA Styles
 const styles = StyleSheet.create({
   screenContainer: {
@@ -232,31 +234,20 @@ export default class TelaCartaoPendente extends Component {
     const {cartoesEstab, cartoesAuto} = this.state;
 
     return (
-      <SafeAreaView style={styles.screenContainer}>
-
-        <LinearGradient
-          // Background Linear Gradient
-          colors={['#00b970', '#00b9a7', '#00b9a7']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            height: '100%',
-          }}
-        />
-
+      <SafeBackground>
         <StatusBar
-          backgroundColor={'#00b970'}
-          barStyle="white-content"
+          backgroundColor={'white'}
+          barStyle="dark-content"
         />
 
         <View style={styles.container}>
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-                <FontAwesome5 onPress={() => this.goBack()} style={{color:'white'}} name="arrow-left" size={20}/>                
-                <Heading6 style={styles.titleText}>Anúncios Pendentes</Heading6>
+                <TouchableOpacity onPress={() => this.goBack()} style={{width:70, height:20}}>
+                    <IconResponsive name="arrow-left" size={20}/>                
+                </TouchableOpacity>
+                <Heading>Cartões Pendentes</Heading>
               </View>
             </View>
 
@@ -277,26 +268,26 @@ export default class TelaCartaoPendente extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={cartoesAuto}
                         renderItem={({item}) => 
-                            <View style={{width: 336, height: 180, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2, }}>
+                            <AnuncioContainer style={{height: 190}}>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:15, color:'#70AD66'}}>{item.nome}</Text>
+                                    <Title>{item.nome}</Title>
 
                                     {this.cutDescription(item.description)}
 
                                     <View style={{flexDirection:'row', paddingHorizontal:'15%'}}>
-                                      <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
-                                      <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
+                                      <ValueField style={{paddingTop:10, fontSize:12}}>{item.categoria}</ValueField>
+                                      <IconResponsive style={{marginLeft:15, marginTop:10}} name="clone" size={19}/>
                                     </View>
                                   </View>
                               </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                  </TouchableOpacity>
+                                  <TouchableDetails onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                      <TextDetails>Ver Detalhes</TextDetails>
+                                  </TouchableDetails>
 
                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarCartao', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
@@ -307,11 +298,11 @@ export default class TelaCartaoPendente extends Component {
                                   </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
-                                      <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
+                                      <IconResponsive  name="user-tie" size={19}/>
                                 </View>
                               </View> 
 
-                            </View>
+                            </AnuncioContainer>
                         }
                       />
                     </View>
@@ -323,26 +314,26 @@ export default class TelaCartaoPendente extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={cartoesEstab}
                         renderItem={({item}) => 
-                            <View style={{width: 336, height: 180, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                            <AnuncioContainer style={{height: 190}}>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column', }}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:15, color:'#70AD66'}}>{item.title}</Text>
+                                    <Title>{item.title}</Title>
 
                                     {this.cutDescription(item.description)}
 
                                     <View style={{flexDirection:'row', paddingHorizontal:45}}>
-                                      <Text style={{paddingTop:10, color: '#70AD66', fontSize:12}}>{item.categoria}</Text>
-                                      <FontAwesome5 style={{marginLeft:15, marginTop:10}} name="clone" size={19} color={'#70AD66'} />
+                                      <ValueField style={{paddingTop:10, fontSize:12}}>{item.categoria}</ValueField>
+                                      <IconResponsive style={{marginLeft:15, marginTop:10}} name="clone" size={19}/>
                                     </View>
                                   </View>
                               </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                  </TouchableOpacity>
+                                  <TouchableDetails onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                      <TextDetails>Ver Detalhes</TextDetails>
+                                  </TouchableDetails>
 
                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarCartao', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
@@ -353,11 +344,11 @@ export default class TelaCartaoPendente extends Component {
                                   </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
-                                      <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                      <IconResponsive  name="briefcase" size={19}/>
                                 </View>
                               </View> 
 
-                            </View>
+                            </AnuncioContainer>
                         }
                       />
                     </View>
@@ -366,7 +357,7 @@ export default class TelaCartaoPendente extends Component {
                 
           </ScrollView>
         </View>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
 }

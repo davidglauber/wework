@@ -53,6 +53,9 @@ const PLUS_ICON = IOS ? 'ios-add' : 'md-add';
 const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
 const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
+
+import { SafeAnuncioView, ValueFieldPrincipal, TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
+
 // ProductA Styles
 const styles = StyleSheet.create({
   screenContainer: {

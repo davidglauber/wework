@@ -7,11 +7,21 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import {Heading6, Subtitle1} from '../../components/text/CustomText';
 import { Ionicons as Ionicon } from "@expo/vector-icons";
 
+import {SmallText} from '../../components/text/CustomText';
+
 
 export const SafeBackground = styled.SafeAreaView`
     flex:1;
     background: ${props => props.theme.background} 
 `;
+
+export const SafeAnuncioView = styled.SafeAreaView`
+    flex: 1;
+    background: ${props => props.theme.background},
+    borderTopRightRadius: 20px;
+    borderTopLeftRadius: 20px;
+`
+
 
 export const AnuncioContainer = styled.View`
     width: 336px;
@@ -26,6 +36,34 @@ export const AnuncioContainer = styled.View`
     shadowOpacity: 0.2
 `
 
+export const CallAndMessageContainer = styled.View`
+    flexDirection: row;
+    justifyContent: space-between; 
+    width: 329px; 
+    height:80px; 
+    left:16px; 
+    padding:20px;  
+    background: ${props => props.theme.containerCall}; 
+    borderRadius:20px
+`
+export const TouchableResponsive = styled.TouchableOpacity`
+    flexDirection: row;
+    padding:10px; 
+    alignItems: center; 
+    width: 45%; 
+    height: 100%; 
+    borderRadius: 20px; 
+    background: ${props => props.theme.inverseContainerCall}
+`
+
+export const ButtonIconContainer = styled.View`
+    position: absolute;
+    top: 16px;
+    borderRadius: 18;
+    background: ${props => props.theme.backgroundColor};
+    left: 16px;
+`
+
 export const Title = styled.Text`
 fontSize:17px;
 marginTop:20px;
@@ -36,6 +74,37 @@ color:${props => props.theme.color}
 
 export const ValueField = styled.Text`
     color:${props => props.theme.color}
+`
+
+export const ValueFieldPrincipal = styled.Text`
+    color:${props => props.theme.inversePallete}
+    fontWeight: 700,
+    
+`
+
+export const TextDescription = styled(SmallText)`
+    paddingBottom: 8;
+    textAlign: left;
+    color: ${props => props.theme.inversePallete}
+
+`
+
+
+export const TextDescription2 = styled(SmallText)`
+    paddingBottom: 8;
+    textAlign: left;
+    color: ${props => props.theme.color}
+
+`
+
+export const TextDescription3 = styled(SmallText)`
+    paddingBottom: 8;
+    textAlign: left;
+    color: ${props => props.theme.colorCallAndMessage}
+
+`
+export const IconResponsiveCallAndMessage = styled(FontAwesome5)`
+    color: ${props => props.theme.colorCallAndMessage}
 `
 
 export const TouchableDetails = styled.TouchableOpacity`
@@ -50,6 +119,10 @@ export const TouchableDetails = styled.TouchableOpacity`
 
 export const TextDetails = styled.Text`
     color: ${props => props.theme.background}
+`
+
+export const TextTheme = styled.Text`
+    color: ${props => props.theme.inversePallete}
 `
 
 export const SwipeLeft = styled.View`

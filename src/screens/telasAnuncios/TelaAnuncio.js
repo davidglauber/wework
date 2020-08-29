@@ -44,6 +44,8 @@ import firebase from '../../config/firebase';
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAnuncioView, ValueFieldPrincipal, TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
+
 
 // ProductA Config
 const isRTL = I18nManager.isRTL;
@@ -289,7 +291,7 @@ export default class TelaAnuncio extends Component {
     } = product;
 
     return (
-      <SafeAreaView style={styles.screenContainer}>
+      <SafeAnuncioView>
         <StatusBar
           backgroundColor={Colors.statusBarColor}
           barStyle="dark-content"
@@ -315,7 +317,7 @@ export default class TelaAnuncio extends Component {
                       />
                   </Swiper>
 
-                  <View style={[styles.topButton, styles.left]}>
+                  <ButtonIconContainer>
                     <TouchableItem onPress={this.goBack} borderless>
                       <View style={styles.buttonIconContainer}>
                         <Icon
@@ -325,45 +327,45 @@ export default class TelaAnuncio extends Component {
                         />
                       </View>
                     </TouchableItem>
-                  </View>
+                  </ButtonIconContainer>
 
                 </View>
 
                   <View style={styles.descriptionContainer}>
                       <View style={styles.productTitleContainer}>
-                            <Heading5 style={styles.productTitle}>{item.title}</Heading5>
-                          <Text style={styles.priceText}>{item.value}</Text>
+                            <Heading>{item.title}</Heading>
+                          <ValueFieldPrincipal style={{fontSize: 18}}>{item.value}</ValueFieldPrincipal>
                       </View>
                   </View>
 
                   <View style={styles.descriptionContainer}>
-                    <SmallText style={styles.shortDescription}>{item.description}</SmallText>
+                    <TextDescription>{item.description}</TextDescription>
                   </View>
 
 
 
                   <View style={styles.pickerGroup}>
                     <View style={styles.pickerContainer}>
-                      <Caption style={styles.caption}>Informações do Autônomo:</Caption>
+                      <TextDescription2 style={styles.caption}>Informações do Autônomo:</TextDescription2>
                     </View>
                   </View>
 
 
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                      <FontAwesome5 name="user-tie" size={25} color={"#70AD66"}/>
-                      <Text style={{fontSize:15, marginLeft: 15}}>{item.nome}</Text>
+                      <IconResponsive name="user-tie" size={25}/>
+                      <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.nome}</TextTheme>
                   </View>
 
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                        <FontAwesome5 name="phone-square" size={30} color={"#70AD66"}/>
-                        <Text style={{fontSize:15, marginLeft: 15}}>{item.phone}</Text>
+                        <IconResponsive name="phone-square" size={30}/>
+                        <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.phone}</TextTheme>
                   </View>
 
                   <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
-                        <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
-                        <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</Text>
+                        <IconResponsive name="list-alt" size={30}/>
+                        <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</TextTheme>
                   </View>
           
                 </View>
@@ -409,7 +411,7 @@ export default class TelaAnuncio extends Component {
                       />
                   </Swiper>
 
-                  <View style={[styles.topButton, styles.left]}>
+                  <ButtonIconContainer>
                     <TouchableItem onPress={this.goBack} borderless>
                       <View style={styles.buttonIconContainer}>
                         <Icon
@@ -419,50 +421,50 @@ export default class TelaAnuncio extends Component {
                         />
                       </View>
                     </TouchableItem>
-                  </View>
+                  </ButtonIconContainer>
 
                 </View>
 
                   <View style={styles.descriptionContainer}>
                       <View style={styles.productTitleContainer}>
-                            <Heading5 style={styles.productTitle}>{item.title}</Heading5>
-                          <Text style={styles.priceText}>{item.value}</Text>
+                            <Heading>{item.title}</Heading>
+                          <ValueFieldPrincipal style={{fontSize: 18}}>{item.value}</ValueFieldPrincipal>
                       </View>
                   </View>
 
                   <View style={styles.descriptionContainer}>
-                    <SmallText style={styles.shortDescription}>{item.description}</SmallText>
+                    <TextDescription>{item.description}</TextDescription>
                   </View>
 
 
 
                   <View style={styles.pickerGroup}>
                     <View style={styles.pickerContainer}>
-                      <Caption style={styles.caption}>Informações do Estabelecimento:</Caption>
+                      <TextDescription2 style={styles.caption}>Informações do Estabelecimento:</TextDescription2>
                     </View>
                   </View>
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                      <FontAwesome5 name="clock" size={25} color={"#70AD66"}/>
-                      <Text style={{fontSize:15, marginLeft: 15}}>Aberto durante {item.workDays} dias na semana</Text>
+                      <IconResponsive name="clock" size={25}/>
+                      <TextTheme style={{fontSize:15, marginLeft: 15}}>Aberto durante {item.workDays} dias na semana</TextTheme>
                   </View>
 
 
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                      <FontAwesome5 name="map-marked-alt" size={25} color={"#70AD66"}/>
-                        <Text style={{fontSize:15, marginLeft: 15}}>{item.local}</Text>
+                      <IconResponsive name="map-marked-alt" size={25}/>
+                        <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.local}</TextTheme>
                   </View>
 
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                        <FontAwesome5 name="phone-square" size={30} color={"#70AD66"}/>
-                        <Text style={{fontSize:15, marginLeft: 15}}>{item.phone}</Text>
+                        <IconResponsive name="phone-square" size={30}/>
+                        <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.phone}</TextTheme>
                   </View>
 
                   <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
-                        <FontAwesome5 name="list-alt" size={30} color={"#70AD66"}/>
-                        <Text style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</Text>
+                        <IconResponsive name="list-alt" size={30}/>
+                        <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</TextTheme>
                   </View>
                 </View>
             }
@@ -473,31 +475,31 @@ export default class TelaAnuncio extends Component {
 
           
         <View style={{flex: 1, flexDirection:'row', marginBottom:50, bottom:50}}>
-            <View style={{flexDirection:'row', justifyContent:'space-between', width: 329, height:80, left:16, padding:20,  backgroundColor: '#E3FAE5', borderRadius:20}}>
-                <TouchableOpacity onPress={() => this.openPhoneApp(this.state.phoneNavigator)} style={{flexDirection:'row', padding:10, alignItems:'center', width: '100%', height:'100%', borderRadius: 20, backgroundColor: '#70AD66'}}>
-                    <Text style={{fontWeight:'bold', color:'white', marginRight:20}}>Telefonar</Text>
-                    <FontAwesome5 name="mobile" size={20} color={"white"}/>
-                </TouchableOpacity>   
+            <CallAndMessageContainer>
+                <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
+                    <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Telefonar</TextDescription2>
+                    <IconResponsive name="mobile" size={20}/>
+                </TouchableResponsive>   
 
-                <TouchableOpacity style={{flexDirection:'row', padding:10, alignItems:'center', width: '100%', height:'100%', borderRadius: 20, backgroundColor: '#70AD66'}}>
-                    <Text style={{fontWeight:'bold', color:'white', marginRight:20}}>Conversar</Text>
-                    <FontAwesome5 name="comment-alt" size={20} color={"white"}/>
-                </TouchableOpacity>            
-            </View>
+                <TouchableResponsive>
+                    <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
+                    <IconResponsive name="comment-alt" size={20}/>
+                </TouchableResponsive>            
+            </CallAndMessageContainer>
         </View>
 
         {this.state.dateAuto == '' ? 
             <View style={{alignItems:'center'}}>
-              <Text style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</Text>
+              <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</TextDescription>
             </View>
           :
             <View style={{alignItems:'center'}}>
-              <Text style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</Text>
+              <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</TextDescription>
             </View>
         }
 
 
-      </SafeAreaView>
+      </SafeAnuncioView>
     );
   }
 }

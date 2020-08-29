@@ -231,7 +231,7 @@ export default function Configuracoes() {
   useEffect(() => {
     const backAction = () => {
         if (navigation.isFocused()) {
-            if(dark == true) {
+            if(dark === true) {
               Alert.alert("Atenção", "Você quer mesmo voltar para a tela principal?", [
                   {
                       text: "Não",
@@ -241,7 +241,9 @@ export default function Configuracoes() {
                   { text: "Sim", onPress: () => navigation.navigate('HomeNavigatorC') }
               ]);
               return true;
-          } else {
+          } 
+          
+          if(dark === false){
             Alert.alert("Atenção", "Você quer mesmo voltar para a tela principal?", [
               {
                   text: "Não",
@@ -256,7 +258,7 @@ export default function Configuracoes() {
     };
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
-}, [])
+}, [dark])
 
 
   function sair () {

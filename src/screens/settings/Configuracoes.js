@@ -66,7 +66,7 @@ const LOGOUT_ICON = IOS ? 'ios-exit' : 'md-exit';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 //CSS responsivo
-import { SafeBackground, SetTextUserSetting, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
+import { SafeBackground, SetTextUserSetting, IconResponsive, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
 import { ThemeContext } from '../../../App';
 
 // SettingsB Styles
@@ -289,11 +289,11 @@ export default function Configuracoes() {
           <View style={styles.titleContainer}>
             {dark == true ?
                 <TouchableOpacity onPress={() => navigation.navigate('HomeNavigatorC')}>
-                    <FontAwesome5 style={{color:'black', marginRight: 24}} name="arrow-left" size={20}/>
+                    <IconResponsive style={{marginRight: 24}} name="arrow-left" size={20}/>
                 </TouchableOpacity>
             :
                 <TouchableOpacity onPress={() => navigation.navigate('HomeNavigator')}>
-                    <FontAwesome5 style={{color:'black', marginRight: 24}} name="arrow-left" size={20}/>
+                    <IconResponsive style={{marginRight: 24}} name="arrow-left" size={20}/>
                 </TouchableOpacity>
             }
             <HeadingSetting>Configurações</HeadingSetting>

@@ -132,3 +132,18 @@ export const IconSetting = styled(Ionicon)`
     color: ${props => props.theme.colorSetting}
 `
 
+
+
+export const PlusContainer = styled.TouchableOpacity`
+    marginRight:5px; 
+    borderRadius:25px; 
+    alignItems: center; 
+    justifyContent: center;
+    width:40px; 
+    height:40px; 
+    backgroundColor: ${props => props.theme.backgroundColor}
+` 
+
+export const PlusIcon = styled(FontAwesome5)`
+    color: ${props => props.theme.color}
+` 

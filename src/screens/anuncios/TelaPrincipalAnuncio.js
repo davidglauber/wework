@@ -28,6 +28,8 @@ import firebase from '../../config/firebase';
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
+import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
+
 // HomeA Styles
 const styles = StyleSheet.create({
   screenContainer: {
@@ -230,7 +232,7 @@ export default class TelaPrincipalAnuncio extends Component {
     const {anunciosEstab, anunciosAuto} = this.state;
 
     return (
-      <SafeAreaView style={styles.screenContainer}>
+      <SafeBackground>
         <StatusBar
           backgroundColor={Colors.statusBarColor}
           barStyle="dark-content"
@@ -241,15 +243,15 @@ export default class TelaPrincipalAnuncio extends Component {
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
                 <View style={styles.titleContainer}>
-                  <Heading6 style={styles.titleText}>Ativos</Heading6>
+                  <Heading style={styles.titleText}>Ativos</Heading>
                 </View>
 
-                <TouchableOpacity onPress={this.navigateTo('Orders')} style={{marginRight:5, borderRadius:25, alignItems:'center', justifyContent:'center', width:40, height:40, backgroundColor: "#70AD66"}}>
-                        <FontAwesome5  name="plus" size={19} color={"#fff"} />
-                </TouchableOpacity>
+                <PlusContainer onPress={this.navigateTo('Orders')}>
+                    <PlusIcon  name="plus" size={19}/>
+                </PlusContainer>
 
-                <TouchableOpacity onPress={this.navigateTo('TelaAnunciosPendentes')} style={{marginRight:5, borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#e3e3e3"}}>
-                    <Text style={{color: 'black', fontWeight: 'bold'}}>Pendentes</Text>
+                <TouchableOpacity onPress={this.navigateTo('TelaAnunciosPendentes')} style={{marginRight:5, borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27}}>
+                    <Heading>Pendentes</Heading>
                 </TouchableOpacity>
               </View>
 
@@ -273,21 +275,21 @@ export default class TelaPrincipalAnuncio extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={anunciosAuto}
                         renderItem={({item}) => 
-                            <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                            <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>{item.title}</Text>
+                                    <Title>{item.title}</Title>
 
                                     {this.cutDescription(item.description)}
                                   </View>
                               </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                  </TouchableOpacity>
+                                  <TouchableDetails onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                      <TextDetails>Ver Detalhes</TextDetails>
+                                  </TouchableDetails>
 
                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                       <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
@@ -298,11 +300,11 @@ export default class TelaPrincipalAnuncio extends Component {
                                   </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
-                                      <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
+                                      <IconResponsive  name="user-tie" size={19}/>
                                 </View>
                               </View> 
 
-                            </View>
+                            </AnuncioContainer>
                         }
                       />
                     </View>
@@ -314,21 +316,21 @@ export default class TelaPrincipalAnuncio extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={anunciosEstab}
                         renderItem={({item}) => 
-                            <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                            <AnuncioContainer>
                                 <View style={{flexDirection:'row'}}>
                                     <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                     
                                     <View style={{flexDirection:'column'}}>
-                                        <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>{item.title}</Text>
+                                        <Title>{item.title}</Title>
                                       
                                         {this.cutDescription(item.description)}
                                     </View>
                                 </View>  
 
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                        <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                    </TouchableOpacity>
+                                    <TouchableDetails onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                        <TextDetails>Ver Detalhes</TextDetails>
+                                    </TouchableDetails>
 
                                     <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
                                         <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
@@ -339,18 +341,18 @@ export default class TelaPrincipalAnuncio extends Component {
                                     </TouchableOpacity>
                                     
                                     <View style={{marginTop: 24, marginRight: 30}}>
-                                        <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                        <IconResponsive  name="briefcase" size={19}/>
                                     </View>
                                 </View> 
 
-                            </View>
+                            </AnuncioContainer>
                         }
                       />
                     </View>
                   </View>
           </ScrollView>
         </View>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
 }

@@ -30,6 +30,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
 
+import { ThemeContext } from '../../../App';
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -102,6 +103,8 @@ const styles = StyleSheet.create({
 });
 
 export default class TelaAnunciosPendentes extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
 
@@ -237,8 +240,8 @@ export default class TelaAnunciosPendentes extends Component {
     return (
       <SafeBackground>
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <View style={styles.container}>
@@ -254,7 +257,7 @@ export default class TelaAnunciosPendentes extends Component {
                   {anunciosEstab.length == 0 && anunciosAuto.length == 0 &&
                     <View style={{flex:1, alignItems:'center', paddingTop:"50%"}}>
                       <View>
-                        <Image style={{width:200, height:200, marginLeft:30}} source={require("../../assets/img/notfound.gif")} />
+                        <Image style={{width:200, height:200, marginLeft:30}} source={require("../../assets/img/notfoundnoback.gif")} />
                         <Text style={{fontWeight:'bold'}}>Nenhum Anúncio Pendente Foi Encontrado</Text>
                       </View>
                     </View>

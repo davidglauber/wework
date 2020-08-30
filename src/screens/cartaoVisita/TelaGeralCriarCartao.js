@@ -30,6 +30,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, TouchableDetails, ValueField, TextDetails, IconResponsive, Heading } from '../home/styles';
 
+import { ThemeContext } from '../../../App';
+
 // HomeA Styles
 const styles = StyleSheet.create({
   screenContainer: {
@@ -101,6 +103,9 @@ const styles = StyleSheet.create({
 });
 
 export default class TelaGeralCriarCartao extends Component {
+  static contextType = ThemeContext
+
+
   constructor(props) {
     super(props);
 
@@ -247,8 +252,8 @@ export default class TelaGeralCriarCartao extends Component {
     return (
       <SafeBackground>
         <StatusBar
-          backgroundColor={"white"}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <View style={styles.container}>

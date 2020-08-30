@@ -44,6 +44,8 @@ const EMPTY_STATE_ICON = 'cart-remove';
 //CSS responsivo
 import { IconResponsive, ViewCartao, TextDetails, TouchableDetails, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
 
+import { ThemeContext } from '../../../App';
+
 // CartA Styles
 const styles = StyleSheet.create({
   flex1: {
@@ -92,6 +94,8 @@ const styles = StyleSheet.create({
 
 // CartA
 export default class CartaoVisita extends Component {
+  static contextType = ThemeContext
+  
   constructor(props) {
     super(props);
 
@@ -224,8 +228,8 @@ export default class CartaoVisita extends Component {
         <ViewCartao/>
 
         <StatusBar
-          backgroundColor={"#121212"}
-          barStyle="white-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
         
 

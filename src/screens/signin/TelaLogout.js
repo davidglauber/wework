@@ -84,6 +84,7 @@ export default class TelaLogout extends Component {
 
 
   componentDidMount(){
+    console.reportErrorsAsExceptions = false;
     let e = this;
 
     e.timeout = setTimeout(async () => {

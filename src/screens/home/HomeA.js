@@ -36,6 +36,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 //CSS responsivo
 import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
+import { ThemeContext } from '../../../App';
+
 // HomeA Styles
 const styles = StyleSheet.create({
   screenContainer: {
@@ -106,7 +108,10 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default class HomeA extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
 
@@ -115,7 +120,7 @@ export default class HomeA extends Component {
       status: null,
       emailUserFunction:'',
       activesPublishesAuto: [],
-      activesPublishesEstab: []
+      activesPublishesEstab: [],
     };
   }
 
@@ -132,7 +137,12 @@ export default class HomeA extends Component {
 
 
 async componentDidMount() {
-  console.reportErrorsAsExceptions = false;
+  const darkVar = this.context
+
+  console.log('DARK CONTEXT: ' + darkVar)
+  console.reportErrorsAsExceptions = false; 
+
+
    let e = this;
 
     await firebase.auth().onAuthStateChanged((user) => {
@@ -282,6 +292,12 @@ async componentDidMount() {
 
     return (
       <SafeBackground>
+
+        <StatusBar
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
+        />
+        
         <View style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.categoriesContainer}>

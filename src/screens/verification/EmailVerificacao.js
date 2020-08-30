@@ -116,9 +116,6 @@ export default class EmailVerificacao extends Component {
 
 
   componentDidMount() {
-    console.clear();
-
-    
     let getNome = this.props.route.params.nome;
     let getEmail = this.props.route.params.email;
     let getSenha = this.props.route.params.senha;

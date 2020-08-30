@@ -114,7 +114,7 @@ export default class TelaLogout extends Component {
               <Image source={require('../../assets/img/loading.gif')} style={{width:200, height:400}}/>
             </View>
             <Paragraph style={styles.instruction}>
-             Isso é um adeus?  Saindo...
+             Volte em Breve!  Saindo...
             </Paragraph>
           </View>
 

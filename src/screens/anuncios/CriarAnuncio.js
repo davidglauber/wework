@@ -48,6 +48,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { TextInputMask } from 'react-native-masked-text';
 
+import { ItemContainer, ViewTopForm } from '../home/styles';
 
 // import colors
 import Colors from '../../theme/colors';
@@ -578,10 +579,7 @@ export default class CriarAnuncio extends Component {
           />
 
           <View style={styles.container}>
-            <View style={{ marginVertical: 4,
-            marginHorizontal: 12,
-            borderRadius: 16,
-            backgroundColor: Colors.background}}>
+            <ViewTopForm>
               
             <View style={{ width: Layout.SCREEN_WIDTH - 2 * 12}}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',padding: 16}}>
@@ -667,7 +665,7 @@ export default class CriarAnuncio extends Component {
 
 
 
-                    <View style={styles.itemContainer}>
+                    <ItemContainer>
 
                       { this.state.type == 'Autonomo' &&
                         <View>
@@ -945,9 +943,9 @@ export default class CriarAnuncio extends Component {
                               </TouchableOpacity>
                             }
                         </View>
-                    </View>
+                    </ItemContainer>
 
-            </View>
+            </ViewTopForm>
           </View>
 
           {/*Modalize da categoria*/}

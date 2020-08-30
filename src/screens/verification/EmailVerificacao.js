@@ -12,6 +12,7 @@ import {
   I18nManager,
   SafeAreaView,
   StatusBar,
+  BackHandler,
   StyleSheet,
   Text,
   View,
@@ -109,58 +110,65 @@ export default class EmailVerificacao extends Component {
     clearTimeout(this.timeout);
   };
 
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
 
   componentDidMount() {
+    console.reportErrorsAsExceptions = false;
+
+    
     let getNome = this.props.route.params.nome;
     let getEmail = this.props.route.params.email;
     let getSenha = this.props.route.params.senha;
     let getTelefone = this.props.route.params.telefone;
     let getDataNascimento = this.props.route.params.dataNascimento;
 
+    
     this.setState({nome: getNome})
     this.setState({email: getEmail})
     this.setState({senha: getSenha})
     this.setState({telefone: getTelefone})
     this.setState({data: getDataNascimento})
-
-
-    //pegar os parametros de email e senha
-    this.registerUserAndConfirmEmail(getEmail, getSenha)
-
-
+    
+    
+    
+    
     console.log('email navigation: ' + getEmail)
     console.log('senha navigation: ' + getSenha)
     console.log('nome navigation: ' + getNome)
     console.log('Telefone navigation: ' + getTelefone)
     console.log('Data born navigation: ' + getDataNascimento)
     
+    this.registerUserAndConfirmEmail(getEmail, getSenha);
   }
 
 
 
-  async registerUserAndConfirmEmail(email, senha) {
-    await firebase.auth().createUserWithEmailAndPassword(email, senha).then((value) => {
+  registerUserAndConfirmEmail(email, senha) {
+    firebase.auth().createUserWithEmailAndPassword(email, senha).then((value) => {
       firebase.auth().currentUser.sendEmailVerification().then(() => {
+        alert('confirme o codigo enviado')
       }).catch((error) => {
         alert('ocorreu um erro ao enviar o email')
       })
-
-      alert('Usuário Cadastrado com Sucesso!')
+      
     }).catch((error) => {
       if(error.code === 'auth/email-already-exists') {
         alert('Esse endereço de email já está em uso, por favor tente outro')
-        this.navigateTo('SignUp')
+        this.props.navigation.navigate('SignUp')
         return;
       } else if (error.code === 'auth/internal-error') {
         alert('Ocorreu um erro interno no nosso servidor, tente novamente mais tarde')
         return;
       } else if (error.code === 'auth/invalid-password') {
         alert('A senha inserida é inválida')
-        this.navigateTo('SignUp')
+        this.props.navigation.navigate('SignUp')
         return;
       } else if (error.code === 'auth/weak-password') {
         alert('A senha inserida é muito fraca, ela precisa ter ao mínimo 6 caracteres')
-        this.navigateTo('SignUp')
+        this.props.navigation.navigate('SignUp')
         return;
       }
     })
@@ -175,12 +183,6 @@ export default class EmailVerificacao extends Component {
 
 
 
-
-
-  navigateTo = (screen) => {
-    const {navigation} = this.props;
-    navigation.navigate(screen);
-  };
 
  async verifyIfUserHasVerified(){
 
@@ -203,7 +205,7 @@ export default class EmailVerificacao extends Component {
           })
   
         AsyncStorage.setItem('verified', JSON.stringify(true))
-          this.navigateTo('HomeNavigator')
+          this.props.navigation.navigate('HomeNavigator')
       } else {
         
         AsyncStorage.setItem('verified', JSON.stringify(false))

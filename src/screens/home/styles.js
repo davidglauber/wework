@@ -220,3 +220,16 @@ export const PlusContainer = styled.TouchableOpacity`
 export const PlusIcon = styled(FontAwesome5)`
     color: ${props => props.theme.color}
 ` 
+
+export const ItemContainer = styled.View`
+    marginVertical: 4;
+    background: ${props => props.theme.backgroundColor}
+`
+
+export const ViewTopForm = styled.View`
+    marginVertical: 4px;
+    marginHorizontal: 12px;
+    borderRadius: 16px;
+    background: ${props => props.theme.backgroundColor}
+`
+

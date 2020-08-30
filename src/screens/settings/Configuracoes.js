@@ -238,7 +238,7 @@ export default function Configuracoes() {
                       onPress: () => null,
                       style: "cancel"
                   },
-                  { text: "Sim", onPress: () => navigation.navigate('HomeNavigatorC') }
+                  { text: "Sim", onPress: () => navigation.navigate('HomeNavigator') }
               ]);
               return true;
           } 
@@ -281,21 +281,15 @@ export default function Configuracoes() {
     return (
       <SafeBackground>
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={dark ? '#121212' : 'white'}
+          barStyle={dark ? "white-content" : "dark-content"}
         />
 
         <ScrollView contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.titleContainer}>
-            {dark == true ?
-                <TouchableOpacity onPress={() => navigation.navigate('HomeNavigatorC')}>
-                    <IconResponsive style={{marginRight: 24}} name="arrow-left" size={20}/>
-                </TouchableOpacity>
-            :
                 <TouchableOpacity onPress={() => navigation.navigate('HomeNavigator')}>
                     <IconResponsive style={{marginRight: 24}} name="arrow-left" size={20}/>
                 </TouchableOpacity>
-            }
             <HeadingSetting>Configurações</HeadingSetting>
           </View>
 

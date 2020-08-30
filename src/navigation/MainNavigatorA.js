@@ -47,7 +47,6 @@ import TermsConditions from '../screens/terms/TermsConditionsA';
 
 // import HomeNavigator
 import HomeNavigator from './HomeNavigatorA';
-import HomeNavigatorC from './HomeNavigatorC';
 
 //screen of filter
 import HomeFiltro from '../screens/home/HomeFiltro';
@@ -186,17 +185,18 @@ function MainNavigatorA({isDarkEnabled}) {
             })
           }
         />
+          <Stack.Screen
+            name="EmailVerificacao"
+            component={EmailVerificacao}
+            options={{headerShown: false}}
+          />
+          
         <Stack.Screen
           name="Verification"
           component={Verification}
           options={{headerShown: false}}
         />
 
-        <Stack.Screen
-          name="EmailVerificacao"
-          component={EmailVerificacao}
-          options={{headerShown: false}}
-        />
 
         <Stack.Screen
           name="SMSVerificacao"
@@ -263,19 +263,12 @@ function MainNavigatorA({isDarkEnabled}) {
             title: 'Termos e Condições',
           }}
         />
-        { isDarkEnabled == false ?
+
           <Stack.Screen
             name="HomeNavigator"
             component={HomeNavigator}
             options={{headerShown: false}}
           />
-          :
-          <Stack.Screen
-            name="HomeNavigatorC"
-            component={HomeNavigatorC}
-            options={{headerShown: false}}
-          />
-        }
 
         <Stack.Screen
           name="HomeFiltro"

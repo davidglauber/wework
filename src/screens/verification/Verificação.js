@@ -15,6 +15,7 @@ import {
   StyleSheet,
   Text,
   View,
+  BackHandler
 } from 'react-native';
 import Color from 'color';
 
@@ -103,6 +104,7 @@ export default class Verificação extends Component {
   };
 
   componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true; });
     let getNome = this.props.route.params.nome;
     let getEmail = this.props.route.params.email;
     let getSenha = this.props.route.params.senha;

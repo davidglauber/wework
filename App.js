@@ -33,13 +33,13 @@ function App() {
   const provideTheme = useMemo(() => ({dark, setDark}), [dark, setDark])
   
   return (
-    <ThemeContext.Provider value={provideTheme}>
-      <ThemeProvider theme={dark ? themes.dark: themes.light}>
+    <ThemeProvider theme={dark ? themes.dark: themes.light}>
+      <ThemeContext.Provider value={provideTheme}>
         <SafeAreaProvider>
-            <MainNavigator isDarkEnabled={dark}/>
+            <MainNavigator/>
         </SafeAreaProvider>
-      </ThemeProvider>
-    </ThemeContext.Provider>
+      </ThemeContext.Provider>
+    </ThemeProvider>
   );
 }
 

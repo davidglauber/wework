@@ -505,11 +505,11 @@ export default class MostrarCartao extends Component {
 
         {this.state.dateAuto == '' ? 
             <View style={{alignItems:'center'}}>
-              <Text style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</Text>
+              <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</TextDescription>
             </View>
           :
             <View style={{alignItems:'center'}}>
-              <Text style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</Text>
+              <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</TextDescription>
             </View>
         }
         

@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 // import components
-import {Heading6, Subtitle1} from '../../components/text/CustomText';
+import {Heading6, Subtitle1, Subtitle2} from '../../components/text/CustomText';
 import { Ionicons as Ionicon } from "@expo/vector-icons";
 
 import {SmallText} from '../../components/text/CustomText';
@@ -14,6 +14,37 @@ export const SafeBackground = styled.SafeAreaView`
     flex:1;
     background: ${props => props.theme.background} 
 `;
+
+export const SafeBackgroundPublish = styled.SafeAreaView`
+    flex:1;
+    background: ${props => props.theme.backgroundPublish} 
+`;
+
+export const ChooseOption = styled.TouchableOpacity`
+    backgroundColor: ${props => props.theme.color};
+    width:18px; 
+    height:18px;
+    borderRadius:30px
+`
+export const Subtitle2Publish = styled(Subtitle2)`
+    marginLeft: 5px;
+    paddingBottom: 2px; 
+    fontWeight: 100;
+    color: ${props => props.theme.color}; 
+    textAlign: left
+`
+
+export const SafeViewPublish = styled.View`
+    flex:1;
+    background: ${props => props.theme.backgroundPublish} 
+`;
+
+export const ViewCircle = styled.View`
+    width: 16px;
+    height: 16px;
+    borderRadius: 8px;
+    background: ${props => props.theme.background}
+`
 
 export const SafeAnuncioView = styled.SafeAreaView`
     flex: 1;

@@ -48,7 +48,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { TextInputMask } from 'react-native-masked-text';
 
-import { ItemContainer, ViewTopForm } from '../home/styles';
+import { ItemContainer, ViewTopForm, SafeBackgroundPublish, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
 
 // import colors
 import Colors from '../../theme/colors';
@@ -571,14 +571,14 @@ export default class CriarAnuncio extends Component {
     return (
       <Fragment>
         <SafeAreaView style={styles.topArea} />
-        <SafeAreaView style={styles.container}>
+        <SafeBackgroundPublish>
           <StatusBar
             backgroundColor={'white'}
             barStyle="dark-content"
 
           />
 
-          <View style={styles.container}>
+          <SafeViewPublish>
             <ViewTopForm>
               
             <View style={{ width: Layout.SCREEN_WIDTH - 2 * 12}}>
@@ -602,18 +602,17 @@ export default class CriarAnuncio extends Component {
                         <View style={{flexDirection:'row', alignItems:'center'}}>
                           { this.state.type == 'Estabelecimento' ?
                             <View style={{flexDirection:'row'}}>
-                                <TouchableOpacity style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30}}/>
+                                <ChooseOption/>
                                 <TouchableOpacity>
-                                    <Subtitle2
-                                      style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                    <Subtitle2Publish
+                                      style={{fontWeight: 'bold'}}>Estabelecimento</Subtitle2Publish>
                                 </TouchableOpacity>
                             </View>
                           :
                             <View style={{flexDirection:'row'}}>
                                 <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30}}/>
                                   <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})}>
-                                      <Subtitle2
-                                        style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                      <Subtitle2Publish>Estabelecimento</Subtitle2Publish>
                                   </TouchableOpacity>
                             </View>                         
                           }
@@ -637,18 +636,17 @@ export default class CriarAnuncio extends Component {
 
                      {this.state.type == 'Autonomo' ?     
                       <View style={{flexDirection:'row', padding: 16}}>
-                              <TouchableOpacity  style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30}}/>
+                              <ChooseOption/>
                                   <TouchableOpacity>
-                                      <Subtitle2
-                                        style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                                      <Subtitle2Publish
+                                        style={{fontWeight: 'bold'}}>Autônomo</Subtitle2Publish>
                                   </TouchableOpacity>
                       </View>
                       :
                       <View style={{flexDirection:'row', padding: 16}}>
                               <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30}}/>
                               <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})}>
-                                  <Subtitle2
-                                      style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                                  <Subtitle2Publish>Autônomo</Subtitle2Publish>
                               </TouchableOpacity>
                       </View>
                      }
@@ -658,9 +656,9 @@ export default class CriarAnuncio extends Component {
 
                     {/*Divisor estiloso*/}
                     <View style={{ flex: 1,  flexDirection: 'row',  justifyContent: 'space-between',alignItems: 'center'}}>
-                      <View style={[styles.circleMask, styles.leftCircle]} />
+                      <ViewCircle style={styles.leftCircle} />
                       <View style={styles.dividerLine} />
-                      <View style={[styles.circleMask, styles.rightCircle]} />
+                      <ViewCircle style={styles.rightCircle} />
                     </View>
 
 
@@ -946,7 +944,7 @@ export default class CriarAnuncio extends Component {
                     </ItemContainer>
 
             </ViewTopForm>
-          </View>
+          </SafeViewPublish>
 
           {/*Modalize da categoria*/}
           <Modalize
@@ -1266,7 +1264,7 @@ export default class CriarAnuncio extends Component {
                 </View>
             </View>
           </Modalize>
-        </SafeAreaView>
+        </SafeBackgroundPublish>
       </Fragment>
     );
   }

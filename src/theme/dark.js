@@ -6,5 +6,6 @@ export default {
   colorSetting: '#DAA520',
   inversePallete: '#fff',
   containerCall: '#3E3C3F',
-  inverseContainerCall: '#645f66'
+  inverseContainerCall: '#645f66',
+  backgroundPublish: '#121212'
 }

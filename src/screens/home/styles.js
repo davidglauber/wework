@@ -10,6 +10,9 @@ import { Ionicons as Ionicon } from "@expo/vector-icons";
 import {SmallText} from '../../components/text/CustomText';
 
 
+import { TextInputMask } from 'react-native-masked-text';
+
+
 export const SafeBackground = styled.SafeAreaView`
     flex:1;
     background: ${props => props.theme.background} 
@@ -19,6 +22,19 @@ export const SafeBackgroundPublish = styled.SafeAreaView`
     flex:1;
     background: ${props => props.theme.backgroundPublish} 
 `;
+
+
+export const InputForm = styled.TextInput`
+    borderBottomWidth:0.5px;
+    color: ${props => props.theme.inversePallete};
+    borderBottomColor: ${props => props.theme.color}
+`
+
+export const InputFormMask = styled(TextInputMask)`
+    borderBottomWidth:0.5px;
+    color: ${props => props.theme.inversePallete};
+    borderBottomColor: ${props => props.theme.color}
+`
 
 export const ChooseOption = styled.TouchableOpacity`
     backgroundColor: ${props => props.theme.color};

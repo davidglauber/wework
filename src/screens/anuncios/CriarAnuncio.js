@@ -46,9 +46,9 @@ import { PulseIndicator } from 'react-native-indicators';
 // import components
 import { FontAwesome5 } from '@expo/vector-icons';
 
-import { TextInputMask } from 'react-native-masked-text';
+import { ItemContainer, ViewTopForm, SafeBackgroundPublish, InputFormMask, InputForm, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
 
-import { ItemContainer, ViewTopForm, SafeBackgroundPublish, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
+import { ThemeContext } from '../../../App';
 
 // import colors
 import Colors from '../../theme/colors';
@@ -94,12 +94,14 @@ const styles = StyleSheet.create({
 
   inputStyle: {
     borderBottomWidth:0.5,
-
   }
 });
 
 // OrdersB
 export default class CriarAnuncio extends Component {
+  static contextType = ThemeContext
+
+
   constructor(props) {
     super(props);
 
@@ -573,9 +575,8 @@ export default class CriarAnuncio extends Component {
         <SafeAreaView style={styles.topArea} />
         <SafeBackgroundPublish>
           <StatusBar
-            backgroundColor={'white'}
-            barStyle="dark-content"
-
+            backgroundColor={this.context.dark ? '#121212' : 'white'}
+            barStyle={this.context.dark ? "white-content" : "dark-content"}
           />
 
           <SafeViewPublish>
@@ -668,8 +669,7 @@ export default class CriarAnuncio extends Component {
                       { this.state.type == 'Autonomo' &&
                         <View>
                           <View style={styles.item}>
-                              <TextInput
-                                style={styles.inputStyle}
+                              <InputForm
                                 value={this.state.tituloAuto}
                                 onChangeText={text => this.onChangeTituloAuto(text)}
                                 maxLength={20}
@@ -678,19 +678,17 @@ export default class CriarAnuncio extends Component {
                           </View>
 
                           <TouchableOpacity onPress={() => this.openModalizeDescricao()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInput
+                              <InputForm
                                 value={this.state.descricaoAuto}
                                 onChangeText={text => this.onChangeDescricaoAuto(text)}
-                                style={styles.inputStyle}
                                 placeholder="Descrição do Anúncio                                                    "
                                 editable={false}
                               />
                           </TouchableOpacity>
 
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInputMask
+                              <InputFormMask
                                 type={'money'}
-                                style={styles.inputStyle}
                                 value={this.state.precoAuto}
                                 onChangeText={text => this.onChangePrecoAuto(text)}
                                 keyboardType={"number-pad"}
@@ -699,8 +697,7 @@ export default class CriarAnuncio extends Component {
                           </View>
 
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInput
-                                style={styles.inputStyle}
+                              <InputForm
                                 value={this.state.nomeAuto}
                                 onChangeText={text => this.onChangeNomeAuto(text)}
                                 autoCapitalize={'words'}
@@ -709,9 +706,8 @@ export default class CriarAnuncio extends Component {
                           </View>
 
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInputMask
+                              <InputFormMask
                                 type={'cel-phone'}
-                                style={styles.inputStyle} 
                                 keyboardType={"phone-pad"}
                                 maxLength={17}
                                 value={this.state.phoneAuto}
@@ -725,8 +721,7 @@ export default class CriarAnuncio extends Component {
                         {this.state.type == 'Estabelecimento' &&
                           <View>
                             <View style={styles.item}>
-                              <TextInput
-                                style={styles.inputStyle}
+                              <InputForm
                                 value={this.state.tituloEstab}
                                 onChangeText={text => this.onChangeTituloEstab(text)}
                                 maxLength={20}
@@ -735,8 +730,7 @@ export default class CriarAnuncio extends Component {
                             </View>
 
                             <TouchableOpacity onPress={() => this.openModalizeDescricaoEstab()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInput
-                                style={styles.inputStyle}
+                              <InputForm
                                 value={this.state.descricaoEstab}
                                 editable={false}
                                 onChangeText={text => this.onChangeDescricaoEstab(text)}
@@ -745,9 +739,8 @@ export default class CriarAnuncio extends Component {
                             </TouchableOpacity>
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInputMask
+                              <InputFormMask
                                 type={'money'}
-                                style={styles.inputStyle}
                                 value={this.state.precoEstab}
                                 onChangeText={text => this.onChangePrecoEstab(text)}
                                 keyboardType={"number-pad"}
@@ -756,9 +749,8 @@ export default class CriarAnuncio extends Component {
                             </View>
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInputMask
+                              <InputFormMask
                                 type={'cel-phone'}
-                                style={styles.inputStyle} 
                                 keyboardType={"phone-pad"}
                                 maxLength={17}
                                 value={this.state.phoneEstab}
@@ -768,8 +760,7 @@ export default class CriarAnuncio extends Component {
                             </View>
                           
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                                <TextInput
-                                  style={styles.inputStyle}
+                                <InputForm
                                   value={this.state.enderecoEstab}
                                   onChangeText={text => this.onChangeEnderecoEstab(text)}
                                   keyboardType={"default"}
@@ -788,7 +779,7 @@ export default class CriarAnuncio extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                      <TouchableOpacity onPress={() => this.setState({segunda: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <ChooseOption onPress={() => this.setState({segunda: false})} style={{marginLeft:15, marginTop:20}}/>
                                       <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
                                     </View>
                                 }
@@ -800,7 +791,7 @@ export default class CriarAnuncio extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                      <TouchableOpacity onPress={() => this.setState({terca: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <ChooseOption onPress={() => this.setState({terca: false})} style={{marginLeft:15, marginTop:20}}/>
                                       <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
                                     </View>
                                 }
@@ -813,7 +804,7 @@ export default class CriarAnuncio extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                      <TouchableOpacity onPress={() => this.setState({quarta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <ChooseOption onPress={() => this.setState({quarta: false})} style={{marginLeft:15, marginTop:20}}/>
                                       <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
                                     </View>
                                 }
@@ -828,7 +819,7 @@ export default class CriarAnuncio extends Component {
 
                                 :
                                   <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity onPress={() => this.setState({quinta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <ChooseOption onPress={() => this.setState({quinta: false})} style={{marginLeft:15, marginTop:20}}/>
                                     <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
                                   </View>
                                 }
@@ -840,7 +831,7 @@ export default class CriarAnuncio extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                        <TouchableOpacity onPress={() => this.setState({sexta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                        <ChooseOption onPress={() => this.setState({sexta: false})} style={{marginLeft:15, marginTop:20}}/>
                                         <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
                                     </View>
                                 }
@@ -853,7 +844,7 @@ export default class CriarAnuncio extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                        <TouchableOpacity onPress={() => this.setState({sabado: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                        <ChooseOption onPress={() => this.setState({sabado: false})} style={{marginLeft:15, marginTop:20}}/>
                                         <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
                                     </View>
                                 }
@@ -867,7 +858,7 @@ export default class CriarAnuncio extends Component {
                                   </View>
                                   :
                                   <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity onPress={() => this.setState({domingo: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <ChooseOption onPress={() => this.setState({domingo: false})} style={{marginLeft:15, marginTop:20}}/>
                                     <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Dom</Text>
                                   </View>
                                 }

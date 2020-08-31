@@ -48,6 +48,12 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { TextInputMask } from 'react-native-masked-text';
 
+
+import { ItemContainer, ViewTopForm, SafeBackgroundPublish, IconResponsive, PublishTouchable, CategoryAndSub, TextDays, TitleChangeColor, InputFormMask, InputForm, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
+
+import { ThemeContext } from '../../../App';
+
+
 // import colors
 import Colors from '../../theme/colors';
 
@@ -98,6 +104,8 @@ const styles = StyleSheet.create({
 
 // OrdersB
 export default class TelaCriarCartaoVisita extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
 
@@ -549,18 +557,14 @@ export default class TelaCriarCartaoVisita extends Component {
     return (
       <Fragment>
         <SafeAreaView style={styles.topArea} />
-        <SafeAreaView style={styles.container}>
+        <SafeBackgroundPublish>
           <StatusBar
-            backgroundColor={'white'}
-            barStyle="dark-content"
-
+            backgroundColor={this.context.dark ? '#121212' : 'white'}
+            barStyle={this.context.dark ? "white-content" : "dark-content"}
           />
 
-          <View style={styles.container}>
-            <View style={{ marginVertical: 4,
-            marginHorizontal: 12,
-            borderRadius: 16,
-            backgroundColor: Colors.background}}>
+          <SafeViewPublish>
+            <ViewTopForm>
               
             <View style={{ width: Layout.SCREEN_WIDTH - 2 * 12}}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',padding: 16}}>
@@ -574,8 +578,8 @@ export default class TelaCriarCartaoVisita extends Component {
                       >
                       <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
                         <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
-                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Enviando o Seu Cartão para a Análise</Text>
-                          <PulseIndicator color='#00b970'/>
+                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Criando o seu Cartão</Text>
+                          <PulseIndicator color='#DAA520'/>
                         </View>
                       </View>
                     </Modal>
@@ -583,18 +587,17 @@ export default class TelaCriarCartaoVisita extends Component {
                         <View style={{flexDirection:'row', alignItems:'center'}}>
                           { this.state.type == 'Estabelecimento' ?
                             <View style={{flexDirection:'row'}}>
-                                <TouchableOpacity style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30}}/>
+                                <ChooseOption/>
                                 <TouchableOpacity>
-                                    <Subtitle2
-                                      style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                    <Subtitle2Publish
+                                      style={{fontWeight: 'bold'}}>Estabelecimento</Subtitle2Publish>
                                 </TouchableOpacity>
                             </View>
                           :
                             <View style={{flexDirection:'row'}}>
                                 <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30}}/>
                                   <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})}>
-                                      <Subtitle2
-                                        style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Estabelecimento</Subtitle2>
+                                      <Subtitle2Publish>Estabelecimento</Subtitle2Publish>
                                   </TouchableOpacity>
                             </View>                         
                           }
@@ -618,18 +621,17 @@ export default class TelaCriarCartaoVisita extends Component {
 
                      {this.state.type == 'Autonomo' ?     
                       <View style={{flexDirection:'row', padding: 16}}>
-                              <TouchableOpacity  style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30}}/>
+                              <ChooseOption/>
                                   <TouchableOpacity>
-                                      <Subtitle2
-                                        style={{marginLeft: 5, paddingBottom: 2, fontWeight: 'bold', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                                      <Subtitle2Publish
+                                        style={{fontWeight: 'bold'}}>Autônomo</Subtitle2Publish>
                                   </TouchableOpacity>
                       </View>
                       :
                       <View style={{flexDirection:'row', padding: 16}}>
                               <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30}}/>
                               <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})}>
-                                  <Subtitle2
-                                      style={{marginLeft: 5, paddingBottom: 2, fontWeight: '100', color: Colors.primaryColorDark, textAlign: 'left'}}>Autônomo</Subtitle2>
+                                  <Subtitle2Publish>Autônomo</Subtitle2Publish>
                               </TouchableOpacity>
                       </View>
                      }
@@ -639,20 +641,19 @@ export default class TelaCriarCartaoVisita extends Component {
 
                     {/*Divisor estiloso*/}
                     <View style={{ flex: 1,  flexDirection: 'row',  justifyContent: 'space-between',alignItems: 'center'}}>
-                      <View style={[styles.circleMask, styles.leftCircle]} />
+                      <ViewCircle style={styles.leftCircle} />
                       <View style={styles.dividerLine} />
-                      <View style={[styles.circleMask, styles.rightCircle]} />
+                      <ViewCircle style={styles.rightCircle} />
                     </View>
 
 
 
-                    <View style={styles.itemContainer}>
+                    <ItemContainer>
 
                       { this.state.type == 'Autonomo' &&
                         <View>
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInput
-                                style={styles.inputStyle}
+                              <InputForm
                                 value={this.state.nomeAuto}
                                 onChangeText={text => this.onChangeNomeAuto(text)}
                                 autoCapitalize={'words'}
@@ -661,19 +662,17 @@ export default class TelaCriarCartaoVisita extends Component {
                           </View>
 
                           <TouchableOpacity onPress={() => this.openModalizeDescricao()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInput
+                              <InputForm
                                 editable={false}
                                 value={this.state.descricaoAuto}
                                 onChangeText={text => this.onChangeDescricaoAuto(text)}
-                                style={styles.inputStyle}
                                 placeholder="Dê a melhor descrição das suas habilidades, detalhe-as                                                    "
                               />
                           </TouchableOpacity>
 
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInputMask
+                              <InputFormMask
                                 type={'cel-phone'}
-                                style={styles.inputStyle} 
                                 keyboardType={"phone-pad"}
                                 maxLength={17}
                                 value={this.state.phoneAuto}
@@ -687,8 +686,7 @@ export default class TelaCriarCartaoVisita extends Component {
                         {this.state.type == 'Estabelecimento' &&
                           <View>
                             <View style={styles.item}>
-                              <TextInput
-                                style={styles.inputStyle}
+                              <InputForm
                                 value={this.state.tituloEstab}
                                 onChangeText={text => this.onChangeTituloEstab(text)}
                                 maxLength={20}
@@ -697,9 +695,8 @@ export default class TelaCriarCartaoVisita extends Component {
                             </View>
 
                             <TouchableOpacity onPress={() => this.openModalizeDescricaoEstab()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInput
+                              <InputForm
                                 editable={false}
-                                style={styles.inputStyle}
                                 value={this.state.descricaoEstab}
                                 onChangeText={text => this.onChangeDescricaoEstab(text)}
                                 placeholder="Dê a melhor descrição do seu negócio                                                   "
@@ -707,9 +704,8 @@ export default class TelaCriarCartaoVisita extends Component {
                             </TouchableOpacity>
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                              <TextInputMask
+                              <InputFormMask
                                 type={'cel-phone'}
-                                style={styles.inputStyle} 
                                 keyboardType={"phone-pad"}
                                 maxLength={17}
                                 value={this.state.phoneEstab}
@@ -719,8 +715,7 @@ export default class TelaCriarCartaoVisita extends Component {
                             </View>
                           
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
-                                <TextInput
-                                  style={styles.inputStyle}
+                                <InputForm
                                   value={this.state.enderecoEstab}
                                   onChangeText={text => this.onChangeEnderecoEstab(text)}
                                   keyboardType={"default"}
@@ -735,24 +730,24 @@ export default class TelaCriarCartaoVisita extends Component {
                                 { this.state.segunda == false ?
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({segunda: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
+                                      <TextDays>Seg</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({segunda: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
+                                      <TextDays>Seg</TextDays>
                                     </View>
                                 }
 
                                 { this.state.terca == false ?
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({terca: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
+                                      <TextDays>Ter</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({terca: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
+                                      <TextDays>Ter</TextDays>
                                     </View>
                                 }
 
@@ -760,12 +755,12 @@ export default class TelaCriarCartaoVisita extends Component {
                                 { this.state.quarta == false ?
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({quarta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
+                                      <TextDays>Qua</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({quarta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
+                                      <TextDays>Qua</TextDays>
                                     </View>
                                 }
                               </View>
@@ -774,25 +769,25 @@ export default class TelaCriarCartaoVisita extends Component {
                                 { this.state.quinta == false ?
                                   <View style={{flexDirection:'row'}}>
                                     <TouchableOpacity onPress={() => this.setState({quinta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
+                                    <TextDays>Qui</TextDays>
                                   </View>
 
                                 :
                                   <View style={{flexDirection:'row'}}>
                                     <TouchableOpacity onPress={() => this.setState({quinta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
+                                    <TextDays>Qui</TextDays>
                                   </View>
                                 }
 
                                 { this.state.sexta == false ?
                                     <View style={{flexDirection:'row'}}>
                                         <TouchableOpacity onPress={() => this.setState({sexta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
+                                        <TextDays>Sex</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                         <TouchableOpacity onPress={() => this.setState({sexta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
+                                        <TextDays>Sex</TextDays>
                                     </View>
                                 }
 
@@ -800,12 +795,12 @@ export default class TelaCriarCartaoVisita extends Component {
                                 { this.state.sabado == false ?
                                     <View style={{flexDirection:'row'}}>
                                         <TouchableOpacity onPress={() => this.setState({sabado: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
+                                        <TextDays>Sáb</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                         <TouchableOpacity onPress={() => this.setState({sabado: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
+                                        <TextDays>Sáb</TextDays>
                                     </View>
                                 }
                               </View>
@@ -814,22 +809,22 @@ export default class TelaCriarCartaoVisita extends Component {
                                 { this.state.domingo == false ?
                                   <View style={{flexDirection:'row'}}>
                                     <TouchableOpacity onPress={() => this.setState({domingo: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Dom</Text>
+                                    <TextDays>Dom</TextDays>
                                   </View>
                                   :
                                   <View style={{flexDirection:'row'}}>
                                     <TouchableOpacity onPress={() => this.setState({domingo: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Dom</Text>
+                                    <TextDays>Dom</TextDays>
                                   </View>
                                 }
                             </View>
 
                             <View style={{flexDirection:'row'}}>
                               <View>
-                                <Text style={{color:Colors.primaryColorDark,  fontWeight:'bold', paddingLeft: 15, marginTop:20}}>Horário de Abertura</Text>
+                                <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 15, marginTop:20}}>Horário de Abertura</TitleChangeColor>
                                   <View style={{marginLeft:14, width: 130, height:30}}>
                                       <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeAbertura()}> 
-                                        <FontAwesome5 name="clock" size={24} color={'#9A9A9A'}/>
+                                        <IconResponsive name="clock" size={24}/>
                                         {this.state.horarioOpen == '' ? 
                                           <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>Abertura</Text> 
                                         : <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>{this.state.horarioOpen}</Text> 
@@ -839,10 +834,10 @@ export default class TelaCriarCartaoVisita extends Component {
                               </View>
 
                                 <View>
-                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'bold', paddingLeft: 35, marginTop:20}}>Horário de Fechamento</Text>
+                                  <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 35, marginTop:20}}>Horário de Fechamento</TitleChangeColor>
                                     <View style={{marginLeft:44, width: 130, height:30}}>
                                         <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeFechamento()}> 
-                                          <FontAwesome5 name="stopwatch" size={24} color={'#9A9A9A'}/>
+                                          <IconResponsive name="stopwatch" size={24}/>
                                           {this.state.horarioClose == '' ?
                                             <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>Fechamento</Text>
                                           : <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>{this.state.horarioClose}</Text>
@@ -866,36 +861,36 @@ export default class TelaCriarCartaoVisita extends Component {
                               <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
                                 {this.state.subcategoria == '' ?
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                                    <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
-                                    <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>
+                                    <IconResponsive name="align-left" size={24}/>
+                                    <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Categoria</TitleChangeColor>
                                 </View>
                                 :
                                 <View style={{flexDirection:'row', alignItems:'center', marginLeft:50}}>
-                                    <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
-                                    <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Selecionada ;)</Text>
+                                    <IconResponsive name="align-left" size={24}/>
+                                    <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Selecionada ;)</TitleChangeColor>
                                 </View>
                                 }
                               </TouchableOpacity>
                             </View>
                             
                             {this.state.categoria !== '' ?
-                              <TouchableOpacity onPress={() => this.uploadFormToFirebase()} style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30, marginRight:50}}>
+                              <PublishTouchable onPress={() => this.uploadFormToFirebase()} style={{marginRight:50}}>
                                 <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
                                   Publicar
                                 </Text>
-                              </TouchableOpacity>
+                              </PublishTouchable>
                               :
-                              <TouchableOpacity onPress={() => this.uploadFormToFirebase()} style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
+                              <PublishTouchable onPress={() => this.uploadFormToFirebase()}>
                                 <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
                                   Publicar
                                 </Text>
-                              </TouchableOpacity>
+                              </PublishTouchable>
                             }
                         </View>
-                    </View>
+                    </ItemContainer>
 
-            </View>
-          </View>
+            </ViewTopForm>
+          </SafeViewPublish>
 
           {/*Modalize da categoria*/}
           <Modalize
@@ -907,7 +902,7 @@ export default class TelaCriarCartaoVisita extends Component {
               {categorias.map(l => (
                 <View>
                   <TouchableOpacity key={this.makeid(10)} onPress={() => this.getCategory(l.id, l.title)}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
+                      <CategoryAndSub>{l.title}</CategoryAndSub>
                   </TouchableOpacity>
                 </View>
               ))}
@@ -924,7 +919,7 @@ export default class TelaCriarCartaoVisita extends Component {
               {this.state.subcategorias.map(l => (
                 <View>
                   <TouchableOpacity key={this.makeid(10)} onPress={() => this.getSubCategory(l.title)}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
+                      <CategoryAndSub>{l.title}</CategoryAndSub>
                   </TouchableOpacity>
                 </View>
               ))}
@@ -1005,99 +1000,99 @@ export default class TelaCriarCartaoVisita extends Component {
                 <View>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('1:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>1:00</Text>
+                      <CategoryAndSub>1:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('2:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>2:00</Text>
+                      <CategoryAndSub>2:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('3:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>3:00</Text>
+                      <CategoryAndSub>3:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('4:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>4:00</Text>
+                      <CategoryAndSub>4:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('5:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>5:00</Text>
+                      <CategoryAndSub>5:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('6:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>6:00</Text>
+                      <CategoryAndSub>6:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('7:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>7:00</Text>
+                      <CategoryAndSub>7:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('8:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>8:00</Text>
+                      <CategoryAndSub>8:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('9:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>9:00</Text>
+                      <CategoryAndSub>9:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('10:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>10:00</Text>
+                      <CategoryAndSub>10:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('11:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>11:00</Text>
+                      <CategoryAndSub>11:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('12:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>12:00</Text>
+                      <CategoryAndSub>12:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('13:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>13:00</Text>
+                      <CategoryAndSub>13:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('14:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>14:00</Text>
+                      <CategoryAndSub>14:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('15:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>15:00</Text>
+                      <CategoryAndSub>15:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('16:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>16:00</Text>
+                      <CategoryAndSub>16:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('17:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>17:00</Text>
+                      <CategoryAndSub>17:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('18:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>18:00</Text>
+                      <CategoryAndSub>18:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('19:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>19:00</Text>
+                      <CategoryAndSub>19:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('20:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>20:00</Text>
+                      <CategoryAndSub>20:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('21:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>21:00</Text>
+                      <CategoryAndSub>21:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('22:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>22:00</Text>
+                      <CategoryAndSub>22:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('23:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>23:00</Text>
+                      <CategoryAndSub>23:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('00:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>00:00</Text>
+                      <CategoryAndSub>00:00</CategoryAndSub>
                   </TouchableOpacity>
                 </View>
             </View>
@@ -1116,104 +1111,104 @@ export default class TelaCriarCartaoVisita extends Component {
                 <View>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('1:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>1:00</Text>
+                      <CategoryAndSub>1:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('2:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>2:00</Text>
+                      <CategoryAndSub>2:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('3:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>3:00</Text>
+                      <CategoryAndSub>3:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('4:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>4:00</Text>
+                      <CategoryAndSub>4:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('5:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>5:00</Text>
+                      <CategoryAndSub>5:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('6:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>6:00</Text>
+                      <CategoryAndSub>6:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('7:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>7:00</Text>
+                      <CategoryAndSub>7:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('8:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>8:00</Text>
+                      <CategoryAndSub>8:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('9:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>9:00</Text>
+                      <CategoryAndSub>9:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('10:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>10:00</Text>
+                      <CategoryAndSub>10:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('11:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>11:00</Text>
+                      <CategoryAndSub>11:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('12:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>12:00</Text>
+                      <CategoryAndSub>12:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('13:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>13:00</Text>
+                      <CategoryAndSub>13:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('14:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>14:00</Text>
+                      <CategoryAndSub>14:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('15:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>15:00</Text>
+                      <CategoryAndSub>15:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('16:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>16:00</Text>
+                      <CategoryAndSub>16:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('17:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>17:00</Text>
+                      <CategoryAndSub>17:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('18:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>18:00</Text>
+                      <CategoryAndSub>18:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('19:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>19:00</Text>
+                      <CategoryAndSub>19:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('20:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>20:00</Text>
+                      <CategoryAndSub>20:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('21:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>21:00</Text>
+                      <CategoryAndSub>21:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('22:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>22:00</Text>
+                      <CategoryAndSub>22:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('23:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>23:00</Text>
+                      <CategoryAndSub>23:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('00:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>00:00</Text>
+                      <CategoryAndSub>00:00</CategoryAndSub>
                   </TouchableOpacity>
                 </View>
             </View>
           </Modalize>
-        </SafeAreaView>
+        </SafeBackgroundPublish>
       </Fragment>
     );
   }

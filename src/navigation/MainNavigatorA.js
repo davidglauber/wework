@@ -457,7 +457,9 @@ function MainNavigatorA({isDarkEnabled}) {
           name="TelaCriarCartaoVisita"
           component={TelaCriarCartaoVisita}
           options={{
-            title: 'Criar Cartão de Visita'
+            title: 'Criar Cartão de Visita',
+            headerStyle: { backgroundColor: dark ? '#121212' : 'white' },
+            headerTitleStyle: { color: dark ? '#FFD700' : 'black' },
           }}
         />
 

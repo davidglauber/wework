@@ -6,7 +6,7 @@
  */
 
 // import dependencies
-import React from 'react';
+import React ,{useContext} from 'react';
 import {Platform} from 'react-native';
 import {NavigationContainer, DarkTheme, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -113,7 +113,9 @@ import AboutUs from '../screens/about/AboutUsA';
 import Colors from '../theme/colors';
 
 import Filtro from '../screens/search/Filtro';
-import FilterCartao from '../screens/search/FilterCartao'
+import FilterCartao from '../screens/search/FilterCartao';
+
+import { ThemeContext } from '../../App';
 
 // MainNavigatorA Config
 const SAVE_ICON = Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark';
@@ -125,6 +127,9 @@ const Stack = createStackNavigator();
 
 // MainNavigatorA
 function MainNavigatorA({isDarkEnabled}) {
+  
+  const {dark, setDark} = useContext(ThemeContext)
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -440,7 +445,9 @@ function MainNavigatorA({isDarkEnabled}) {
           name="Orders"
           component={Orders}
           options={{
-            title: 'Criar Anúncio'
+            title: 'Criar Anúncio',
+            headerStyle: { backgroundColor: dark ? '#121212' : 'white' },
+            headerTitleStyle: { color: dark ? '#FFD700' : 'black' },
           }}
         />
 

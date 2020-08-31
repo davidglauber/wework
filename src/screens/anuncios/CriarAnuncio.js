@@ -46,7 +46,7 @@ import { PulseIndicator } from 'react-native-indicators';
 // import components
 import { FontAwesome5 } from '@expo/vector-icons';
 
-import { ItemContainer, ViewTopForm, SafeBackgroundPublish, InputFormMask, InputForm, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
+import { ItemContainer, ViewTopForm, SafeBackgroundPublish, IconResponsive, PublishTouchable, CategoryAndSub, TextDays, TitleChangeColor, InputFormMask, InputForm, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
 
 import { ThemeContext } from '../../../App';
 
@@ -775,24 +775,24 @@ export default class CriarAnuncio extends Component {
                                 { this.state.segunda == false ?
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({segunda: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
+                                      <TextDays>Seg</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                       <ChooseOption onPress={() => this.setState({segunda: false})} style={{marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Seg</Text>
+                                      <TextDays>Seg</TextDays>
                                     </View>
                                 }
 
                                 { this.state.terca == false ?
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({terca: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
+                                      <TextDays>Ter</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                       <ChooseOption onPress={() => this.setState({terca: false})} style={{marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Ter</Text>
+                                      <TextDays>Ter</TextDays>
                                     </View>
                                 }
 
@@ -800,12 +800,12 @@ export default class CriarAnuncio extends Component {
                                 { this.state.quarta == false ?
                                     <View style={{flexDirection:'row'}}>
                                       <TouchableOpacity onPress={() => this.setState({quarta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
+                                      <TextDays>Qua</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                       <ChooseOption onPress={() => this.setState({quarta: false})} style={{marginLeft:15, marginTop:20}}/>
-                                      <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qua</Text>
+                                      <TextDays>Qua</TextDays>
                                     </View>
                                 }
                               </View>
@@ -814,25 +814,25 @@ export default class CriarAnuncio extends Component {
                                 { this.state.quinta == false ?
                                   <View style={{flexDirection:'row'}}>
                                     <TouchableOpacity onPress={() => this.setState({quinta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
+                                    <TextDays>Qui</TextDays>
                                   </View>
 
                                 :
                                   <View style={{flexDirection:'row'}}>
                                     <ChooseOption onPress={() => this.setState({quinta: false})} style={{marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Qui</Text>
+                                    <TextDays>Qui</TextDays>
                                   </View>
                                 }
 
                                 { this.state.sexta == false ?
                                     <View style={{flexDirection:'row'}}>
                                         <TouchableOpacity onPress={() => this.setState({sexta: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
+                                        <TextDays>Sex</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                         <ChooseOption onPress={() => this.setState({sexta: false})} style={{marginLeft:15, marginTop:20}}/>
-                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sex</Text>
+                                        <TextDays>Sex</TextDays>
                                     </View>
                                 }
 
@@ -840,12 +840,12 @@ export default class CriarAnuncio extends Component {
                                 { this.state.sabado == false ?
                                     <View style={{flexDirection:'row'}}>
                                         <TouchableOpacity onPress={() => this.setState({sabado: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
+                                        <TextDays>Sáb</TextDays>
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
                                         <ChooseOption onPress={() => this.setState({sabado: false})} style={{marginLeft:15, marginTop:20}}/>
-                                        <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Sáb</Text>
+                                        <TextDays>Sáb</TextDays>
                                     </View>
                                 }
                               </View>
@@ -854,22 +854,22 @@ export default class CriarAnuncio extends Component {
                                 { this.state.domingo == false ?
                                   <View style={{flexDirection:'row'}}>
                                     <TouchableOpacity onPress={() => this.setState({domingo: true})} style={{backgroundColor:'#E3E3E3', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Dom</Text>
+                                    <TextDays>Dom</TextDays>
                                   </View>
                                   :
                                   <View style={{flexDirection:'row'}}>
                                     <ChooseOption onPress={() => this.setState({domingo: false})} style={{marginLeft:15, marginTop:20}}/>
-                                    <Text style={{color:Colors.primaryColorDark,  fontWeight:'800', paddingTop:20, paddingLeft: 5}}>Dom</Text>
+                                    <TextDays>Dom</TextDays>
                                   </View>
                                 }
                             </View>
 
                             <View style={{flexDirection:'row'}}>
                               <View>
-                                <Text style={{color:Colors.primaryColorDark,  fontWeight:'bold', paddingLeft: 15, marginTop:20}}>Horário de Abertura</Text>
+                                  <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 15, marginTop:20}}>Horário de Abertura</TitleChangeColor>
                                   <View style={{marginLeft:14, width: 130, height:30}}>
                                       <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeAbertura()}> 
-                                        <FontAwesome5 name="clock" size={24} color={'#9A9A9A'}/>
+                                        <IconResponsive name="clock" size={24}/>
                                         {this.state.horarioOpen == '' ? 
                                           <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>Abertura</Text> 
                                         : <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>{this.state.horarioOpen}</Text> 
@@ -879,10 +879,10 @@ export default class CriarAnuncio extends Component {
                               </View>
 
                                 <View>
-                                  <Text style={{color:Colors.primaryColorDark,  fontWeight:'bold', paddingLeft: 35, marginTop:20}}>Horário de Fechamento</Text>
+                                  <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 35, marginTop:20}}>Horário de Fechamento</TitleChangeColor>
                                     <View style={{marginLeft:44, width: 130, height:30}}>
                                         <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeFechamento()}> 
-                                          <FontAwesome5 name="stopwatch" size={24} color={'#9A9A9A'}/>
+                                          <IconResponsive name="stopwatch" size={24}/>
                                           {this.state.horarioClose == '' ?
                                             <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>Fechamento</Text>
                                           : <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>{this.state.horarioClose}</Text>
@@ -906,30 +906,30 @@ export default class CriarAnuncio extends Component {
                               <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
                                 {this.state.subcategoria == '' ?
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                                    <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
-                                    <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Categoria</Text>
+                                    <IconResponsive name="align-left" size={24}/>
+                                    <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Categoria</TitleChangeColor>
                                 </View>
                                 :
                                 <View style={{flexDirection:'row', alignItems:'center', marginLeft:50}}>
-                                    <FontAwesome5 name="align-left" size={24} color={'#70AD66'}/>
-                                    <Text style={{ marginLeft:10, fontWeight:'bold', color:'#70AD66'}}>Selecionada ;)</Text>
+                                    <IconResponsive name="align-left" size={24}/>
+                                    <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Selecionada ;)</TitleChangeColor>
                                 </View>
                                 }
                               </TouchableOpacity>
                             </View>
                             
                             {this.state.categoria !== '' ?
-                              <TouchableOpacity onPress={() => this.uploadFormToFirebase()} style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30, marginRight:50}}>
+                              <PublishTouchable onPress={() => this.uploadFormToFirebase()} style={{marginRight:50}}>
                                 <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
                                   Publicar
                                 </Text>
-                              </TouchableOpacity>
+                              </PublishTouchable>
                               :
-                              <TouchableOpacity onPress={() => this.uploadFormToFirebase()} style={{backgroundColor:'#70AD66', width:100, height:30, borderRadius:30}}>
+                              <PublishTouchable onPress={() => this.uploadFormToFirebase()}>
                                 <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
                                   Publicar
                                 </Text>
-                              </TouchableOpacity>
+                              </PublishTouchable>
                             }
                         </View>
                     </ItemContainer>
@@ -947,7 +947,7 @@ export default class CriarAnuncio extends Component {
               {categorias.map(l => (
                 <View>
                   <TouchableOpacity key={this.makeid(10)} onPress={() => this.getCategory(l.id, l.title)}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
+                      <CategoryAndSub>{l.title}</CategoryAndSub>
                   </TouchableOpacity>
                 </View>
               ))}
@@ -966,7 +966,7 @@ export default class CriarAnuncio extends Component {
               {this.state.subcategorias.map(l => (
                 <View>
                   <TouchableOpacity key={this.makeid(10)} onPress={() => this.getSubCategory(l.title)}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>{l.title}</Text>
+                      <CategoryAndSub>{l.title}</CategoryAndSub>
                   </TouchableOpacity>
                 </View>
               ))}
@@ -1047,99 +1047,99 @@ export default class CriarAnuncio extends Component {
                 <View>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('1:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>1:00</Text>
+                      <CategoryAndSub>1:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('2:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>2:00</Text>
+                      <CategoryAndSub>2:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('3:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>3:00</Text>
+                      <CategoryAndSub>3:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('4:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>4:00</Text>
+                      <CategoryAndSub>4:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('5:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>5:00</Text>
+                      <CategoryAndSub>5:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('6:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>6:00</Text>
+                      <CategoryAndSub>6:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('7:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>7:00</Text>
+                      <CategoryAndSub>7:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('8:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>8:00</Text>
+                      <CategoryAndSub>8:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('9:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>9:00</Text>
+                      <CategoryAndSub>9:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('10:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>10:00</Text>
+                      <CategoryAndSub>10:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('11:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>11:00</Text>
+                      <CategoryAndSub>11:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('12:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>12:00</Text>
+                      <CategoryAndSub>12:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('13:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>13:00</Text>
+                      <CategoryAndSub>13:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('14:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>14:00</Text>
+                      <CategoryAndSub>14:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('15:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>15:00</Text>
+                      <CategoryAndSub>15:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('16:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>16:00</Text>
+                      <CategoryAndSub>16:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('17:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>17:00</Text>
+                      <CategoryAndSub>17:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('18:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>18:00</Text>
+                      <CategoryAndSub>18:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('19:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>19:00</Text>
+                      <CategoryAndSub>19:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('20:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>20:00</Text>
+                      <CategoryAndSub>20:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('21:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>21:00</Text>
+                      <CategoryAndSub>21:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('22:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>22:00</Text>
+                      <CategoryAndSub>22:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('23:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>23:00</Text>
+                      <CategoryAndSub>23:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioOpen('00:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>00:00</Text>
+                      <CategoryAndSub>00:00</CategoryAndSub>
                   </TouchableOpacity>
                 </View>
             </View>
@@ -1158,99 +1158,99 @@ export default class CriarAnuncio extends Component {
                 <View>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('1:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>1:00</Text>
+                      <CategoryAndSub>1:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('2:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>2:00</Text>
+                      <CategoryAndSub>2:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('3:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>3:00</Text>
+                      <CategoryAndSub>3:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('4:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>4:00</Text>
+                      <CategoryAndSub>4:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('5:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>5:00</Text>
+                      <CategoryAndSub>5:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('6:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>6:00</Text>
+                      <CategoryAndSub>6:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('7:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>7:00</Text>
+                      <CategoryAndSub>7:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('8:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>8:00</Text>
+                      <CategoryAndSub>8:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('9:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>9:00</Text>
+                      <CategoryAndSub>9:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('10:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>10:00</Text>
+                      <CategoryAndSub>10:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('11:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>11:00</Text>
+                      <CategoryAndSub>11:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('12:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>12:00</Text>
+                      <CategoryAndSub>12:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('13:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>13:00</Text>
+                      <CategoryAndSub>13:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('14:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>14:00</Text>
+                      <CategoryAndSub>14:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('15:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>15:00</Text>
+                      <CategoryAndSub>15:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('16:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>16:00</Text>
+                      <CategoryAndSub>16:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('17:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>17:00</Text>
+                      <CategoryAndSub>17:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('18:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>18:00</Text>
+                      <CategoryAndSub>18:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('19:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>19:00</Text>
+                      <CategoryAndSub>19:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('20:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>20:00</Text>
+                      <CategoryAndSub>20:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('21:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>21:00</Text>
+                      <CategoryAndSub>21:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('22:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>22:00</Text>
+                      <CategoryAndSub>22:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('23:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>23:00</Text>
+                      <CategoryAndSub>23:00</CategoryAndSub>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => this.getHorarioClose('00:00')}>
-                      <Text style={{fontWeight:'700', color:'#70AD66', fontSize:20, marginLeft:17, marginTop:10, marginBottom:15}}>00:00</Text>
+                      <CategoryAndSub>00:00</CategoryAndSub>
                   </TouchableOpacity>
                 </View>
             </View>

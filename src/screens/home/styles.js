@@ -23,6 +23,12 @@ export const SafeBackgroundPublish = styled.SafeAreaView`
     background: ${props => props.theme.backgroundPublish} 
 `;
 
+export const TextDays = styled.Text`
+    color: ${props => props.theme.color}; 
+    fontWeight: 800; 
+    paddingTop:20px; 
+    paddingLeft: 5px
+`
 
 export const InputForm = styled.TextInput`
     borderBottomWidth:0.5px;
@@ -48,6 +54,24 @@ export const Subtitle2Publish = styled(Subtitle2)`
     fontWeight: 100;
     color: ${props => props.theme.color}; 
     textAlign: left
+`
+export const TitleChangeColor = styled.Text`
+    color:${props => props.theme.color}
+`
+export const PublishTouchable = styled.TouchableOpacity`
+    backgroundColor: ${props => props.theme.inverseContainerCall};
+    width:100px; 
+    height:30px; 
+    borderRadius:30px
+`
+
+export const CategoryAndSub = styled.Text`
+    fontWeight: 700; 
+    color: ${props => props.theme.color}; 
+    fontSize:20px; 
+    marginLeft:17px; 
+    marginTop:10px; 
+    marginBottom:15px
 `
 
 export const SafeViewPublish = styled.View`

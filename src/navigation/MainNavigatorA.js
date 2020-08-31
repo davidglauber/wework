@@ -306,7 +306,9 @@ function MainNavigatorA({isDarkEnabled}) {
           name="EditarAnuncio"
           component={EditarAnuncio}
           options={{
-            title: 'Editar Anúncio'
+            title: 'Editar Anúncio',
+            headerStyle: { backgroundColor: dark ? '#121212' : 'white' },
+            headerTitleStyle: { color: dark ? '#FFD700' : 'black' },
           }}
         />
 

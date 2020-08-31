@@ -464,7 +464,7 @@ export default class CriarAnuncio extends Component {
               descriptionEstab: e.state.descricaoEstab,
               valueServiceEstab: e.state.precoEstab,
               type: 'Estabelecimento',
-              verifiedPublish: false,
+              verifiedPublish: true,
               phoneNumberEstab: e.state.phoneEstab,
               localEstab: e.state.enderecoEstab,
               categoryEstab: e.state.categoria,
@@ -484,7 +484,7 @@ export default class CriarAnuncio extends Component {
               descriptionEstab: e.state.descricaoEstab,
               valueServiceEstab: e.state.precoEstab,
               type: 'Estabelecimento',
-              verifiedPublish: false,
+              verifiedPublish: true,
               phoneNumberEstab: e.state.phoneEstab,
               localEstab: e.state.enderecoEstab,
               categoryEstab: e.state.categoria,
@@ -525,7 +525,7 @@ export default class CriarAnuncio extends Component {
               descriptionAuto: e.state.descricaoAuto,
               valueServiceAuto: e.state.precoAuto,
               type: 'Autonomo',
-              verifiedPublish: false,
+              verifiedPublish: true,
               phoneNumberAuto: e.state.phoneAuto,
               categoryAuto: e.state.categoria,
               subcategoryAuto: e.state.subcategoria,
@@ -542,7 +542,7 @@ export default class CriarAnuncio extends Component {
               descriptionAuto: e.state.descricaoAuto,
               valueServiceAuto: e.state.precoAuto,
               type: 'Autonomo',
-              verifiedPublish: false,
+              verifiedPublish: true,
               phoneNumberAuto: e.state.phoneAuto,
               categoryAuto: e.state.categoria,
               subcategoryAuto: e.state.subcategoria,
@@ -594,8 +594,8 @@ export default class CriarAnuncio extends Component {
                       >
                       <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
                         <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
-                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Enviando o Seu Anúncio para a Análise</Text>
-                          <PulseIndicator color='#00b970'/>
+                          <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Criando o seu Anúncio</Text>
+                          <PulseIndicator color='#DAA520'/>
                         </View>
                       </View>
                     </Modal>
@@ -993,7 +993,7 @@ export default class CriarAnuncio extends Component {
                       <View style={{alignItems:'center'}}>
                         <TouchableOpacity
                           onPress={() => this.closeDescriptionModal()}
-                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
                         >
                           <FontAwesome5 name="check-circle" size={24} color={'white'}/>
                         </TouchableOpacity>
@@ -1025,7 +1025,7 @@ export default class CriarAnuncio extends Component {
                       <View style={{alignItems:'center'}}>
                         <TouchableOpacity
                           onPress={() => this.closeDescriptionEstabModal()}
-                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
                         >
                           <FontAwesome5 name="check-circle" size={24} color={'white'}/>
                         </TouchableOpacity>

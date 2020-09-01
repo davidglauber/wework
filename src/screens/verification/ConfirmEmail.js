@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 });
 
 // VerificationEMAIL
-export default class EmailVerificacao extends Component {
+export default class ConfirmEmail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -131,16 +131,10 @@ export default class EmailVerificacao extends Component {
     
 
     await firebase.auth().createUserWithEmailAndPassword(getEmail, getSenha).then((value) => {
-
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            try {
-              firebase.auth().currentUser.sendEmailVerification()
-              alert('confirme o codigo enviado')
-            } catch {
-              alert('ocorreu um erro ao enviar o email')
-            }
-        } else { return null }
+      firebase.auth().currentUser.sendEmailVerification().then(() => {
+        alert('confirme o codigo enviado')
+      }).catch((error) => {
+        alert('ocorreu um erro ao enviar o email')
       })
       
     }).catch((error) => {

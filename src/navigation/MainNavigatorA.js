@@ -47,6 +47,7 @@ import TermsConditions from '../screens/terms/TermsConditionsA';
 
 // import HomeNavigator
 import HomeNavigator from './HomeNavigatorA';
+import HomeNavigatorC from './HomeNavigatorC';
 
 //screen of filter
 import HomeFiltro from '../screens/home/HomeFiltro';
@@ -114,6 +115,8 @@ import Colors from '../theme/colors';
 
 import Filtro from '../screens/search/Filtro';
 import FilterCartao from '../screens/search/FilterCartao';
+
+import ConfirmEmail from '../screens/verification/ConfirmEmail';
 
 import { ThemeContext } from '../../App';
 
@@ -195,7 +198,14 @@ function MainNavigatorA({isDarkEnabled}) {
             component={EmailVerificacao}
             options={{headerShown: false}}
           />
+
+          <Stack.Screen
+            name="ConfirmEmail"
+            component={ConfirmEmail}
+            options={{headerShown: false}}
+          />
           
+
         <Stack.Screen
           name="Verification"
           component={Verification}
@@ -274,6 +284,15 @@ function MainNavigatorA({isDarkEnabled}) {
             component={HomeNavigator}
             options={{headerShown: false}}
           />
+
+          { isDarkEnabled == true &&
+            <Stack.Screen
+              name="HomeNavigatorC"
+              component={HomeNavigatorC}
+              options={{headerShown: false}}
+            />
+          }
+
 
         <Stack.Screen
           name="HomeFiltro"

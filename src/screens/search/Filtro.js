@@ -268,7 +268,7 @@ export default class Filtro extends Component {
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
                 {selected.map((item) => (
                   <View>
-                      <TouchableFilter style={{marginTop: 20}} key={item.id} onPress={() => this.reuploadCategoriesToList(item)}>
+                      <TouchableFilter key={item.id} onPress={() => this.reuploadCategoriesToList(item)}>
                         <TextFilter>{item}</TextFilter>
                       </TouchableFilter>
                   </View>

@@ -39,7 +39,7 @@ export const TextFilter = styled.Text`
 `
 
 export const FilterUnderContainer = styled.View`
-    paddingVertical: 2px;
+    paddingVertical: 26px;
     paddingHorizontal: 24px;
     backgroundColor: ${props => props.theme.background};
 `

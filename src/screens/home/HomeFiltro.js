@@ -36,6 +36,11 @@ const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
 const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 
+//CSS responsivo
+import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
+
+import { ThemeContext } from '../../../App';
+
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -110,6 +115,8 @@ const styles = StyleSheet.create({
 });
 
 export default class HomeFiltro extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
 
@@ -299,10 +306,10 @@ async componentDidMount() {
     const { status, emailUserFunction, activesPublishesAuto, activesPublishesEstab } = this.state
 
     return (
-      <SafeAreaView style={styles.screenContainer}>
+      <SafeBackground>
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <View style={styles.container}>
@@ -312,16 +319,16 @@ async componentDidMount() {
               
                 {status == true ? 
                     <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
-                        <Text style={{color: '#70AD66', fontWeight: 'bold'}}>Olá, {emailUserFunction}</Text>
+                        <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity onPress={this.navigateTo('SignUp')} style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
-                        <Text style={{color: 'white', fontWeight: 'bold'}}>Criar Conta</Text>
+                        <TextBold>Criar Conta</TextBold>
                     </TouchableOpacity>
                 }
                     
                 <TouchableOpacity onPress={this.navigateTo('Filtro')} style={{width:20, height:20}}>
-                    <FontAwesome5  name="sort-alpha-up" size={19} color={"#70AD66"} />
+                    <IconResponsive  name="sort-alpha-up" size={19}/>
                 </TouchableOpacity>
               </View>
 
@@ -330,7 +337,7 @@ async componentDidMount() {
             </View>
 
             <View style={styles.titleContainer}>
-              <Heading6 style={styles.titleText}>Anúncios</Heading6>
+              <Heading>Anúncios</Heading>
             </View>
               
               <FlatList 
@@ -340,31 +347,31 @@ async componentDidMount() {
                 
                   <View style={{flex:1, alignItems: 'center'}}>
                       <View>
-                          <View style={{width: 336, height: 170, marginBottom:5, marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                          <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column'}}>
-                                      <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:25, color:'#70AD66'}}>{item.title}</Text>
+                                      <Title>{item.title}</Title>
                                       {this.cutDescription(item.description)}
                                   </View>
                               </View>  
 
                               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                      <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                  </TouchableOpacity>
+                                  <TouchableDetails onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                      <TextDetails>Ver Detalhes</TextDetails>
+                                  </TouchableDetails>
 
                                   <View style={{marginTop: 24}}>
-                                      <Text style={{color:'#70AD66'}}>{item.value}</Text>
+                                      <ValueField>{item.value}</ValueField>
                                   </View>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
-                                      <FontAwesome5  name="user-tie" size={19} color={"#70AD66"} />
+                                      <IconResponsive  name="user-tie" size={19}/>
                                   </View>
                               </View> 
 
-                          </View>
+                          </AnuncioContainer>
                       </View>
                   </View>
                 
@@ -380,32 +387,32 @@ async componentDidMount() {
                 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                        <View style={{width: 336, height: 170, marginBottom:5,marginTop: 10, borderRadius: 10, backgroundColor: '#FFFDFD', elevation:5, shadowColor:'black', shadowOffset:{width:2, height:4}, shadowOpacity: 0.2}}>
+                        <AnuncioContainer>
                             <View style={{flexDirection:'row'}}>
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                 
                                 <View style={{flexDirection:'column'}}>
-                                    <Text style={{fontSize:17, marginTop:20, fontWeight: 'bold', marginLeft:10, color:'#70AD66'}}>{item.title}</Text>
+                                    <Title>{item.title}</Title>
                                     {this.cutDescription(item.description)}
                                 </View>
                             </View>  
 
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})} style={{paddingLeft: 10, backgroundColor: "#70AD66", width:100, height:20, borderRadius: 5, marginTop: 24, marginLeft: 31}}>
-                                    <Text style={{color: 'white'}}>Ver Detalhes</Text>
-                                </TouchableOpacity>
+                                <TouchableDetails onPress={() => this.props.navigation.navigate('TelaAnuncio', {idDoAnuncio: item.idAnuncio, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                    <TextDetails>Ver Detalhes</TextDetails>
+                                </TouchableDetails>
 
 
                                 <View style={{marginTop: 24}}>
-                                      <Text style={{color:'#70AD66'}}>{item.value}</Text>
+                                      <ValueField>{item.value}</ValueField>
                                 </View>
 
                                 <View style={{marginTop: 24, marginRight: 30}}>
-                                    <FontAwesome5  name="briefcase" size={19} color={"#70AD66"} />
+                                    <IconResponsive  name="briefcase" size={19}/>
                                 </View>
                             </View> 
 
-                        </View>
+                        </AnuncioContainer>
                     </View>
                 </View>
                 
@@ -415,7 +422,7 @@ async componentDidMount() {
 
           </ScrollView>
         </View>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
 }

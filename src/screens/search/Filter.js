@@ -16,6 +16,10 @@ import ProductCard from '../../components/cards/ProductCard';
 // import colors
 import Colors from '../../theme/colors';
 
+import { FilterUnderContainer, HeadingInverse, Sub1Filter, TextFilter, TouchableFilter, TouchableFilterUnselected, TouchableResponsive, SafeBackground, ButtonIconContainer, CallAndMessageContainer, IconResponsive, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
+
+import { ThemeContext } from '../../../App';
+
 // SearchResultsB Styles
 const styles = StyleSheet.create({
   topArea: {flex: 0, backgroundColor: Colors.primaryColor},
@@ -30,6 +34,8 @@ const styles = StyleSheet.create({
 
 // SearchResultsB
 export default class Filter extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
 

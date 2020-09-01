@@ -7,5 +7,8 @@ export default {
   inversePallete: '#fff',
   containerCall: '#3E3C3F',
   inverseContainerCall: '#645f66',
-  backgroundPublish: '#121212'
+  backgroundPublish: '#121212',
+  colorFilter: '#fff',
+  selectedFilter: '#DAA520',
+  unselectedFilter: 'rgb(91, 91, 92)'
 }

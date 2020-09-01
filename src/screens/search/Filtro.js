@@ -31,11 +31,16 @@ import {Subtitle1} from '../../components/text/CustomText';
 import firebase from '../../config/firebase';
 
 
-import {Heading6} from '../../components/text/CustomText';
 
 // import colors
 import Colors from '../../theme/colors';
 import Layout from '../../theme/layout';
+
+
+import { FilterUnderContainer, HeadingInverse, Sub1Filter, TextFilter, TouchableFilter, TouchableFilterUnselected, TouchableResponsive, SafeBackground, ButtonIconContainer, CallAndMessageContainer, IconResponsive, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
+
+import { ThemeContext } from '../../../App';
+
 
 // SearchFilterB Config
 const isRTL = I18nManager.isRTL;
@@ -112,6 +117,8 @@ const styles = StyleSheet.create({
 
 // SearchFilterB
 export default class Filtro extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
     this.state = {
@@ -203,83 +210,83 @@ export default class Filtro extends Component {
     } = this.state;
 
     return (
-      <SafeAreaView style={styles.screenContainer}>
+      <SafeBackground>
         <StatusBar
-          backgroundColor={"white"}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <KeyboardAwareScrollView
           contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.formContainer}>
             <View style={styles.titleContainer}>
-              <Heading6 style={{fontWeight: '700'}}>Filtro de Anúncio</Heading6>
+              <HeadingInverse>Filtro de Anúncio</HeadingInverse>
             </View>
-            <Subtitle1 style={styles.subtitle}>Qual tipo de Profissional?</Subtitle1>
+            <Sub1Filter>Qual tipo de Profissional?</Sub1Filter>
             <View style={styles.rowWrap}>
                 <View>
                   { this.state.type == 'Estabelecimento' &&
                     <View style={{flexDirection:'row'}}>
-                      <TouchableOpacity onPress={() => this.setState({type: 'Autonomo'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
-                        <Text style={{padding:10, color:'black'}}>Autônomo</Text>
-                      </TouchableOpacity>
+                      <TouchableFilterUnselected onPress={() => this.setState({type: 'Autonomo'})}>
+                        <TextFilter style={{color:'black'}}>Autônomo</TextFilter>
+                      </TouchableFilterUnselected>
 
-                      <TouchableOpacity style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
-                        <Text style={{padding:10, color:'#00b970'}}>Estabelecimento</Text>
-                      </TouchableOpacity>
+                      <TouchableFilter>
+                        <TextFilter>Estabelecimento</TextFilter>
+                      </TouchableFilter>
                     </View>
                   }
 
                   { this.state.type == 'Autonomo' &&
                     <View style={{flexDirection:'row'}}>
-                      <TouchableOpacity  style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
-                        <Text style={{padding:10, color:'#00b970'}}>Autônomo</Text> 
-                      </TouchableOpacity>
+                      <TouchableFilter>
+                        <TextFilter>Autônomo</TextFilter> 
+                      </TouchableFilter>
 
-                      <TouchableOpacity onPress={() => this.setState({type: 'Estabelecimento'})} style={{backgroundColor:'green', borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
-                        <Text style={{padding:10, color:'black'}}>Estabelecimento</Text>
-                      </TouchableOpacity>
+                      <TouchableFilterUnselected onPress={() => this.setState({type: 'Estabelecimento'})}>
+                        <TextFilter style={{color:'black'}}>Estabelecimento</TextFilter>
+                      </TouchableFilterUnselected>
                     </View>
                   }
                 </View>
             </View>
 
-            <Subtitle1 style={[styles.subtitle, styles.mt8]}>Escolha a categoria abaixo</Subtitle1>
+            <Sub1Filter style={styles.mt8}>Escolha a categoria abaixo</Sub1Filter>
             <View style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
               {categorias.map((item) => (
                 <View>
-                    <TouchableOpacity onPress={() => this.renderAndSelectCategory(item)} style={{borderRadius:30, backgroundColor:'rgba(35, 47, 52, 0.08)', margin: 7}}>
-                      <Text style={{padding:10}}>{item}</Text>
-                    </TouchableOpacity>
+                    <TouchableFilterUnselected onPress={() => this.renderAndSelectCategory(item)}>
+                      <TextFilter>{item}</TextFilter>
+                    </TouchableFilterUnselected>
                 </View>
               ))}
             </View>
           </View>
 
 
-          <View style={styles.buttonContainer}>
+          <FilterUnderContainer>
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
                 {selected.map((item) => (
                   <View>
-                      <TouchableOpacity key={item.id} onPress={() => this.reuploadCategoriesToList(item)} style={{borderRadius:30, backgroundColor:'rgba(0, 185, 112, 0.24)', margin: 7}}>
-                        <Text style={{padding:10, color:'#00b970'}}>{item}</Text>
-                      </TouchableOpacity>
+                      <TouchableFilter style={{marginTop: 20}} key={item.id} onPress={() => this.reuploadCategoriesToList(item)}>
+                        <TextFilter>{item}</TextFilter>
+                      </TouchableFilter>
                   </View>
                 ))}
             </ScrollView>
 
             {selected.length == 1 ?
-              <Text style={{marginBottom:17, color:'#00b970', fontWeight: "bold"}}>{selected.length} categoria selecionada</Text>
+              <Text style={{marginBottom:17, color:'#DAA520', fontWeight: "bold"}}>{selected.length} categoria selecionada</Text>
               :
-              <Text style={{marginBottom:17, color:'#00b970', fontWeight: "bold"}}>{selected.length} categorias selecionadas</Text>
+              <Text style={{marginBottom:17, color:'#DAA520', fontWeight: "bold"}}>{selected.length} categorias selecionadas</Text>
             }
             <Button onPress={() => this.props.navigation.navigate('HomeFiltro', {
               categoriasFiltradas: this.state.selected,
               type: this.state.type
             })} title="Aplicar Filtros" rounded />
-          </View>
+          </FilterUnderContainer>
         </KeyboardAwareScrollView>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
 }

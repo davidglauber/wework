@@ -46,6 +46,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAnuncioView, ValueFieldPrincipal, TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
+import { ThemeContext } from '../../../App';
 
 // ProductA Config
 const isRTL = I18nManager.isRTL;
@@ -180,6 +181,8 @@ const styles = StyleSheet.create({
 
 // ProductA
 export default class TelaAnuncio extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
     this.state = {
@@ -293,8 +296,8 @@ export default class TelaAnuncio extends Component {
     return (
       <SafeAnuncioView>
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <ScrollView>

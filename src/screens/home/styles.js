@@ -33,6 +33,29 @@ export const TextDays = styled.Text`
     paddingLeft: 5px
 `
 
+export const TextFilter = styled.Text`
+    padding:10px; 
+    color: ${props => props.theme.colorFilter}
+`
+
+export const FilterUnderContainer = styled.View`
+    paddingVertical: 2px;
+    paddingHorizontal: 24px;
+    backgroundColor: ${props => props.theme.background};
+`
+
+export const TouchableFilter = styled.TouchableOpacity`
+    borderRadius:30px; 
+    backgroundColor: ${props => props.theme.selectedFilter}; 
+    margin: 7px
+`
+
+export const TouchableFilterUnselected = styled.TouchableOpacity`
+    borderRadius:30px; 
+    backgroundColor: ${props => props.theme.unselectedFilter}; 
+    margin: 7px
+`
+
 export const InputForm = styled.TextInput`
     borderBottomWidth:0.5px;
     color: ${props => props.theme.inversePallete};
@@ -258,6 +281,11 @@ export const Heading = styled(Heading6)`
     color: ${props => props.theme.color}
 `
 
+export const HeadingInverse = styled(Heading6)`
+    fontWeight: 700,
+    color: ${props => props.theme.inversePallete}
+`
+
 export const HeadingSetting = styled(Heading6)`
     fontWeight: 700;
     paddingTop: 16;
@@ -271,6 +299,12 @@ export const NameUserSetting = styled(Subtitle1)`
     fontWeight: 500;
     textAlign: left;
     color: ${props => props.theme.color}
+`
+
+export const Sub1Filter = styled(Subtitle1)`
+    color: ${props => props.theme.color};
+    textAlign: left;
+    padding: 16px
 `
 
 export const EmailUserSetting = styled(Subtitle1)`

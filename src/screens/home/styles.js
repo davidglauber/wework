@@ -9,8 +9,11 @@ import { Ionicons as Ionicon } from "@expo/vector-icons";
 
 import {SmallText} from '../../components/text/CustomText';
 
-
 import { TextInputMask } from 'react-native-masked-text';
+
+import UnderlineTextInput from '../../components/textinputs/UnderlineTextInput';
+
+import  Button  from '../../components/buttons/Button';
 
 
 export const SafeBackground = styled.SafeAreaView`
@@ -36,6 +39,12 @@ export const InputForm = styled.TextInput`
     borderBottomColor: ${props => props.theme.color}
 `
 
+export const InputFormComponent = styled(UnderlineTextInput)`
+    borderBottomWidth:0.5px;
+    color: ${props => props.theme.inversePallete};
+    borderBottomColor: ${props => props.theme.color}
+`
+
 export const InputFormMask = styled(TextInputMask)`
     borderBottomWidth:0.5px;
     color: ${props => props.theme.inversePallete};
@@ -55,6 +64,13 @@ export const Subtitle2Publish = styled(Subtitle2)`
     color: ${props => props.theme.color}; 
     textAlign: left
 `
+
+export const Subtitle2EditProfile = styled(Subtitle2)`
+    color: ${props => props.theme.color};
+    textAlign: left
+`
+
+
 export const TitleChangeColor = styled.Text`
     color:${props => props.theme.color}
 `
@@ -303,4 +319,9 @@ export const ViewTopForm = styled.View`
     borderRadius: 16px;
     background: ${props => props.theme.backgroundColor}
 `
-
+export const ButtonCustomized = styled(Button)`
+    justifyContent: center;
+    alignItems: center;
+    background: ${props => props.theme.color};
+    borderRadius: 4px
+`

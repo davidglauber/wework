@@ -741,7 +741,7 @@ export default class EditarAnuncio extends Component {
                       <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
                         <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
                           <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
-                          <PulseIndicator color='#00b970'/>
+                          <PulseIndicator color='#DAA520'/>
                         </View>
                       </View>
                     </Modal>

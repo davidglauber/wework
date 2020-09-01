@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: '#DAA520',
     borderRadius: BUTTON_BORDER_RADIUS
   },
   defaultContainer: {

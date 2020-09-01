@@ -46,6 +46,11 @@ import firebase from '../../config/firebase';
 // import colors
 import Colors from '../../theme/colors';
 
+import { ButtonCustomized, SafeBackground, InputForm, InputFormMask, Subtitle2EditProfile } from '../home/styles';
+
+import { ThemeContext } from '../../../App';
+
+
 // EditProfileA Config
 const AVATAR_SIZE = 100;
 const IOS = Platform.OS === 'ios';
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 17,
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: 'white',
     overflow: 'hidden',
   },
   cameraButton: {
@@ -106,6 +111,9 @@ const styles = StyleSheet.create({
 
 // EditProfileA
 export default class EditarPerfil extends Component {
+  static contextType = ThemeContext
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -287,10 +295,10 @@ export default class EditarPerfil extends Component {
     } = this.state;
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeBackground>
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <KeyboardAwareScrollView enableOnAndroid>
@@ -305,8 +313,8 @@ export default class EditarPerfil extends Component {
               >
               <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
                 <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15, elevation:50, shadowColor:'black', shadowOffset:{width:20, height:40}, shadowOpacity: 0.1}}>
-                  <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Atualizando Perfil</Text>
-                  <PulseIndicator color='#00b970'/>
+                  <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Atualizando Perfil...</Text>
+                  <PulseIndicator color='#DAA520'/>
                 </View>
               </View>
             </Modal>
@@ -325,7 +333,7 @@ export default class EditarPerfil extends Component {
                       <View style={styles.cameraButton}>
                         <Icon 
                           name={CAMERA_ICON}
-                          size={16}
+                          size={20}
                           color={Colors.onPrimaryColor}
                         />
                       </View>
@@ -347,7 +355,7 @@ export default class EditarPerfil extends Component {
                       <View style={styles.cameraButton}>
                         <Icon 
                           name={CAMERA_ICON}
-                          size={16}
+                          size={20}
                           color={Colors.onPrimaryColor}
                         />
                       </View>
@@ -358,26 +366,21 @@ export default class EditarPerfil extends Component {
             }
 
           <View style={styles.editForm}>
-            <Subtitle2 style={styles.overline}>Nome</Subtitle2>
-            <UnderlineTextInput
-              onRef={(r) => {
-                this.name = r;
-              }}
+            <Subtitle2EditProfile>Nome</Subtitle2EditProfile>
+
+            <InputForm
               value={name}
-              onChangeText={this.nameChange}
-              onFocus={this.nameFocus}
-              inputFocused={nameFocused}
-              onSubmitEditing={this.focusOn(this.email)}
-              returnKeyType="next"
-              focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
-              inputContainerStyle={styles.inputContainerStyle}
+              style={{marginBottom: 20}}
+              onChangeText={text => this.nameChange(text)}
+              autoCapitalize={'words'}
+              maxLength={32}
+              placeholder="Digite seu Nome                                                                       "
             />
 
-            <Subtitle2 style={styles.overline}>Número de Telefone</Subtitle2>
-            <TextInputMask
+            <Subtitle2EditProfile>Número de Telefone</Subtitle2EditProfile>
+            <InputFormMask
               type={'cel-phone'}
-              inputContainerStyle={styles.inputContainerStyle}
-              style={{marginTop:10, borderBottomWidth:1, borderColor:'gray', color:'black'}}
+              style={{marginTop:10}}
               value={phone}
               onFocus={this.phoneFocus}
               onChangeText={text => this.phoneChange(text)}
@@ -385,7 +388,7 @@ export default class EditarPerfil extends Component {
             />
 
               <View style={styles.buttonContainer}>
-                <Button
+                <ButtonCustomized
                   onPress={() => this.updateToFirebase()}
                   title={'Salvar Mudanças'}
                   height={48}
@@ -394,7 +397,7 @@ export default class EditarPerfil extends Component {
             </View>
           </View>
         </KeyboardAwareScrollView>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
 }

@@ -334,7 +334,9 @@ function MainNavigatorA({isDarkEnabled}) {
           name="EditarCartao"
           component={EditarCartao}
           options={{
-            title: 'Editar Cartão'
+            title: 'Editar Cartão',
+            headerStyle: { backgroundColor: dark ? '#121212' : 'white' },
+            headerTitleStyle: { color: dark ? '#FFD700' : 'black' },
           }}
         />
 
@@ -390,7 +392,9 @@ function MainNavigatorA({isDarkEnabled}) {
           name="EditProfile"
           component={EditProfile}
           options={({navigation}) => ({
-            title: 'Editar Perfil'
+            title: 'Editar Perfil',
+            headerStyle: { backgroundColor: dark ? '#121212' : 'white' },
+            headerTitleStyle: { color: dark ? '#FFD700' : 'black' },
           })}
         />
 

@@ -454,7 +454,7 @@ export default class TelaCriarCartaoVisita extends Component {
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
               type: 'Estabelecimento',
-              verifiedPublish: false,
+              verifiedPublish: true,
               phoneNumberEstab: e.state.phoneEstab,
               localEstab: e.state.enderecoEstab,
               categoryEstab: e.state.categoria,
@@ -472,7 +472,7 @@ export default class TelaCriarCartaoVisita extends Component {
               idUser: userUID,
               descriptionEstab: e.state.descricaoEstab,
               type: 'Estabelecimento',
-              verifiedPublish: false,
+              verifiedPublish: true,
               phoneNumberEstab: e.state.phoneEstab,
               localEstab: e.state.enderecoEstab,
               categoryEstab: e.state.categoria,
@@ -511,7 +511,7 @@ export default class TelaCriarCartaoVisita extends Component {
               nome: e.state.nomeAuto,
               descriptionAuto: e.state.descricaoAuto,
               type: 'Autonomo',
-              verifiedPublish: false,
+              verifiedPublish: true,
               phoneNumberAuto: e.state.phoneAuto,
               categoryAuto: e.state.categoria,
               subcategoryAuto: e.state.subcategoria,
@@ -526,7 +526,7 @@ export default class TelaCriarCartaoVisita extends Component {
               nome: e.state.nomeAuto,
               descriptionAuto: e.state.descricaoAuto,
               type: 'Autonomo',
-              verifiedPublish: false,
+              verifiedPublish: true,
               phoneNumberAuto: e.state.phoneAuto,
               categoryAuto: e.state.categoria,
               subcategoryAuto: e.state.subcategoria,
@@ -657,6 +657,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                 value={this.state.nomeAuto}
                                 onChangeText={text => this.onChangeNomeAuto(text)}
                                 autoCapitalize={'words'}
+                                maxLength={20}
                                 placeholder="Digite seu Nome                                                                       "
                               />
                           </View>
@@ -734,7 +735,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                      <TouchableOpacity onPress={() => this.setState({segunda: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <ChooseOption onPress={() => this.setState({segunda: false})} style={{marginLeft:15, marginTop:20}}/>
                                       <TextDays>Seg</TextDays>
                                     </View>
                                 }
@@ -746,7 +747,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                      <TouchableOpacity onPress={() => this.setState({terca: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <ChooseOption onPress={() => this.setState({terca: false})} style={{marginLeft:15, marginTop:20}}/>
                                       <TextDays>Ter</TextDays>
                                     </View>
                                 }
@@ -759,7 +760,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                      <TouchableOpacity onPress={() => this.setState({quarta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                      <ChooseOption onPress={() => this.setState({quarta: false})} style={{marginLeft:15, marginTop:20}}/>
                                       <TextDays>Qua</TextDays>
                                     </View>
                                 }
@@ -774,7 +775,7 @@ export default class TelaCriarCartaoVisita extends Component {
 
                                 :
                                   <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity onPress={() => this.setState({quinta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <ChooseOption onPress={() => this.setState({quinta: false})} style={{marginLeft:15, marginTop:20}}/>
                                     <TextDays>Qui</TextDays>
                                   </View>
                                 }
@@ -786,7 +787,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                        <TouchableOpacity onPress={() => this.setState({sexta: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                        <ChooseOption onPress={() => this.setState({sexta: false})} style={{marginLeft:15, marginTop:20}}/>
                                         <TextDays>Sex</TextDays>
                                     </View>
                                 }
@@ -799,7 +800,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                     </View>
                                     :
                                     <View style={{flexDirection:'row'}}>
-                                        <TouchableOpacity onPress={() => this.setState({sabado: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                        <ChooseOption onPress={() => this.setState({sabado: false})} style={{marginLeft:15, marginTop:20}}/>
                                         <TextDays>Sáb</TextDays>
                                     </View>
                                 }
@@ -813,7 +814,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                   </View>
                                   :
                                   <View style={{flexDirection:'row'}}>
-                                    <TouchableOpacity onPress={() => this.setState({domingo: false})} style={{backgroundColor:'#70AD66', width:18, height:18, borderRadius:30, marginLeft:15, marginTop:20}}/>
+                                    <ChooseOption onPress={() => this.setState({domingo: false})} style={{marginLeft:15, marginTop:20}}/>
                                     <TextDays>Dom</TextDays>
                                   </View>
                                 }
@@ -977,7 +978,7 @@ export default class TelaCriarCartaoVisita extends Component {
                       <View style={{alignItems:'center'}}>
                         <TouchableOpacity
                           onPress={() => this.closeDescriptionEstabModal()}
-                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
                         >
                           <FontAwesome5 name="check-circle" size={24} color={'white'}/>
                         </TouchableOpacity>

@@ -207,7 +207,7 @@ export default class TelaGeralCriarCartao extends Component {
       })
     })
 
-    firebase.firestore().collection('cartoes').where("idAnuncio", "==", itemToBeDeletedFunction).get().then(function(querySnapshot) {
+    firebase.firestore().collection('cartoes').where("idCartao", "==", itemToBeDeletedFunction).get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc){
         doc.ref.delete();
       })
@@ -260,15 +260,12 @@ export default class TelaGeralCriarCartao extends Component {
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
-                    <Heading style={{marginLeft: 30, marginRight: 34}}>Ativos</Heading>
+                    <Heading style={{marginLeft: 30, marginRight: 34}}>Cartões Ativos</Heading>
 
                 <PlusContainer onPress={this.navigateTo('TelaCriarCartaoVisita')}>
                         <PlusIcon  name="plus" size={19}/>
                 </PlusContainer>
 
-                <TouchableOpacity onPress={this.navigateTo('TelaCartaoPendente')} style={{marginRight:5, borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27}}>
-                    <Heading>Pendentes</Heading>
-                </TouchableOpacity>
               </View>
 
 

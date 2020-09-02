@@ -248,16 +248,13 @@ export default class TelaPrincipalAnuncio extends Component {
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
                 <View style={styles.titleContainer}>
-                  <Heading style={styles.titleText}>Ativos</Heading>
+                  <Heading style={styles.titleText}>Anúncios Ativos</Heading>
                 </View>
 
                 <PlusContainer onPress={this.navigateTo('Orders')}>
                     <PlusIcon  name="plus" size={19}/>
                 </PlusContainer>
 
-                <TouchableOpacity onPress={this.navigateTo('TelaAnunciosPendentes')} style={{marginRight:5, borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27}}>
-                    <Heading>Pendentes</Heading>
-                </TouchableOpacity>
               </View>
 
 

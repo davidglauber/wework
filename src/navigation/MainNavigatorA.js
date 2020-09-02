@@ -276,6 +276,8 @@ function MainNavigatorA({isDarkEnabled}) {
           component={TermsConditions}
           options={{
             title: 'Termos e Condições',
+            headerStyle: { backgroundColor: dark ? '#121212' : 'white' },
+            headerTitleStyle: { color: dark ? '#FFD700' : 'black' },
           }}
         />
 

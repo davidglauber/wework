@@ -7,7 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import {Heading6, Subtitle1, Subtitle2} from '../../components/text/CustomText';
 import { Ionicons as Ionicon } from "@expo/vector-icons";
 
-import {SmallText} from '../../components/text/CustomText';
+import {SmallText, Caption} from '../../components/text/CustomText';
 
 import { TextInputMask } from 'react-native-masked-text';
 
@@ -60,6 +60,39 @@ export const InputForm = styled.TextInput`
     borderBottomWidth:0.5px;
     color: ${props => props.theme.inversePallete};
     borderBottomColor: ${props => props.theme.color}
+`
+export const CaptionTerms = styled(Caption)`
+    paddingBottom: 12px;
+    textAlign: left;
+    color: ${props => props.theme.inversePallete}
+`
+
+export const TextBlock = styled.Text`
+    paddingBottom: 24px;
+    fontWeight: 400;
+    fontSize: 14px;
+    lineHeight: 22px;
+    color: ${props => props.theme.color};
+    letterSpacing: 0.4px;
+    textAlign: left;
+`
+
+export const ContainerButton = styled.View`
+    flexDirection: row;
+    justifyContent: space-between;
+    alignItems: center;
+    padding: 16px;
+    width: 100%;
+    backgroundColor: ${props => props.theme.background}
+`
+
+export const HeadTerm = styled.Text`
+    paddingBottom: 16px;
+    fontWeight: 700;
+    fontSize: 16px;
+    color: ${props => props.theme.inversePallete};
+    letterSpacing: 0.2px;
+    textAlign: left
 `
 
 export const InputFormComponent = styled(UnderlineTextInput)`

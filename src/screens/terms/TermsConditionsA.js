@@ -20,6 +20,12 @@ import {
 import Button from '../../components/buttons/Button';
 import {Caption} from '../../components/text/CustomText';
 
+
+//CSS responsivo
+import { SafeBackground, CaptionTerms, TextBlock, HeadTerm, ContainerButton, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from '../home/styles';
+
+import { ThemeContext } from '../../../App';
+
 // import colors
 import Colors from '../../theme/colors';
 
@@ -73,6 +79,8 @@ const styles = StyleSheet.create({
 
 // TermsConditionsA
 export default class TermsConditionsA extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -85,62 +93,59 @@ export default class TermsConditionsA extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.screenContainer}>
+      <SafeBackground>
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
         <ScrollView>
           <View style={styles.content}>
-            <Caption style={styles.caption}>
-              Last update: 12 April, 2020
-            </Caption>
-            <Text
-              style={
-                styles.textBlock
-              }>{`Please read these terms and conditions carefully, before you start using the mobile application ${APP_NAME}.`}</Text>
+            <CaptionTerms>
+              Última atualização: 12 de Abril, 2020
+            </CaptionTerms>
+            <TextBlock>{`Please read these terms and conditions carefully, before you start using the mobile application ${APP_NAME}.`}</TextBlock>
 
-            <Text style={styles.heading}>0. Introduction</Text>
-            <Text style={styles.textBlock}>
+            <HeadTerm>0. Introduction</HeadTerm>
+            <TextBlock>
               {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                  \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`}
-            </Text>
+            </TextBlock>
 
-            <Text style={styles.heading}>1. Your Content</Text>
-            <Text style={styles.textBlock}>
+            <HeadTerm>1. Your Content</HeadTerm>
+            <TextBlock>
               {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`}
-            </Text>
+            </TextBlock>
 
-            <Text style={styles.heading}>2. No warranties</Text>
-            <Text style={styles.textBlock}>
+            <HeadTerm>2. No warranties</HeadTerm>
+            <TextBlock>
               {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`}
-            </Text>
+            </TextBlock>
 
-            <Text style={styles.heading}>3. License</Text>
-            <Text style={styles.textBlock}>
+            <HeadTerm>3. License</HeadTerm>
+            <TextBlock>
               {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`}
-            </Text>
+            </TextBlock>
           </View>
         </ScrollView>
 
-        <View style={styles.buttonsContainer}>
+        <ContainerButton>
           <Button
             onPress={this.goBack}
             buttonStyle={styles.button}
-            title="Decline"
+            title="Discordar"
             outlined
           />
 
           <Button
             onPress={this.goBack}
             buttonStyle={styles.button}
-            title="Accept"
+            title="Concordar"
           />
-        </View>
-      </SafeAreaView>
+        </ContainerButton>
+      </SafeBackground>
     );
   }
 }

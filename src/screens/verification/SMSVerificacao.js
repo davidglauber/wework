@@ -34,7 +34,6 @@ import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaVerifier } from 'expo-
 import Colors from '../../theme/colors';
 import { TextInput } from 'react-native-gesture-handler';
 import { firestore } from 'firebase';
-import AsyncStorage from '@react-native-community/async-storage';
 
 // VerificationB Config
 const isRTL = I18nManager.isRTL;

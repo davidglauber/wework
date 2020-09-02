@@ -36,7 +36,6 @@ import { TextInputMask } from 'react-native-masked-text';
 
 // import colors
 import Colors from '../../theme/colors';
-import AsyncStorage from '@react-native-community/async-storage';
 
 
 const PLACEHOLDER_TEXT_COLOR = 'rgba(255, 255, 255, 0.7)';

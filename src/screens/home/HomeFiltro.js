@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   Image,
+  AsyncStorage,
   View,
   TouchableOpacity,
 } from 'react-native';
@@ -18,10 +19,6 @@ import {Heading6} from '../../components/text/CustomText';
 
 // import colors
 import Colors from '../../theme/colors';
-
-
-//import AsyncStorage
-import AsyncStorage from '@react-native-community/async-storage';
 
 
 //import firebase 

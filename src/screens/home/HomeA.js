@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  AsyncStorage,
   StyleSheet,
   Text,
   Image,
@@ -19,10 +20,6 @@ import {Heading6} from '../../components/text/CustomText';
 
 // import colors
 import Colors from '../../theme/colors';
-
-
-//import AsyncStorage
-import AsyncStorage from '@react-native-community/async-storage';
 
 
 //import firebase 

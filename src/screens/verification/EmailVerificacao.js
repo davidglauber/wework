@@ -13,6 +13,7 @@ import {
   SafeAreaView,
   StatusBar,
   BackHandler,
+  AsyncStorage,
   StyleSheet,
   Text,
   View,
@@ -30,8 +31,6 @@ import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 import Colors from '../../theme/colors';
 
 
-//import AsyncStorage
-import AsyncStorage from '@react-native-community/async-storage';
 
 //import firebase 
 import firebase from '../../config/firebase';

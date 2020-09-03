@@ -50,7 +50,7 @@ import { TextInputMask } from 'react-native-masked-text';
 
 import { ItemContainer, ViewTopForm, SafeBackgroundPublish, IconResponsive, PublishTouchable, CategoryAndSub, TextDays, TitleChangeColor, InputFormMask, InputForm, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 // import colors
 import Colors from '../../theme/colors';

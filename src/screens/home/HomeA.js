@@ -33,7 +33,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 //CSS responsivo
 import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 // HomeA Styles
 const styles = StyleSheet.create({

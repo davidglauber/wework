@@ -1,9 +1,14 @@
-import React ,{createContext, useContext, useReducer} from 'react';
+import React ,{createContext} from 'react';
 
 
-const ThemeContext = createContext({dark:false});
+export const ThemeContext = createContext();
 
 
-export default ThemeContext;
+export default function ThemeProviderStyle({children, darkTheme, setDarkTheme}) {
 
-
+    return(
+        <ThemeContext.Provider value={{darkTheme, setDarkTheme}}>
+            {children}
+        </ThemeContext.Provider>
+    );
+}

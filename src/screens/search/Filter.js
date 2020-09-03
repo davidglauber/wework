@@ -18,7 +18,7 @@ import Colors from '../../theme/colors';
 
 import { FilterUnderContainer, HeadingInverse, Sub1Filter, TextFilter, TouchableFilter, TouchableFilterUnselected, TouchableResponsive, SafeBackground, ButtonIconContainer, CallAndMessageContainer, IconResponsive, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 // SearchResultsB Styles
 const styles = StyleSheet.create({

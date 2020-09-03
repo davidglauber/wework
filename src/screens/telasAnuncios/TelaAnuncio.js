@@ -46,7 +46,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAnuncioView, ValueFieldPrincipal, TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 // ProductA Config
 const isRTL = I18nManager.isRTL;

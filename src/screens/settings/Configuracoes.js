@@ -67,7 +67,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 //CSS responsivo
 import { SafeBackground, SetTextUserSetting, IconResponsive, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 // SettingsB Styles
 const styles = StyleSheet.create({

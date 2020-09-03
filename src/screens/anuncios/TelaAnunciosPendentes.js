@@ -30,7 +30,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 // HomeA Styles
 const styles = StyleSheet.create({

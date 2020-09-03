@@ -8,7 +8,7 @@
 // import dependencies
 import React ,{useContext} from 'react';
 import {Platform} from 'react-native';
-import {NavigationContainer, DarkTheme, DefaultTheme} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // import components
@@ -118,7 +118,7 @@ import FilterCartao from '../screens/search/FilterCartao';
 
 import ConfirmEmail from '../screens/verification/ConfirmEmail';
 
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../../ThemeContext';
 
 // MainNavigatorA Config
 const SAVE_ICON = Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark';

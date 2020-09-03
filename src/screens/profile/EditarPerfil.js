@@ -48,7 +48,7 @@ import Colors from '../../theme/colors';
 
 import { ButtonCustomized, SafeBackground, InputForm, InputFormMask, Subtitle2EditProfile } from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 
 // EditProfileA Config

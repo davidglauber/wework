@@ -27,7 +27,7 @@ import Colors from '../theme/colors';
 //import ICON
 import { FontAwesome5 } from '@expo/vector-icons';
 
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../../ThemeContext';
 
 import white from '../theme/light';
 import black from '../theme/dark';

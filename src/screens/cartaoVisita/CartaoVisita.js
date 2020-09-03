@@ -44,7 +44,7 @@ const EMPTY_STATE_ICON = 'cart-remove';
 //CSS responsivo
 import { IconResponsive, ViewCartao, TextDetails, TouchableDetails, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 // CartA Styles
 const styles = StyleSheet.create({

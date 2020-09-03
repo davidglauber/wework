@@ -33,7 +33,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { SafeBackground, Title, AnuncioContainer, ValueField, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 
 // HomeA Styles

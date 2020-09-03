@@ -24,7 +24,7 @@ import {Caption} from '../../components/text/CustomText';
 //CSS responsivo
 import { SafeBackground, CaptionTerms, TextBlock, HeadTerm, ContainerButton, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 // import colors
 import Colors from '../../theme/colors';

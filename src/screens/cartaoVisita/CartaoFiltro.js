@@ -48,7 +48,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 //CSS responsivo
 import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from '../home/styles';
 
-import { ThemeContext } from '../../../App';
+import { ThemeContext } from '../../../ThemeContext';
 
 
 // CartA Config

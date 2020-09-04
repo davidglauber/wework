@@ -232,6 +232,36 @@ export default class TelaGeralCriarCartao extends Component {
     navigation.navigate(screen);
   };
 
+  verifyNumberOfPublises() {
+    let currentUserUID = firebase.auth().currentUser.uid;
+
+    firebase.firestore().collection(`usuarios/${currentUserUID}/cartoes`).where("verifiedPublish", "==", true).get().then(documentSnapshot => {
+      let cartoesDidMount = []
+      documentSnapshot.forEach(function(doc) {
+        cartoesDidMount.push({
+          idUser: doc.data().idUser,
+          nome: doc.data().nome,
+          idCartao: doc.data().idCartao,
+          photo: doc.data().photoPublish,
+          description: doc.data().descriptionAuto,
+          type: doc.data().type,
+          categoria: doc.data().categoryAuto,
+          phone: doc.data().phoneNumberAuto,
+        })
+      })
+
+      if(cartoesDidMount.length  <= 2) {
+        this.props.navigation.navigate('TelaCriarCartaoVisita')
+      }
+
+      if(cartoesDidMount.length >= 3) {
+        alert('A conta Free permite até 3 cartões, consulte a tela de PLANOS para mais informações')
+      }
+
+      console.log('TAMANHO DA LISTA DE ANUNCIOS:> ' + cartoesDidMount)
+    })
+
+  }
 
   waitQueryToShowNotFoundGIF() {
     if(this.state.cartoesAuto.length == 0 && this.state.cartoesEstab.length == 0) {
@@ -262,7 +292,7 @@ export default class TelaGeralCriarCartao extends Component {
               <View style={styles.titleContainer}>
                     <Heading style={{marginLeft: 30, marginRight: 34}}>Cartões Ativos</Heading>
 
-                <PlusContainer onPress={this.navigateTo('TelaCriarCartaoVisita')}>
+                <PlusContainer onPress={() => this.verifyNumberOfPublises()}>
                         <PlusIcon  name="plus" size={19}/>
                 </PlusContainer>
 

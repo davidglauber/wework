@@ -187,7 +187,6 @@ export default class TelaPrincipalAnuncio extends Component {
 
 
   verifyNumberOfPublises() {
-    let e = this;
     let currentUserUID = firebase.auth().currentUser.uid;
 
     firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("verifiedPublish", "==", true).get().then(documentSnapshot => {

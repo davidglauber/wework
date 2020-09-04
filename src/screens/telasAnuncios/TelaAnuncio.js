@@ -287,6 +287,20 @@ export default class TelaAnuncio extends Component {
     Linking.openURL(`tel:${phone}`)
   }
 
+  openWhatsApp(phone) {
+    Linking.canOpenURL("whatsapp://send?text=oi").then(supported => {
+      if (supported) {
+        return Linking.openURL(
+          `whatsapp://send?phone=55${phone}&text=Olá, ${this.props.route.params.nomeToZap} te vi no WeWork e Tenho Interesse no Seu Trabalho`
+        );
+      } else {
+        return Linking.openURL(
+          `https://api.whatsapp.com/send?phone=55${phone}&text=Olá, ${this.props.route.params.nomeToZap} te vi no WeWork e Tenho Interesse no Seu Trabalho`
+        );
+      }
+    })
+  }
+
   render() {
     const {product, anuncioAuto, anuncioEstab} = this.state;
     const {
@@ -485,7 +499,7 @@ export default class TelaAnuncio extends Component {
                 </TouchableResponsive>   
 
                 <TouchableResponsive>
-                    <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
+                    <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
                     <IconResponsive name="comment-alt" size={20}/>
                 </TouchableResponsive>            
             </CallAndMessageContainer>

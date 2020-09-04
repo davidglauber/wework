@@ -445,7 +445,7 @@ export default class TelaCriarCartaoVisita extends Component {
    
     if(type == 'Estabelecimento'){
       if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
-        this.sleep(3000).then(() => { 
+        this.sleep(5000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
               titleEstab: e.state.tituloEstab,
@@ -502,7 +502,7 @@ export default class TelaCriarCartaoVisita extends Component {
 
     if(type == 'Autonomo') {
       if(this.state.descricaoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
-        this.sleep(3000).then(() => { 
+        this.sleep(5000).then(() => { 
           firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
           firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(getSameIdToDocument).set({
               idCartao: getSameIdToDocument,
@@ -946,7 +946,7 @@ export default class TelaCriarCartaoVisita extends Component {
                       <View style={{alignItems:'center'}}>
                         <TouchableOpacity
                           onPress={() => this.closeDescriptionModal()}
-                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#70AD66', height: 40, width: 40, marginBottom:40}}
+                          style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
                         >
                           <FontAwesome5 name="check-circle" size={24} color={'white'}/>
                         </TouchableOpacity>

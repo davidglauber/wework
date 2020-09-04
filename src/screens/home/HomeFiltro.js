@@ -319,9 +319,9 @@ async componentDidMount() {
                         <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
                     </TouchableOpacity>
                     :
-                    <TouchableOpacity onPress={this.navigateTo('SignUp')} style={{borderRadius:5, alignItems:'center', justifyContent:'center', width:116, height:27, backgroundColor: "#70AD66"}}>
+                    <SignUpBottom onPress={this.navigateTo('SignUp')}>
                         <TextBold>Criar Conta</TextBold>
-                    </TouchableOpacity>
+                    </SignUpBottom>
                 }
                     
                 <TouchableOpacity onPress={this.navigateTo('Filtro')} style={{width:20, height:20}}>

@@ -30,16 +30,15 @@ import ThemeProviderStyle from './ThemeContext';
 // APP
 function App() {
   const [dark, setDark] = useState(false)
-  const provideTheme = useMemo(() => ({dark, setDark}), [dark, setDark])
   
   return (
-      <ThemeProviderStyle darkTheme={dark} setDarkTheme={setDark}>
-        <ThemeProvider theme={dark ? themes.dark: themes.light}>
-            <SafeAreaProvider>
+    <ThemeProvider theme={dark ? themes.dark: themes.light}>
+        <SafeAreaProvider>
+              <ThemeProviderStyle dark={dark} setDark={setDark}>
                 <MainNavigator isDarkEnabled={dark}/>
-            </SafeAreaProvider>
-        </ThemeProvider>
-      </ThemeProviderStyle>
+              </ThemeProviderStyle>
+        </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
 

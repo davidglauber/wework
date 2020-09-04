@@ -186,6 +186,39 @@ export default class TelaPrincipalAnuncio extends Component {
   };
 
 
+  verifyNumberOfPublises() {
+    let e = this;
+    let currentUserUID = firebase.auth().currentUser.uid;
+
+    firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("verifiedPublish", "==", true).get().then(documentSnapshot => {
+      let anunciosDidMount = []
+      documentSnapshot.forEach(function(doc) {
+        anunciosDidMount.push({
+          idUser: doc.data().idUser,
+          nome: doc.data().nome,
+          idAnuncio: doc.data().idAnuncio,
+          photo: doc.data().photoPublish,
+          title: doc.data().titleAuto,
+          description: doc.data().descriptionAuto,
+          type: doc.data().type,
+          phone: doc.data().phoneNumberAuto,
+          verified: doc.data().verifiedPublish
+        })
+      })
+
+      if(anunciosDidMount.length  <= 2) {
+        this.props.navigation.navigate('Orders')
+      }
+
+      if(anunciosDidMount.length >= 3) {
+        alert('A conta Free permite até 3 anúncios, consulte a tela de PLANOS para mais informações')
+      }
+
+      console.log('TAMANHO DA LISTA DE ANUNCIOS:> ' + anunciosDidMount)
+    })
+
+  }
+
   cutDescription(text) {
     if(text.length > 40) {
       let shortDescription = text.substr(0, 40)
@@ -251,7 +284,7 @@ export default class TelaPrincipalAnuncio extends Component {
                   <Heading style={styles.titleText}>Anúncios Ativos</Heading>
                 </View>
 
-                <PlusContainer onPress={this.navigateTo('Orders')}>
+                <PlusContainer onPress={() => this.verifyNumberOfPublises()}>
                     <PlusIcon  name="plus" size={19}/>
                 </PlusContainer>
 

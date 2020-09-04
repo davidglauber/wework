@@ -12,7 +12,6 @@ import {
   I18nManager,
   SafeAreaView,
   StatusBar,
-  BackHandler,
   AsyncStorage,
   StyleSheet,
   Text,
@@ -21,20 +20,19 @@ import {
 import Color from 'color';
 
 // import components
-import ActivityIndicatorModal from '../../components/modals/ActivityIndicatorModal';
 import Button from '../../components/buttons/Button';
 import GradientContainer from '../../components/gradientcontainer/GradientContainer';
 import {Heading5, Paragraph} from '../../components/text/CustomText';
-import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 
 // import colors
 import Colors from '../../theme/colors';
 
-
+import { CommonActions } from '@react-navigation/native';
 
 //import firebase 
 import firebase from '../../config/firebase';
 
+import { ThemeContext } from '../../../ThemeContext';
 
 // VerificationB Config
 const isRTL = I18nManager.isRTL;
@@ -91,11 +89,13 @@ const styles = StyleSheet.create({
 
 // VerificationEMAIL
 export default class EmailVerificacao extends Component {
+  static contextType = ThemeContext
+
+
   constructor(props) {
     super(props);
     this.state = {
       modalVisible: false,
-      pin: '',
       email:'',
       nome:'',
       data:'',
@@ -104,17 +104,9 @@ export default class EmailVerificacao extends Component {
     };
   }
 
-  // avoid memory leak
-  componentWillUnmount = () => {
-    clearTimeout(this.timeout);
-  };
+  
 
-  sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
-
-
-  async componentDidMount() {
+  componentDidMount() {
     let getNome = this.props.route.params.nome;
     let getEmail = this.props.route.params.email;
     let getSenha = this.props.route.params.senha;
@@ -129,37 +121,8 @@ export default class EmailVerificacao extends Component {
     this.setState({data: getDataNascimento})
     
 
-    await firebase.auth().createUserWithEmailAndPassword(getEmail, getSenha).then((value) => {
 
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            try {
-              firebase.auth().currentUser.sendEmailVerification()
-              alert('confirme o codigo enviado')
-            } catch {
-              alert('ocorreu um erro ao enviar o email')
-            }
-        } else { return null }
-      })
-      
-    }).catch((error) => {
-      if(error.code === 'auth/email-already-exists') {
-        alert('Esse endereço de email já está em uso, por favor tente outro')
-        this.props.navigation.navigate('SignUp')
-        return;
-      } else if (error.code === 'auth/internal-error') {
-        alert('Ocorreu um erro interno no nosso servidor, tente novamente mais tarde')
-        return;
-      } else if (error.code === 'auth/invalid-password') {
-        alert('A senha inserida é inválida')
-        this.props.navigation.navigate('SignUp')
-        return;
-      } else if (error.code === 'auth/weak-password') {
-        alert('A senha inserida é muito fraca, ela precisa ter ao mínimo 6 caracteres')
-        this.props.navigation.navigate('SignUp')
-        return;
-      }
-    })
+    
     
     
     
@@ -168,6 +131,24 @@ export default class EmailVerificacao extends Component {
     console.log('nome navigation: ' + getNome)
     console.log('Telefone navigation: ' + getTelefone)
     console.log('Data born navigation: ' + getDataNascimento)
+      
+
+
+    try {
+      firebase.auth().createUserWithEmailAndPassword(getEmail, getSenha)
+          firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                try {
+                  firebase.auth().currentUser.sendEmailVerification()
+                  alert('confirme o codigo enviado')
+                } catch {
+                  alert('ocorreu um erro ao enviar o email')
+                }
+            } else { return null }
+          })
+    } catch {
+        alert('erro')          
+    }
     
   }
 
@@ -218,21 +199,12 @@ export default class EmailVerificacao extends Component {
    
   };
 
-  closeModal = () => {
-    // for demo purpose clear timeout if user request close modal before 3s timeout
-    clearTimeout(this.timeout);
-    this.setState({
-      modalVisible: false,
-      pin: '',
-    });
-  };
-
   render() {
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
         <StatusBar
-          backgroundColor={Colors.primaryColor}
-          barStyle="light-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <GradientContainer containerStyle={styles.container}>
@@ -242,23 +214,6 @@ export default class EmailVerificacao extends Component {
               O email de confirmação foi enviado, confira a caixa de SPAM e caso não tenha recebido o email recadastre-se
             </Paragraph>
 
-          {/* 
-            <View style={styles.codeContainer}>
-              <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[0]}</Text>
-              </View>
-              <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[1]}</Text>
-              </View>
-              <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[2]}</Text>
-              </View>
-              <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[3]}</Text>
-              </View>
-            </View>
-
-          */}
           </View>
 
 

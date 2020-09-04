@@ -198,7 +198,6 @@ export default function Configuracoes() {
   const {dark, setDark} = useContext(ThemeContext)
 
 
-
   useEffect(() => {
     async function callFirebase() {
       console.log('tema: ' + dark)

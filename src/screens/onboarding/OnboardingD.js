@@ -171,17 +171,6 @@ export default class OnboardingD extends Component {
 
 
 
-   componentDidMount() {
-    console.reportErrorsAsExceptions = false;
-      firebase.auth().onAuthStateChanged((user) => {
-          if(user) {
-            this.props.navigation.navigate('HomeNavigatorC')
-          } else {
-            return null
-          }
-      })
-  }
-
   onIndexChanged = (index) => {
     let activeIndex;
     if (isRTL) {

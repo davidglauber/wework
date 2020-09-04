@@ -130,7 +130,6 @@ const Stack = createStackNavigator();
 
 // MainNavigatorA
 function MainNavigatorA({isDarkEnabled}) {
-  
   const {dark, setDark} = useContext(ThemeContext)
 
   return (
@@ -150,6 +149,7 @@ function MainNavigatorA({isDarkEnabled}) {
           headerTitleAlign: 'center',
         }}>
 
+
         { isDarkEnabled == false ?
           <Stack.Screen
             name="Onboarding"
@@ -163,6 +163,13 @@ function MainNavigatorA({isDarkEnabled}) {
             options={{headerShown: false}}
           />
         }
+         
+         <Stack.Screen
+           name="EmailVerificacao"
+           component={EmailVerificacao}
+           options={{headerShown: false}}
+         />
+         
         <Stack.Screen
           name="Welcome"
           component={Welcome}
@@ -193,11 +200,8 @@ function MainNavigatorA({isDarkEnabled}) {
             })
           }
         />
-          <Stack.Screen
-            name="EmailVerificacao"
-            component={EmailVerificacao}
-            options={{headerShown: false}}
-          />
+
+        
 
           <Stack.Screen
             name="ConfirmEmail"
@@ -281,19 +285,18 @@ function MainNavigatorA({isDarkEnabled}) {
           }}
         />
 
+       
           <Stack.Screen
-            name="HomeNavigator"
-            component={HomeNavigator}
+            name="HomeNavigatorC"
+            component={HomeNavigatorC}
             options={{headerShown: false}}
           />
-
-          { isDarkEnabled == true &&
-            <Stack.Screen
-              name="HomeNavigatorC"
-              component={HomeNavigatorC}
-              options={{headerShown: false}}
-            />
-          }
+        
+        <Stack.Screen
+          name="HomeNavigator"
+          component={HomeNavigator}
+          options={{headerShown: false}}
+        />
 
 
         <Stack.Screen

@@ -6,7 +6,7 @@
  */
 
 // import dependencies
-import React from 'react';
+import React ,{useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MaterialCommunityIcons as Icon} from '@expo/vector-icons';
 
@@ -27,6 +27,8 @@ import Colors from '../theme/colors';
 //import ICON
 import { FontAwesome5 } from '@expo/vector-icons';
 
+import { ThemeContext } from '../../ThemeContext';
+
 import white from '../theme/light';
 import black from '../theme/dark';
 import dark from '../theme/dark';
@@ -44,6 +46,9 @@ const Tab = createBottomTabNavigator();
 
 // HomeNavigator
 function HomeNavigatorC() {
+  const {dark, setDark} = useContext(ThemeContext)
+
+console.log('Dark do HOMEEE: ' + dark)
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -65,11 +70,11 @@ function HomeNavigatorC() {
       screenProps={{backgroundColor:'blue'}}
       tabBarOptions={{
         keyboardHidesTabBar: true,
-        activeTintColor: '#FFD700',
+        activeTintColor: dark ? '#FFD700' : '#DAA520',
         inactiveTintColor: Colors.secondaryText,
         showLabel: false, // hide labels
         style: {
-          backgroundColor: 'black' // TabBar background
+          backgroundColor: '#121212' // TabBar background
         },
       }}>
       <Tab.Screen name="Home" component={Home} />

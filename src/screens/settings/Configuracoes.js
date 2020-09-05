@@ -67,6 +67,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 //CSS responsivo
 import { SafeBackground, SetTextUserSetting, IconResponsive, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
+
+import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
 import { ThemeContext } from '../../../ThemeContext';
 
 // SettingsB Styles
@@ -195,6 +198,7 @@ export default function Configuracoes() {
   const [dataNascimento, setDataNascimento] = React.useState('');
   const [fotoPerfil, setFotoPerfil] = React.useState('');
   const [value, setValue] = React.useState(false);
+  const [isFetchedPublish, setIsFetchedPublish] = React.useState(false);
   const {dark, setDark} = useContext(ThemeContext)
 
 
@@ -210,6 +214,8 @@ export default function Configuracoes() {
             setNomeUser(documentSnapshot.data().nome)
             setDataNascimento(documentSnapshot.data().dataNascimento)
             setFotoPerfil(documentSnapshot.data().photoProfile)
+
+            setIsFetchedPublish(true)
           })
         } 
         
@@ -282,22 +288,34 @@ export default function Configuracoes() {
             <View style={[styles.row, styles.profileContainer]}>
               <View style={styles.leftSide}>
                 {fotoPerfil == '' ?
-                  <Image style={{borderRadius:50, width:60, height:60}} source={require('../../assets/img/profile_1.jpeg')}
-                  />
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:50, width:60, height:60}}>
+                    <Image style={{borderRadius:50, width:60, height:60}} source={require('../../assets/img/profile_1.jpeg')}
+                    />
+                  </ShimmerPlaceholder>
                   :
-                  <Image
-                    source={{uri: fotoPerfil}}
-                    style={{borderRadius:50, width:60, height:60}}
-                  />
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:50, width:60, height:60}}>
+                    <Image
+                      source={{uri: fotoPerfil}}
+                      style={{borderRadius:50, width:60, height:60}}
+                    />
+                  </ShimmerPlaceholder>
                 }
                 <View style={styles.profileInfo}>
-                  <NameUserSetting>{nomeUser}</NameUserSetting>
-                  <EmailUserSetting style={styles.email}>
-                    {emailUser}
-                  </EmailUserSetting>
-                  <EmailUserSetting style={styles.email}>
-                    {dataNascimento}
-                  </EmailUserSetting>
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{fontWeight: '500', textAlign: 'left', borderRadius: 30}}>
+                    <NameUserSetting>{nomeUser}</NameUserSetting>
+                  </ShimmerPlaceholder>
+
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{paddingVertical: 2, borderRadius:30}}>
+                    <EmailUserSetting style={styles.email}>
+                      {emailUser}
+                    </EmailUserSetting>
+                  </ShimmerPlaceholder>
+
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{paddingVertical: 2, borderRadius:30}}>
+                    <EmailUserSetting style={styles.email}>
+                      {dataNascimento}
+                    </EmailUserSetting>
+                  </ShimmerPlaceholder>
                 </View>
               </View>
             </View>

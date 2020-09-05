@@ -54,7 +54,7 @@ const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
 const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
 
-import { SafeAnuncioView, ValueFieldPrincipal, TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
+import { SafeAnuncioView, ValueFieldPrincipal, IconResponsiveNOBACK,  TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
@@ -396,12 +396,12 @@ export default class MostrarCartao extends Component {
 
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                        <IconResponsive name="phone-square" size={30}/>
+                        <IconResponsiveNOBACK name="phone-square" size={30}/>
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.phone}</TextTheme>
                   </View>
 
                   <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
-                        <IconResponsive name="list-alt" size={30}/>
+                        <IconResponsiveNOBACK name="list-alt" size={30}/>
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</TextTheme>
                   </View>
 
@@ -411,12 +411,12 @@ export default class MostrarCartao extends Component {
                     <CallAndMessageContainer>
                         <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
                             <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Telefonar</TextDescription2>
-                            <IconResponsive name="mobile" size={20}/>
+                            <IconResponsiveNOBACK name="mobile" size={20}/>
                         </TouchableResponsive>   
 
                         <TouchableResponsive>
                             <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
-                            <IconResponsive name="comment-alt" size={20}/>
+                            <IconResponsiveNOBACK name="comment-alt" size={20}/>
                         </TouchableResponsive>            
                     </CallAndMessageContainer>
                   </View>
@@ -507,25 +507,25 @@ export default class MostrarCartao extends Component {
                   </View>
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                      <IconResponsive name="clock" size={25}/>
+                      <IconResponsiveNOBACK name="clock" size={25}/>
                       <TextTheme style={{fontSize:15, marginLeft: 15}}>Aberto durante {item.workDays} dias na semana</TextTheme>
                   </View>
 
 
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                      <IconResponsive name="map-marked-alt" size={25}/>
+                      <IconResponsiveNOBACK name="map-marked-alt" size={25}/>
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.local}</TextTheme>
                   </View>
 
 
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
-                        <IconResponsive name="phone-square" size={30}/>
+                        <IconResponsiveNOBACK name="phone-square" size={30}/>
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.phone}</TextTheme>
                   </View>
 
                   <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>
-                        <IconResponsive name="list-alt" size={30}/>
+                        <IconResponsiveNOBACK name="list-alt" size={30}/>
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</TextTheme>
                   </View>
           
@@ -536,12 +536,12 @@ export default class MostrarCartao extends Component {
                     <CallAndMessageContainer>
                         <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
                             <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Telefonar</TextDescription2>
-                            <IconResponsive name="mobile" size={20}/>
+                            <IconResponsiveNOBACK name="mobile" size={20}/>
                         </TouchableResponsive>   
 
                         <TouchableResponsive>
                             <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
-                            <IconResponsive name="comment-alt" size={20}/>
+                            <IconResponsiveNOBACK name="comment-alt" size={20}/>
                         </TouchableResponsive>            
                     </CallAndMessageContainer>
                   </View>

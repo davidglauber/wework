@@ -49,7 +49,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { TextInputMask } from 'react-native-masked-text';
 
 
-import { ItemContainer, ViewTopForm, SafeBackgroundPublish, IconResponsive, PublishTouchable, CategoryAndSub, TextDays, TitleChangeColor, InputFormMask, InputForm, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
+import { ItemContainer, ViewTopForm, SafeBackgroundPublish, IconResponsive, IconResponsiveNOBACK, PublishTouchable, CategoryAndSub, TextDays, TitleChangeColor, InputFormMask, InputForm, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
 
 import { ThemeContext } from '../../../ThemeContext';
 
@@ -825,7 +825,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                 <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 15, marginTop:20}}>Horário de Abertura</TitleChangeColor>
                                   <View style={{marginLeft:14, width: 130, height:30}}>
                                       <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeAbertura()}> 
-                                        <IconResponsive name="clock" size={24}/>
+                                        <IconResponsiveNOBACK name="clock" size={24}/>
                                         {this.state.horarioOpen == '' ? 
                                           <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>Abertura</Text> 
                                         : <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>{this.state.horarioOpen}</Text> 
@@ -838,7 +838,7 @@ export default class TelaCriarCartaoVisita extends Component {
                                   <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 35, marginTop:20}}>Horário de Fechamento</TitleChangeColor>
                                     <View style={{marginLeft:44, width: 130, height:30}}>
                                         <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeFechamento()}> 
-                                          <IconResponsive name="stopwatch" size={24}/>
+                                          <IconResponsiveNOBACK name="stopwatch" size={24}/>
                                           {this.state.horarioClose == '' ?
                                             <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>Fechamento</Text>
                                           : <Text style={{color:'#9A9A9A', fontWeight:'bold', marginLeft:5}}>{this.state.horarioClose}</Text>
@@ -862,12 +862,12 @@ export default class TelaCriarCartaoVisita extends Component {
                               <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
                                 {this.state.subcategoria == '' ?
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                                    <IconResponsive name="align-left" size={24}/>
+                                    <IconResponsiveNOBACK name="align-left" size={24}/>
                                     <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Categoria</TitleChangeColor>
                                 </View>
                                 :
                                 <View style={{flexDirection:'row', alignItems:'center', marginLeft:50}}>
-                                    <IconResponsive name="align-left" size={24}/>
+                                    <IconResponsiveNOBACK name="align-left" size={24}/>
                                     <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Selecionada ;)</TitleChangeColor>
                                 </View>
                                 }

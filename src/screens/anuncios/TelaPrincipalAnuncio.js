@@ -28,7 +28,7 @@ import firebase from '../../config/firebase';
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
-import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
+import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, Description, IconResponsiveNOBACK, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
 
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
@@ -238,13 +238,13 @@ sleep = (time) => {
 
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription} ...</Text>
+          <Description>{shortDescription} ...</Description>
         </View>
       );
     } else {
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{text}</Text>
+          <Description>{text}</Description>
         </View>
       );
     }
@@ -323,7 +323,7 @@ sleep = (time) => {
                         keyExtractor={() => this.makeid(17)}
                         data={anunciosAuto}
                         renderItem={({item}) => 
-                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
+                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                             <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -341,11 +341,11 @@ sleep = (time) => {
                                   </TouchableDetails>
 
                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
-                                      <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
+                                      <IconResponsive  name="pencil-alt" size={19}/>
                                   </TouchableOpacity>
 
                                   <TouchableOpacity onPress={() => this.deletePublish(item.idAnuncio)} style={{marginTop: 24, marginRight: 10}}>
-                                      <FontAwesome5  name="trash" size={19} color={"grey"} />
+                                      <IconResponsive  name="trash" size={19}/>
                                   </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
@@ -366,7 +366,7 @@ sleep = (time) => {
                         keyExtractor={() => this.makeid(17)}
                         data={anunciosEstab}
                         renderItem={({item}) => 
-                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
+                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                             <AnuncioContainer>
                                 <View style={{flexDirection:'row'}}>
                                     <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -384,11 +384,11 @@ sleep = (time) => {
                                     </TouchableDetails>
 
                                     <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarAnuncio', {idAnuncio: item.idAnuncio, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
-                                        <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
+                                        <IconResponsive  name="pencil-alt" size={19} />
                                     </TouchableOpacity>
 
                                     <TouchableOpacity onPress={() => this.deletePublish(item.idAnuncio)} style={{marginTop: 24, marginRight: 10}}>
-                                        <FontAwesome5  name="trash" size={19} color={"grey"} />
+                                        <IconResponsive  name="trash" size={19} />
                                     </TouchableOpacity>
                                     
                                     <View style={{marginTop: 24, marginRight: 30}}>

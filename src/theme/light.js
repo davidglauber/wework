@@ -1,7 +1,10 @@
 export default {
     background: '#fff',
-    backgroundColor: '#FFFDFD',
+    backgroundColor: '#DAA520',
+    backgroundColor2: '#fff',
     color:'#DAA520',
+    colorTitle:'#fff',
+    colorContainerDetails: '#3E3C3F',
     colorCallAndMessage: '#DAA520',
     colorSetting: '#DAA520',
     inversePallete: '#000000',

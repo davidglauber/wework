@@ -173,10 +173,6 @@ export const AnuncioContainer = styled.View`
     marginTop: 10px; 
     borderRadius: 10px; 
     backgroundColor: ${props => props.theme.backgroundColor}; 
-    elevation:5; 
-    shadowColor: black; 
-    shadowOffset:{width:2px, height:4px}; 
-    shadowOpacity: 0.2
 `
 
 export const CallAndMessageContainer = styled.View`
@@ -212,11 +208,12 @@ fontSize:17px;
 marginTop:20px;
 fontWeight: bold; 
 marginLeft:20px; 
-color:${props => props.theme.color}
+color:${props => props.theme.colorTitle}
 `
 
 export const ValueField = styled.Text`
-    color:${props => props.theme.color}
+    color:${props => props.theme.colorTitle};
+    fontWeight: bold
 `
 
 export const ValueFieldPrincipal = styled.Text`
@@ -252,7 +249,7 @@ export const IconResponsiveCallAndMessage = styled(FontAwesome5)`
 
 export const TouchableDetails = styled.TouchableOpacity`
     paddingLeft: 10px; 
-    backgroundColor: ${props => props.theme.color}; 
+    backgroundColor: ${props => props.theme.colorContainerDetails}; 
     width:100px; 
     height:20px; 
     borderRadius: 5px;
@@ -298,7 +295,20 @@ export const TextBoldGolden = styled.Text`
 `
 
 export const IconResponsive = styled(FontAwesome5)`
+    color: ${props => props.theme.colorTitle}
+`
+export const IconResponsiveNOBACK = styled(FontAwesome5)`
     color: ${props => props.theme.color}
+`
+
+export const Description = styled.Text`
+    textAlign: center; 
+    fontSize:12px; 
+    marginTop:20px; 
+    marginRight:170px; 
+    fontWeight: 500; 
+    marginLeft:25px; 
+    color:${props => props.theme.inversePallete}
 `
 export const ViewCartao = styled.View`
     position: absolute;
@@ -377,19 +387,19 @@ export const PlusContainer = styled.TouchableOpacity`
 ` 
 
 export const PlusIcon = styled(FontAwesome5)`
-    color: ${props => props.theme.color}
+    color: ${props => props.theme.colorTitle}
 ` 
 
 export const ItemContainer = styled.View`
     marginVertical: 4;
-    background: ${props => props.theme.backgroundColor}
+    background: ${props => props.theme.backgroundColor2}
 `
 
 export const ViewTopForm = styled.View`
     marginVertical: 4px;
     marginHorizontal: 12px;
     borderRadius: 16px;
-    background: ${props => props.theme.backgroundColor}
+    background: ${props => props.theme.backgroundColor2}
 `
 export const ButtonCustomized = styled(Button)`
     justifyContent: center;

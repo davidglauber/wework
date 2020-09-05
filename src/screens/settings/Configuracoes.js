@@ -66,7 +66,7 @@ const LOGOUT_ICON = IOS ? 'ios-exit' : 'md-exit';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 //CSS responsivo
-import { SafeBackground, SetTextUserSetting, IconResponsive, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
+import { SafeBackground, SetTextUserSetting, IconResponsiveNOBACK, SectionHeaderTextSetting, NameUserSetting, EmailUserSetting, HeadingSetting } from '../home/styles';
 
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
@@ -279,7 +279,7 @@ export default function Configuracoes() {
         <ScrollView contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.titleContainer}>
                 <TouchableOpacity onPress={() => navigation.navigate('HomeNavigator')}>
-                    <IconResponsive style={{marginRight: 24}} name="arrow-left" size={20}/>
+                    <IconResponsiveNOBACK style={{marginRight: 24}} name="arrow-left" size={20}/>
                 </TouchableOpacity>
             <HeadingSetting>Configurações</HeadingSetting>
           </View>

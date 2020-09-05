@@ -26,7 +26,7 @@ import Colors from '../../theme/colors';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 
-import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, TouchableDetails, ValueField, TextDetails, IconResponsive, Heading } from '../home/styles';
+import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, Description, TouchableDetails, ValueField, TextDetails, IconResponsive, Heading } from '../home/styles';
 
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
@@ -194,13 +194,13 @@ export default class TelaGeralCriarCartao extends Component {
 
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription} ...</Text>
+          <Description>{shortDescription} ...</Description>
         </View>
       );
     } else {
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{text}</Text>
+          <Description>{text}</Description>
         </View>
       );
     }
@@ -319,7 +319,7 @@ export default class TelaGeralCriarCartao extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={cartoesAuto}
                         renderItem={({item}) => 
-                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 190,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
+                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 190,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                             <AnuncioContainer style={{height: 190}}>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -342,11 +342,11 @@ export default class TelaGeralCriarCartao extends Component {
                                   </TouchableDetails>
 
                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarCartao', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
-                                      <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
+                                      <IconResponsive  name="pencil-alt" size={19}/>
                                   </TouchableOpacity>
 
                                   <TouchableOpacity onPress={() => this.deletePublish(item.idCartao)} style={{marginTop: 24, marginRight: 10}}>
-                                      <FontAwesome5  name="trash" size={19} color={"grey"} />
+                                      <IconResponsive  name="trash" size={19}/>
                                   </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>
@@ -369,7 +369,7 @@ export default class TelaGeralCriarCartao extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={cartoesEstab}
                         renderItem={({item}) => 
-                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 190,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
+                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 190,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                             <AnuncioContainer style={{height: 190}}>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -392,11 +392,11 @@ export default class TelaGeralCriarCartao extends Component {
                                   </TouchableDetails>
 
                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('EditarCartao', {idCartao: item.idCartao, type: item.type})} style={{marginTop: 24, marginRight: 10}}>
-                                      <FontAwesome5  name="pencil-alt" size={19} color={"grey"} />
+                                      <IconResponsive  name="pencil-alt" size={19}/>
                                   </TouchableOpacity>
 
                                   <TouchableOpacity onPress={() => this.deletePublish(item.idCartao)} style={{marginTop: 24, marginRight: 10}}>
-                                      <FontAwesome5  name="trash" size={19} color={"grey"} />
+                                      <IconResponsive  name="trash" size={19}/>
                                   </TouchableOpacity>
 
                                   <View style={{marginTop: 24, marginRight: 30}}>

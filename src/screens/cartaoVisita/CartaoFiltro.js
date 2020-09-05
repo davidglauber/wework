@@ -48,6 +48,8 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 //CSS responsivo
 import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from '../home/styles';
 
+import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
 import { ThemeContext } from '../../../ThemeContext';
 
 
@@ -112,6 +114,7 @@ export default class CartaoFiltro extends Component {
       favorite: false,
       cartoesEstab: [],
       cartoesAuto: [],
+      isFetchedPublish: false,
       products: [
         {
           id: 'product1',
@@ -137,6 +140,12 @@ export default class CartaoFiltro extends Component {
         },
       ],
     };
+  }
+
+
+  //sleep function
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
 
   async componentDidMount() {
@@ -176,6 +185,10 @@ export default class CartaoFiltro extends Component {
         
         
               e.setState({cartoesAuto: cartoesAutoDidMount})
+
+              this.sleep(1000).then(() => { 
+                e.setState({isFetchedPublish: true})
+              })
             })
         }
 
@@ -204,6 +217,10 @@ export default class CartaoFiltro extends Component {
   
   
           e.setState({cartoesEstab: cartoesEstabDidMount})
+
+          this.sleep(1000).then(() => { 
+            e.setState({isFetchedPublish: true})
+          })
         })
         }
 
@@ -260,7 +277,7 @@ export default class CartaoFiltro extends Component {
     }
   }
   render() {
-    const {cartoesAuto, cartoesEstab, products} = this.state;
+    const {cartoesAuto, cartoesEstab, products, isFetchedPublish} = this.state;
 
     return (
 
@@ -294,6 +311,8 @@ export default class CartaoFiltro extends Component {
                   <Swipeable
                     renderRightActions={this.RightAction}
                   > 
+
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                     <AnuncioContainer>
                           <View style={{flexDirection:'row'}}>
                               <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -322,6 +341,7 @@ export default class CartaoFiltro extends Component {
                           </View> 
 
                     </AnuncioContainer>
+                  </ShimmerPlaceholder>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}
@@ -337,6 +357,7 @@ export default class CartaoFiltro extends Component {
                   <Swipeable
                     renderRightActions={this.RightAction}
                   > 
+                    <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                     <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -364,7 +385,8 @@ export default class CartaoFiltro extends Component {
                                 </View>
                               </View> 
 
-                            </AnuncioContainer>
+                    </AnuncioContainer>
+                    </ShimmerPlaceholder>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}

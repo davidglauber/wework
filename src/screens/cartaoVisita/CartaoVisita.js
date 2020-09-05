@@ -42,7 +42,7 @@ import Colors from '../../theme/colors';
 const EMPTY_STATE_ICON = 'cart-remove';
 
 //CSS responsivo
-import { IconResponsive, ViewCartao, TextDetails, TouchableDetails, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
+import { IconResponsive, ViewCartao, TextDetails, TouchableDetails, Favorite, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
 
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
@@ -213,8 +213,8 @@ export default class CartaoVisita extends Component {
   RightAction() {
       return(
         <TouchableOpacity style={{width: 336, height: 170, flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom:5, marginTop: 10, borderRadius: 10, opacity:0.5}}>
-            <FontAwesome5 style={{marginRight:40}} name="star" size={24} color={"white"} />
-            <Text style={{color:'#fff', fontSize:30}}>Favoritar</Text>
+            <IconResponsive style={{marginRight:40}} name="star" size={24}/>
+            <Favorite>Favoritar</Favorite>
         </TouchableOpacity>
       );
   }

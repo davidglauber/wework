@@ -309,6 +309,11 @@ export const ViewCartao = styled.View`
     height: 100%;
 `
 
+export const Favorite = styled.Text`
+    color: ${props => props.theme.inversePallete}; 
+    fontSize:30px
+`
+
 export const Heading = styled(Heading6)`
     fontWeight: 700,
     color: ${props => props.theme.color}

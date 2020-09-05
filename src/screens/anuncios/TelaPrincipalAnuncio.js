@@ -30,6 +30,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
 
+import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
 import { ThemeContext } from '../../../ThemeContext';
 
 // HomeA Styles
@@ -113,12 +115,16 @@ export default class TelaPrincipalAnuncio extends Component {
     this.state = {
       anunciosEstab: [],
       anunciosAuto:[],
+      isFetchedPublish: false
     };
   }
 
 
 
-
+//sleep function
+sleep = (time) => {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 
   async componentDidMount() {
@@ -141,6 +147,10 @@ export default class TelaPrincipalAnuncio extends Component {
         })
       })
       e.setState({anunciosAuto: anunciosAutoDidMount})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
     })
 
     await firebase.firestore().collection(`usuarios/${currentUserUID}/anuncios`).where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
@@ -158,6 +168,10 @@ export default class TelaPrincipalAnuncio extends Component {
         })
       })
       e.setState({anunciosEstab: anunciosEstabDidMount})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
     })
 
     
@@ -266,7 +280,7 @@ export default class TelaPrincipalAnuncio extends Component {
 
  
   render() {
-    const {anunciosEstab, anunciosAuto} = this.state;
+    const {anunciosEstab, anunciosAuto, isFetchedPublish} = this.state;
 
     return (
       <SafeBackground>
@@ -309,6 +323,7 @@ export default class TelaPrincipalAnuncio extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={anunciosAuto}
                         renderItem={({item}) => 
+                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                             <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -339,6 +354,7 @@ export default class TelaPrincipalAnuncio extends Component {
                               </View> 
 
                             </AnuncioContainer>
+                          </ShimmerPlaceholder>
                         }
                       />
                     </View>
@@ -350,6 +366,7 @@ export default class TelaPrincipalAnuncio extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={anunciosEstab}
                         renderItem={({item}) => 
+                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                             <AnuncioContainer>
                                 <View style={{flexDirection:'row'}}>
                                     <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -380,6 +397,7 @@ export default class TelaPrincipalAnuncio extends Component {
                                 </View> 
 
                             </AnuncioContainer>
+                          </ShimmerPlaceholder>
                         }
                       />
                     </View>

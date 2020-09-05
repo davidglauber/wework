@@ -21,14 +21,14 @@ import firebase from '../../config/firebase';
 // import colors
 import Colors from '../../theme/colors';
 
-//import gradient
-import  { LinearGradient } from 'expo-linear-gradient';
 
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
 
 import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, TouchableDetails, ValueField, TextDetails, IconResponsive, Heading } from '../home/styles';
+
+import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
 
@@ -111,7 +111,8 @@ export default class TelaGeralCriarCartao extends Component {
 
     this.state = {
       cartoesEstab: [],
-      cartoesAuto: []
+      cartoesAuto: [],
+      isFetchedPublish: false
     };
   }
 
@@ -141,6 +142,10 @@ export default class TelaGeralCriarCartao extends Component {
         })
       })
       e.setState({cartoesAuto: cartoesAutoDidMount})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
     })
 
     await firebase.firestore().collection(`usuarios/${currentUserUID}/cartoes`).where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
@@ -163,6 +168,10 @@ export default class TelaGeralCriarCartao extends Component {
         })
       })
       e.setState({cartoesEstab: cartoesEstabDidMount})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
     })
 
   }
@@ -277,7 +286,7 @@ export default class TelaGeralCriarCartao extends Component {
   }
  
   render() {
-    const {cartoesAuto, cartoesEstab} = this.state;
+    const {cartoesAuto, cartoesEstab, isFetchedPublish} = this.state;
 
     return (
       <SafeBackground>
@@ -310,6 +319,7 @@ export default class TelaGeralCriarCartao extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={cartoesAuto}
                         renderItem={({item}) => 
+                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 190,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                             <AnuncioContainer style={{height: 190}}>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -345,6 +355,7 @@ export default class TelaGeralCriarCartao extends Component {
                               </View> 
 
                             </AnuncioContainer>
+                          </ShimmerPlaceholder>
                         }
                       />
                     </View>
@@ -358,6 +369,7 @@ export default class TelaGeralCriarCartao extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={cartoesEstab}
                         renderItem={({item}) => 
+                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 190,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                             <AnuncioContainer style={{height: 190}}>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -393,6 +405,7 @@ export default class TelaGeralCriarCartao extends Component {
                               </View> 
 
                             </AnuncioContainer>
+                          </ShimmerPlaceholder>
                         }
                       />
                     </View>

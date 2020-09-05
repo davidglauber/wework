@@ -46,6 +46,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAnuncioView, ValueFieldPrincipal, TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
+import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
 import { ThemeContext } from '../../../ThemeContext';
 
 // ProductA Config
@@ -196,7 +198,8 @@ export default class TelaAnuncio extends Component {
       },
       phoneNavigator: this.props.route.params.phoneNumberNavigator,
       dateAuto:'',
-      dateEstab:''
+      dateEstab:'',
+      isFetched: false
     };
   }
 
@@ -232,6 +235,8 @@ export default class TelaAnuncio extends Component {
       })
       e.setState({anuncioAuto: anuncioAutoDidMount})
       e.setState({dateAuto: dataAtual})
+
+      e.setState({isFetched: true})
     })
 
 
@@ -261,6 +266,8 @@ export default class TelaAnuncio extends Component {
       })
       e.setState({anuncioEstab: anuncioEstabDidMount})
       e.setState({dateEstab: dataAtual})
+
+      e.setState({isFetched: true})
     })
 
     console.log('ARRAY ANUNCIO anuncioEstab: ' + this.state.anuncioEstab)
@@ -302,7 +309,7 @@ export default class TelaAnuncio extends Component {
   }
 
   render() {
-    const {product, anuncioAuto, anuncioEstab} = this.state;
+    const {product, anuncioAuto, anuncioEstab, isFetched} = this.state;
     const {
       images,
     } = product;
@@ -328,10 +335,12 @@ export default class TelaAnuncio extends Component {
                     activeDotStyle={styles.activeDot}
                     dotStyle={styles.dot}
                     index={isRTL ? images.length - 1 : 0}>
+                    <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: '100%', height: 228, resizeMode: 'cover'}}>
                       <Image
                         source={{uri: item.photo}}
                         style={styles.slideImg}
-                      />
+                        />
+                    </ShimmerPlaceholder>
                   </Swiper>
 
                   <ButtonIconContainer>
@@ -385,6 +394,31 @@ export default class TelaAnuncio extends Component {
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</TextTheme>
                   </View>
           
+
+                  <View style={{flex: 1, flexDirection:'row', marginBottom:1, bottom:40}}>
+                  <CallAndMessageContainer>
+                      <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
+                          <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Telefonar</TextDescription2>
+                          <IconResponsive name="mobile" size={20}/>
+                      </TouchableResponsive>   
+
+                      <TouchableResponsive>
+                          <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
+                          <IconResponsive name="comment-alt" size={20}/>
+                      </TouchableResponsive>            
+                  </CallAndMessageContainer>
+                  </View>
+
+
+                  {this.state.dateAuto == '' ? 
+                      <View style={{alignItems:'center'}}>
+                        <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</TextDescription>
+                      </View>
+                    :
+                      <View style={{alignItems:'center'}}>
+                        <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</TextDescription>
+                      </View>
+                  }
                 </View>
             }
           />
@@ -483,38 +517,38 @@ export default class TelaAnuncio extends Component {
                         <IconResponsive name="list-alt" size={30}/>
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.categoria} / {item.subcategoria}</TextTheme>
                   </View>
+
+                <View style={{flex: 1, flexDirection:'row', marginBottom:1, bottom:40}}>
+                <CallAndMessageContainer>
+                    <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
+                        <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Telefonar</TextDescription2>
+                        <IconResponsive name="mobile" size={20}/>
+                    </TouchableResponsive>   
+
+                    <TouchableResponsive>
+                        <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
+                        <IconResponsive name="comment-alt" size={20}/>
+                    </TouchableResponsive>            
+                </CallAndMessageContainer>
                 </View>
+
+
+                  {this.state.dateAuto == '' ? 
+                      <View style={{alignItems:'center'}}>
+                        <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</TextDescription>
+                      </View>
+                    :
+                      <View style={{alignItems:'center'}}>
+                        <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</TextDescription>
+                      </View>
+                  }
+                </View>
+
             }
           />
 
 
         </ScrollView>
-
-          
-        <View style={{flex: 1, flexDirection:'row', marginBottom:50, bottom:50}}>
-            <CallAndMessageContainer>
-                <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
-                    <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Telefonar</TextDescription2>
-                    <IconResponsive name="mobile" size={20}/>
-                </TouchableResponsive>   
-
-                <TouchableResponsive>
-                    <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
-                    <IconResponsive name="comment-alt" size={20}/>
-                </TouchableResponsive>            
-            </CallAndMessageContainer>
-        </View>
-
-        {this.state.dateAuto == '' ? 
-            <View style={{alignItems:'center'}}>
-              <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateEstab}</TextDescription>
-            </View>
-          :
-            <View style={{alignItems:'center'}}>
-              <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</TextDescription>
-            </View>
-        }
-
 
       </SafeAnuncioView>
     );

@@ -44,7 +44,10 @@ const EMPTY_STATE_ICON = 'cart-remove';
 //CSS responsivo
 import { IconResponsive, ViewCartao, TextDetails, TouchableDetails, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
 
+import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
 import { ThemeContext } from '../../../ThemeContext';
+
 
 // CartA Styles
 const styles = StyleSheet.create({
@@ -104,6 +107,7 @@ export default class CartaoVisita extends Component {
       favorite: false,
       cartoesEstab: [],
       cartoesAuto: [],
+      isFetchedPublish: false,
       products: [
         {
           id: 'product1',
@@ -131,6 +135,13 @@ export default class CartaoVisita extends Component {
     };
   }
 
+  //sleep function
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+
+
   async componentDidMount() {
     let e = this;
 
@@ -149,6 +160,10 @@ export default class CartaoVisita extends Component {
         })
       })
       e.setState({cartoesAuto: cartoesAutoDidMount})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
     })
 
     await firebase.firestore().collection('cartoes').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
@@ -171,6 +186,10 @@ export default class CartaoVisita extends Component {
         })
       })
       e.setState({cartoesEstab: cartoesEstabDidMount})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
     })
   };
 
@@ -219,7 +238,7 @@ export default class CartaoVisita extends Component {
     }
   }
   render() {
-    const {cartoesAuto, cartoesEstab, products} = this.state;
+    const {cartoesAuto, cartoesEstab, products, isFetchedPublish} = this.state;
 
     return (
 
@@ -254,6 +273,8 @@ export default class CartaoVisita extends Component {
                   <Swipeable
                     renderRightActions={this.RightAction}
                   > 
+
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                     <AnuncioContainer>
                           <View style={{flexDirection:'row'}}>
                               <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -282,6 +303,7 @@ export default class CartaoVisita extends Component {
                           </View> 
 
                     </AnuncioContainer>
+                  </ShimmerPlaceholder>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}
@@ -297,6 +319,8 @@ export default class CartaoVisita extends Component {
                   <Swipeable
                     renderRightActions={this.RightAction}
                   > 
+
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                     <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -325,6 +349,7 @@ export default class CartaoVisita extends Component {
                               </View> 
 
                     </AnuncioContainer>
+                  </ShimmerPlaceholder>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}

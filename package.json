@@ -40,6 +40,7 @@
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
+    "react-native-shimmer-placeholder": "^2.0.6",
     "react-native-svg": "12.1.0",
     "react-native-swipe-list-view": "^2.3.0",
     "react-native-swiper": "^1.6.0",

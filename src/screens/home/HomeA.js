@@ -33,7 +33,10 @@ import { FontAwesome5 } from '@expo/vector-icons';
 //CSS responsivo
 import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
+import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
 import { ThemeContext } from '../../../ThemeContext';
+
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -118,6 +121,8 @@ export default class HomeA extends Component {
       emailUserFunction:'',
       activesPublishesAuto: [],
       activesPublishesEstab: [],
+      isFetched: false,
+      isFetchedPublish: false
     };
   }
 
@@ -130,6 +135,10 @@ export default class HomeA extends Component {
 
 
 
+    //sleep function
+    sleep = (time) => {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
 
 
 
@@ -154,7 +163,7 @@ async componentDidMount() {
               let removeCharacters6 = removeCharacters5.replace('yahoo.com', '')
 
               e.setState({emailUserFunction: removeCharacters6})
-
+              e.setState({isFetched: true})
 
         })
         } else {
@@ -184,6 +193,10 @@ async componentDidMount() {
 
 
       e.setState({activesPublishesAuto: anunciosAtivosAuto})
+
+      this.sleep(1000).then(() => { 
+      e.setState({isFetchedPublish: true})
+      })
     })
 
 
@@ -206,6 +219,10 @@ async componentDidMount() {
 
 
       e.setState({activesPublishesEstab: anunciosAtivosEstab})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
     })
 
 
@@ -285,7 +302,7 @@ async componentDidMount() {
   }
 
   render() {
-    const { status, emailUserFunction, activesPublishesAuto, activesPublishesEstab } = this.state
+    const { status, emailUserFunction, isFetchedPublish, activesPublishesAuto, activesPublishesEstab, isFetched } = this.state
 
     return (
       <SafeBackground>
@@ -301,13 +318,19 @@ async componentDidMount() {
               <View style={styles.titleContainer}>
               
                 {status == true ? 
-                    <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
-                        <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
-                    </TouchableOpacity>
+                  <View>
+                    <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5, justifyContent:'center', width:210, height:27}}>
+                      <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
+                          <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
+                      </TouchableOpacity>
+                    </ShimmerPlaceholder>
+                    </View>
                     :
-                    <SignUpBottom onPress={this.navigateTo('SignUp')}>
-                        <TextBold>Criar Conta</TextBold>
-                    </SignUpBottom>
+                    <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5 ,alignItems: 'center', justifyContent: 'center', width:116, height:27}}>
+                      <SignUpBottom onPress={this.navigateTo('SignUp')}>
+                          <TextBold>Criar Conta</TextBold>
+                      </SignUpBottom>
+                    </ShimmerPlaceholder>
                 }
                     
                 <TouchableOpacity onPress={this.navigateTo('Filtro')} style={{width:20, height:20}}>
@@ -330,6 +353,7 @@ async componentDidMount() {
                 
                   <View style={{flex:1, alignItems: 'center'}}>
                       <View>
+                        <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                           <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -355,6 +379,7 @@ async componentDidMount() {
                               </View> 
 
                           </AnuncioContainer>
+                        </ShimmerPlaceholder>
                       </View>
                   </View>
                 
@@ -370,6 +395,7 @@ async componentDidMount() {
                 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
+                      <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
                         <AnuncioContainer>
                             <View style={{flexDirection:'row'}}>
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -396,6 +422,7 @@ async componentDidMount() {
                             </View> 
 
                         </AnuncioContainer>
+                      </ShimmerPlaceholder>
                     </View>
                 </View>
                 

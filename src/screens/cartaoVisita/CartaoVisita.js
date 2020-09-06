@@ -111,6 +111,7 @@ export default class CartaoVisita extends Component {
       cartoesAuto: [],
       isFetchedPublish: false,
       switchSwipeState: true,
+      isOpen: true,
       products: [
         {
           id: 'product1',
@@ -228,6 +229,12 @@ export default class CartaoVisita extends Component {
   AddToFav(id, publishObj) {
     let currentUser = firebase.auth().currentUser.uid;
     firebase.firestore().collection('usuarios').doc(currentUser).collection('favoritos').doc(id).set(publishObj)
+    
+      this.setState({isOpen: false})
+
+    this.sleep(500).then(() => { 
+      this.setState({isOpen: true})
+    })
   }
 
 
@@ -250,7 +257,7 @@ export default class CartaoVisita extends Component {
     }
   }
   render() {
-    const {cartoesAuto, cartoesEstab, products, isFetchedPublish, switchSwipeState} = this.state;
+    const {cartoesAuto, cartoesEstab, products, isOpen, isFetchedPublish, switchSwipeState} = this.state;
 
     return (
 
@@ -285,6 +292,7 @@ export default class CartaoVisita extends Component {
                   <Swipeable
                     renderRightActions={this.RightAction}
                     onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item)}
+                    enabled={isOpen}
                   > 
 
                   <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>

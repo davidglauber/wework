@@ -218,7 +218,7 @@ export default class FavoritesA extends Component {
   RightAction() {
       return(
         <TouchableWithoutFeedback style={{width: 336, height: 170, flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom:5, marginTop: 10, borderRadius: 10, opacity:0.5}}>
-            <IconResponsiveNOBACK style={{marginRight:40}} name="star" size={24}/>
+            <IconResponsiveNOBACK style={{marginRight:40}} name="trash-alt" size={24}/>
             <Favorite>Deletado</Favorite>
         </TouchableWithoutFeedback>
       );

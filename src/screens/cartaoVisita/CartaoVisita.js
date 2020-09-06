@@ -220,6 +220,19 @@ export default class CartaoVisita extends Component {
   }
 
 
+
+  AddToFav(id, publishObj, type) {
+    let currentUser = firebase.auth().currentUser.uid;
+
+    console.log('ID DO CARTAO: ' + id)
+    console.log('OBJETO DO CARTAO: ' + publishObj)
+    console.log('TYPE DO CARTAO: ' + type)
+
+    firebase.firestore().collection('usuarios').doc(currentUser).collection('favoritos').doc(id).set(publishObj)
+  }
+
+
+
   cutDescription(text) {
     if(text.length > 40) {
       let shortDescription = text.substr(0, 40)
@@ -272,6 +285,7 @@ export default class CartaoVisita extends Component {
                 renderItem={({item}) => 
                   <Swipeable
                     renderRightActions={this.RightAction}
+                    onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item, item.type)}
                   > 
 
                   <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
@@ -318,6 +332,7 @@ export default class CartaoVisita extends Component {
                 renderItem={({item}) => 
                   <Swipeable
                     renderRightActions={this.RightAction}
+                    onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item, item.type)}
                   > 
 
                   <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>

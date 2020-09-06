@@ -275,6 +275,13 @@ export default class FavoritesA extends Component {
 
           <ScrollView>
             <View>
+
+              {cartoesAuto.length == 0 && cartoesEstab.length == 0 &&
+                <View style={{flex:1, alignItems:'center', paddingTop:'70%', marginLeft:30}}>
+                  <Heading>Parece que você ainda não tem nenhum cartão favoritado :(</Heading>
+                </View>
+              }
+              
               <FlatList
                 data={cartoesAuto}
                 keyExtractor={() => this.makeid(17)}

@@ -18,6 +18,7 @@ import {
   Image,
   FlatList,
   Alert,
+  TouchableWithoutFeedbackComponent,
 } from 'react-native';
 import remove from 'lodash/remove';
 
@@ -47,6 +48,7 @@ import { IconResponsive, ViewCartao, TextDetails, Description, IconResponsiveNOB
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 // CartA Styles
@@ -108,6 +110,7 @@ export default class CartaoVisita extends Component {
       cartoesEstab: [],
       cartoesAuto: [],
       isFetchedPublish: false,
+      switchSwipeState: true,
       products: [
         {
           id: 'product1',
@@ -157,6 +160,7 @@ export default class CartaoVisita extends Component {
           type: doc.data().type,
           categoria: doc.data().categoryAuto,
           phone: doc.data().phoneNumberAuto,
+          verified: doc.data().verifiedPublish
         })
       })
       e.setState({cartoesAuto: cartoesAutoDidMount})
@@ -212,22 +216,17 @@ export default class CartaoVisita extends Component {
 
   RightAction() {
       return(
-        <TouchableOpacity style={{width: 336, height: 170, flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom:5, marginTop: 10, borderRadius: 10, opacity:0.5}}>
+        <TouchableWithoutFeedback style={{width: 336, height: 170, flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom:5, marginTop: 10, borderRadius: 10, opacity:0.5}}>
             <IconResponsiveNOBACK style={{marginRight:40}} name="star" size={24}/>
-            <Favorite>Favoritar</Favorite>
-        </TouchableOpacity>
+            <Favorite>Favoritado</Favorite>
+        </TouchableWithoutFeedback>
       );
   }
 
 
 
-  AddToFav(id, publishObj, type) {
+  AddToFav(id, publishObj) {
     let currentUser = firebase.auth().currentUser.uid;
-
-    console.log('ID DO CARTAO: ' + id)
-    console.log('OBJETO DO CARTAO: ' + publishObj)
-    console.log('TYPE DO CARTAO: ' + type)
-
     firebase.firestore().collection('usuarios').doc(currentUser).collection('favoritos').doc(id).set(publishObj)
   }
 
@@ -251,7 +250,7 @@ export default class CartaoVisita extends Component {
     }
   }
   render() {
-    const {cartoesAuto, cartoesEstab, products, isFetchedPublish} = this.state;
+    const {cartoesAuto, cartoesEstab, products, isFetchedPublish, switchSwipeState} = this.state;
 
     return (
 
@@ -285,7 +284,7 @@ export default class CartaoVisita extends Component {
                 renderItem={({item}) => 
                   <Swipeable
                     renderRightActions={this.RightAction}
-                    onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item, item.type)}
+                    onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item)}
                   > 
 
                   <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
@@ -332,7 +331,7 @@ export default class CartaoVisita extends Component {
                 renderItem={({item}) => 
                   <Swipeable
                     renderRightActions={this.RightAction}
-                    onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item, item.type)}
+                    onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item)}
                   > 
 
                   <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>

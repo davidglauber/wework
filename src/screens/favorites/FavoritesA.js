@@ -8,197 +8,376 @@
 // import dependencies
 import React, {Component, Fragment} from 'react';
 import {
-  FlatList,
-  I18nManager,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Alert,
+  TouchableWithoutFeedbackComponent,
 } from 'react-native';
 import remove from 'lodash/remove';
 
 // import components
-import ActionProductCardHorizontal from '../../components/cards/ActionProductCardHorizontal';
-import EmptyState from '../../components/emptystate/EmptyState';
 import {Heading6, SmallText} from '../../components/text/CustomText';
+
+//import GestureHandler
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+
+import { FontAwesome5 } from '@expo/vector-icons';
+
+//import firebase
+import firebase from '../../config/firebase';
+
+
+const fotoCartaoVisita = require('../../assets/img/smile.jpg');
 
 // import colors
 import Colors from '../../theme/colors';
 
-// FavoritesA Config
-const isRTL = I18nManager.isRTL;
-const EMPTY_STATE_ICON = 'star-outline';
+// CartA Config
+const EMPTY_STATE_ICON = 'cart-remove';
 
-// FavoritesA Styles
+//CSS responsivo
+import { IconResponsive, ViewCartao, TextDetails, Description, IconResponsiveNOBACK, TouchableDetails, Favorite, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
+
+import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
+import { ThemeContext } from '../../../ThemeContext';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
+
+// CartA Styles
 const styles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
+  inline: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
   },
   titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 16,
     paddingHorizontal: 16,
+    paddingBottom: 24,
   },
   titleText: {
-    paddingTop: 16,
-    paddingBottom: 24,
     fontWeight: '700',
-    textAlign: 'left',
+    color: 'white'
   },
   productList: {
     // spacing = paddingHorizontal + ActionProductCardHorizontal margin = 12 + 4 = 16
     paddingHorizontal: 12,
   },
-  bottomTextInfo: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8,
+  subTotalText: {
+    top: -2,
+    fontWeight: '500',
+    color: Colors.onSurface,
   },
-  info: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 28,
-    borderRadius: 4,
-    paddingHorizontal: 8,
-    backgroundColor: '#f1f1f1',
+  subTotalPriceText: {
+    fontWeight: '700',
+    color: Colors.primaryColor,
+  },
+  bottomButtonContainer: {
+    width: '100%',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
   },
 });
 
-// FavoritesA
+// CartA
 export default class FavoritesA extends Component {
+  static contextType = ThemeContext
+  
   constructor(props) {
     super(props);
 
     this.state = {
+      total: 0.0,
+      favorite: false,
+      cartoesEstab: [],
+      cartoesAuto: [],
+      isFetchedPublish: false,
+      switchSwipeState: true,
       products: [
         {
           id: 'product1',
           imageUri: require('../../assets/img/sandwich_2.jpg'),
           name: 'Subway sandwich',
-          price: 8.49,
-          quantity: 0,
+          price: 10.0,
+          quantity: 2,
           discountPercentage: 10,
         },
         {
           id: 'product2',
           imageUri: require('../../assets/img/pizza_1.jpg'),
           name: 'Pizza Margarita 35cm',
-          quantity: 0,
-          price: 10.99,
+          price: 20.0,
+          quantity: 1,
         },
         {
           id: 'product3',
           imageUri: require('../../assets/img/cake_1.jpg'),
           name: 'Chocolate cake',
-          quantity: 0,
-          price: 4.99,
+          price: 30.0,
+          quantity: 2,
         },
       ],
     };
   }
+
+  //sleep function
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+
+
+  async componentDidMount() {
+    let e = this;
+    let currentUser = firebase.auth().currentUser.uid;
+
+    await firebase.firestore().collection('usuarios').doc(currentUser).collection('favoritos').where("type", "==", "Autonomo").where("verified", "==", true).onSnapshot(documentSnapshot => {
+      let cartoesAutoDidMount = []
+      documentSnapshot.forEach(function(doc) {
+        cartoesAutoDidMount.push({
+          idUser: doc.data().idUser,
+          nome: doc.data().nome,
+          idCartao: doc.data().idCartao,
+          photo: doc.data().photo,
+          description: doc.data().description,
+          type: doc.data().type,
+          categoria: doc.data().categoria,
+          phone: doc.data().phoneNumberAuto,
+        })
+      })
+      e.setState({cartoesAuto: cartoesAutoDidMount})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
+    })
+
+    await firebase.firestore().collection('usuarios').doc(currentUser).collection('favoritos').where("type", "==", "Estabelecimento").where("verified", "==", true).onSnapshot(documentSnapshot => {
+      let cartoesEstabDidMount = []
+      documentSnapshot.forEach(function(doc) {
+        cartoesEstabDidMount.push({
+          idUser: doc.data().idUser,
+          idCartao: doc.data().idCartao,
+          photo: doc.data().photo,
+          local: doc.data().localEstab,
+          title: doc.data().title,
+          description: doc.data().description,
+          phone: doc.data().phoneNumberEstab,
+          timeOpen: doc.data().timeOpen,
+          timeClose: doc.data().timeClose,
+          type: doc.data().type,
+          verified: doc.data().verifiedPublish,
+          categoria: doc.data().categoria,
+          workDays: doc.data().workDays
+        })
+
+      })
+      e.setState({cartoesEstab: cartoesEstabDidMount})
+
+      this.sleep(1000).then(() => { 
+        e.setState({isFetchedPublish: true})
+      })
+    })
+  };
 
   navigateTo = (screen) => () => {
     const {navigation} = this.props;
     navigation.navigate(screen);
   };
 
-  swipeoutOnPressRemove = (item) => () => {
-    let {products} = this.state;
-    const index = products.indexOf(item);
 
-    products = remove(products, (n) => products.indexOf(n) !== index);
-
-    this.setState({
-      products,
-    });
-  };
-
-  onPressRemove = (item) => () => {
-    let {quantity} = item;
-    quantity -= 1;
-
-    const {products} = this.state;
-    const index = products.indexOf(item);
-
-    if (quantity < 0) {
-      return;
+  makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    products[index].quantity = quantity;
+    return result;
+ }
 
-    this.setState({
-      products: [...products],
-    });
-  };
 
-  onPressAdd = (item) => () => {
-    const {quantity} = item;
-    const {products} = this.state;
+  RightAction() {
+      return(
+        <TouchableWithoutFeedback style={{width: 336, height: 170, flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom:5, marginTop: 10, borderRadius: 10, opacity:0.5}}>
+            <IconResponsiveNOBACK style={{marginRight:40}} name="star" size={24}/>
+            <Favorite>Deletado</Favorite>
+        </TouchableWithoutFeedback>
+      );
+  }
 
-    const index = products.indexOf(item);
-    products[index].quantity = quantity + 1;
 
-    this.setState({
-      products: [...products],
-    });
-  };
 
-  keyExtractor = (item) => item.id.toString();
+  RemoveFav(id) {
+    let currentUser = firebase.auth().currentUser.uid;
+      firebase.firestore().collection('usuarios').doc(currentUser).collection('favoritos').where("idCartao", "==", id).get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc){
+          doc.ref.delete();
+        })
+    })
+  }
 
-  renderProductItem = ({item}) => (
-    <ActionProductCardHorizontal
-      key={item.id}
-      onPress={this.navigateTo('Product')}
-      onPressRemove={this.onPressRemove(item)}
-      onPressAdd={this.onPressAdd(item)}
-      imageUri={item.imageUri}
-      title={item.name}
-      price={item.price}
-      quantity={item.quantity}
-      discountPercentage={item.discountPercentage}
-      label={item.label}
-      swipeoutDisabled={false}
-      swipeoutOnPressRemove={this.swipeoutOnPressRemove(item)}
-    />
-  );
 
+
+  cutDescription(text) {
+    if(text.length > 40) {
+      let shortDescription = text.substr(0, 40)
+
+      return(
+        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+          <Description>{shortDescription} ...</Description>
+        </View>
+      );
+    } else {
+      return(
+        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+          <Description>{text}</Description>
+        </View>
+      );
+    }
+  }
   render() {
-    const {products} = this.state;
+    const {cartoesAuto, cartoesEstab, products, isFetchedPublish, switchSwipeState} = this.state;
 
     return (
+
       <SafeAreaView style={styles.container}>
+
+        <ViewCartao/>
+
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
+        
 
         <View style={styles.titleContainer}>
-          <Heading6 style={styles.titleText}>Favorites</Heading6>
+          <Heading>Favoritos</Heading>
         </View>
 
-        {products.length === 0 ? (
-          <EmptyState
-            showIcon
-            iconName={EMPTY_STATE_ICON}
-            title="Your Favorites List is Empty"
-            message="Save your favorite food so you can always find it here and make order easier"
-          />
-        ) : (
-          <Fragment>
-            <FlatList
-              data={products}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderProductItem}
-              contentContainerStyle={styles.productList}
-            />
+          <ScrollView>
+            <View>
+              <FlatList
+                data={cartoesAuto}
+                keyExtractor={() => this.makeid(17)}
+                renderItem={({item}) => 
+                  <Swipeable
+                    renderLeftActions={this.RightAction}
+                    onSwipeableLeftOpen={() => this.RemoveFav(item.idCartao)}
+                  > 
 
-            <View style={styles.bottomTextInfo}>
-              <View style={styles.info}>
-                <SmallText>
-                  {`Swipe ${isRTL ? 'right' : 'left'} to remove items`}
-                </SmallText>
-              </View>
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
+                    <AnuncioContainer>
+                          <View style={{flexDirection:'row'}}>
+                              <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                              
+                              <View style={{flexDirection:'column'}}>
+                                <Title>{item.nome}</Title>
+
+                                {this.cutDescription(item.description)}
+
+                              </View>
+                          </View>  
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                              <TouchableDetails onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                  <TextDetails>Ver Detalhes</TextDetails>
+                              </TouchableDetails>
+
+                              <View style={{flexDirection:'row', marginTop:15}}>
+                                  <ValueField style={{paddingTop:10, fontSize:12}}>{item.categoria}</ValueField>
+                                  <IconResponsive style={{marginLeft:15, marginTop:10}} name="clone" size={19}/>
+                              </View>
+
+                              <View style={{marginTop: 24, marginRight: 30}}>
+                                  <IconResponsive  name="user-tie" size={19}/>
+                            </View>
+                          </View> 
+
+                    </AnuncioContainer>
+                  </ShimmerPlaceholder>
+                  </Swipeable>
+                }
+                contentContainerStyle={styles.productList}
+              />
+
             </View>
-          </Fragment>
-        )}
+
+            <View>
+              <FlatList
+                data={cartoesEstab}
+                keyExtractor={() => this.makeid(17)}
+                renderItem={({item}) => 
+                  <Swipeable
+                    renderLeftActions={this.RightAction}
+                    onSwipeableLeftOpen={() => this.RemoveFav(item.idCartao)}
+                  > 
+
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
+                    <AnuncioContainer>
+                              <View style={{flexDirection:'row'}}>
+                                  <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
+                                  
+                                  <View style={{flexDirection:'column', }}>
+                                    <Title>{item.title}</Title>
+
+                                    {this.cutDescription(item.description)}
+
+                                  </View>
+                              </View>  
+
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                  <TouchableDetails onPress={() => this.props.navigation.navigate('MostrarCartao', {idDoCartao: item.idCartao, phoneNumberNavigator: item.phone, idUserCartao: item.idUser})}>
+                                      <TextDetails>Ver Detalhes</TextDetails>
+                                  </TouchableDetails>
+
+                                  <View style={{flexDirection:'row', marginTop:15}}>
+                                      <ValueField style={{paddingTop:10, fontSize:12}}>{item.categoria}</ValueField>
+                                      <IconResponsive style={{marginLeft:15, marginTop:10}} name="clone" size={19}/>
+                                  </View>
+
+                                  <View style={{marginTop: 24, marginRight: 30}}>
+                                      <IconResponsive  name="briefcase" size={19}/>
+                                </View>
+                              </View> 
+
+                    </AnuncioContainer>
+                  </ShimmerPlaceholder>
+                  </Swipeable>
+                }
+                contentContainerStyle={styles.productList}
+              />
+
+            </View>
+
+          </ScrollView>
+
+
+          <View style={{justifyContent: 'center',alignItems: 'center', padding: 8}}>
+            <SwipeLeft>
+                <SmallText>
+                      {`Deslize para a direita para excluir`}
+                </SmallText>
+            </SwipeLeft>
+          </View>
       </SafeAreaView>
     );
   }

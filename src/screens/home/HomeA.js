@@ -122,7 +122,8 @@ export default class HomeA extends Component {
       activesPublishesAuto: [],
       activesPublishesEstab: [],
       isFetched: false,
-      isFetchedPublish: false
+      isFetchedPublish: false,
+      isFetchedButton: false
     };
   }
 
@@ -163,10 +164,11 @@ async componentDidMount() {
               let removeCharacters6 = removeCharacters5.replace('yahoo.com', '')
 
               e.setState({emailUserFunction: removeCharacters6})
-              e.setState({isFetched: true})
+              e.setState({isFetchedButton: true})
 
         })
         } else {
+          e.setState({isFetchedButton: true})
           e.setState({status: false})
         }
 
@@ -302,7 +304,7 @@ async componentDidMount() {
   }
 
   render() {
-    const { status, emailUserFunction, isFetchedPublish, activesPublishesAuto, activesPublishesEstab, isFetched } = this.state
+    const { status, emailUserFunction, isFetchedButton, isFetchedPublish, activesPublishesAuto, activesPublishesEstab, isFetched } = this.state
 
     return (
       <SafeBackground>
@@ -319,14 +321,14 @@ async componentDidMount() {
               
                 {status == true ? 
                   <View>
-                    <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5, justifyContent:'center', width:210, height:27}}>
+                    <ShimmerPlaceholder visible={isFetchedButton} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5, justifyContent:'center', width:210, height:27}}>
                       <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
                           <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
                       </TouchableOpacity>
                     </ShimmerPlaceholder>
                     </View>
                     :
-                    <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5 ,alignItems: 'center', justifyContent: 'center', width:116, height:27}}>
+                    <ShimmerPlaceholder visible={isFetchedButton} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5 ,alignItems: 'center', justifyContent: 'center', width:116, height:27}}>
                       <SignUpBottom onPress={this.navigateTo('SignUp')}>
                           <TextBold>Criar Conta</TextBold>
                       </SignUpBottom>

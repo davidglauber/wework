@@ -227,14 +227,28 @@ export default class CartaoVisita extends Component {
 
 
   AddToFav(id, publishObj) {
-    let currentUser = firebase.auth().currentUser.uid;
-    firebase.firestore().collection('usuarios').doc(currentUser).collection('favoritos').doc(id).set(publishObj)
+    let currentUser = firebase.auth().currentUser;
+
+    if(currentUser == null) {
+      alert('Você precisa estar logado para favoritar um cartão!')
+
+      this.setState({isOpen: false})
+
+      this.sleep(500).then(() => { 
+        this.setState({isOpen: true})
+      })
+    }
+
+    if(currentUser != null) {
+      firebase.firestore().collection('usuarios').doc(currentUser.uid).collection('favoritos').doc(id).set(publishObj)
     
       this.setState({isOpen: false})
 
-    this.sleep(500).then(() => { 
-      this.setState({isOpen: true})
-    })
+      this.sleep(500).then(() => { 
+        this.setState({isOpen: true})
+      })
+
+    }
   }
 
 

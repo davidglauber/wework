@@ -144,7 +144,10 @@ export default class CriarAnuncio extends Component {
       currentDate: new Date(),
       date: '',
       subcategorias:[],
-      subcategoria:''
+      subcategoria:'',
+      isPhotoLoaded: false,
+      isPhotoLoaded2: false,
+      isPhotoLoaded3: false
     };
   }
 
@@ -507,9 +510,6 @@ export default class CriarAnuncio extends Component {
     let imageIdStorageState2 = '';
     let imageIdStorageState3 = '';
 
-    var isPhotoLoaded = false;
-    var isPhotoLoaded2 = false;
-    var isPhotoLoaded3 = false;
 
       var getFileBlob = function (url, cb) { 
           var xhr = new XMLHttpRequest();
@@ -527,7 +527,7 @@ export default class CriarAnuncio extends Component {
         getFileBlob(this.state.image, blob => {
           firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
               imageIdStorageState = imageId
-              isPhotoLoaded = true
+              e.setState({isPhotoLoaded: true})
               console.log('A imagem foi salva no Storage!');
               console.log('Valor image state: ' + imageIdStorageState);
               
@@ -537,7 +537,7 @@ export default class CriarAnuncio extends Component {
         getFileBlob(this.state.image2, blob => {
           firebase.storage().ref(`${storageUrl}/images/${imageId2}`).put(blob).then((snapshot) => {
               imageIdStorageState2 = imageId2
-              isPhotoLoaded2 = true
+              e.setState({isPhotoLoaded2: true})
               console.log('A imagem foi salva no Storage!');
               console.log('Valor image state2: ' + imageIdStorageState2);
               
@@ -548,19 +548,13 @@ export default class CriarAnuncio extends Component {
         getFileBlob(this.state.image3, blob => {
           firebase.storage().ref(`${storageUrl}/images/${imageId3}`).put(blob).then((snapshot) => {
               imageIdStorageState3 = imageId3
-              isPhotoLoaded3 = true
               console.log('A imagem foi salva no Storage!');
-              console.log('Valor image state: ' + imageIdStorageState3);
+              console.log('Valor image state3: ' + imageIdStorageState3);
               
-          })
-        })
-
-
 
 
               if(type == 'Estabelecimento'){
                 if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
-                  this.sleep(3000).then(() => { 
                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
                       firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
                         firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
@@ -609,7 +603,6 @@ export default class CriarAnuncio extends Component {
 
                         })
 
-                      })
                     }).catch(function(error) {
                       console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
                     })
@@ -618,7 +611,7 @@ export default class CriarAnuncio extends Component {
           
                     this.setModalVisible(true)
           
-                  this.sleep(8000).then(() => { 
+                  this.sleep(5000).then(() => { 
                     this.props.navigation.navigate('TelaPrincipalAnuncio')
                   })
           
@@ -630,7 +623,6 @@ export default class CriarAnuncio extends Component {
           
               if(type == 'Autonomo') {
                 if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
-                  this.sleep(3000).then(() => { 
                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
                       firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
                         firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
@@ -671,7 +663,6 @@ export default class CriarAnuncio extends Component {
                             photoPublish3: urlImage3,
                           })
                         })
-                      })
                     }).catch(function(error) {
                       console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
                     })
@@ -679,15 +670,18 @@ export default class CriarAnuncio extends Component {
           
                       this.setModalVisible(true)
           
-                    this.sleep(8000).then(() => { 
+                    this.sleep(5000).then(() => { 
                       this.props.navigation.navigate('TelaPrincipalAnuncio')
                     })
                 } else {
                   alert('Todos os campos devem ser preenchidos!')
                 }
                 
-              }
 
+              } 
+
+          })
+        })
 
       } else {
         alert('Por favor, o anúncio deve ter 3 fotos ao mínimo')

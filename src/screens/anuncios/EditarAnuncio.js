@@ -699,6 +699,7 @@ export default class EditarAnuncio extends Component {
           })
         })
 
+
               if(type == 'Estabelecimento'){
                 if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
                   this.sleep(3000).then(() => { 
@@ -1293,8 +1294,8 @@ export default class EditarAnuncio extends Component {
 
 
 
-{/*Modalize das fotos*/}
-<Modalize
+          {/*Modalize das fotos*/}
+          <Modalize
             ref={this.state.modalizePhotos}
             snapPoint={500}
           >

@@ -134,7 +134,10 @@ export default class CriarAnuncio extends Component {
       modalizeRefSub: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
+      modalizePhotos: React.createRef(null),
       image:null,
+      image2:null,
+      image3:null,
       imageName:'',
       animated: true,
       modalVisible: false,
@@ -306,6 +309,12 @@ export default class CriarAnuncio extends Component {
   }
 
 
+  openModalizePhotos() {
+    const modalizePhotos = this.state.modalizePhotos;
+
+    modalizePhotos.current?.open()
+  }
+
 
 
   openModalizeAbertura() {
@@ -338,6 +347,13 @@ export default class CriarAnuncio extends Component {
     modalizeRefSub.current?.close()
 
     console.log('SUBCATEGORIA Selecionada: '  + param)
+  }
+
+
+  closePhotosModal(){
+    const modalizePhotos = this.state.modalizePhotos;
+
+    modalizePhotos.current?.close()
   }
 
 
@@ -401,6 +417,66 @@ export default class CriarAnuncio extends Component {
 
   }
 
+
+  async imagePickerGetPhoto2() {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Desculpa, nós precisamos do acesso a permissão da câmera');
+      }
+    }
+
+
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+
+      });
+      if (!result.cancelled) {
+        this.setState({ image2: result.uri })
+        this.setState({imageName: result.uri})
+      }
+
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
+
+  }
+
+
+  async imagePickerGetPhoto3() {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Desculpa, nós precisamos do acesso a permissão da câmera');
+      }
+    }
+
+
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+
+      });
+      if (!result.cancelled) {
+        this.setState({ image3: result.uri })
+        this.setState({imageName: result.uri})
+      }
+
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
+
+  }
+
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
@@ -421,11 +497,19 @@ export default class CriarAnuncio extends Component {
     let getSameIdToDocument = '';
         getSameIdToDocument = publishId;
 
-    let imageId = e.makeid(17)
+    let imageId = e.makeid(17);
+    let imageId2 = e.makeid(17);
+    let imageId3 = e.makeid(17);
     let userUID = firebase.auth().currentUser.uid;
     let storageUrl = userUID;
     let type = this.state.type;
     let imageIdStorageState = '';
+    let imageIdStorageState2 = '';
+    let imageIdStorageState3 = '';
+
+    var isPhotoLoaded = false;
+    var isPhotoLoaded2 = false;
+    var isPhotoLoaded3 = false;
 
       var getFileBlob = function (url, cb) { 
           var xhr = new XMLHttpRequest();
@@ -437,16 +521,39 @@ export default class CriarAnuncio extends Component {
           xhr.send();
       }
       
-      if(this.state.image !== null) {
+      if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null) {
         
         this.setModalVisible(true)
         getFileBlob(this.state.image, blob => {
           firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
               imageIdStorageState = imageId
+              isPhotoLoaded = true
               console.log('A imagem foi salva no Storage!');
               console.log('Valor image state: ' + imageIdStorageState);
               
+          })
+        })
 
+        getFileBlob(this.state.image2, blob => {
+          firebase.storage().ref(`${storageUrl}/images/${imageId2}`).put(blob).then((snapshot) => {
+              imageIdStorageState2 = imageId2
+              isPhotoLoaded2 = true
+              console.log('A imagem foi salva no Storage!');
+              console.log('Valor image state2: ' + imageIdStorageState2);
+              
+          })
+        })
+
+
+        getFileBlob(this.state.image3, blob => {
+          firebase.storage().ref(`${storageUrl}/images/${imageId3}`).put(blob).then((snapshot) => {
+              imageIdStorageState3 = imageId3
+              isPhotoLoaded3 = true
+              console.log('A imagem foi salva no Storage!');
+              console.log('Valor image state: ' + imageIdStorageState3);
+              
+          })
+        })
 
 
 
@@ -455,43 +562,53 @@ export default class CriarAnuncio extends Component {
                 if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
                   this.sleep(3000).then(() => { 
                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-                    firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
-                        titleEstab: e.state.tituloEstab,
-                        idAnuncio: getSameIdToDocument,
-                        idUser: userUID,
-                        publishData: e.state.date,
-                        descriptionEstab: e.state.descricaoEstab,
-                        valueServiceEstab: e.state.precoEstab,
-                        type: 'Estabelecimento',
-                        verifiedPublish: true,
-                        phoneNumberEstab: e.state.phoneEstab,
-                        localEstab: e.state.enderecoEstab,
-                        categoryEstab: e.state.categoria,
-                        subcategoryEstab: e.state.subcategoria,
-                        photoPublish: urlImage,
-                        workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
-                        timeOpen: e.state.horarioOpen,
-                        timeClose: e.state.horarioClose
-                      })
-          
-                      //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
-                      firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
-                        titleEstab: e.state.tituloEstab,
-                        idAnuncio: getSameIdToDocument,
-                        idUser: userUID,
-                        publishData: e.state.date,
-                        descriptionEstab: e.state.descricaoEstab,
-                        valueServiceEstab: e.state.precoEstab,
-                        type: 'Estabelecimento',
-                        verifiedPublish: true,
-                        phoneNumberEstab: e.state.phoneEstab,
-                        localEstab: e.state.enderecoEstab,
-                        categoryEstab: e.state.categoria,
-                        subcategoryEstab: e.state.subcategoria,
-                        photoPublish: urlImage,
-                        workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
-                        timeOpen: e.state.horarioOpen,
-                        timeClose: e.state.horarioClose
+                      firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
+                        firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
+                          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+                            titleEstab: e.state.tituloEstab,
+                            idAnuncio: getSameIdToDocument,
+                            idUser: userUID,
+                            publishData: e.state.date,
+                            descriptionEstab: e.state.descricaoEstab,
+                            valueServiceEstab: e.state.precoEstab,
+                            type: 'Estabelecimento',
+                            verifiedPublish: true,
+                            phoneNumberEstab: e.state.phoneEstab,
+                            localEstab: e.state.enderecoEstab,
+                            categoryEstab: e.state.categoria,
+                            subcategoryEstab: e.state.subcategoria,
+                            photoPublish: urlImage,
+                            photoPublish2: urlImage2,
+                            photoPublish3: urlImage3,
+                            workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+                            timeOpen: e.state.horarioOpen,
+                            timeClose: e.state.horarioClose
+                          })
+              
+                          //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
+                          firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
+                            titleEstab: e.state.tituloEstab,
+                            idAnuncio: getSameIdToDocument,
+                            idUser: userUID,
+                            publishData: e.state.date,
+                            descriptionEstab: e.state.descricaoEstab,
+                            valueServiceEstab: e.state.precoEstab,
+                            type: 'Estabelecimento',
+                            verifiedPublish: true,
+                            phoneNumberEstab: e.state.phoneEstab,
+                            localEstab: e.state.enderecoEstab,
+                            categoryEstab: e.state.categoria,
+                            subcategoryEstab: e.state.subcategoria,
+                            photoPublish: urlImage,
+                            photoPublish2: urlImage2,
+                            photoPublish3: urlImage3,
+                            workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+                            timeOpen: e.state.horarioOpen,
+                            timeClose: e.state.horarioClose
+                          })
+
+                        })
+
                       })
                     }).catch(function(error) {
                       console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
@@ -515,37 +632,45 @@ export default class CriarAnuncio extends Component {
                 if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
                   this.sleep(3000).then(() => { 
                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-                    firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
-                        titleAuto: e.state.tituloAuto,
-                        idAnuncio: getSameIdToDocument,
-                        idUser: userUID,
-                        publishData: e.state.date,
-                        nome: e.state.nomeAuto,
-                        descriptionAuto: e.state.descricaoAuto,
-                        valueServiceAuto: e.state.precoAuto,
-                        type: 'Autonomo',
-                        verifiedPublish: true,
-                        phoneNumberAuto: e.state.phoneAuto,
-                        categoryAuto: e.state.categoria,
-                        subcategoryAuto: e.state.subcategoria,
-                        photoPublish: urlImage,
-                      })
-          
-                      //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
-                      firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
-                        titleAuto: e.state.tituloAuto,
-                        idAnuncio: getSameIdToDocument,
-                        idUser: userUID,
-                        publishData: e.state.date,
-                        nome: e.state.nomeAuto,
-                        descriptionAuto: e.state.descricaoAuto,
-                        valueServiceAuto: e.state.precoAuto,
-                        type: 'Autonomo',
-                        verifiedPublish: true,
-                        phoneNumberAuto: e.state.phoneAuto,
-                        categoryAuto: e.state.categoria,
-                        subcategoryAuto: e.state.subcategoria,
-                        photoPublish: urlImage,
+                      firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
+                        firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
+                          firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+                            titleAuto: e.state.tituloAuto,
+                            idAnuncio: getSameIdToDocument,
+                            idUser: userUID,
+                            publishData: e.state.date,
+                            nome: e.state.nomeAuto,
+                            descriptionAuto: e.state.descricaoAuto,
+                            valueServiceAuto: e.state.precoAuto,
+                            type: 'Autonomo',
+                            verifiedPublish: true,
+                            phoneNumberAuto: e.state.phoneAuto,
+                            categoryAuto: e.state.categoria,
+                            subcategoryAuto: e.state.subcategoria,
+                            photoPublish: urlImage,
+                            photoPublish2: urlImage2,
+                            photoPublish3: urlImage3,
+                          })
+              
+                          //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
+                          firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
+                            titleAuto: e.state.tituloAuto,
+                            idAnuncio: getSameIdToDocument,
+                            idUser: userUID,
+                            publishData: e.state.date,
+                            nome: e.state.nomeAuto,
+                            descriptionAuto: e.state.descricaoAuto,
+                            valueServiceAuto: e.state.precoAuto,
+                            type: 'Autonomo',
+                            verifiedPublish: true,
+                            phoneNumberAuto: e.state.phoneAuto,
+                            categoryAuto: e.state.categoria,
+                            subcategoryAuto: e.state.subcategoria,
+                            photoPublish: urlImage,
+                            photoPublish2: urlImage2,
+                            photoPublish3: urlImage3,
+                          })
+                        })
                       })
                     }).catch(function(error) {
                       console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
@@ -564,12 +689,8 @@ export default class CriarAnuncio extends Component {
               }
 
 
-          }).catch((error) => {
-            console.log('IMAGE UPLOAD ERROR: ' + error)
-          })
-        })
       } else {
-        alert('Por favor, selecione uma imagem para o anúncio')
+        alert('Por favor, o anúncio deve ter 3 fotos ao mínimo')
       }
 
   }
@@ -630,13 +751,13 @@ export default class CriarAnuncio extends Component {
 
                         {this.state.image == null ?
                           <View>
-                            <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                            <TouchableOpacity onPress={() => this.openModalizePhotos()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
                                 <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
                             </TouchableOpacity>
                           </View> 
                           :
                           <View>
-                            <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                            <TouchableOpacity onPress={() => this.openModalizePhotos()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
                                 <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}} source={{uri: this.state.image}}/>
                             </TouchableOpacity>
                           </View>
@@ -1009,6 +1130,63 @@ export default class CriarAnuncio extends Component {
 
                   </ScrollView>
                   
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize das fotos*/}
+          <Modalize
+            ref={this.state.modalizePhotos}
+            snapPoint={500}
+          >
+            <View style={{flex:1,alignItems:'center', flexDirection:'row'}}>
+                <Text style={{fontWeight: 'bold', padding:15}}>Escolha 3 Fotos</Text>  
+
+                {this.state.image == null ?
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7}}>
+                        <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
+                    </TouchableOpacity>
+                  </View> 
+                  :
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7}}>
+                        <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20}} source={{uri: this.state.image}}/>
+                    </TouchableOpacity>
+                  </View>
+                }
+
+
+                {this.state.image2 == null ?
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto2()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7, marginLeft:15}}>
+                        <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
+                    </TouchableOpacity>
+                  </View> 
+                  :
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto2()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7, marginLeft:15}}>
+                        <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20}} source={{uri: this.state.image2}}/>
+                    </TouchableOpacity>
+                  </View>
+                }
+
+
+                {this.state.image3 == null ?
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto3()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7, marginLeft:15}}>
+                        <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
+                    </TouchableOpacity>
+                  </View> 
+                  :
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto3()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7, marginLeft:15}}>
+                        <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20}} source={{uri: this.state.image3}}/>
+                    </TouchableOpacity>
+                  </View>
+                }
+
             </View>
           </Modalize>
 

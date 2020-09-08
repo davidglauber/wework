@@ -223,6 +223,8 @@ export default class TelaAnuncio extends Component {
           idAnuncio: doc.data().idAnuncio,
           nome: doc.data().nome,
           photo: doc.data().photoPublish,
+          photo2: doc.data().photoPublish2,
+          photo3: doc.data().photoPublish3,
           phone: doc.data().phoneNumberAuto,
           title: doc.data().titleAuto,
           categoria: doc.data().categoryAuto,
@@ -250,6 +252,8 @@ export default class TelaAnuncio extends Component {
           publishData: e.state.date,
           idAnuncio: doc.data().idAnuncio,
           photo: doc.data().photoPublish,
+          photo2: doc.data().photoPublish2,
+          photo3: doc.data().photoPublish3,
           phone: doc.data().phoneNumberEstab,
           title: doc.data().titleEstab,
           categoria: doc.data().categoryEstab,
@@ -335,12 +339,20 @@ export default class TelaAnuncio extends Component {
                     activeDotStyle={styles.activeDot}
                     dotStyle={styles.dot}
                     index={isRTL ? images.length - 1 : 0}>
-                    <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: '100%', height: 228, resizeMode: 'cover'}}>
                       <Image
                         source={{uri: item.photo}}
                         style={styles.slideImg}
-                        />
-                    </ShimmerPlaceholder>
+                      />
+
+                      <Image
+                        source={{uri: item.photo2}}
+                        style={styles.slideImg}
+                      />
+
+                      <Image
+                        source={{uri: item.photo3}}
+                        style={styles.slideImg}
+                      />
                   </Swiper>
 
                   <ButtonIconContainer>
@@ -458,6 +470,16 @@ export default class TelaAnuncio extends Component {
                     index={isRTL ? images.length - 1 : 0}>
                       <Image
                         source={{uri: item.photo}}
+                        style={styles.slideImg}
+                      />
+
+                      <Image
+                        source={{uri: item.photo2}}
+                        style={styles.slideImg}
+                      />
+
+                      <Image
+                        source={{uri: item.photo3}}
                         style={styles.slideImg}
                       />
                   </Swiper>

@@ -134,7 +134,10 @@ export default class EditarCartao extends Component {
       modalizeRefDescriptionEstab: React.createRef(null),
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
+      modalizePhotos: React.createRef(null),
       image:null,
+      image2:null,
+      image3:null,
       imageName:'',
       animated: true,
       modalVisible: false,
@@ -195,6 +198,8 @@ export default class EditarCartao extends Component {
             let nome = ''
             let telefone = ''
             let imagem = ''
+            let imagem2 = ''
+            let imagem3 = ''
             let type = ''
             let verificado = false
 
@@ -207,6 +212,8 @@ export default class EditarCartao extends Component {
                 nome = doc.data().nome,
                 telefone = doc.data().phoneNumberAuto,
                 imagem = doc.data().photoPublish,
+                imagem2 = doc.data().photoPublish2,
+                imagem3 = doc.data().photoPublish3,
                 type = doc.data().type,
                 verificado = false
             })
@@ -218,6 +225,8 @@ export default class EditarCartao extends Component {
             e.setState({nomeAuto: nome})
             e.setState({phoneAuto: telefone})
             e.setState({image: imagem})
+            e.setState({image2: imagem2})
+            e.setState({image3: imagem3})
             e.setState({type: type})
         })
 
@@ -234,6 +243,8 @@ export default class EditarCartao extends Component {
             let idUser = ''
             let telefone = ''
             let imagem = ''
+            let imagem2 = ''
+            let imagem3 = ''
             let titulo = ''
             let verificado = false
             let local = ''
@@ -251,6 +262,8 @@ export default class EditarCartao extends Component {
                 idUser = doc.data().idUser,
                 telefone = doc.data().phoneNumberEstab,
                 imagem = doc.data().photoPublish,
+                imagem2 = doc.data().photoPublish2,
+                imagem3 = doc.data().photoPublish3,
                 verificado = false,
                 type = doc.data().type,
                 local = doc.data().localEstab,
@@ -266,6 +279,8 @@ export default class EditarCartao extends Component {
             e.setState({subcategoria: subcategoria})
             e.setState({phoneEstab: telefone})
             e.setState({image: imagem})
+            e.setState({image2: imagem2})
+            e.setState({image3: imagem3})
             e.setState({type: type})
             e.setState({enderecoEstab: local})
             e.setState({horarioOpen: abertura})
@@ -412,6 +427,12 @@ export default class EditarCartao extends Component {
     modalizeRefDescriptionEstab.current?.open()
   }
 
+  openModalizePhotos() {
+    const modalizePhotos = this.state.modalizePhotos;
+
+    modalizePhotos.current?.open()
+  }
+
   
   closeDescriptionModal(){
     const modalizeRefDescription = this.state.modalizeRefDescription;
@@ -501,6 +522,69 @@ export default class EditarCartao extends Component {
 
   }
 
+
+  async imagePickerGetPhoto2() {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Desculpa, nós precisamos do acesso a permissão da câmera');
+      }
+    }
+
+
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+
+      });
+      if (!result.cancelled) {
+        this.setState({ image2: result.uri })
+        this.setState({imageName: result.uri})
+      }
+
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
+
+  }
+
+
+
+  async imagePickerGetPhoto3() {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Desculpa, nós precisamos do acesso a permissão da câmera');
+      }
+    }
+
+
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+
+      });
+      if (!result.cancelled) {
+        this.setState({ image3: result.uri })
+        this.setState({imageName: result.uri})
+      }
+
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
+
+  }
+
+
+
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
@@ -522,11 +606,19 @@ export default class EditarCartao extends Component {
     let getSameIdToDocument = '';
         getSameIdToDocument = publishId;
 
-    let imageId = e.makeid(17)
+    let imageId = e.makeid(17);
+    let imageId2 = e.makeid(17);
+    let imageId3 = e.makeid(17);
     let userUID = firebase.auth().currentUser.uid;
     let storageUrl = userUID;
     let type = this.state.type;
     let imageIdStorageState = '';
+    let imageIdStorageState2 = '';
+    let imageIdStorageState3 = '';
+
+    var isPhotoLoaded = false;
+    var isPhotoLoaded2 = false;
+    var isPhotoLoaded3 = false;
 
       var getFileBlob = function (url, cb) { 
           var xhr = new XMLHttpRequest();
@@ -538,63 +630,87 @@ export default class EditarCartao extends Component {
           xhr.send();
       }
       
-      if(this.state.image !== null) {
+      if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null) {
+        this.setModalVisible(true)
+        
         getFileBlob(this.state.image, blob => {
           firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
               imageIdStorageState = imageId
+              isPhotoLoaded = true
               console.log('A imagem foi salva no Storage!');
               console.log('Valor image state: ' + imageIdStorageState);
+          })
+        })
 
+
+        getFileBlob(this.state.image2, blob => {
+          firebase.storage().ref(`${storageUrl}/images/${imageId2}`).put(blob).then((snapshot) => {
+              imageIdStorageState2 = imageId2
+              isPhotoLoaded2 = true
+              console.log('A imagem foi salva no Storage!');
+              console.log('Valor image state2: ' + imageIdStorageState2);
+              
+          })
+        })
+
+
+        getFileBlob(this.state.image3, blob => {
+          firebase.storage().ref(`${storageUrl}/images/${imageId3}`).put(blob).then((snapshot) => {
+              imageIdStorageState3 = imageId3
 
               if(type == 'Estabelecimento'){
                 if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
-                  this.sleep(2000).then(() => { 
                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-                    firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
-                        titleEstab: e.state.tituloEstab,
-                        idCartao: routeIdCartao,
-                        idUser: userUID,
-                        descriptionEstab: e.state.descricaoEstab,
-                        publishData: e.state.date,
-                        type: 'Estabelecimento',
-                        verifiedPublish: true,
-                        phoneNumberEstab: e.state.phoneEstab,
-                        localEstab: e.state.enderecoEstab,
-                        categoryEstab: e.state.categoria,
-                        subcategoryEstab: e.state.subcategoria,
-                        photoPublish: urlImage,
-                        workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
-                        timeOpen: e.state.horarioOpen,
-                        timeClose: e.state.horarioClose
+                      firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {   
+                        firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {  
+                          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
+                            titleEstab: e.state.tituloEstab,
+                            idCartao: routeIdCartao,
+                            idUser: userUID,
+                            descriptionEstab: e.state.descricaoEstab,
+                            publishData: e.state.date,
+                            type: 'Estabelecimento',
+                            verifiedPublish: true,
+                            phoneNumberEstab: e.state.phoneEstab,
+                            localEstab: e.state.enderecoEstab,
+                            categoryEstab: e.state.categoria,
+                            subcategoryEstab: e.state.subcategoria,
+                            photoPublish: urlImage,
+                            photoPublish2: urlImage2,
+                            photoPublish3: urlImage3,
+                            workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+                            timeOpen: e.state.horarioOpen,
+                            timeClose: e.state.horarioClose
+                          })
+              
+                          //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
+                          firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
+                            titleEstab: e.state.tituloEstab,
+                            idCartao: routeIdCartao,
+                            idUser: userUID,
+                            descriptionEstab: e.state.descricaoEstab,
+                            publishData: e.state.date,
+                            type: 'Estabelecimento',
+                            verifiedPublish: true,
+                            phoneNumberEstab: e.state.phoneEstab,
+                            localEstab: e.state.enderecoEstab,
+                            categoryEstab: e.state.categoria,
+                            subcategoryEstab: e.state.subcategoria,
+                            photoPublish: urlImage,
+                            photoPublish2: urlImage2,
+                            photoPublish3: urlImage3,
+                            workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+                            timeOpen: e.state.horarioOpen,
+                            timeClose: e.state.horarioClose
+                          })
                       })
+                        })
+                          })
           
-                      //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
-                      firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
-                        titleEstab: e.state.tituloEstab,
-                        idCartao: routeIdCartao,
-                        idUser: userUID,
-                        descriptionEstab: e.state.descricaoEstab,
-                        publishData: e.state.date,
-                        type: 'Estabelecimento',
-                        verifiedPublish: true,
-                        phoneNumberEstab: e.state.phoneEstab,
-                        localEstab: e.state.enderecoEstab,
-                        categoryEstab: e.state.categoria,
-                        subcategoryEstab: e.state.subcategoria,
-                        photoPublish: urlImage,
-                        workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
-                        timeOpen: e.state.horarioOpen,
-                        timeClose: e.state.horarioClose
-                      })
-                    }).catch(function(error) {
-                      console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
-                    })
-          
-                  })
           
                     this.setModalVisible(true)
           
-                  this.sleep(8000).then(() => { 
+                  this.sleep(5000).then(() => { 
                     this.props.navigation.navigate('TelaGeralCriarCartao')
                   })
           
@@ -606,44 +722,48 @@ export default class EditarCartao extends Component {
           
               if(type == 'Autonomo') {
                 if(this.state.descricaoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
-                  this.sleep(2000).then(() => { 
                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-                    firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
-                        idCartao: routeIdCartao,
-                        idUser: userUID,
-                        nome: e.state.nomeAuto,
-                        publishData: e.state.date,
-                        descriptionAuto: e.state.descricaoAuto,
-                        type: 'Autonomo',
-                        verifiedPublish: true,
-                        phoneNumberAuto: e.state.phoneAuto,
-                        categoryAuto: e.state.categoria,
-                        subcategoryAuto: e.state.subcategoria,
-                        photoPublish: urlImage,
+                      firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {   
+                        firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {  
+                          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
+                            idCartao: routeIdCartao,
+                            idUser: userUID,
+                            nome: e.state.nomeAuto,
+                            publishData: e.state.date,
+                            descriptionAuto: e.state.descricaoAuto,
+                            type: 'Autonomo',
+                            verifiedPublish: true,
+                            phoneNumberAuto: e.state.phoneAuto,
+                            categoryAuto: e.state.categoria,
+                            subcategoryAuto: e.state.subcategoria,
+                            photoPublish: urlImage,
+                            photoPublish2: urlImage2,
+                            photoPublish3: urlImage3,
+                          })
+              
+                          //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
+                          firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
+                            idCartao: routeIdCartao,
+                            idUser: userUID,
+                            nome: e.state.nomeAuto,
+                            publishData: e.state.date,
+                            descriptionAuto: e.state.descricaoAuto,
+                            type: 'Autonomo',
+                            verifiedPublish: true,
+                            phoneNumberAuto: e.state.phoneAuto,
+                            categoryAuto: e.state.categoria,
+                            subcategoryAuto: e.state.subcategoria,
+                            photoPublish: urlImage,
+                            photoPublish2: urlImage2,
+                            photoPublish3: urlImage3,
+                          })
                       })
-          
-                      //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
-                      firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
-                        idCartao: routeIdCartao,
-                        idUser: userUID,
-                        nome: e.state.nomeAuto,
-                        publishData: e.state.date,
-                        descriptionAuto: e.state.descricaoAuto,
-                        type: 'Autonomo',
-                        verifiedPublish: true,
-                        phoneNumberAuto: e.state.phoneAuto,
-                        categoryAuto: e.state.categoria,
-                        subcategoryAuto: e.state.subcategoria,
-                        photoPublish: urlImage,
-                      })
-                    }).catch(function(error) {
-                      console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
-                    })
-                  })
+                        })
+                          })
           
                       this.setModalVisible(true)
           
-                    this.sleep(8000).then(() => { 
+                    this.sleep(5000).then(() => { 
                       this.props.navigation.navigate('TelaGeralCriarCartao')
                     })
                 } else {
@@ -652,13 +772,11 @@ export default class EditarCartao extends Component {
                 
               }
 
-              
-          }).catch((error) => {
-            console.log('IMAGE UPLOAD ERROR: ' + error)
           })
         })
+
       } else {
-        alert('Por favor, selecione uma imagem para o anúncio')
+        alert('Por favor, selecione 3 imagens para o Cartão')
       }
 
   }
@@ -738,13 +856,13 @@ export default class EditarCartao extends Component {
 
                         {this.state.image == null ?
                           <View>
-                            <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                            <TouchableOpacity onPress={() => this.openModalizePhotos()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
                                 <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
                             </TouchableOpacity>
                           </View> 
                           :
                           <View>
-                            <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                            <TouchableOpacity onPress={() => this.openModalizePhotos()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
                                 <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}} source={{uri: this.state.image}}/>
                             </TouchableOpacity>
                           </View>
@@ -1062,6 +1180,60 @@ export default class EditarCartao extends Component {
 
 
 
+          {/*Modalize das fotos*/}
+          <Modalize
+            ref={this.state.modalizePhotos}
+            snapPoint={500}
+          >
+            <View style={{flex:1,alignItems:'center', flexDirection:'row'}}>
+                <Text style={{fontWeight: 'bold', padding:15}}>Escolha 3 Fotos</Text>  
+
+                {this.state.image == null ?
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7}}>
+                        <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
+                    </TouchableOpacity>
+                  </View> 
+                  :
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7}}>
+                        <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20}} source={{uri: this.state.image}}/>
+                    </TouchableOpacity>
+                  </View>
+                }
+
+
+                {this.state.image2 == null ?
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto2()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7, marginLeft:15}}>
+                        <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
+                    </TouchableOpacity>
+                  </View> 
+                  :
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto2()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7, marginLeft:15}}>
+                        <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20}} source={{uri: this.state.image2}}/>
+                    </TouchableOpacity>
+                  </View>
+                }
+
+
+                {this.state.image3 == null ?
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto3()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7, marginLeft:15}}>
+                        <FontAwesome5 name="camera-retro" size={24} color={'#9A9A9A'}/>
+                    </TouchableOpacity>
+                  </View> 
+                  :
+                  <View>
+                    <TouchableOpacity onPress={() => this.imagePickerGetPhoto3()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20, marginTop:7, marginLeft:15}}>
+                        <Image style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:60, height:60, borderRadius:20}} source={{uri: this.state.image3}}/>
+                    </TouchableOpacity>
+                  </View>
+                }
+
+            </View>
+          </Modalize>
 
 
           {/*Modalize da descrição Autonomo*/}

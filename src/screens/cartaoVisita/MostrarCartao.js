@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     transform: [{scaleX: isRTL ? -1 : 1}],
   },
   dot: {backgroundColor: Colors.background},
-  activeDot: {backgroundColor: Colors.primaryColor},
+  activeDot: {backgroundColor: '#DAA520'},
   slideImg: {
     width: '100%',
     height: 228,
@@ -234,6 +234,8 @@ export default class MostrarCartao extends Component {
           publishData: e.state.date,
           nome: doc.data().nome,
           photo: doc.data().photoPublish,
+          photo2: doc.data().photoPublish2,
+          photo3: doc.data().photoPublish3,
           phone: doc.data().phoneNumberAuto,
           categoria: doc.data().categoryAuto,
           subcategoria: doc.data().subcategoryAuto,
@@ -260,6 +262,8 @@ export default class MostrarCartao extends Component {
           idAnuncio: doc.data().idAnuncio,
           publishData: e.state.date,
           photo: doc.data().photoPublish,
+          photo2: doc.data().photoPublish2,
+          photo3: doc.data().photoPublish3,
           phone: doc.data().phoneNumberEstab,
           title: doc.data().titleEstab,
           categoria: doc.data().categoryEstab,
@@ -353,12 +357,20 @@ export default class MostrarCartao extends Component {
                     activeDotStyle={styles.activeDot}
                     dotStyle={styles.dot}
                     index={isRTL ? images.length - 1 : 0}>
-                      <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: '100%', height: 228, resizeMode: 'cover'}}>
                         <Image
                           source={{uri: item.photo}}
                           style={styles.slideImg}
                         />
-                      </ShimmerPlaceholder>
+
+                        <Image
+                          source={{uri: item.photo2}}
+                          style={styles.slideImg}
+                        />
+
+                        <Image
+                          source={{uri: item.photo3}}
+                          style={styles.slideImg}
+                        />
                   </Swiper>
 
                   <ButtonIconContainer>
@@ -471,6 +483,16 @@ export default class MostrarCartao extends Component {
                     index={isRTL ? images.length - 1 : 0}>
                       <Image
                         source={{uri: item.photo}}
+                        style={styles.slideImg}
+                      />
+
+                      <Image
+                        source={{uri: item.photo2}}
+                        style={styles.slideImg}
+                      />
+
+                      <Image
+                        source={{uri: item.photo3}}
                         style={styles.slideImg}
                       />
                   </Swiper>

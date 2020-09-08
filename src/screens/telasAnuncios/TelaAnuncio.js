@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     transform: [{scaleX: isRTL ? -1 : 1}],
   },
   dot: {backgroundColor: Colors.background},
-  activeDot: {backgroundColor: Colors.primaryColor},
+  activeDot: {backgroundColor: '#DAA520'},
   slideImg: {
     width: '100%',
     height: 228,

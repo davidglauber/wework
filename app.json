@@ -27,11 +27,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "ios.wework"
+      "bundleIdentifier": "ios.wework",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~1458002511"
+      }
     },
     "description": "We Work - A React Native App",
     "android": {
-      "package": "com.zubito.WeWork_Expo"
+      "package": "com.zubito.WeWork_Expo",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-1397640114399871~3615827759"
+      }
     },
     "entryPoint": "node_modules/expo/AppEntry.js"
   }

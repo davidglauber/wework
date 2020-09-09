@@ -38,6 +38,10 @@ import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 import { ThemeContext } from '../../../ThemeContext';
 
 
+//import ADS
+import { AdMobBanner, setTestDeviceIDAsync } from 'expo-ads-admob';
+import { addListener } from 'expo-updates';
+
 // HomeA Styles
 const styles = StyleSheet.create({
   screenContainer: {
@@ -123,7 +127,8 @@ export default class HomeA extends Component {
       activesPublishesEstab: [],
       isFetched: false,
       isFetchedPublish: false,
-      isFetchedButton: false
+      isFetchedButton: false,
+      scrollY: 0
     };
   }
 
@@ -302,6 +307,33 @@ async componentDidMount() {
       );
     }
   }
+  
+  renderAds(value) {
+    console.log('entrou no addListener, valor: ' + value)
+    if(value >= 0.2) {
+      return(
+        <AdMobBanner
+          style={{marginLeft: 20}}
+          bannerSize="leaderboard"
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          setTestDeviceIDAsync
+          servePersonalizedAds
+          onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+        /> 
+      );
+    }
+  }
+
+  handleScroll = (event) => {
+    let yOffset = event.nativeEvent.contentOffset.y
+    let contentHeight = event.nativeEvent.contentSize.height
+    let value = yOffset / contentHeight
+
+    this.renderAds(value)
+    this.setState({scrollY: value})
+    console.log('VALOR SCROLL: ' +  value)
+  }
+
 
   render() {
     const { status, emailUserFunction, isFetchedButton, isFetchedPublish, activesPublishesAuto, activesPublishesEstab, isFetched } = this.state
@@ -315,7 +347,7 @@ async componentDidMount() {
         />
         
         <View style={styles.container}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView onScroll={this.handleScroll} showsVerticalScrollIndicator={false}>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
               
@@ -347,13 +379,15 @@ async componentDidMount() {
             <View style={styles.titleContainer}>
               <Heading>Anúncios</Heading>
             </View>
-              
+
+
               <FlatList 
                 keyExtractor={() => this.makeid(17)}
                 data={activesPublishesAuto}
                 renderItem={({item}) =>
                 
-                  <View style={{flex:1, alignItems: 'center'}}>
+                
+                <View style={{flex:1, alignItems: 'center'}}>
                       <View>
                         <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                           <AnuncioContainer>
@@ -383,12 +417,14 @@ async componentDidMount() {
                           </AnuncioContainer>
                         </ShimmerPlaceholder>
                       </View>
+
                   </View>
                 
-                }
+              }
               >
               </FlatList>
 
+              {this.renderAds(this.state.scrollY)}
 
               <FlatList 
                 keyExtractor={() => this.makeid(17)}

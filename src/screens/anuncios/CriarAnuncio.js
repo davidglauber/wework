@@ -524,8 +524,8 @@ export default class CriarAnuncio extends Component {
       if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null) {
         
         this.setModalVisible(true)
-        getFileBlob(this.state.image, blob => {
-          firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
+        getFileBlob(this.state.image, async blob => {
+          await firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
               imageIdStorageState = imageId
               e.setState({isPhotoLoaded: true})
               console.log('A imagem foi salva no Storage!');
@@ -534,8 +534,8 @@ export default class CriarAnuncio extends Component {
           })
         })
 
-        getFileBlob(this.state.image2, blob => {
-          firebase.storage().ref(`${storageUrl}/images/${imageId2}`).put(blob).then((snapshot) => {
+        getFileBlob(this.state.image2, async blob => {
+          await firebase.storage().ref(`${storageUrl}/images/${imageId2}`).put(blob).then((snapshot) => {
               imageIdStorageState2 = imageId2
               e.setState({isPhotoLoaded2: true})
               console.log('A imagem foi salva no Storage!');
@@ -545,8 +545,9 @@ export default class CriarAnuncio extends Component {
         })
 
 
-        getFileBlob(this.state.image3, blob => {
-          firebase.storage().ref(`${storageUrl}/images/${imageId3}`).put(blob).then((snapshot) => {
+        this.sleep(10000).then(() => { 
+        getFileBlob(this.state.image3, async blob => {
+          await firebase.storage().ref(`${storageUrl}/images/${imageId3}`).put(blob).then((snapshot) => {
               imageIdStorageState3 = imageId3
               console.log('A imagem foi salva no Storage!');
               console.log('Valor image state3: ' + imageIdStorageState3);
@@ -682,6 +683,7 @@ export default class CriarAnuncio extends Component {
 
           })
         })
+      })
 
       } else {
         alert('Por favor, o anúncio deve ter 3 fotos ao mínimo')

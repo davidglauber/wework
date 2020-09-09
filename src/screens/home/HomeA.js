@@ -308,32 +308,7 @@ async componentDidMount() {
     }
   }
   
-  renderAds(value) {
-    console.log('entrou no addListener, valor: ' + value)
-    if(value >= 0.2) {
-      return(
-        <AdMobBanner
-          style={{marginLeft: 20}}
-          bannerSize="leaderboard"
-          adUnitID="ca-app-pub-3940256099942544/6300978111"
-          setTestDeviceIDAsync
-          servePersonalizedAds
-          onDidFailToReceiveAdWithError={(err) => console.log(err)} 
-        /> 
-      );
-    }
-  }
-
-  handleScroll = (event) => {
-    let yOffset = event.nativeEvent.contentOffset.y
-    let contentHeight = event.nativeEvent.contentSize.height
-    let value = yOffset / contentHeight
-
-    this.renderAds(value)
-    this.setState({scrollY: value})
-    console.log('VALOR SCROLL: ' +  value)
-  }
-
+ 
 
   render() {
     const { status, emailUserFunction, isFetchedButton, isFetchedPublish, activesPublishesAuto, activesPublishesEstab, isFetched } = this.state
@@ -347,7 +322,7 @@ async componentDidMount() {
         />
         
         <View style={styles.container}>
-          <ScrollView onScroll={this.handleScroll} showsVerticalScrollIndicator={false}>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>
               
@@ -380,6 +355,14 @@ async componentDidMount() {
               <Heading>Anúncios</Heading>
             </View>
 
+            <AdMobBanner
+              style={{marginLeft: 20}}
+              bannerSize="leaderboard"
+              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              setTestDeviceIDAsync
+              servePersonalizedAds
+              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+            /> 
 
               <FlatList 
                 keyExtractor={() => this.makeid(17)}
@@ -424,7 +407,14 @@ async componentDidMount() {
               >
               </FlatList>
 
-              {this.renderAds(this.state.scrollY)}
+              <AdMobBanner
+                style={{marginLeft: 20}}
+                bannerSize="leaderboard"
+                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                setTestDeviceIDAsync
+                servePersonalizedAds
+                onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+              /> 
 
               <FlatList 
                 keyExtractor={() => this.makeid(17)}
@@ -464,10 +454,18 @@ async componentDidMount() {
                     </View>
                 </View>
                 
-                }
+              }
               >
               </FlatList>
 
+              <AdMobBanner
+                style={{marginLeft: 20}}
+                bannerSize="leaderboard"
+                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                setTestDeviceIDAsync
+                servePersonalizedAds
+                onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+              /> 
           </ScrollView>
         </View>
       </SafeBackground>

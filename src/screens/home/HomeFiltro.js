@@ -43,6 +43,10 @@ import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
+
+//import ADS
+import { AdMobBanner} from 'expo-ads-admob';
+
 // HomeA Styles
 const styles = StyleSheet.create({
   screenContainer: {
@@ -356,6 +360,15 @@ async componentDidMount() {
             <View style={styles.titleContainer}>
               <Heading>Anúncios</Heading>
             </View>
+
+            <AdMobBanner
+              style={{marginLeft: 20}}
+              bannerSize="leaderboard"
+              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              setTestDeviceIDAsync
+              servePersonalizedAds
+              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+            /> 
               
               <FlatList 
                 keyExtractor={() => this.makeid(17)}
@@ -399,6 +412,15 @@ async componentDidMount() {
               </FlatList>
 
 
+              <AdMobBanner
+                style={{marginLeft: 20}}
+                bannerSize="leaderboard"
+                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                setTestDeviceIDAsync
+                servePersonalizedAds
+                onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+              /> 
+
               <FlatList 
                 keyExtractor={() => this.makeid(17)}
                 data={activesPublishesEstab}
@@ -441,6 +463,14 @@ async componentDidMount() {
               >
               </FlatList>
 
+              <AdMobBanner
+                style={{marginLeft: 20}}
+                bannerSize="leaderboard"
+                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                setTestDeviceIDAsync
+                servePersonalizedAds
+                onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+              /> 
           </ScrollView>
         </View>
       </SafeBackground>

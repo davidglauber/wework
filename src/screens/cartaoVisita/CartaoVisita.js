@@ -51,6 +51,9 @@ import { ThemeContext } from '../../../ThemeContext';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
+//import ADS
+import { AdMobBanner} from 'expo-ads-admob';
+
 // CartA Styles
 const styles = StyleSheet.create({
   flex1: {
@@ -298,6 +301,14 @@ export default class CartaoVisita extends Component {
         </View>
 
           <ScrollView>
+            <AdMobBanner
+              style={{marginLeft: 20}}
+              bannerSize="leaderboard"
+              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              setTestDeviceIDAsync
+              servePersonalizedAds
+              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+            /> 
             <View>
               <FlatList
                 data={cartoesAuto}
@@ -334,7 +345,7 @@ export default class CartaoVisita extends Component {
 
                               <View style={{marginTop: 24, marginRight: 30}}>
                                   <IconResponsive  name="user-tie" size={19}/>
-                            </View>
+                              </View>
                           </View> 
 
                     </AnuncioContainer>
@@ -344,6 +355,14 @@ export default class CartaoVisita extends Component {
                 contentContainerStyle={styles.productList}
               />
 
+            <AdMobBanner
+              style={{marginLeft: 20}}
+              bannerSize="leaderboard"
+              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              setTestDeviceIDAsync
+              servePersonalizedAds
+              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+            /> 
             </View>
 
             <View>
@@ -390,7 +409,15 @@ export default class CartaoVisita extends Component {
                 }
                 contentContainerStyle={styles.productList}
               />
-
+            
+            <AdMobBanner
+              style={{marginLeft: 20}}
+              bannerSize="leaderboard"
+              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              setTestDeviceIDAsync
+              servePersonalizedAds
+              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+            /> 
             </View>
 
           </ScrollView>

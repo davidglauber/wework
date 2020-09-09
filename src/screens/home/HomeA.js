@@ -39,8 +39,7 @@ import { ThemeContext } from '../../../ThemeContext';
 
 
 //import ADS
-import { AdMobBanner, setTestDeviceIDAsync } from 'expo-ads-admob';
-import { addListener } from 'expo-updates';
+import { AdMobBanner} from 'expo-ads-admob';
 
 // HomeA Styles
 const styles = StyleSheet.create({

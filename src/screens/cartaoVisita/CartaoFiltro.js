@@ -46,12 +46,15 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 //CSS responsivo
-import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from '../home/styles';
+import { SafeBackground, IconResponsive, AnuncioContainer, IconResponsiveNOBACK, Favorite,  Description, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from '../home/styles';
 
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
 
+
+//import ADS
+import { AdMobBanner} from 'expo-ads-admob';
 
 // CartA Config
 const EMPTY_STATE_ICON = 'cart-remove';
@@ -115,6 +118,7 @@ export default class CartaoFiltro extends Component {
       cartoesEstab: [],
       cartoesAuto: [],
       isFetchedPublish: false,
+      isOpen: true,
       products: [
         {
           id: 'product1',
@@ -251,11 +255,36 @@ export default class CartaoFiltro extends Component {
 
   RightAction() {
       return(
-        <TouchableOpacity style={{width: 336, height: 170, flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom:5, marginTop: 10, borderRadius: 10, opacity:0.5}}>
-            <FontAwesome5 style={{marginRight:40}} name="star" size={24} color={"white"} />
-            <Text style={{color:'#fff', fontSize:30}}>Favoritar</Text>
-        </TouchableOpacity>
+        <TouchableWithoutFeedback style={{width: 336, height: 170, flexDirection:'row', justifyContent:'center', alignItems:'center', marginBottom:5, marginTop: 10, borderRadius: 10, opacity:0.5}}>
+            <IconResponsiveNOBACK style={{marginRight:40}} name="star" size={24}/>
+            <Favorite>Favoritado</Favorite>
+        </TouchableWithoutFeedback>
       );
+  }
+
+  AddToFav(id, publishObj) {
+    let currentUser = firebase.auth().currentUser;
+
+    if(currentUser == null) {
+      alert('Você precisa estar logado para favoritar um cartão!')
+
+      this.setState({isOpen: false})
+
+      this.sleep(500).then(() => { 
+        this.setState({isOpen: true})
+      })
+    }
+
+    if(currentUser != null) {
+      firebase.firestore().collection('usuarios').doc(currentUser.uid).collection('favoritos').doc(id).set(publishObj)
+    
+      this.setState({isOpen: false})
+
+      this.sleep(500).then(() => { 
+        this.setState({isOpen: true})
+      })
+
+    }
   }
 
 
@@ -265,19 +294,19 @@ export default class CartaoFiltro extends Component {
 
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription} ...</Text>
+          <Description>{shortDescription} ...</Description>
         </View>
       );
     } else {
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{text}</Text>
+          <Description>{text}</Description>
         </View>
       );
     }
   }
   render() {
-    const {cartoesAuto, cartoesEstab, products, isFetchedPublish} = this.state;
+    const {cartoesAuto, cartoesEstab, isOpen, products, isFetchedPublish} = this.state;
 
     return (
 
@@ -302,6 +331,14 @@ export default class CartaoFiltro extends Component {
           )}
         </View>
 
+            <AdMobBanner
+              style={{marginLeft: 20}}
+              bannerSize="leaderboard"
+              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              setTestDeviceIDAsync
+              servePersonalizedAds
+              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+            /> 
           <ScrollView>
             <View>
               <FlatList
@@ -310,9 +347,11 @@ export default class CartaoFiltro extends Component {
                 renderItem={({item}) => 
                   <Swipeable
                     renderRightActions={this.RightAction}
+                    onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item)}
+                    enabled={isOpen}
                   > 
 
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
+                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                     <AnuncioContainer>
                           <View style={{flexDirection:'row'}}>
                               <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -347,6 +386,14 @@ export default class CartaoFiltro extends Component {
                 contentContainerStyle={styles.productList}
               />
 
+            <AdMobBanner
+              style={{marginLeft: 20}}
+              bannerSize="leaderboard"
+              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              setTestDeviceIDAsync
+              servePersonalizedAds
+              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+            /> 
             </View>
 
             <View>
@@ -356,8 +403,9 @@ export default class CartaoFiltro extends Component {
                 renderItem={({item}) => 
                   <Swipeable
                     renderRightActions={this.RightAction}
+                    onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item)}
                   > 
-                    <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
+                    <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                     <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -392,6 +440,14 @@ export default class CartaoFiltro extends Component {
                 contentContainerStyle={styles.productList}
               />
 
+            <AdMobBanner
+              style={{marginLeft: 20}}
+              bannerSize="leaderboard"
+              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              setTestDeviceIDAsync
+              servePersonalizedAds
+              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+            /> 
             </View>
 
           </ScrollView>

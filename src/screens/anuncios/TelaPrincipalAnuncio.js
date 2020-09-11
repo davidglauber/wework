@@ -34,6 +34,8 @@ import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
 
+import {purchased} from '../../config/purchase';
+
 // HomeA Styles
 const styles = StyleSheet.create({
   screenContainer: {
@@ -218,6 +220,7 @@ sleep = (time) => {
           verified: doc.data().verifiedPublish
         })
       })
+      
 
       if(anunciosDidMount.length  <= 2) {
         this.props.navigation.navigate('Orders')

@@ -26,8 +26,15 @@ import Icon from '../../components/icon/Icon';
 import {Caption, Subtitle1} from '../../components/text/CustomText';
 import TouchableItem from '../../components/TouchableItem';
 
+//CSS responsivo
+import { SafeBackground } from '../home/styles';
+
 // import colors
 import Colors from '../../theme/colors';
+
+import { ThemeContext } from '../../../ThemeContext';
+
+import {purchased} from '../../config/purchase';
 
 // PaymentMethodA Config
 const isRTL = I18nManager.isRTL;
@@ -37,6 +44,8 @@ const EDIT_ICON = IOS ? 'ios-create' : 'md-create';
 const SAVE_ICON = IOS ? 'ios-save' : 'md-save';
 const REMOVE_ICON = IOS ? 'ios-remove-circle' : 'md-remove-circle';
 const BOTTOM_SHEET_PB = IOS ? 16 : 0;
+
+
 
 // PaymentMethodA Styles
 const styles = StyleSheet.create({
@@ -56,7 +65,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   activeDot: {
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: "#DAA520",
     width: 8,
     height: 8,
     borderRadius: 4,
@@ -113,6 +122,8 @@ const styles = StyleSheet.create({
 
 // PaymentMethodA
 export default class PaymentMethodA extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
     this.state = {
@@ -143,10 +154,10 @@ export default class PaymentMethodA extends Component {
     const {cardNumber} = this.state;
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeBackground style={{justifyContent: 'space-between'}}>
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <View style={styles.swiperContainer}>
@@ -200,7 +211,7 @@ export default class PaymentMethodA extends Component {
         <View style={styles.buttonContainer}>
           <Button
             onPress={this.navigateTo('AddCreditCard')}
-            title="Add Credit Card"
+            title="Assinar Premium"
           />
         </View>
 
@@ -245,7 +256,7 @@ export default class PaymentMethodA extends Component {
             </View>
           </TouchableItem>
         </BottomSheet>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
 }

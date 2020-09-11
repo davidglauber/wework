@@ -620,7 +620,7 @@ export default class EditarCartao extends Component {
     var isPhotoLoaded2 = false;
     var isPhotoLoaded3 = false;
 
-      var getFileBlob = function (url, cb) { 
+      var getFileBlob = async function (url, cb) { 
           var xhr = new XMLHttpRequest();
           xhr.open("GET", url);
           xhr.responseType = "blob";
@@ -633,145 +633,152 @@ export default class EditarCartao extends Component {
       if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null) {
         this.setModalVisible(true)
         
-        getFileBlob(this.state.image, blob => {
-          firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
+        getFileBlob(this.state.image, async blob => {
+          await firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
               imageIdStorageState = imageId
               isPhotoLoaded = true
               console.log('A imagem foi salva no Storage!');
               console.log('Valor image state: ' + imageIdStorageState);
-          })
-        })
 
 
-        getFileBlob(this.state.image2, blob => {
-          firebase.storage().ref(`${storageUrl}/images/${imageId2}`).put(blob).then((snapshot) => {
-              imageIdStorageState2 = imageId2
-              isPhotoLoaded2 = true
-              console.log('A imagem foi salva no Storage!');
-              console.log('Valor image state2: ' + imageIdStorageState2);
-              
-          })
-        })
 
 
-        getFileBlob(this.state.image3, blob => {
-          firebase.storage().ref(`${storageUrl}/images/${imageId3}`).put(blob).then((snapshot) => {
-              imageIdStorageState3 = imageId3
 
-              if(type == 'Estabelecimento'){
-                if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
-                    firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-                      firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {   
-                        firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {  
-                          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
-                            titleEstab: e.state.tituloEstab,
-                            idCartao: routeIdCartao,
-                            idUser: userUID,
-                            descriptionEstab: e.state.descricaoEstab,
-                            publishData: e.state.date,
-                            type: 'Estabelecimento',
-                            verifiedPublish: true,
-                            phoneNumberEstab: e.state.phoneEstab,
-                            localEstab: e.state.enderecoEstab,
-                            categoryEstab: e.state.categoria,
-                            subcategoryEstab: e.state.subcategoria,
-                            photoPublish: urlImage,
-                            photoPublish2: urlImage2,
-                            photoPublish3: urlImage3,
-                            workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
-                            timeOpen: e.state.horarioOpen,
-                            timeClose: e.state.horarioClose
-                          })
-              
-                          //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
-                          firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
-                            titleEstab: e.state.tituloEstab,
-                            idCartao: routeIdCartao,
-                            idUser: userUID,
-                            descriptionEstab: e.state.descricaoEstab,
-                            publishData: e.state.date,
-                            type: 'Estabelecimento',
-                            verifiedPublish: true,
-                            phoneNumberEstab: e.state.phoneEstab,
-                            localEstab: e.state.enderecoEstab,
-                            categoryEstab: e.state.categoria,
-                            subcategoryEstab: e.state.subcategoria,
-                            photoPublish: urlImage,
-                            photoPublish2: urlImage2,
-                            photoPublish3: urlImage3,
-                            workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
-                            timeOpen: e.state.horarioOpen,
-                            timeClose: e.state.horarioClose
-                          })
+              getFileBlob(this.state.image2, async blob => {
+                await firebase.storage().ref(`${storageUrl}/images/${imageId2}`).put(blob).then((snapshot) => {
+                    imageIdStorageState2 = imageId2
+                    isPhotoLoaded2 = true
+                    console.log('A imagem foi salva no Storage!');
+                    console.log('Valor image state2: ' + imageIdStorageState2);
+                    
+
+
+
+
+
+
+                    getFileBlob(this.state.image3, async blob => {
+                      await firebase.storage().ref(`${storageUrl}/images/${imageId3}`).put(blob).then((snapshot) => {
+                          imageIdStorageState3 = imageId3
+            
+                          if(type == 'Estabelecimento'){
+                            if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
+                                firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
+                                  firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {   
+                                    firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {  
+                                      firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
+                                        titleEstab: e.state.tituloEstab,
+                                        idCartao: routeIdCartao,
+                                        idUser: userUID,
+                                        descriptionEstab: e.state.descricaoEstab,
+                                        publishData: e.state.date,
+                                        type: 'Estabelecimento',
+                                        verifiedPublish: true,
+                                        phoneNumberEstab: e.state.phoneEstab,
+                                        localEstab: e.state.enderecoEstab,
+                                        categoryEstab: e.state.categoria,
+                                        subcategoryEstab: e.state.subcategoria,
+                                        photoPublish: urlImage,
+                                        photoPublish2: urlImage2,
+                                        photoPublish3: urlImage3,
+                                        workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+                                        timeOpen: e.state.horarioOpen,
+                                        timeClose: e.state.horarioClose
+                                      })
+                          
+                                      //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
+                                      firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
+                                        titleEstab: e.state.tituloEstab,
+                                        idCartao: routeIdCartao,
+                                        idUser: userUID,
+                                        descriptionEstab: e.state.descricaoEstab,
+                                        publishData: e.state.date,
+                                        type: 'Estabelecimento',
+                                        verifiedPublish: true,
+                                        phoneNumberEstab: e.state.phoneEstab,
+                                        localEstab: e.state.enderecoEstab,
+                                        categoryEstab: e.state.categoria,
+                                        subcategoryEstab: e.state.subcategoria,
+                                        photoPublish: urlImage,
+                                        photoPublish2: urlImage2,
+                                        photoPublish3: urlImage3,
+                                        workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+                                        timeOpen: e.state.horarioOpen,
+                                        timeClose: e.state.horarioClose
+                                      })
+                                  })
+                                    })
+                                      })
+                      
+                      
+                                this.setModalVisible(true)
+                      
+                              this.sleep(5000).then(() => { 
+                                this.props.navigation.navigate('TelaGeralCriarCartao')
+                              })
+                      
+                            } else {
+                              alert('Todos os campos devem ser preenchidos!')
+                            }
+                          }
+                      
+                      
+                          if(type == 'Autonomo') {
+                            if(this.state.descricaoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
+                                firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
+                                  firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {   
+                                    firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {  
+                                      firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
+                                        idCartao: routeIdCartao,
+                                        idUser: userUID,
+                                        nome: e.state.nomeAuto,
+                                        publishData: e.state.date,
+                                        descriptionAuto: e.state.descricaoAuto,
+                                        type: 'Autonomo',
+                                        verifiedPublish: true,
+                                        phoneNumberAuto: e.state.phoneAuto,
+                                        categoryAuto: e.state.categoria,
+                                        subcategoryAuto: e.state.subcategoria,
+                                        photoPublish: urlImage,
+                                        photoPublish2: urlImage2,
+                                        photoPublish3: urlImage3,
+                                      })
+                          
+                                      //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
+                                      firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
+                                        idCartao: routeIdCartao,
+                                        idUser: userUID,
+                                        nome: e.state.nomeAuto,
+                                        publishData: e.state.date,
+                                        descriptionAuto: e.state.descricaoAuto,
+                                        type: 'Autonomo',
+                                        verifiedPublish: true,
+                                        phoneNumberAuto: e.state.phoneAuto,
+                                        categoryAuto: e.state.categoria,
+                                        subcategoryAuto: e.state.subcategoria,
+                                        photoPublish: urlImage,
+                                        photoPublish2: urlImage2,
+                                        photoPublish3: urlImage3,
+                                      })
+                                  })
+                                    })
+                                      })
+                      
+                                  this.setModalVisible(true)
+                      
+                                this.sleep(5000).then(() => { 
+                                  this.props.navigation.navigate('TelaGeralCriarCartao')
+                                })
+                            } else {
+                              alert('Todos os campos devem ser preenchidos!')
+                            }
+                            
+                          }
+            
                       })
-                        })
-                          })
-          
-          
-                    this.setModalVisible(true)
-          
-                  this.sleep(5000).then(() => { 
-                    this.props.navigation.navigate('TelaGeralCriarCartao')
-                  })
-          
-                } else {
-                  alert('Todos os campos devem ser preenchidos!')
-                }
-              }
-          
-          
-              if(type == 'Autonomo') {
-                if(this.state.descricaoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
-                    firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-                      firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {   
-                        firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {  
-                          firebase.firestore().collection('usuarios').doc(userUID).collection('cartoes').doc(routeIdCartao).update({
-                            idCartao: routeIdCartao,
-                            idUser: userUID,
-                            nome: e.state.nomeAuto,
-                            publishData: e.state.date,
-                            descriptionAuto: e.state.descricaoAuto,
-                            type: 'Autonomo',
-                            verifiedPublish: true,
-                            phoneNumberAuto: e.state.phoneAuto,
-                            categoryAuto: e.state.categoria,
-                            subcategoryAuto: e.state.subcategoria,
-                            photoPublish: urlImage,
-                            photoPublish2: urlImage2,
-                            photoPublish3: urlImage3,
-                          })
-              
-                          //editar cartao para a pasta principal onde todos os cartoes ativos serão visiveis
-                          firebase.firestore().collection('cartoes').doc(routeIdCartao).update({
-                            idCartao: routeIdCartao,
-                            idUser: userUID,
-                            nome: e.state.nomeAuto,
-                            publishData: e.state.date,
-                            descriptionAuto: e.state.descricaoAuto,
-                            type: 'Autonomo',
-                            verifiedPublish: true,
-                            phoneNumberAuto: e.state.phoneAuto,
-                            categoryAuto: e.state.categoria,
-                            subcategoryAuto: e.state.subcategoria,
-                            photoPublish: urlImage,
-                            photoPublish2: urlImage2,
-                            photoPublish3: urlImage3,
-                          })
-                      })
-                        })
-                          })
-          
-                      this.setModalVisible(true)
-          
-                    this.sleep(5000).then(() => { 
-                      this.props.navigation.navigate('TelaGeralCriarCartao')
                     })
-                } else {
-                  alert('Todos os campos devem ser preenchidos!')
-                }
-                
-              }
-
+                })
+              })
           })
         })
 

@@ -34,7 +34,7 @@ const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 
 
 //CSS responsivo
-import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
+import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, Description, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
 import { ThemeContext } from '../../../ThemeContext';
 
@@ -306,13 +306,13 @@ async componentDidMount() {
 
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{shortDescription} ...</Text>
+          <Description>{shortDescription} ...</Description>
         </View>
       );
     } else {
       return(
         <View style={{justifyContent: 'center', alignItems: 'center',}}>
-          <Text style={{textAlign:'center', fontSize:12, marginTop:20, marginRight:170, fontWeight: '500', marginLeft:25, color:'#888888'}}>{text}</Text>
+          <Description>{text}</Description>
         </View>
       );
     }

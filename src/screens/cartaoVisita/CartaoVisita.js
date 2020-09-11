@@ -301,14 +301,6 @@ export default class CartaoVisita extends Component {
         </View>
 
           <ScrollView>
-            <AdMobBanner
-              style={{marginLeft: 20}}
-              bannerSize="leaderboard"
-              adUnitID="ca-app-pub-3940256099942544/6300978111"
-              setTestDeviceIDAsync
-              servePersonalizedAds
-              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
-            /> 
             <View>
               <FlatList
                 data={cartoesAuto}
@@ -358,7 +350,7 @@ export default class CartaoVisita extends Component {
             <AdMobBanner
               style={{marginLeft: 20}}
               bannerSize="leaderboard"
-              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              adUnitID="ca-app-pub-1397640114399871/3366763355"
               setTestDeviceIDAsync
               servePersonalizedAds
               onDidFailToReceiveAdWithError={(err) => console.log(err)} 
@@ -413,7 +405,7 @@ export default class CartaoVisita extends Component {
             <AdMobBanner
               style={{marginLeft: 20}}
               bannerSize="leaderboard"
-              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              adUnitID="ca-app-pub-1397640114399871/3366763355"
               setTestDeviceIDAsync
               servePersonalizedAds
               onDidFailToReceiveAdWithError={(err) => console.log(err)} 

@@ -50,6 +50,11 @@ import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
 
+
+//import ADS
+import { AdMobBanner} from 'expo-ads-admob';
+
+
 // ProductA Config
 const isRTL = I18nManager.isRTL;
 const IOS = Platform.OS === 'ios';
@@ -431,6 +436,16 @@ export default class TelaAnuncio extends Component {
                         <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</TextDescription>
                       </View>
                   }
+
+
+                  <AdMobBanner
+                    style={{marginLeft: 20, marginBottom:20}}
+                    bannerSize="leaderboard"
+                    adUnitID="ca-app-pub-1397640114399871/3366763355"
+                    setTestDeviceIDAsync
+                    servePersonalizedAds
+                    onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+                  /> 
                 </View>
             }
           />
@@ -564,6 +579,17 @@ export default class TelaAnuncio extends Component {
                         <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</TextDescription>
                       </View>
                   }
+
+
+
+                  <AdMobBanner
+                    style={{marginLeft: 20, marginBottom:20}}
+                    bannerSize="leaderboard"
+                    adUnitID="ca-app-pub-1397640114399871/3366763355"
+                    setTestDeviceIDAsync
+                    servePersonalizedAds
+                    onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+                  /> 
                 </View>
 
             }

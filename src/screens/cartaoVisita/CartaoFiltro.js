@@ -330,15 +330,6 @@ export default class CartaoFiltro extends Component {
             </View>
           )}
         </View>
-
-            <AdMobBanner
-              style={{marginLeft: 20}}
-              bannerSize="leaderboard"
-              adUnitID="ca-app-pub-3940256099942544/6300978111"
-              setTestDeviceIDAsync
-              servePersonalizedAds
-              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
-            /> 
           <ScrollView>
             <View>
               <FlatList
@@ -389,7 +380,7 @@ export default class CartaoFiltro extends Component {
             <AdMobBanner
               style={{marginLeft: 20}}
               bannerSize="leaderboard"
-              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              adUnitID="ca-app-pub-1397640114399871/3366763355"
               setTestDeviceIDAsync
               servePersonalizedAds
               onDidFailToReceiveAdWithError={(err) => console.log(err)} 
@@ -443,7 +434,7 @@ export default class CartaoFiltro extends Component {
             <AdMobBanner
               style={{marginLeft: 20}}
               bannerSize="leaderboard"
-              adUnitID="ca-app-pub-3940256099942544/6300978111"
+              adUnitID="ca-app-pub-1397640114399871/3366763355"
               setTestDeviceIDAsync
               servePersonalizedAds
               onDidFailToReceiveAdWithError={(err) => console.log(err)} 

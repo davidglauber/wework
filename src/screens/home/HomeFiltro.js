@@ -361,15 +361,6 @@ async componentDidMount() {
               <Heading>Anúncios</Heading>
             </View>
 
-            <AdMobBanner
-              style={{marginLeft: 20}}
-              bannerSize="leaderboard"
-              adUnitID="ca-app-pub-3940256099942544/6300978111"
-              setTestDeviceIDAsync
-              servePersonalizedAds
-              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
-            /> 
-              
               <FlatList 
                 keyExtractor={() => this.makeid(17)}
                 data={activesPublishesAuto}
@@ -415,7 +406,7 @@ async componentDidMount() {
               <AdMobBanner
                 style={{marginLeft: 20}}
                 bannerSize="leaderboard"
-                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                adUnitID="ca-app-pub-1397640114399871/3366763355"
                 setTestDeviceIDAsync
                 servePersonalizedAds
                 onDidFailToReceiveAdWithError={(err) => console.log(err)} 
@@ -466,7 +457,7 @@ async componentDidMount() {
               <AdMobBanner
                 style={{marginLeft: 20}}
                 bannerSize="leaderboard"
-                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                adUnitID="ca-app-pub-1397640114399871/3366763355"
                 setTestDeviceIDAsync
                 servePersonalizedAds
                 onDidFailToReceiveAdWithError={(err) => console.log(err)} 

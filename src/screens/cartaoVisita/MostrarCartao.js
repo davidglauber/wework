@@ -56,7 +56,9 @@ const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
 import { SafeAnuncioView, ValueFieldPrincipal, IconResponsiveNOBACK,  TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
-import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
+//import ADS
+import { AdMobBanner} from 'expo-ads-admob';
 
 // ProductA Styles
 const styles = StyleSheet.create({
@@ -444,6 +446,15 @@ export default class MostrarCartao extends Component {
                       </View>
                   }
 
+
+                  <AdMobBanner
+                    style={{marginLeft: 20, marginBottom:20}}
+                    bannerSize="leaderboard"
+                    adUnitID="ca-app-pub-1397640114399871/3366763355"
+                    setTestDeviceIDAsync
+                    servePersonalizedAds
+                    onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+                  />
                 </View>
             }
           />
@@ -578,6 +589,15 @@ export default class MostrarCartao extends Component {
                         <TextDescription style={{marginBottom:15, fontWeight:'bold'}}>Publicado em {this.state.dateAuto}</TextDescription>
                       </View>
                   }
+
+                  <AdMobBanner
+                    style={{marginLeft: 20, marginBottom:20}}
+                    bannerSize="leaderboard"
+                    adUnitID="ca-app-pub-1397640114399871/3366763355"
+                    setTestDeviceIDAsync
+                    servePersonalizedAds
+                    onDidFailToReceiveAdWithError={(err) => console.log(err)} 
+                  />
             </View>
             }
           />

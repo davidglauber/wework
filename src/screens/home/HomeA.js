@@ -354,15 +354,6 @@ async componentDidMount() {
               <Heading>Anúncios</Heading>
             </View>
 
-            <AdMobBanner
-              style={{marginLeft: 20}}
-              bannerSize="leaderboard"
-              adUnitID="ca-app-pub-3940256099942544/6300978111"
-              setTestDeviceIDAsync
-              servePersonalizedAds
-              onDidFailToReceiveAdWithError={(err) => console.log(err)} 
-            /> 
-
               <FlatList 
                 keyExtractor={() => this.makeid(17)}
                 data={activesPublishesAuto}
@@ -409,7 +400,7 @@ async componentDidMount() {
               <AdMobBanner
                 style={{marginLeft: 20}}
                 bannerSize="leaderboard"
-                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                adUnitID="ca-app-pub-1397640114399871/3366763355"
                 setTestDeviceIDAsync
                 servePersonalizedAds
                 onDidFailToReceiveAdWithError={(err) => console.log(err)} 
@@ -422,7 +413,7 @@ async componentDidMount() {
                 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                      <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10, elevation:15,  shadowColor: 'black', shadowOffset:{width:2, height:2},  shadowOpacity: 0.2}}>
+                      <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                         <AnuncioContainer>
                             <View style={{flexDirection:'row'}}>
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -460,7 +451,7 @@ async componentDidMount() {
               <AdMobBanner
                 style={{marginLeft: 20}}
                 bannerSize="leaderboard"
-                adUnitID="ca-app-pub-3940256099942544/6300978111"
+                adUnitID="ca-app-pub-1397640114399871/3366763355"
                 setTestDeviceIDAsync
                 servePersonalizedAds
                 onDidFailToReceiveAdWithError={(err) => console.log(err)} 

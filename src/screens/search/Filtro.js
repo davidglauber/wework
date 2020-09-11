@@ -174,7 +174,7 @@ export default class Filtro extends Component {
       this.setState({selected: array})
     } 
 
-    if(selected.length >= 10) {
+    else if(selected.length >= 10) {
       alert('Você só pode escolher até 10 categorias diferentes!')
     } else {
       this.setState({selected: selected.concat(array)})
@@ -238,7 +238,7 @@ export default class Filtro extends Component {
                   }
 
                   { this.state.type == 'Autonomo' &&
-                    <ScrollView style={{flexDirection:'row'}}>
+                    <View style={{flexDirection:'row'}}>
                       <TouchableFilter>
                         <TextFilter>Autônomo</TextFilter> 
                       </TouchableFilter>
@@ -246,7 +246,7 @@ export default class Filtro extends Component {
                       <TouchableFilterUnselected onPress={() => this.setState({type: 'Estabelecimento'})}>
                         <TextFilter style={{color:'black'}}>Estabelecimento</TextFilter>
                       </TouchableFilterUnselected>
-                    </ScrollView>
+                    </View>
                   }
                 </View>
             </View>

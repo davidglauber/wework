@@ -16,7 +16,9 @@ import HeaderIconButton from '../components/navigation/HeaderIconButton';
 
 // import Onboarding screen
 import Onboarding from '../screens/onboarding/OnboardingA';
-import OnboardingD from '../screens/onboarding/OnboardingD';
+
+import CheckUserScreen from '../screens/onboarding/CheckUserScreen';
+
 
 // import Welcome screen
 import Welcome from '../screens/welcome/WelcomeA';
@@ -129,7 +131,7 @@ const Stack = createStackNavigator();
 
 
 // MainNavigatorA
-function MainNavigatorA({isDarkEnabled}) {
+function MainNavigatorA({isDark}) {
   const {dark, setDark} = useContext(ThemeContext)
 
   return (
@@ -150,55 +152,58 @@ function MainNavigatorA({isDarkEnabled}) {
         }}>
 
 
-        { isDarkEnabled == false ?
+        <Stack.Screen
+          name="CheckUserScreen"
+          component={CheckUserScreen}
+          options={{headerShown: false}}
+        />
+         
+
+        <Stack.Screen
+          name="Onboarding"
+          component={Onboarding}
+          options={{headerShown: false}}
+        />
+
+        {isDark === false ?
           <Stack.Screen
-            name="Onboarding"
-            component={Onboarding}
+            name="HomeNavigator"
+            component={HomeNavigator}
             options={{headerShown: false}}
           />
           :
           <Stack.Screen
-            name="OnboardingD"
-            component={OnboardingD}
+            name="HomeNavigatorC"
+            component={HomeNavigatorC}
             options={{headerShown: false}}
           />
         }
-         
-         <Stack.Screen
-           name="EmailVerificacao"
-           component={EmailVerificacao}
-           options={{headerShown: false}}
-         />
-         
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{headerShown: false}}
-        />
+
+
         <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={
             ({navigation}) => ({ 
-            headerTitleStyle: {
-              color:'white'
-            },
-            title: 'Criar Conta',
-            headerStyle: {
-              elevation: 0,
-              shadowOpacity: 0,
-              backgroundColor: '#00b970'
-            },
-
-            headerLeft: () => (
-              <HeaderIconButton
+              headerTitleStyle: {
+                color:'white'
+              },
+              title: 'Criar Conta',
+              headerStyle: {
+                elevation: 0,
+                shadowOpacity: 0,
+                backgroundColor: '#00b970'
+              },
+              
+              headerLeft: () => (
+                <HeaderIconButton
                 onPress={() => navigation.goBack()}
                 name={'ios-arrow-back'}
                 color={'white'}
-              />
-            ),
-            })
-          }
+                />
+                ),
+              })
+            }
         />
 
         
@@ -222,6 +227,7 @@ function MainNavigatorA({isDarkEnabled}) {
           component={SMSVerificacao}
           options={{headerShown: false}}
         />
+        
 
         <Stack.Screen
           name="TelaLoginSMS"
@@ -243,14 +249,14 @@ function MainNavigatorA({isDarkEnabled}) {
               shadowOpacity: 0,
               backgroundColor: '#00b970'
             },
-
+            
             headerLeft: () => (
               <HeaderIconButton
-                onPress={() => navigation.goBack()}
-                name={'ios-arrow-back'}
-                color={'white'}
+              onPress={() => navigation.goBack()}
+              name={'ios-arrow-back'}
+              color={'white'}
               />
-            ),
+              ),
             })}
         />
         <Stack.Screen
@@ -265,15 +271,15 @@ function MainNavigatorA({isDarkEnabled}) {
               shadowOpacity: 0,
             },
             title: 'Esqueci Minha Senha',
-
+            
             headerLeft: () => (
               <HeaderIconButton
                 onPress={() => navigation.goBack()}
                 name={'ios-arrow-back'}
                 color={'#00b970'}
-              />
-            )
-          })}
+                />
+                )
+              })}
         />
         <Stack.Screen
           name="TermsConditions"
@@ -286,17 +292,6 @@ function MainNavigatorA({isDarkEnabled}) {
         />
 
        
-          <Stack.Screen
-            name="HomeNavigatorC"
-            component={HomeNavigatorC}
-            options={{headerShown: false}}
-          />
-        
-        <Stack.Screen
-          name="HomeNavigator"
-          component={HomeNavigator}
-          options={{headerShown: false}}
-        />
 
 
         <Stack.Screen
@@ -429,12 +424,12 @@ function MainNavigatorA({isDarkEnabled}) {
             title: 'Delivery Address',
             headerRight: () => (
               <HeaderIconButton
-                onPress={() => navigation.goBack()}
-                name={SAVE_ICON}
-                color={Colors.primaryColor}
+              onPress={() => navigation.goBack()}
+              name={SAVE_ICON}
+              color={Colors.primaryColor}
               />
-            ),
-          })}
+              ),
+            })}
         />
         <Stack.Screen
           name="AddAddress"
@@ -500,7 +495,16 @@ function MainNavigatorA({isDarkEnabled}) {
             title: 'About Us',
           }}
         />
+      
+      <Stack.Screen
+        name="EmailVerificacao"
+        component={EmailVerificacao}
+        options={{headerShown: false}}
+      />
+      
       </Stack.Navigator>
+
+
     </NavigationContainer>
   );
 }

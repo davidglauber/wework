@@ -8,13 +8,11 @@
 // import dependencies
 import React, {Component} from 'react';
 import {
-  Alert,
   I18nManager,
   SafeAreaView,
   StatusBar,
   AsyncStorage,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import Color from 'color';
@@ -27,12 +25,9 @@ import {Heading5, Paragraph} from '../../components/text/CustomText';
 // import colors
 import Colors from '../../theme/colors';
 
-import { CommonActions } from '@react-navigation/native';
 
-//import firebase 
 import firebase from '../../config/firebase';
 
-import { ThemeContext } from '../../../ThemeContext';
 
 // VerificationB Config
 const isRTL = I18nManager.isRTL;
@@ -89,9 +84,6 @@ const styles = StyleSheet.create({
 
 // VerificationEMAIL
 export default class EmailVerificacao extends Component {
-  static contextType = ThemeContext
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -107,12 +99,41 @@ export default class EmailVerificacao extends Component {
   
 
   componentDidMount() {
+    
     let getNome = this.props.route.params.nome;
     let getEmail = this.props.route.params.email;
     let getSenha = this.props.route.params.senha;
     let getTelefone = this.props.route.params.telefone;
     let getDataNascimento = this.props.route.params.dataNascimento;
+    
+    try {
+      firebase.auth().createUserWithEmailAndPassword(getEmail, getSenha).then(() => {
 
+        firebase.auth().currentUser.sendEmailVerification().then(() => {
+        }).catch((error) => {
+          alert('ocorreu um erro ao enviar o email')
+        })
+  
+        alert('Usuário Cadastrado com Sucesso!')
+      }).catch((error) => {
+        if(error.code === 'auth/email-already-exists') {
+          alert('Esse endereço de email já está em uso, por favor tente outro')
+          return;
+        } else if (error.code === 'auth/internal-error') {
+          return;
+        } else if (error.code === 'auth/invalid-password') {
+          alert('A senha inserida é inválida')
+          return;
+        } else if (error.code === 'auth/weak-password') {
+          alert('A senha inserida é muito fraca, ela precisa ter ao mínimo 6 caracteres')
+          return;
+        }
+      })
+    } catch {
+      alert('erro ao cadastrar usuario')          
+    }
+    
+    
     
     this.setState({nome: getNome})
     this.setState({email: getEmail})
@@ -120,8 +141,8 @@ export default class EmailVerificacao extends Component {
     this.setState({telefone: getTelefone})
     this.setState({data: getDataNascimento})
     
-
-
+    
+    
     
     
     
@@ -131,24 +152,9 @@ export default class EmailVerificacao extends Component {
     console.log('nome navigation: ' + getNome)
     console.log('Telefone navigation: ' + getTelefone)
     console.log('Data born navigation: ' + getDataNascimento)
-      
-
-
-    try {
-      firebase.auth().createUserWithEmailAndPassword(getEmail, getSenha)
-          firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                try {
-                  firebase.auth().currentUser.sendEmailVerification()
-                  alert('confirme o codigo enviado')
-                } catch {
-                  alert('ocorreu um erro ao enviar o email')
-                }
-            } else { return null }
-          })
-    } catch {
-        alert('erro')          
-    }
+    
+    
+    
     
   }
 
@@ -162,8 +168,9 @@ export default class EmailVerificacao extends Component {
 
 
 
- async verifyIfUserHasVerified(){
+ verifyIfUserHasVerified(){
 
+  console.log('entrou no verificar!!!!!!!!!!')
   let getNome = this.props.route.params.nome;
   let getEmail = this.props.route.params.email;
   let getSenha = this.props.route.params.senha;
@@ -202,10 +209,6 @@ export default class EmailVerificacao extends Component {
   render() {
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
-        <StatusBar
-          backgroundColor={this.context.dark ? '#121212' : 'white'}
-          barStyle={this.context.dark ? "white-content" : "dark-content"}
-        />
 
         <GradientContainer containerStyle={styles.container}>
           <View style={styles.instructionContainer}>

@@ -33,7 +33,7 @@ import white from '../theme/light';
 import black from '../theme/dark';
 import dark from '../theme/dark';
 
-// HomeNavigator Config
+// HomeNavigatorC Config
 
 type Props = {
   color: string,
@@ -44,7 +44,7 @@ type Props = {
 // create bottom tab navigator
 const Tab = createBottomTabNavigator();
 
-// HomeNavigator
+// HomeNavigatorC
 function HomeNavigatorC() {
   const {dark, setDark} = useContext(ThemeContext)
 
@@ -74,7 +74,7 @@ console.log('Dark do HOMEEE: ' + dark)
         inactiveTintColor: Colors.secondaryText,
         showLabel: false, // hide labels
         style: {
-          backgroundColor: '#121212' // TabBar background
+          backgroundColor: dark ? '#121212' : 'white' // TabBar background
         },
       }}>
       <Tab.Screen name="Home" component={Home} />
@@ -95,4 +95,4 @@ console.log('Dark do HOMEEE: ' + dark)
   );
 }
 
-export default HomeNavigatorC;
+export default HomeNavigator;

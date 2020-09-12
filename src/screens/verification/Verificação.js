@@ -31,8 +31,14 @@ import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
+
+import firebase from '../../config/firebase';
+
 // import colors
 import Colors from '../../theme/colors';
+
+//import Facebook API
+import * as Facebook from 'expo-facebook';
 
 // VerificationB Config
 const isRTL = I18nManager.isRTL;
@@ -109,7 +115,6 @@ export default class Verificação extends Component {
   };
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => { return true; });
     let getNome = this.props.route.params.nome;
     let getEmail = this.props.route.params.email;
     let getSenha = this.props.route.params.senha;
@@ -173,6 +178,36 @@ export default class Verificação extends Component {
     alert('ENTROU NO GOOGLE')
   }
 
+
+  async signInWithFacebook() {
+    await Facebook.initializeAsync('654536232159341');
+    try {
+      const { type, token } = await
+        Facebook.logInWithReadPermissionsAsync(
+              "654536232159341",{
+                      permission: "public_profile"
+            } 
+        );
+
+      if (type === 'success') {
+        var credential =   
+        firebase
+          .auth
+          .FacebookAuthProvider
+          .credential(token);
+          } else {
+            // type === 'cancel'
+          }
+
+          firebase
+          .auth().signInWithCredential(credential).catch(error => {
+              console.log(error);
+          });
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  }
+
   render() {
     const {modalVisible, pin} = this.state;
 
@@ -199,7 +234,9 @@ export default class Verificação extends Component {
               <FontAwesome5 name="google" size={35} style={{marginRight:25}} color="#DAA520"/>
           </TouchableOpacity>
 
-          <FontAwesome5 name="facebook" size={35} style={{marginRight:15}} color="#DAA520"/>
+          <TouchableOpacity onPress={() => this.signInWithFacebook()}>
+              <FontAwesome5 name="facebook" size={35} style={{marginRight:15}} color="#DAA520"/>
+          </TouchableOpacity>
           <View style={{marginBottom: 44, marginLeft: 10}}>
             <Button
               onPress={() => this.navigateTo('SMSVerificacao')}

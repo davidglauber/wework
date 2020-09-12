@@ -33,6 +33,9 @@ import Layout from '../../theme/layout';
 import { TextInputMask } from 'react-native-masked-text';
 
 
+//import icons
+import { FontAwesome5 } from '@expo/vector-icons';
+
 //import datepicker
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
@@ -42,10 +45,10 @@ import firebase from '../../config/firebase';
 
 
 // SignUpB Config
-const PLACEHOLDER_TEXT_COLOR = 'rgba(255, 255, 255, 0.7)';
-const INPUT_TEXT_COLOR = '#fff';
-const INPUT_BORDER_COLOR = 'rgba(255, 255, 255, 0.4)';
-const INPUT_FOCUSED_BORDER_COLOR = '#fff';
+const PLACEHOLDER_TEXT_COLOR = '#DAA520';
+const INPUT_TEXT_COLOR = 'black';
+const INPUT_BORDER_COLOR = '#DAA520';
+const INPUT_FOCUSED_BORDER_COLOR = '#DAA520';
 
 // SignUpB Styles
 const styles = StyleSheet.create({
@@ -100,13 +103,13 @@ const styles = StyleSheet.create({
   footerText: {
     fontWeight: '300',
     fontSize: 13,
-    color: Colors.white,
+    color: "#DAA520",
   },
   footerText2: {
     fontWeight: '300',
     marginTop:10,
     fontSize: 13,
-    color: Colors.white,
+    color: "#DAA520",
   },
   footerLink: {
     fontWeight: '400',
@@ -321,10 +324,10 @@ export default class Cadastro extends Component {
     } = this.state;
 
     return (
-      <GradientContainer>
+      <View style={{flex:1, backgroundColor:'white'}}>
         <StatusBar
-          backgroundColor={Colors.primaryColor}
-          barStyle="light-content"
+          backgroundColor='#fff'
+          barStyle="dark-content"
         />
 
         <SafeAreaView style={styles.screenContainer}>
@@ -415,7 +418,7 @@ export default class Cadastro extends Component {
                   type={'cel-phone'}
                   placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
                   borderColor={INPUT_BORDER_COLOR}
-                  style={{marginTop:10, borderBottomWidth:1, color:'white'}}
+                  style={{marginTop:10, borderBottomWidth:1, color:'black'}}
                   value={this.state.phone}
                   onChangeText={text => this.onChangePhone(text)}
                   keyboardType={"phone-pad"}
@@ -424,7 +427,7 @@ export default class Cadastro extends Component {
 
               
                   <TouchableOpacity style={{width:150, height: 55, alignItems:'center', justifyContent:'center', marginTop: 30, borderRadius:20}} onPress={() => this.setState({showDate: true})}>
-                          <Text style={{fontWeight: 'bold', fontSize:12, color:'#fff'}}>
+                          <Text style={{color: '#DAA520', fontWeight: 'bold', fontSize:12}}>
                             Defina sua Data de Nascimento: {this.convertDate()}
                           </Text>
                   </TouchableOpacity>
@@ -444,9 +447,10 @@ export default class Cadastro extends Component {
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity
                     onPress={this.navigateTo('Verification')}
-                    style={{backgroundColor:'white', width:300, borderRadius:10, height:30}}
+                    style={{backgroundColor:'black', width:200, borderRadius:10, height:50, flexDirection:'row', alignItems:'center'}}
                   >
-                    <Text style={{fontWeight:'bold', textAlign:'center', fontSize:16, marginTop:4}}>Criar Conta</Text>
+                    <FontAwesome5 name="plus-square" size={35} style={{marginLeft:15}} color="#fff"/>
+                    <Text style={{fontWeight:'bold', marginLeft:15, textAlign:'center', fontSize:20, marginTop:4, color:'white'}}>Criar Conta</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={this.navigateToSignIn('SignIn')}>
@@ -479,7 +483,7 @@ export default class Cadastro extends Component {
             </View>
           </KeyboardAwareScrollView>
         </SafeAreaView>
-      </GradientContainer>
+      </View>
     );
   }
 }

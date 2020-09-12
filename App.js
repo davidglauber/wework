@@ -35,7 +35,7 @@ function App() {
     <ThemeProvider theme={dark ? themes.dark: themes.light}>
         <SafeAreaProvider>
               <ThemeProviderStyle dark={dark} setDark={setDark}>
-                <MainNavigator isDark={dark}/>
+                <MainNavigator/>
               </ThemeProviderStyle>
         </SafeAreaProvider>
     </ThemeProvider>

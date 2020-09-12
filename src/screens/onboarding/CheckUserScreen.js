@@ -15,7 +15,7 @@ export default class CheckUserScreen extends Component {
    async componentDidMount() {
       await firebase.auth().onAuthStateChanged((user) => {
           if(user) {
-            this.props.navigation.navigate('HomeNavigatorC')
+            this.props.navigation.navigate('HomeNavigator')
           } else {
             this.props.navigation.navigate('Onboarding')
           }

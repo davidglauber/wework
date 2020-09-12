@@ -14,6 +14,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
   BackHandler
 } from 'react-native';
@@ -27,6 +28,9 @@ import {Heading5, Paragraph} from '../../components/text/CustomText';
 import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 
 
+//import icons
+import { FontAwesome5 } from '@expo/vector-icons';
+
 // import colors
 import Colors from '../../theme/colors';
 
@@ -37,11 +41,12 @@ const isRTL = I18nManager.isRTL;
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: '#fff',
   },
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    color:'#DAA520',
     alignItems: 'center',
   },
   instructionContainer: {
@@ -49,12 +54,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  heading: {color: Colors.onPrimaryColor},
+  heading: {color: "#DAA520"},
   instruction: {
     marginTop: 16,
     paddingHorizontal: 40,
     fontSize: 14,
-    color: Colors.onPrimaryColor,
+    color: "#DAA520",
     textAlign: 'center',
     opacity: 0.76,
   },
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 50,
     borderRadius: 4,
-    backgroundColor: Color(Colors.onPrimaryColor).alpha(0.84),
+    backgroundColor: "#DAA520",
   },
   digit: {
     fontWeight: '400',
@@ -162,68 +167,53 @@ export default class Verificação extends Component {
     });
   };
 
+
+
+  signInWithGoogle() {
+    alert('ENTROU NO GOOGLE')
+  }
+
   render() {
     const {modalVisible, pin} = this.state;
 
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
         <StatusBar
-          backgroundColor={Colors.primaryColor}
-          barStyle="light-content"
+          backgroundColor="#fff"
+          barStyle="dark-content"
         />
 
-        <GradientContainer containerStyle={styles.container}>
+        <View style={styles.container}>
           <View style={styles.instructionContainer}>
-            <Heading5 style={styles.heading}>Código de Verificação</Heading5>
+            <Heading5 style={styles.heading}>Confirmação de Cadastro</Heading5>
             <Paragraph style={styles.instruction}>
               Escolha como irá confirmar seu cadastro
             </Paragraph>
 
-          {/* 
-            <View style={styles.codeContainer}>
-              <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[0]}</Text>
-              </View>
-              <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[1]}</Text>
-              </View>
-              <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[2]}</Text>
-              </View>
-              <View style={styles.digitContainer}>
-                <Text style={styles.digit}>{pin[3]}</Text>
-              </View>
-            </View>
-
-          */}
           </View>
 
 
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-            <Button
-              onPress={() => this.navigateTo('EmailVerificacao')}
-              disabled={false}
-              borderRadius={4}
-              color={Colors.onPrimaryColor}
-              small
-              title={'EMAIL'.toUpperCase()}
-              titleColor={Colors.primaryColor}
-            />
+            
+          <TouchableOpacity onPress={() => this.signInWithGoogle()}>
+              <FontAwesome5 name="google" size={35} style={{marginRight:25}} color="#DAA520"/>
+          </TouchableOpacity>
 
+          <FontAwesome5 name="facebook" size={35} style={{marginRight:15}} color="#DAA520"/>
           <View style={{marginBottom: 44, marginLeft: 10}}>
             <Button
               onPress={() => this.navigateTo('SMSVerificacao')}
               disabled={false}
               borderRadius={4}
-              color={Colors.onPrimaryColor}
+              color="#DAA520"
               small
               title={'SMS'.toUpperCase()}
-              titleColor={Colors.primaryColor}
+              titleColor="#fff"
             />
           </View>
         </View>
 
-        </GradientContainer>
+        </View>
       </SafeAreaView>
     );
   }

@@ -49,7 +49,6 @@ import TermsConditions from '../screens/terms/TermsConditionsA';
 
 // import HomeNavigator
 import HomeNavigator from './HomeNavigatorA';
-import HomeNavigatorC from './HomeNavigatorC';
 
 //screen of filter
 import HomeFiltro from '../screens/home/HomeFiltro';
@@ -131,7 +130,7 @@ const Stack = createStackNavigator();
 
 
 // MainNavigatorA
-function MainNavigatorA({isDark}) {
+function MainNavigatorA() {
   const {dark, setDark} = useContext(ThemeContext)
 
   return (
@@ -165,20 +164,11 @@ function MainNavigatorA({isDark}) {
           options={{headerShown: false}}
         />
 
-        {isDark === false ?
           <Stack.Screen
             name="HomeNavigator"
             component={HomeNavigator}
             options={{headerShown: false}}
           />
-          :
-          <Stack.Screen
-            name="HomeNavigatorC"
-            component={HomeNavigatorC}
-            options={{headerShown: false}}
-          />
-        }
-
 
         <Stack.Screen
           name="SignUp"
@@ -186,13 +176,13 @@ function MainNavigatorA({isDark}) {
           options={
             ({navigation}) => ({ 
               headerTitleStyle: {
-                color:'white'
+                color:'#DAA520'
               },
               title: 'Criar Conta',
               headerStyle: {
                 elevation: 0,
                 shadowOpacity: 0,
-                backgroundColor: '#00b970'
+                backgroundColor: '#fff'
               },
               
               headerLeft: () => (

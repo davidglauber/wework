@@ -40,9 +40,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 
-//import firebase 
-import firebase from '../../config/firebase';
-
 
 // SignUpB Config
 const PLACEHOLDER_TEXT_COLOR = '#DAA520';
@@ -140,11 +137,6 @@ export default class Cadastro extends Component {
       secureTextEntry2: true,
     };
   }
-
-
-
-
-
 
 
 

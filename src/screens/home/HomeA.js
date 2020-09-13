@@ -26,10 +26,6 @@ import Colors from '../../theme/colors';
 import firebase from '../../config/firebase';
 
 
-
-//import icons
-import { FontAwesome5 } from '@expo/vector-icons';
-
 //CSS responsivo
 import { SafeBackground, IconResponsive, AnuncioContainer, Description, IconResponsiveNOBACK, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
@@ -113,7 +109,7 @@ const styles = StyleSheet.create({
 
 
 export default class HomeA extends Component {
-  static contextType = ThemeContext
+  static contextType = ThemeContext;
 
   constructor(props) {
     super(props);
@@ -148,18 +144,12 @@ export default class HomeA extends Component {
 
 
 async componentDidMount() {
-  const darkVar = this.context
-
-  console.log('DARK CONTEXT: ' + darkVar)
-  console.reportErrorsAsExceptions = false; 
-
-
    let e = this;
 
     await firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           e.setState({status: true})
-          firebase.firestore().collection('usuarios').doc(user.uid).onSnapshot(documentSnapshot => {
+          firebase.firestore().collection('usuarios').doc(user.uid).get().then(documentSnapshot => {
             var removeCharacters = documentSnapshot.data().email.replace('@', '')
               let removeCharacters2 = removeCharacters.replace('gmail.com', '')
               let removeCharacters3 = removeCharacters2.replace('hotmail.com', '')
@@ -230,48 +220,6 @@ async componentDidMount() {
         e.setState({isFetchedPublish: true})
       })
     })
-
-
-
-
-
-   let nomeUser = '';
-   let emailUser = '';
-   let senhaUser = '';
-   let telefoneUser = '';
-   let dataNascimentoUser = '';
-
-
-    AsyncStorage.getItem('verified').then((value) => {
-      if(value == 'true') {
-        AsyncStorage.setItem('verified', JSON.stringify(true))
-      }
-
-      if(value == 'false') {
-         AsyncStorage.getItem('nome').then((value) =>{nomeUser = value})
-         AsyncStorage.getItem('email').then((value) =>{emailUser = value})
-         AsyncStorage.getItem('senha').then((value) =>{senhaUser = value})
-         AsyncStorage.getItem('telefone').then((value) =>{telefoneUser = value})
-         AsyncStorage.getItem('dataNascimento').then((value) =>{dataNascimentoUser = value})
-
-        this.props.navigation.navigate('EmailVerificacao', {
-            nome: nomeUser,
-            email: emailUser,
-            senha: senhaUser,
-            telefone: telefoneUser,
-            dataNascimento: dataNascimentoUser
-        })
-        alert('Você ainda não confirmou o email!')
-      }
-
-      if(value == 'undefined' || value == 'null') {
-        return null;
-      }
-      console.log('VALOR DO ASYNC STORAGE: ' + value)
-    })
-
-
-
 
 
   }

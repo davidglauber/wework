@@ -21,11 +21,8 @@ import {
 import Color from 'color';
 
 // import components
-import ActivityIndicatorModal from '../../components/modals/ActivityIndicatorModal';
 import Button from '../../components/buttons/Button';
-import GradientContainer from '../../components/gradientcontainer/GradientContainer';
 import {Heading5, Paragraph} from '../../components/text/CustomText';
-import NumericKeyboard from '../../components/keyboard/NumericKeyboard';
 
 
 //import icons
@@ -105,8 +102,9 @@ export default class Verificação extends Component {
       nome:'',
       data:'',
       telefone:'',
-      senha:''
+      senha:'',
     };
+    this.signInWithFacebook = this.signInWithFacebook.bind(this);
   }
 
   // avoid memory leak
@@ -114,12 +112,14 @@ export default class Verificação extends Component {
     clearTimeout(this.timeout);
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     let getNome = this.props.route.params.nome;
     let getEmail = this.props.route.params.email;
     let getSenha = this.props.route.params.senha;
     let getTelefone = this.props.route.params.telefone;
     let getDataNascimento = this.props.route.params.dataNascimento;
+
+    await firebase.auth().createUserWithEmailAndPassword(getEmail, getSenha)
 
     this.setState({nome: getNome})
     this.setState({email: getEmail})
@@ -148,30 +148,6 @@ export default class Verificação extends Component {
   };
 
 
-  toSMS = () => {
-    this.setState(
-      {
-        modalVisible: true,
-      },
-      () => {
-        // for demo purpose after 3s close modal
-        this.timeout = setTimeout(() => {
-          this.closeModal();
-          this.navigateTo('SMSVerificacao');
-        }, 1000);
-      },
-    );
-  };
-
-  closeModal = () => {
-    // for demo purpose clear timeout if user request close modal before 3s timeout
-    clearTimeout(this.timeout);
-    this.setState({
-      modalVisible: false,
-      pin: '',
-    });
-  };
-
 
 
   signInWithGoogle() {
@@ -191,7 +167,7 @@ export default class Verificação extends Component {
 
       if (type === 'success') {
         var credential =   
-        firebase
+        await firebase
           .auth
           .FacebookAuthProvider
           .credential(token);
@@ -199,18 +175,19 @@ export default class Verificação extends Component {
             // type === 'cancel'
           }
 
-          firebase
-          .auth().signInWithCredential(credential).catch(error => {
+          await firebase
+          .auth().signInWithCredential(credential).then(() =>{console.log('FUNCIONOU')}).catch(error => {
               console.log(error);
           });
+
+          alert('CADASTROU NO FACEBOOK')
+
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
     }
   }
 
   render() {
-    const {modalVisible, pin} = this.state;
-
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
         <StatusBar

@@ -11,8 +11,6 @@ import React , {useState}from 'react';
 import {YellowBox} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {enableScreens} from 'react-native-screens';
-import { ThemeProvider } from 'styled-components';
-import themes from './src/theme';
 
 
 enableScreens();
@@ -25,20 +23,15 @@ YellowBox.ignoreWarnings([
 
 // import MainNavigatorA or MainNavigatorB to preview design differnces
 import MainNavigator from './src/navigation/MainNavigatorA';
-import ThemeProviderStyle from './ThemeContext';
+
 
 // APP
 function App() {
-  const [dark, setDark] = useState(false)
   
   return (
-    <ThemeProvider theme={dark ? themes.dark: themes.light}>
-        <SafeAreaProvider>
-              <ThemeProviderStyle dark={dark} setDark={setDark}>
-                <MainNavigator/>
-              </ThemeProviderStyle>
-        </SafeAreaProvider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <MainNavigator/>
+    </SafeAreaProvider>
   );
 }
 

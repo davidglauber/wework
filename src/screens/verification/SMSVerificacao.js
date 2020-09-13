@@ -33,7 +33,6 @@ import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaVerifier } from 'expo-
 // import colors
 import Colors from '../../theme/colors';
 import { TextInput } from 'react-native-gesture-handler';
-import { firestore } from 'firebase';
 
 // VerificationB Config
 const isRTL = I18nManager.isRTL;

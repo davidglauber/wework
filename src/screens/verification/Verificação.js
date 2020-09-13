@@ -112,14 +112,13 @@ export default class Verificação extends Component {
     clearTimeout(this.timeout);
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     let getNome = this.props.route.params.nome;
     let getEmail = this.props.route.params.email;
     let getSenha = this.props.route.params.senha;
     let getTelefone = this.props.route.params.telefone;
     let getDataNascimento = this.props.route.params.dataNascimento;
 
-    await firebase.auth().createUserWithEmailAndPassword(getEmail, getSenha)
 
     this.setState({nome: getNome})
     this.setState({email: getEmail})
@@ -156,6 +155,8 @@ export default class Verificação extends Component {
 
 
   async signInWithFacebook() {
+    let e = this;
+    
     await Facebook.initializeAsync('654536232159341');
     try {
       const { type, token } = await
@@ -176,11 +177,20 @@ export default class Verificação extends Component {
           }
 
           await firebase
-          .auth().signInWithCredential(credential).then(() =>{console.log('FUNCIONOU')}).catch(error => {
+          .auth().signInWithCredential(credential).then(() => {
+            var user = firebase.auth().currentUser;
+                    firebase.firestore().collection('usuarios').doc(user.uid).set({
+                      email: e.state.email,
+                      nome: e.state.nome,
+                      premium: false,
+                      dataNascimento: e.state.data,
+                      telefone: e.state.telefone
+                    })
+                  this.props.navigation.navigate('HomeNavigator')
+                  alert('Você foi cadastrado com sucesso 👍')
+          }).catch(error => {
               console.log(error);
           });
-
-          alert('CADASTROU NO FACEBOOK')
 
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);

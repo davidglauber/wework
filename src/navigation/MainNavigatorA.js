@@ -156,6 +156,22 @@ function MainNavigatorA() {
         }}>
 
 
+        <Stack.Screen
+          name="CheckUserScreen"
+          component={CheckUserScreen}
+          options={{headerShown: false}}
+          />
+
+
+
+
+        <Stack.Screen
+          name="Onboarding"
+          component={Onboarding}
+          options={{headerShown: false}}
+        />
+
+
             <Stack.Screen
               name="HomeNavigator"
               component={HomeNavigator}
@@ -451,20 +467,6 @@ function MainNavigatorA() {
           }}
         />
 
-          <Stack.Screen
-            name="CheckUserScreen"
-            component={CheckUserScreen}
-            options={{headerShown: false}}
-            />
-
-          
-          
-          
-          <Stack.Screen
-            name="Onboarding"
-            component={CheckUserScreen}
-            options={{headerShown: false}}
-          />
 
           <Stack.Screen
             name="Verification"

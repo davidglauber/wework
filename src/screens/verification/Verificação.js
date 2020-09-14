@@ -24,6 +24,8 @@ import Color from 'color';
 import Button from '../../components/buttons/Button';
 import {Heading5, Paragraph} from '../../components/text/CustomText';
 
+import Expo from 'expo';
+
 
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -33,6 +35,9 @@ import firebase from '../../config/firebase';
 
 // import colors
 import Colors from '../../theme/colors';
+
+//import Google API
+import * as Google from 'expo-google-app-auth';
 
 //import Facebook API
 import * as Facebook from 'expo-facebook';
@@ -149,8 +154,45 @@ export default class Verificação extends Component {
 
 
 
-  signInWithGoogle() {
-    alert('ENTROU NO GOOGLE')
+  async signInWithGoogle() {
+    let e = this;
+
+    try {
+      const {accessToken, idToken, type} = await Google.logInAsync({
+        androidClientId: '739877707204-kgh0qk400a0gjk6bad9evgak7ooeoi7f.apps.googleusercontent.com',
+        iosClientId: '739877707204-6sduc8aq9ggi6d411lhtfi62rne5gvtc.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+      });
+  
+      if (type === 'success') {
+        var credential =   
+        await firebase
+          .auth
+          .GoogleAuthProvider
+          .credential(idToken, accessToken);
+
+
+
+        await firebase.auth().signInWithCredential(credential).then(() =>{
+          var user = firebase.auth().currentUser;
+              firebase.firestore().collection('usuarios').doc(user.uid).set({
+                email: e.state.email,
+                nome: e.state.nome,
+                premium: false,
+                dataNascimento: e.state.data,
+                telefone: e.state.telefone
+              })
+            this.props.navigation.navigate('HomeNavigator')
+            alert('Você foi cadastrado com sucesso 👍')
+        }).catch((err) => {
+          console.log('erro: ' + err)
+        })
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      return console.log('ERRO NO GOOGLE: '  + e)
+    }
   }
 
 

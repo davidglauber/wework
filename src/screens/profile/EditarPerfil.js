@@ -216,6 +216,14 @@ export default class EditarPerfil extends Component {
       getFileBlob(this.state.fotoPerfil, blob => {
         firebase.storage().ref(`${userUID}/images/${imageId}`).put(blob).then((snapshot) => {
             imageIdStorageState = imageId
+
+            firebase.storage().ref(`${userUID}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
+              firebase.firestore().collection('usuarios').doc(userUID).update({
+                photoProfile: urlImage,
+                nome: e.state.name,
+                telefone: e.state.phone
+              })
+            })
             console.log('A imagem foi salva no Storage!');
             console.log('Valor image state: ' + imageIdStorageState);
         }).catch((error) => {
@@ -226,16 +234,6 @@ export default class EditarPerfil extends Component {
       alert('Por favor, selecione uma imagem para o perfil')
     }
 
-
-    this.sleep(2000).then(() => { 
-      firebase.storage().ref(`${userUID}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
-        firebase.firestore().collection('usuarios').doc(userUID).update({
-          photoProfile: urlImage,
-          nome: e.state.name,
-          telefone: e.state.phone
-        })
-      })
-    })
 
     this.setModalVisible(true)
 

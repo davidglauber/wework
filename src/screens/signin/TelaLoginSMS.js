@@ -179,7 +179,7 @@ export default function TelaLoginSMS () {
 
                   <View style={{paddingTop:27}}>
                     <Button
-                      onPress={() => SendSMS(phoneInput)}
+                      //onPress={() => SendSMS(phoneInput)}
                       disabled={false}
                       borderRadius={4}
                       color={Colors.onPrimaryColor}

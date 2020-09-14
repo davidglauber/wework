@@ -12,17 +12,15 @@ import {
   StatusBar,
   Alert,
   StyleSheet,
+  TouchableOpacity,
+  Button,
   Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 // import components
-import ContainedButton from '../../components/buttons/ContainedButton';
-import GradientContainer from '../../components/gradientcontainer/GradientContainer';
-import UnderlinePasswordInput from '../../components/textinputs/UnderlinePasswordInput';
-import UnderlineTextInput from '../../components/textinputs/UnderlineTextInput';
+import {Heading5, Paragraph} from '../../components/text/CustomText';
 
 // import colors, layout
 import Colors from '../../theme/colors';
@@ -30,6 +28,16 @@ import Layout from '../../theme/layout';
 
 //import firebase 
 import firebase from '../../config/firebase';
+
+
+//import Google API
+import * as Google from 'expo-google-app-auth';
+
+//import Facebook API
+import * as Facebook from 'expo-facebook';
+
+//import icons
+import { FontAwesome5 } from '@expo/vector-icons';
 
 // SignInB Config
 const PLACEHOLDER_TEXT_COLOR = 'rgba(255, 255, 255, 0.7)';
@@ -96,25 +104,37 @@ const styles = StyleSheet.create({
   footerText: {
     fontWeight: '300',
     fontSize: 13,
-    color: Colors.white,
+    color: '#DAA520',
   },
   footerLink: {
     fontWeight: '400',
     textDecorationLine: 'underline',
+  },
+  instructionContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  heading: {color: "#DAA520"},
+  instruction: {
+    marginTop: 16,
+    paddingHorizontal: 40,
+    fontSize: 14,
+    color: "#DAA520",
+    textAlign: 'center',
+    opacity: 0.76,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    color:'#DAA520',
+    alignItems: 'center',
   },
 });
 
 export default class TelaLogin extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      email: '',
-      emailFocused: false,
-      password: '',
-      passwordFocused: false,
-      secureTextEntry: true,
-    };
   }
 
   
@@ -174,116 +194,117 @@ export default class TelaLogin extends Component {
     );
   }
 
-  async signIn(email, password){
-    console.log('entrou na funcao de login')
-    this.setState(
-      {
-        emailFocused: false,
-        passwordFocused: false,
-      },
 
-      await firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-        this.props.navigation.navigate('HomeNavigator')
-        console.log('Logado com sucesso!')
-      }).catch((error) => {
-        alert('Algum dos campos estão incorretos')
-      })
+  async signInWithGoogle() {
+    let e = this;
 
-    );
-  };
+    try {
+      const {accessToken, idToken, type} = await Google.logInAsync({
+        androidClientId: '739877707204-kgh0qk400a0gjk6bad9evgak7ooeoi7f.apps.googleusercontent.com',
+        iosClientId: '739877707204-6sduc8aq9ggi6d411lhtfi62rne5gvtc.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+      });
+  
+      if (type === 'success') {
+        var credential =   
+        await firebase
+          .auth
+          .GoogleAuthProvider
+          .credential(idToken, accessToken);
+
+
+
+        await firebase.auth().signInWithCredential(credential).then(() =>{
+            this.props.navigation.navigate('HomeNavigator')
+            alert('Logado com sucesso 👍')
+        }).catch((err) => {
+          console.log('erro: ' + err)
+        })
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      return console.log('ERRO NO GOOGLE: '  + e)
+    }
+  }
+
+
+  async signInWithFacebook() {
+    let e = this;
+    
+    await Facebook.initializeAsync('654536232159341');
+    try {
+      const { type, token } = await
+        Facebook.logInWithReadPermissionsAsync(
+              "654536232159341",{
+                      permission: "public_profile"
+            } 
+        );
+
+      if (type === 'success') {
+        var credential =   
+        await firebase
+          .auth
+          .FacebookAuthProvider
+          .credential(token);
+          } else {
+            // type === 'cancel'
+          }
+
+          await firebase
+          .auth().signInWithCredential(credential).then(() => {
+            this.props.navigation.navigate('HomeNavigator')
+            alert('Logado com sucesso 👍')
+          }).catch(error => {
+              console.log(error);
+          });
+
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  }
 
   render() {
-    const {
-      email,
-      emailFocused,
-      password,
-      passwordFocused,
-      secureTextEntry,
-    } = this.state;
-
     return (
-      <GradientContainer>
+      <View style={{flex:1, backgroundColor:'white'}}>
         <StatusBar
-          backgroundColor={Colors.primaryColor}
-          barStyle="light-content"
+          backgroundColor="white"
+          barStyle="dark-content"
         />
 
-        <SafeAreaView style={styles.screenContainer}>
-          <KeyboardAwareScrollView
-            contentContainerStyle={styles.contentContainerStyle}>
+
+        <View style={styles.container}>
+        <View style={styles.instructionContainer}>
+            <Heading5 style={styles.heading}>Login</Heading5>
+            <Paragraph style={styles.instruction}>
+              Escolha como irá logar na sua conta
+            </Paragraph>
+        </View>
+
+
+        <View style={{flexDirection:'row', justifyContent:'space-between', marginTop: '100%'}}>
+            
+          <TouchableOpacity onPress={() => this.signInWithGoogle()}>
+              <FontAwesome5 name="google" size={35} style={{marginRight:25}} color="#DAA520"/>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => this.signInWithFacebook()}>
+              <FontAwesome5 name="facebook" size={35} style={{marginRight:15}} color="#DAA520"/>
+          </TouchableOpacity>
+          <View style={{marginBottom: 44, marginLeft: 10}}>
+            <Button
+              onPress={() => this.confirmIfUserHasBeenSignUp()}
+              disabled={false}
+              borderRadius={10}
+              color="#DAA520"
+              small
+              title={'SMS'.toUpperCase()}
+              titleColor="#fff"
+            />
+          </View>
+        </View>
+
             <View style={styles.content}>
-              <View />
-
-              <View style={styles.form}>
-                <UnderlineTextInput
-                  onRef={r => {
-                    this.email = r;
-                  }}
-                  onChangeText={this.emailChange}
-                  onFocus={this.emailFocus}
-                  inputFocused={emailFocused}
-                  onSubmitEditing={this.focusOn(this.password)}
-                  returnKeyType="next"
-                  blurOnSubmit={false}
-                  keyboardType="email-address"
-                  placeholder="E-mail"
-                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                  inputTextColor={INPUT_TEXT_COLOR}
-                  borderColor={INPUT_BORDER_COLOR}
-                  focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
-                  inputContainerStyle={styles.inputContainer}
-                />
-
-                <UnderlinePasswordInput
-                  onRef={r => {
-                    this.password = r;
-                  }}
-                  onChangeText={this.passwordChange}
-                  onFocus={this.passwordFocus}
-                  inputFocused={passwordFocused}
-                  onSubmitEditing={this.signIn}
-                  returnKeyType="go"
-                  placeholder="Senha"
-                  placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                  inputTextColor={INPUT_TEXT_COLOR}
-                  secureTextEntry={secureTextEntry}
-                  borderColor={INPUT_BORDER_COLOR}
-                  focusedBorderColor={INPUT_FOCUSED_BORDER_COLOR}
-                  toggleVisible={password.length > 0}
-                  toggleText={secureTextEntry ? 'Show' : 'Hide'}
-                  onTogglePress={this.onTogglePress}
-                  inputContainerStyle={styles.inputContainer}
-                />
-
-                <View style={styles.buttonContainer}>
-                  <ContainedButton
-                    onPress={() => this.signIn(this.state.email, this.state.password)}
-                    color={Colors.accentColor}
-                    title={'Logar com Email e Senha'.toUpperCase()}
-                  />
-                </View>
-
-                <View style={styles.buttonContainer}>
-                  <ContainedButton
-                    onPress={() => this.confirmIfUserHasBeenSignUp()}
-                    color={Colors.accentColor}
-                    title={'Logar com Telefone'.toUpperCase()}
-                  />
-                </View>
-                
-
-                <View style={styles.forgotPassword}>
-                  <Text
-                    onPress={this.navigateTo('ForgotPassword')}
-                    style={styles.forgotPasswordText}>
-                      Esqueci minha senha
-                  </Text>
-                </View>
-
-                  
-               
-              </View>
-
               <TouchableWithoutFeedback
                 onPress={this.navigateTo('TermsConditions')}>
                 <View style={styles.footer}>
@@ -303,9 +324,8 @@ export default class TelaLogin extends Component {
                 </View>
               </TouchableWithoutFeedback>
             </View>
-          </KeyboardAwareScrollView>
-        </SafeAreaView>
-      </GradientContainer>
+          </View>
+      </View >
     );
   }
 }

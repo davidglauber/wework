@@ -212,13 +212,13 @@ function MainNavigatorA() {
           component={TelaLogin}
           options={({navigation}) => ({ 
             headerTitleStyle: {
-              color:'white'
+              color:'#DAA520'
             },
             title: 'Entrar na Conta',
             headerStyle: {
               elevation: 0,
               shadowOpacity: 0,
-              backgroundColor: '#00b970'
+              backgroundColor: '#fff'
             },
             
             headerLeft: () => (
@@ -353,6 +353,12 @@ function MainNavigatorA() {
         <Stack.Screen
           name="TelaAnuncio"
           component={TelaAnuncio}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="TelaLoginSMS"
+          component={TelaLoginSMS}
           options={{headerShown: false}}
         />
 

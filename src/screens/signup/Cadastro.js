@@ -442,7 +442,7 @@ export default class Cadastro extends Component {
                     style={{backgroundColor:'black', width:200, borderRadius:10, height:50, flexDirection:'row', alignItems:'center'}}
                   >
                     <FontAwesome5 name="plus-square" size={35} style={{marginLeft:15}} color="#fff"/>
-                    <Text style={{fontWeight:'bold', marginLeft:15, textAlign:'center', fontSize:20, marginTop:4, color:'white'}}>Criar Conta</Text>
+                    <Text style={{fontWeight:'bold', marginLeft:15, textAlign:'center', fontSize:26, color:'white'}}>Criar Conta</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={this.navigateToSignIn('SignIn')}>

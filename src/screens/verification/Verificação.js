@@ -24,8 +24,6 @@ import Color from 'color';
 import Button from '../../components/buttons/Button';
 import {Heading5, Paragraph} from '../../components/text/CustomText';
 
-import Expo from 'expo';
-
 
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -253,7 +251,6 @@ export default class Verificação extends Component {
             <Paragraph style={styles.instruction}>
               Escolha como irá confirmar seu cadastro
             </Paragraph>
-
           </View>
 
 

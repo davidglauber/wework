@@ -48,7 +48,7 @@ const isRTL = I18nManager.isRTL;
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: 'white',
   },
   container: {
     flex: 1,
@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  heading: {color: Colors.onPrimaryColor},
+  heading: {color: 'black'},
   instruction: {
     marginTop: 16,
     paddingHorizontal: 40,
     fontSize: 14,
-    color: Colors.onPrimaryColor,
+    color: 'black',
     textAlign: 'center',
     opacity: 0.76,
   },
@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     width: 133,
     height: 45,
-    borderRadius: 4,
-    backgroundColor: Color(Colors.onPrimaryColor).alpha(0.84),
+    borderRadius: 8,
+    backgroundColor: '#e4e6dc',
   },
   digit: {
     fontWeight: '400',
     fontSize: 17,
-    color: Colors.primaryText,
+    color: "#DAA520",
   },
   buttonContainer: {
     marginBottom: 44,
@@ -141,8 +141,8 @@ export default function TelaLoginSMS () {
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
         <StatusBar
-          backgroundColor={Colors.primaryColor}
-          barStyle="light-content"
+          backgroundColor="white"
+          barStyle="dark-content"
         />
 
         <FirebaseRecaptchaVerifierModal
@@ -150,7 +150,7 @@ export default function TelaLoginSMS () {
           firebaseConfig={firebaseConfig}
         />
 
-        <GradientContainer containerStyle={styles.container}>
+        <View style={styles.container}>
           <View style={styles.instructionContainer}>
             <Heading5 style={styles.heading}>Digite o seu Número para Logar</Heading5>
             <Paragraph style={styles.instruction}>
@@ -179,13 +179,13 @@ export default function TelaLoginSMS () {
 
                   <View style={{paddingTop:27}}>
                     <Button
-                      //onPress={() => SendSMS(phoneInput)}
+                      onPress={() => SendSMS(phoneInput)}
                       disabled={false}
                       borderRadius={4}
                       color={Colors.onPrimaryColor}
                       small
                       title={'Enviar SMS'.toUpperCase()}
-                      titleColor={Colors.primaryColor}
+                      titleColor={'#DAA520'}
                     />
                   </View>
 
@@ -231,11 +231,11 @@ export default function TelaLoginSMS () {
               color={Colors.onPrimaryColor}
               small
               title={'Confirmar'.toUpperCase()}
-              titleColor={Colors.primaryColor}
+              titleColor={'#DAA520'}
             />
 
           </View>
-        </GradientContainer>
+        </View>
       </SafeAreaView>
     );
   }

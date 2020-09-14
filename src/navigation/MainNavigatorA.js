@@ -321,6 +321,12 @@ function MainNavigatorA() {
         />
 
         <Stack.Screen
+          name="SMSVerificacao"
+          component={SMSVerificacao}
+          options={{headerShown: false}}
+        />
+        
+        <Stack.Screen
           name="EditarCartao"
           component={EditarCartao}
           options={{

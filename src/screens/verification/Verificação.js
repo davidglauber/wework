@@ -173,10 +173,10 @@ export default class Verificação extends Component {
 
 
 
-        await firebase.auth().signInWithCredential(credential).then(() =>{
+        await firebase.auth().signInWithCredential(credential).then((result) =>{
           var user = firebase.auth().currentUser;
               firebase.firestore().collection('usuarios').doc(user.uid).set({
-                email: e.state.email,
+                email: result.user.email,
                 nome: e.state.nome,
                 premium: false,
                 dataNascimento: e.state.data,

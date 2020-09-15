@@ -113,7 +113,7 @@ export default function SMSVerificacao () {
 
 
 
- useEffect(() =>{
+  useEffect(() =>{
     async function SendSMS() {
       try {
         const phoneProvider = new firebase.auth.PhoneAuthProvider();
@@ -162,18 +162,12 @@ export default function SMSVerificacao () {
                   onChangeText={setVerificationCode}
                 />
               </View>
-            </View>
 
-          
-          </View>
 
-        
-
-          <View style={{marginBottom: 44}}>
-            <Button
-              onPress={async () => {
-                try {
-                  const credential = firebase.auth.PhoneAuthProvider.credential(
+              <Button
+                onPress={async () => {
+                  try {
+                    const credential = firebase.auth.PhoneAuthProvider.credential(
                     verificationId,
                     verificationCode
                   );
@@ -200,8 +194,11 @@ export default function SMSVerificacao () {
               title={'Confirmar'.toUpperCase()}
               titleColor={'#DAA520'}
             />
+            </View>
 
+          
           </View>
+
         </View>
       </SafeAreaView>
     );

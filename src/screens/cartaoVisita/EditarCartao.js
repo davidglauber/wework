@@ -1251,6 +1251,7 @@ export default class EditarCartao extends Component {
             <View>
                   <ScrollView>
                       <TextInput
+                        autoFocus={true}
                         multiline={true}
                         underlineColorAndroid="transparent"
                         value={this.state.descricaoAuto}
@@ -1283,6 +1284,7 @@ export default class EditarCartao extends Component {
             <View>
                   <ScrollView>
                       <TextInput
+                        autoFocus={true}
                         multiline={true}
                         underlineColorAndroid="transparent"
                         value={this.state.descricaoEstab}

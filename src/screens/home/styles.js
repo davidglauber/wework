@@ -180,7 +180,7 @@ export const CallAndMessageContainer = styled.View`
     justifyContent: space-between; 
     width: 329px; 
     height:80px; 
-    left:16px; 
+    marginLeft:16px; 
     padding:20px;  
     background: ${props => props.theme.containerCall}; 
     borderRadius:20px

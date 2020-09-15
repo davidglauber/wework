@@ -486,7 +486,7 @@ export default class CriarAnuncio extends Component {
 
 
 
-  uploadFormToFirebase() {
+  uploadFormToFirebase(typePublish) {
     let segunda = this.state.segunda;
     let terca = this.state.terca;
     let quarta = this.state.quarta;
@@ -521,7 +521,8 @@ export default class CriarAnuncio extends Component {
           xhr.send();
       }
       
-      if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null) {
+      if(typePublish === 'Autonomo') { 
+      if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null && this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.nomeAuto !== '' && this.state.phoneAuto !== '') {
         
         this.setModalVisible(true)
         getFileBlob(this.state.image, async blob => {
@@ -692,8 +693,187 @@ export default class CriarAnuncio extends Component {
 
 
       } else {
-        alert('Por favor, o anúncio deve ter 3 fotos ao mínimo')
+        alert('Por favor, verifique se TODOS os campos estão preenchidos (incluindo 3 imagens)')
       }
+
+    }
+
+
+    if(typePublish === 'Estabelecimento') {
+      if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null && this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.enderecoEstab !== '' && this.state.phoneEstab !== '') {
+        
+        this.setModalVisible(true)
+        getFileBlob(this.state.image, async blob => {
+          await firebase.storage().ref(`${storageUrl}/images/${imageId}`).put(blob).then((snapshot) => {
+              imageIdStorageState = imageId
+              e.setState({isPhotoLoaded: true})
+              console.log('A imagem foi salva no Storage!');
+              console.log('Valor image state: ' + imageIdStorageState);
+              
+
+              getFileBlob(this.state.image2, async blob => {
+                await firebase.storage().ref(`${storageUrl}/images/${imageId2}`).put(blob).then((snapshot) => {
+                    imageIdStorageState2 = imageId2
+                    e.setState({isPhotoLoaded2: true})
+                    console.log('A imagem foi salva no Storage!');
+                    console.log('Valor image state2: ' + imageIdStorageState2);
+                    
+
+
+
+
+
+
+
+
+                    getFileBlob(this.state.image3, async blob => {
+                      await firebase.storage().ref(`${storageUrl}/images/${imageId3}`).put(blob).then((snapshot) => {
+                          imageIdStorageState3 = imageId3
+                          console.log('A imagem foi salva no Storage!');
+                          console.log('Valor image state3: ' + imageIdStorageState3);
+                          
+            
+            
+                          if(type == 'Estabelecimento'){
+                            if(this.state.tituloEstab !== '' && this.state.descricaoEstab !== '' && this.state.precoEstab !== '' && this.state.phoneEstab !== '' && this.state.enderecoEstab !== '' && this.state.horarioOpen !== '' && this.state.horarioClose !== '' && this.state.categoria !== '' && this.state.image !== null) {
+                                firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
+                                  firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
+                                    firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
+                                      firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+                                        titleEstab: e.state.tituloEstab,
+                                        idAnuncio: getSameIdToDocument,
+                                        idUser: userUID,
+                                        publishData: e.state.date,
+                                        descriptionEstab: e.state.descricaoEstab,
+                                        valueServiceEstab: e.state.precoEstab,
+                                        type: 'Estabelecimento',
+                                        verifiedPublish: true,
+                                        phoneNumberEstab: e.state.phoneEstab,
+                                        localEstab: e.state.enderecoEstab,
+                                        categoryEstab: e.state.categoria,
+                                        subcategoryEstab: e.state.subcategoria,
+                                        photoPublish: urlImage,
+                                        photoPublish2: urlImage2,
+                                        photoPublish3: urlImage3,
+                                        workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+                                        timeOpen: e.state.horarioOpen,
+                                        timeClose: e.state.horarioClose
+                                      })
+                          
+                                      //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
+                                      firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
+                                        titleEstab: e.state.tituloEstab,
+                                        idAnuncio: getSameIdToDocument,
+                                        idUser: userUID,
+                                        publishData: e.state.date,
+                                        descriptionEstab: e.state.descricaoEstab,
+                                        valueServiceEstab: e.state.precoEstab,
+                                        type: 'Estabelecimento',
+                                        verifiedPublish: true,
+                                        phoneNumberEstab: e.state.phoneEstab,
+                                        localEstab: e.state.enderecoEstab,
+                                        categoryEstab: e.state.categoria,
+                                        subcategoryEstab: e.state.subcategoria,
+                                        photoPublish: urlImage,
+                                        photoPublish2: urlImage2,
+                                        photoPublish3: urlImage3,
+                                        workDays: segunda + terca + quarta + quinta + sexta + sabado + domingo,
+                                        timeOpen: e.state.horarioOpen,
+                                        timeClose: e.state.horarioClose
+                                      })
+            
+                                    })
+            
+                                }).catch(function(error) {
+                                  console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
+                                })
+                      
+                              })
+                      
+                                this.setModalVisible(true)
+                      
+                              this.sleep(5000).then(() => { 
+                                this.props.navigation.navigate('TelaPrincipalAnuncio')
+                              })
+                      
+                            } else {
+                              alert('Todos os campos devem ser preenchidos!')
+                            }
+                          }
+                      
+                      
+                          if(type == 'Autonomo') {
+                            if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
+                                firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
+                                  firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
+                                    firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
+                                      firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+                                        titleAuto: e.state.tituloAuto,
+                                        idAnuncio: getSameIdToDocument,
+                                        idUser: userUID,
+                                        publishData: e.state.date,
+                                        nome: e.state.nomeAuto,
+                                        descriptionAuto: e.state.descricaoAuto,
+                                        valueServiceAuto: e.state.precoAuto,
+                                        type: 'Autonomo',
+                                        verifiedPublish: true,
+                                        phoneNumberAuto: e.state.phoneAuto,
+                                        categoryAuto: e.state.categoria,
+                                        subcategoryAuto: e.state.subcategoria,
+                                        photoPublish: urlImage,
+                                        photoPublish2: urlImage2,
+                                        photoPublish3: urlImage3,
+                                      })
+                          
+                                      //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
+                                      firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
+                                        titleAuto: e.state.tituloAuto,
+                                        idAnuncio: getSameIdToDocument,
+                                        idUser: userUID,
+                                        publishData: e.state.date,
+                                        nome: e.state.nomeAuto,
+                                        descriptionAuto: e.state.descricaoAuto,
+                                        valueServiceAuto: e.state.precoAuto,
+                                        type: 'Autonomo',
+                                        verifiedPublish: true,
+                                        phoneNumberAuto: e.state.phoneAuto,
+                                        categoryAuto: e.state.categoria,
+                                        subcategoryAuto: e.state.subcategoria,
+                                        photoPublish: urlImage,
+                                        photoPublish2: urlImage2,
+                                        photoPublish3: urlImage3,
+                                      })
+                                    })
+                                }).catch(function(error) {
+                                  console.log('ocorreu um erro ao carregar a imagem: ' + error.message)
+                                })
+                              })
+                      
+                                  this.setModalVisible(true)
+                      
+                                this.sleep(5000).then(() => { 
+                                  this.props.navigation.navigate('TelaPrincipalAnuncio')
+                                })
+                            } else {
+                              alert('Todos os campos devem ser preenchidos!')
+                            }
+                            
+            
+                          } 
+            
+                      })
+                    })
+            
+                })
+              })
+          })
+        })
+
+
+      } else {
+        alert('Por favor, verifique se TODOS os campos estão preenchidos (incluindo 3 imagens)')
+      }
+    }
 
   }
 
@@ -847,6 +1027,37 @@ export default class CriarAnuncio extends Component {
                               />
                           </View>
 
+                          <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
+                            <View style={{marginRight:70}}>
+                              <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
+                                {this.state.subcategoria == '' ?
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <IconResponsiveNOBACK name="align-left" size={24}/>
+                                    <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Categoria</TitleChangeColor>
+                                </View>
+                                :
+                                <View style={{flexDirection:'row', alignItems:'center', marginLeft:50}}>
+                                    <IconResponsiveNOBACK name="align-left" size={24}/>
+                                    <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Selecionada ;)</TitleChangeColor>
+                                </View>
+                                }
+                              </TouchableOpacity>
+                            </View>
+                            
+                            {this.state.categoria !== '' ?
+                              <PublishTouchable onPress={() => this.uploadFormToFirebase('Autonomo')} style={{marginRight:50}}>
+                                <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
+                                  Publicar
+                                </Text>
+                              </PublishTouchable>
+                              :
+                              <PublishTouchable onPress={() => this.uploadFormToFirebase('Autonomo')}>
+                                <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
+                                  Publicar
+                                </Text>
+                              </PublishTouchable>
+                            }
+                        </View>
                       </View>
                       }
                         {this.state.type == 'Estabelecimento' &&
@@ -1025,44 +1236,41 @@ export default class CriarAnuncio extends Component {
                               
                             </View>
 
-
+                            <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
+                              <View style={{marginRight:70}}>
+                                <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
+                                  {this.state.subcategoria == '' ?
+                                  <View style={{flexDirection:'row', alignItems:'center'}}>
+                                      <IconResponsiveNOBACK name="align-left" size={24}/>
+                                      <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Categoria</TitleChangeColor>
+                                  </View>
+                                  :
+                                  <View style={{flexDirection:'row', alignItems:'center', marginLeft:50}}>
+                                      <IconResponsiveNOBACK name="align-left" size={24}/>
+                                      <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Selecionada ;)</TitleChangeColor>
+                                  </View>
+                                  }
+                                </TouchableOpacity>
+                              </View>
+                              
+                              {this.state.categoria !== '' ?
+                                <PublishTouchable onPress={() => this.uploadFormToFirebase('Estabelecimento')} style={{marginRight:50}}>
+                                  <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
+                                    Publicar
+                                  </Text>
+                                </PublishTouchable>
+                                :
+                                <PublishTouchable onPress={() => this.uploadFormToFirebase('Estabelecimento')}>
+                                  <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
+                                    Publicar
+                                  </Text>
+                                </PublishTouchable>
+                              }
+                            </View>
                           </View>
 
                         }
 
-
-
-                        <View style={{flexDirection:'row', paddingTop:50, paddingBottom:10, alignItems:'center', justifyContent:'center'}}>                          
-                            <View style={{marginRight:70}}>
-                              <TouchableOpacity onPress={() => this.openModalize()} style={{justifyContent:'center', alignItems:'center', flexDirection:'row', marginLeft:8, marginRight:5, borderRadius:10}}>
-                                {this.state.subcategoria == '' ?
-                                <View style={{flexDirection:'row', alignItems:'center'}}>
-                                    <IconResponsiveNOBACK name="align-left" size={24}/>
-                                    <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Categoria</TitleChangeColor>
-                                </View>
-                                :
-                                <View style={{flexDirection:'row', alignItems:'center', marginLeft:50}}>
-                                    <IconResponsiveNOBACK name="align-left" size={24}/>
-                                    <TitleChangeColor style={{ marginLeft:10, fontWeight:'bold'}}>Selecionada ;)</TitleChangeColor>
-                                </View>
-                                }
-                              </TouchableOpacity>
-                            </View>
-                            
-                            {this.state.categoria !== '' ?
-                              <PublishTouchable onPress={() => this.uploadFormToFirebase()} style={{marginRight:50}}>
-                                <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
-                                  Publicar
-                                </Text>
-                              </PublishTouchable>
-                              :
-                              <PublishTouchable onPress={() => this.uploadFormToFirebase()}>
-                                <Text style={{color:'#fff', fontWeight:'bold', paddingTop:5, paddingLeft:20}}>
-                                  Publicar
-                                </Text>
-                              </PublishTouchable>
-                            }
-                        </View>
                     </ItemContainer>
 
             </ViewTopForm>
@@ -1113,6 +1321,7 @@ export default class CriarAnuncio extends Component {
             <View>
                   <ScrollView>
                       <TextInput
+                        autoFocus={true}
                         multiline={true}
                         underlineColorAndroid="transparent"
                         value={this.state.descricaoAuto}
@@ -1202,6 +1411,7 @@ export default class CriarAnuncio extends Component {
             <View>
                   <ScrollView>
                       <TextInput
+                        autoFocus={true}
                         multiline={true}
                         underlineColorAndroid="transparent"
                         value={this.state.descricaoEstab}

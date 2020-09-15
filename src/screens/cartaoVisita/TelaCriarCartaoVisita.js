@@ -1047,6 +1047,7 @@ export default class TelaCriarCartaoVisita extends Component {
             <View>
                   <ScrollView>
                       <TextInput
+                        autoFocus={true}
                         multiline={true}
                         underlineColorAndroid="transparent"
                         value={this.state.descricaoAuto}
@@ -1133,6 +1134,7 @@ export default class TelaCriarCartaoVisita extends Component {
             <View>
                   <ScrollView>
                       <TextInput
+                        autoFocus={true}
                         multiline={true}
                         underlineColorAndroid="transparent"
                         value={this.state.descricaoEstab}

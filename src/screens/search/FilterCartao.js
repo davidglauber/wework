@@ -252,7 +252,7 @@ export default class FilterCartao extends Component {
             </View>
 
             <Sub1Filter style={styles.mt8}>Escolha a categoria abaixo</Sub1Filter>
-            <View showsVerticalScrollIndicator={false} style={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
+            <ScrollView contentContainerStyle={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
               {categorias.map((item) => (
                 <View>
                     <TouchableFilterUnselected onPress={() => this.renderAndSelectCategory(item)}>
@@ -260,7 +260,7 @@ export default class FilterCartao extends Component {
                     </TouchableFilterUnselected>
                 </View>
               ))}
-            </View>
+            </ScrollView>
           </View>
 
 

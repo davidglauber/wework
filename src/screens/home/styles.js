@@ -146,7 +146,7 @@ export const CategoryAndSub = styled.Text`
     marginBottom:15px
 `
 
-export const SafeViewPublish = styled.View`
+export const SafeViewPublish = styled.ScrollView`
     flex:1;
     background: ${props => props.theme.backgroundPublish} 
 `;

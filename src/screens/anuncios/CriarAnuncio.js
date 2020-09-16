@@ -884,7 +884,7 @@ export default class CriarAnuncio extends Component {
     return (
       <Fragment>
         <SafeAreaView style={styles.topArea} />
-        <SafeBackgroundPublish style={{marginBottom:"20%"}}>
+        <SafeBackgroundPublish>
           <StatusBar
             backgroundColor={this.context.dark ? '#121212' : 'white'}
             barStyle={this.context.dark ? "white-content" : "dark-content"}

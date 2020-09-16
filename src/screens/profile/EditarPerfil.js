@@ -13,6 +13,7 @@ import {
   StatusBar,
   Image,
   StyleSheet,
+  Dimensions,
   TouchableOpacity,
   View,
   Modal,
@@ -56,6 +57,9 @@ const AVATAR_SIZE = 100;
 const IOS = Platform.OS === 'ios';
 const CAMERA_ICON = IOS ? 'ios-camera' : 'md-camera';
 const INPUT_FOCUSED_BORDER_COLOR = Colors.primaryColor;
+
+const widthScreen = Dimensions.get('window').width;
+const heightScreen = Dimensions.get('window').height;
 
 // EditProfileA Styles
 const styles = StyleSheet.create({
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   buttonContainer: {
-    marginTop:'70%',
+    marginTop:widthScreen/2,
     paddingHorizontal: 24,
   },
 });

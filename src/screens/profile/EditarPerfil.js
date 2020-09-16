@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   buttonContainer: {
-    paddingVertical: '95%',
+    marginTop:'70%',
     paddingHorizontal: 24,
   },
 });

@@ -1015,7 +1015,7 @@ export default class EditarAnuncio extends Component {
     return (
       <Fragment>
         <SafeAreaView style={styles.topArea} />
-        <SafeBackgroundPublish>
+        <SafeBackgroundPublish style={{marginBottom:"20%"}}>
           <StatusBar
             backgroundColor={this.context.dark ? '#121212' : 'white'}
             barStyle={this.context.dark ? "white-content" : "dark-content"}

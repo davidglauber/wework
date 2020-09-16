@@ -23,7 +23,7 @@ export const SafeBackground = styled.SafeAreaView`
 
 export const SafeBackgroundPublish = styled.SafeAreaView`
     flex:1;
-    background: ${props => props.theme.backgroundPublish} 
+    background: ${props => props.theme.backgroundPublish};
 `;
 
 export const TextDays = styled.Text`

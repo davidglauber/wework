@@ -421,15 +421,15 @@ export default class MostrarCartao extends Component {
 
 
 
-                  <View style={{flex: 1, flexDirection:'row', marginBottom:1, bottom:40}}>
+                  <View style={{flex: 1, flexDirection:'row', justifyContent:'center', marginBottom:1, bottom:40}}>
                     <CallAndMessageContainer>
                         <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
-                            <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Telefonar</TextDescription2>
+                            <TextDescription2 style={{fontWeight:'bold', marginRight:'20%', marginTop:7}}>Telefonar</TextDescription2>
                             <IconResponsiveNOBACK name="mobile" size={20}/>
                         </TouchableResponsive>   
 
                         <TouchableResponsive>
-                            <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
+                            <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:'20%', marginTop:7}}>Conversar</TextDescription2>
                             <IconResponsiveNOBACK name="comment-alt" size={20}/>
                         </TouchableResponsive>            
                     </CallAndMessageContainer>
@@ -565,15 +565,15 @@ export default class MostrarCartao extends Component {
 
 
 
-                  <View style={{flex: 1, flexDirection:'row', marginBottom:1, bottom:40}}>
+                  <View style={{flex: 1, flexDirection:'row', justifyContent:'center', marginBottom:1, bottom:40}}>
                     <CallAndMessageContainer>
                         <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
-                            <TextDescription2 style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Telefonar</TextDescription2>
+                            <TextDescription2 style={{fontWeight:'bold', marginRight:'20%', marginTop:7}}>Telefonar</TextDescription2>
                             <IconResponsiveNOBACK name="mobile" size={20}/>
                         </TouchableResponsive>   
 
                         <TouchableResponsive>
-                            <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:20, marginTop:7}}>Conversar</TextDescription2>
+                            <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:'20%', marginTop:7}}>Conversar</TextDescription2>
                             <IconResponsiveNOBACK name="comment-alt" size={20}/>
                         </TouchableResponsive>            
                     </CallAndMessageContainer>

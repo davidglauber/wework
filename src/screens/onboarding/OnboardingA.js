@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: '700',
     fontSize: 14,
-    color: Colors.primaryColor,
+    color: '#DAA520',
   },
   dot: {
     margin: 4,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   bgDark: {
-    backgroundColor: Colors.primaryColorDark,
+    backgroundColor:'#DAA520',
   },
   bgLight: {
     backgroundColor: Colors.primaryColorDark,
@@ -238,7 +238,7 @@ export default class OnboardingA extends Component {
                   <Icon
                     name={isRTL ? 'chevron-right' : 'chevron-left'}
                     size={24}
-                    color={Colors.primaryColor}
+                    color="#DAA520"
                   />
                   <Text style={styles.buttonText}>{'voltar'.toUpperCase()}</Text>
                 </View>
@@ -273,7 +273,7 @@ export default class OnboardingA extends Component {
                   <Icon
                     name={isRTL ? 'chevron-left' : 'chevron-right'}
                     size={24}
-                    color={Colors.primaryColor}
+                    color="#DAA520"
                   />
                 </View>
               </TouchableItem>

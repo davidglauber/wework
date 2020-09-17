@@ -261,7 +261,7 @@ export default class Cadastro extends Component {
       alert('Todos os campos devem ser preenchidos!')
     } 
     
-    if(this.state.password == this.state.confirmPassword && this.state.password.length >= 6){  
+    if(this.state.password == this.state.confirmPassword && this.state.password.length >= 6 && this.state.date !== null){  
         navigation.navigate(screen, {
           nome: this.state.nome,
           email: this.state.emailUser,
@@ -432,7 +432,7 @@ export default class Cadastro extends Component {
                       is24Hour={true}
                       display="calendar"
                       onChange={this.onChange}
-                      
+                      style={{width: 320, backgroundColor: "white"}}
                   />
                }
 
@@ -442,7 +442,7 @@ export default class Cadastro extends Component {
                     style={{backgroundColor:'black', width:200, borderRadius:10, height:50, flexDirection:'row', alignItems:'center'}}
                   >
                     <FontAwesome5 name="plus-square" size={35} style={{marginLeft:15}} color="#fff"/>
-                    <Text style={{fontWeight:'bold', marginLeft:15, textAlign:'center', fontSize:26, color:'white'}}>Criar Conta</Text>
+                    <Text style={{fontWeight:'bold', marginLeft:15, textAlign:'center', fontSize:20, color:'white'}}>Criar Conta</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity onPress={this.navigateToSignIn('SignIn')}>

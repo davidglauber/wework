@@ -167,8 +167,8 @@ export const SafeAnuncioView = styled.SafeAreaView`
 
 
 export const AnuncioContainer = styled.View`
-    width: 336px;
-    height: 170px; 
+    width: 100%;
+    height: 100%; 
     marginBottom:5px; 
     marginTop: 10px; 
     borderRadius: 10px; 
@@ -180,7 +180,6 @@ export const CallAndMessageContainer = styled.View`
     justifyContent: space-between; 
     width: 329px; 
     height:80px; 
-    marginLeft:16px; 
     padding:20px;  
     background: ${props => props.theme.containerCall}; 
     borderRadius:20px

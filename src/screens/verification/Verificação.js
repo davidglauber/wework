@@ -202,7 +202,7 @@ export default class Verificação extends Component {
       const { type, token } = await
         Facebook.logInWithReadPermissionsAsync(
               "654536232159341",{
-                      permission: "public_profile"
+                      permission: ["public_profile", "email", "user_friends"] 
             } 
         );
 

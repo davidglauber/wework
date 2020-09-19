@@ -280,7 +280,6 @@ export default class CartaoVisita extends Component {
 
       <SafeAreaView style={styles.container}>
 
-        <ViewCartao/>
 
         <StatusBar
           backgroundColor={this.context.dark ? '#121212' : 'white'}

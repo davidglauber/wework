@@ -91,14 +91,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cardTitle: {
-    fontWeight: '700',
-    fontSize: 16,
-    color: Colors.white,
-    textShadowColor: 'rgba(0, 0, 0, 0.8)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10,
-  },
   restauratnsList: {
     // spacing = paddingHorizontal + RestaurantCard margin = 12 + 4 = 16
     paddingHorizontal: 12,

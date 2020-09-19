@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 
+import { Dimensions } from 'react-native'
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -82,7 +83,7 @@ export const ContainerButton = styled.View`
     justifyContent: space-between;
     alignItems: center;
     padding: 16px;
-    width: 100%;
+    width: ${Dimensions.get('window').width};
     backgroundColor: ${props => props.theme.background}
 `
 
@@ -167,8 +168,8 @@ export const SafeAnuncioView = styled.SafeAreaView`
 
 
 export const AnuncioContainer = styled.View`
-    width: 100%;
-    height: 100%; 
+    width: ${Dimensions.get('window').width};
+    height: ${Dimensions.get('window').height}; 
     marginBottom:5px; 
     marginTop: 10px; 
     borderRadius: 10px; 
@@ -188,8 +189,8 @@ export const TouchableResponsive = styled.TouchableOpacity`
     flexDirection: row;
     padding:10px; 
     alignItems: center; 
-    width: 45%; 
-    height: 100%; 
+    width: ${Dimensions.get('window').height/5}; 
+    height: ${Dimensions.get('window').height/16}; 
     borderRadius: 20px; 
     background: ${props => props.theme.inverseContainerCall}
 `
@@ -309,15 +310,6 @@ export const Description = styled.Text`
     marginLeft:25px; 
     color:${props => props.theme.inversePallete}
 `
-export const ViewCartao = styled.View`
-    position: absolute;
-    left: 0;
-    backgroundColor: ${props => props.theme.background};
-    right: 0;
-    top: 0;
-    height: 100%;
-`
-
 export const Favorite = styled.Text`
     color: ${props => props.theme.inversePallete}; 
     fontSize:30px

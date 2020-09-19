@@ -86,15 +86,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  cardTitle: {
-    padding: 12,
-    fontWeight: '500',
-    fontSize: 16,
-    color: Colors.white,
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10,
-  },
   productsList: {
     paddingBottom: 16,
     // spacing = paddingHorizontal + ActionProductCard margin = 12 + 4 = 16

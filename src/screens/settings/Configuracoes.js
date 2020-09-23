@@ -28,8 +28,6 @@ import Icon from '../../components/icon/Icon';
 import {Heading6, Subtitle1, Subtitle2} from '../../components/text/CustomText';
 import TouchableItem from '../../components/TouchableItem';
 
-console.disableYellowBox = true;
-
 //import switch
 import Switch from 'expo-dark-mode-switch';
 

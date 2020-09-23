@@ -14,10 +14,11 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Dimensions,
   FlatList,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20
   },
   swiperContainer: {
-    width: '100%',
+    width: Dimensions.get('window').width,
     height: 228,
   },
   paginationStyle: {
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   dot: {backgroundColor: Colors.background},
   activeDot: {backgroundColor: '#DAA520'},
   slideImg: {
-    width: '100%',
+    width: Dimensions.get('window').width,
     height: 228,
     resizeMode: 'cover',
   },
@@ -163,14 +164,6 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
     backgroundColor: Colors.secondaryColor,
-  },
-  bottomButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-    paddingBottom: 16,
-    paddingHorizontal: 24,
   },
   buttonPriceContainer: {
     position: 'absolute',
@@ -424,12 +417,12 @@ export default class MostrarCartao extends Component {
                   <View style={{flex: 1, flexDirection:'row', justifyContent:'center', marginBottom:1, bottom:40}}>
                     <CallAndMessageContainer>
                         <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
-                            <TextDescription2 style={{fontWeight:'bold', marginRight:'20%', marginTop:7}}>Telefonar</TextDescription2>
+                            <TextDescription2 style={{fontWeight:'bold', marginRight:30, marginTop:7}}>Telefonar</TextDescription2>
                             <IconResponsiveNOBACK name="mobile" size={20}/>
                         </TouchableResponsive>   
 
                         <TouchableResponsive>
-                            <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:'20%', marginTop:7}}>Conversar</TextDescription2>
+                            <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:30, marginTop:7}}>Conversar</TextDescription2>
                             <IconResponsiveNOBACK name="comment-alt" size={20}/>
                         </TouchableResponsive>            
                     </CallAndMessageContainer>
@@ -568,12 +561,12 @@ export default class MostrarCartao extends Component {
                   <View style={{flex: 1, flexDirection:'row', justifyContent:'center', marginBottom:1, bottom:40}}>
                     <CallAndMessageContainer>
                         <TouchableResponsive onPress={() => this.openPhoneApp(this.state.phoneNavigator)}>
-                            <TextDescription2 style={{fontWeight:'bold', marginRight:'20%', marginTop:7}}>Telefonar</TextDescription2>
+                            <TextDescription2 style={{fontWeight:'bold', marginRight:30, marginTop:7}}>Telefonar</TextDescription2>
                             <IconResponsiveNOBACK name="mobile" size={20}/>
                         </TouchableResponsive>   
 
                         <TouchableResponsive>
-                            <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:'20%', marginTop:7}}>Conversar</TextDescription2>
+                            <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:30, marginTop:7}}>Conversar</TextDescription2>
                             <IconResponsiveNOBACK name="comment-alt" size={20}/>
                         </TouchableResponsive>            
                     </CallAndMessageContainer>

@@ -903,8 +903,8 @@ export default class CriarAnuncio extends Component {
                           Alert.alert("Modal has been closed.");
                         }}
                       >
-                      <View style={{alignItems:'center', paddingTop: '75%', width: '100%'}}>
-                        <View style={{alignItems:'center', backgroundColor:'white', height:'50%', width:'80%', backgroundColor:'white', borderRadius:15}}>
+                      <View style={{alignItems:'center', paddingTop: 75, width: 100}}>
+                        <View style={{alignItems:'center', backgroundColor:'white', height:50, width: 100, backgroundColor:'white', borderRadius:15}}>
                           <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Criando o seu Anúncio</Text>
                           <PulseIndicator color='#DAA520'/>
                         </View>

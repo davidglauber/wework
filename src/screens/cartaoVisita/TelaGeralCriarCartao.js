@@ -266,7 +266,7 @@ export default class TelaGeralCriarCartao extends Component {
   waitQueryToShowNotFoundGIF() {
     if(this.state.cartoesAuto.length == 0 && this.state.cartoesEstab.length == 0) {
         return( 
-          <View style={{flex:1, alignItems:'center', paddingTop:"50%"}}>
+          <View style={{flex:1, alignItems:'center', paddingTop: 80}}>
             <View>
               <Image style={{width:200, height:200, marginLeft:20}} source={require("../../assets/img/notfoundnoback.gif")} />
               <Text style={{fontWeight:'bold', color:'white'}}>Nenhum Cartão Ativo Foi Encontrado</Text>
@@ -320,7 +320,7 @@ export default class TelaGeralCriarCartao extends Component {
 
                                     {this.cutDescription(item.description)}
 
-                                    <View style={{flexDirection:'row', paddingHorizontal:'15%'}}>
+                                    <View style={{flexDirection:'row', paddingHorizontal:40}}>
                                       <ValueField style={{paddingTop:10, fontSize:12}}>{item.categoria}</ValueField>
                                       <IconResponsive style={{marginLeft:15, marginTop:10}} name="clone" size={19} />
                                     </View>

@@ -12,6 +12,7 @@ import {
   StatusBar,
   Alert,
   StyleSheet,
+  Dimensions,
   TouchableOpacity,
   Button,
   Text,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    width: '100%',
+    width: Dimensions.get('window').width,
   },
   termsContainer: {
     flexDirection: 'row',
@@ -282,7 +283,7 @@ export default class TelaLogin extends Component {
         </View>
 
 
-        <View style={{flexDirection:'row', justifyContent:'space-between', marginTop: '100%'}}>
+        <View style={{flexDirection:'row', justifyContent:'space-between', marginTop: 100}}>
             
           <TouchableOpacity onPress={() => this.signInWithGoogle()}>
               <FontAwesome5 name="google" size={35} style={{marginRight:25}} color="#DAA520"/>

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 3,
     alignItems: 'center',
     paddingHorizontal: 32,
-    width: '100%',
+    width: 100,
   },
   vspace16: {
     height: 16,

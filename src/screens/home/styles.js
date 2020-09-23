@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 
-import { Dimensions } from 'react-native'
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -21,6 +20,10 @@ export const SafeBackground = styled.SafeAreaView`
     flex:1;
     background: ${props => props.theme.background} 
 `;
+
+export const ViewCartao = styled.View`
+    backgroundColor: ${props => props.theme.background};
+`
 
 export const SafeBackgroundPublish = styled.SafeAreaView`
     flex:1;
@@ -83,7 +86,7 @@ export const ContainerButton = styled.View`
     justifyContent: space-between;
     alignItems: center;
     padding: 16px;
-    width: ${Dimensions.get('window').width};
+    width: 100px;
     backgroundColor: ${props => props.theme.background}
 `
 
@@ -161,15 +164,15 @@ export const ViewCircle = styled.View`
 
 export const SafeAnuncioView = styled.SafeAreaView`
     flex: 1;
-    background: ${props => props.theme.background},
+    background: ${props => props.theme.background};
     borderTopRightRadius: 20px;
     borderTopLeftRadius: 20px;
 `
 
 
 export const AnuncioContainer = styled.View`
-    width: ${Dimensions.get('window').width};
-    height: ${Dimensions.get('window').height}; 
+    width: 336px;
+    height: 170px; 
     marginBottom:5px; 
     marginTop: 10px; 
     borderRadius: 10px; 
@@ -189,8 +192,8 @@ export const TouchableResponsive = styled.TouchableOpacity`
     flexDirection: row;
     padding:10px; 
     alignItems: center; 
-    width: ${Dimensions.get('window').height/5}; 
-    height: ${Dimensions.get('window').height/16}; 
+    width: 140px; 
+    height: 40px; 
     borderRadius: 20px; 
     background: ${props => props.theme.inverseContainerCall}
 `
@@ -198,7 +201,7 @@ export const TouchableResponsive = styled.TouchableOpacity`
 export const ButtonIconContainer = styled.View`
     position: absolute;
     top: 16px;
-    borderRadius: 18;
+    borderRadius: 18px;
     background: ${props => props.theme.backgroundColor};
     left: 16px;
 `
@@ -217,13 +220,13 @@ export const ValueField = styled.Text`
 `
 
 export const ValueFieldPrincipal = styled.Text`
-    color:${props => props.theme.inversePallete}
-    fontWeight: 700,
+    color:${props => props.theme.inversePallete};
+    fontWeight: 700
     
 `
 
 export const TextDescription = styled(SmallText)`
-    paddingBottom: 8;
+    paddingBottom: 8px;
     textAlign: left;
     color: ${props => props.theme.inversePallete}
 
@@ -231,14 +234,14 @@ export const TextDescription = styled(SmallText)`
 
 
 export const TextDescription2 = styled(SmallText)`
-    paddingBottom: 8;
+    paddingBottom: 8px;
     textAlign: left;
     color: ${props => props.theme.color}
 
 `
 
 export const TextDescription3 = styled(SmallText)`
-    paddingBottom: 8;
+    paddingBottom: 8px;
     textAlign: left;
     color: ${props => props.theme.colorCallAndMessage}
 
@@ -316,19 +319,19 @@ export const Favorite = styled.Text`
 `
 
 export const Heading = styled(Heading6)`
-    fontWeight: 700,
+    fontWeight: 700;
     color: ${props => props.theme.color}
 `
 
 export const HeadingInverse = styled(Heading6)`
-    fontWeight: 700,
+    fontWeight: 700;
     color: ${props => props.theme.inversePallete}
 `
 
 export const HeadingSetting = styled(Heading6)`
     fontWeight: 700;
-    paddingTop: 16;
-    paddingBottom: 16;
+    paddingTop: 16px;
+    paddingBottom: 16px;
     fontWeight: 700;
     textAlign: left;
     color: ${props => props.theme.color}
@@ -347,16 +350,16 @@ export const Sub1Filter = styled(Subtitle1)`
 `
 
 export const EmailUserSetting = styled(Subtitle1)`
-    paddingVertical: 2;
+    paddingVertical: 2px;
     color: ${props => props.theme.inversePallete}
 `
 export const SetTextUserSetting = styled(Subtitle1)`
-    paddingVertical: 2;
-    fontSize: 14px
+    paddingVertical: 2px;
+    fontSize: 14px;
     color: ${props => props.theme.inversePallete}
 `
 export const SectionHeaderTextSetting = styled(Subtitle1)`
-    paddingVertical: 2;
+    paddingVertical: 2px;
     textAlign: left;
     color: ${props => props.theme.color}
 `
@@ -382,7 +385,7 @@ export const PlusIcon = styled(FontAwesome5)`
 ` 
 
 export const ItemContainer = styled.View`
-    marginVertical: 4;
+    marginVertical: 4px;
     background: ${props => props.theme.backgroundColor2}
 `
 

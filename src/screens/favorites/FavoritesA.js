@@ -13,22 +13,17 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Text,
-  TouchableOpacity,
+  Dimensions,
   Image,
   FlatList,
-  Alert,
-  TouchableWithoutFeedbackComponent,
 } from 'react-native';
-import remove from 'lodash/remove';
 
 // import components
-import {Heading6, SmallText} from '../../components/text/CustomText';
+import {SmallText} from '../../components/text/CustomText';
 
 //import GestureHandler
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-import { FontAwesome5 } from '@expo/vector-icons';
 
 //import firebase
 import firebase from '../../config/firebase';
@@ -43,7 +38,7 @@ import Colors from '../../theme/colors';
 const EMPTY_STATE_ICON = 'cart-remove';
 
 //CSS responsivo
-import { IconResponsive, ViewCartao, TextDetails, Description, IconResponsiveNOBACK, TouchableDetails, Favorite, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
+import {SafeBackground, IconResponsive,TextDetails, Description, IconResponsiveNOBACK, TouchableDetails, Favorite, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
 
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
@@ -89,12 +84,7 @@ const styles = StyleSheet.create({
   subTotalPriceText: {
     fontWeight: '700',
     color: Colors.primaryColor,
-  },
-  bottomButtonContainer: {
-    width: '100%',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-  },
+  }
 });
 
 // CartA
@@ -259,9 +249,7 @@ export default class FavoritesA extends Component {
 
     return (
 
-      <SafeAreaView style={styles.container}>
-
-        <ViewCartao/>
+      <SafeBackground>
 
         <StatusBar
           backgroundColor={this.context.dark ? '#121212' : 'white'}
@@ -277,7 +265,7 @@ export default class FavoritesA extends Component {
             <View>
 
               {cartoesAuto.length == 0 && cartoesEstab.length == 0 &&
-                <View style={{flex:1, alignItems:'center', paddingTop:'70%', marginLeft:30}}>
+                <View style={{flex:1, alignItems:'center', paddingTop:70, marginLeft:30}}>
                   <Heading>Parece que você ainda não tem nenhum cartão favoritado :(</Heading>
                 </View>
               }
@@ -385,7 +373,7 @@ export default class FavoritesA extends Component {
                 </SmallText>
             </SwipeLeft>
           </View>
-      </SafeAreaView>
+      </SafeBackground>
     );
   }
 }

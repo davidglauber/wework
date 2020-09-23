@@ -3,10 +3,8 @@
 import React, {Component} from 'react';
 import {
   FlatList,
-  SafeAreaView,
   ScrollView,
   StatusBar,
-  AsyncStorage,
   StyleSheet,
   Text,
   Image,
@@ -15,7 +13,6 @@ import {
 } from 'react-native';
 import Color from 'color';
 
-import {Heading6} from '../../components/text/CustomText';
 
 
 // import colors

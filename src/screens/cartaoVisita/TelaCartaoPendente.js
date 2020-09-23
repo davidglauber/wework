@@ -24,9 +24,6 @@ import Colors from '../../theme/colors';
 
 import firebase from '../../config/firebase'; 
 
-//import gradient
-import  { LinearGradient } from 'expo-linear-gradient';
-
 
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -250,7 +247,7 @@ export default class TelaCartaoPendente extends Component {
 
 
                   {cartoesEstab.length == 0 && cartoesAuto.length == 0 &&
-                    <View style={{flex:1, alignItems:'center', paddingTop:"50%"}}>
+                    <View style={{flex:1, alignItems:'center', paddingTop:5}}>
                       <View>
                         <Image style={{width:200, height:200, marginLeft:30}} source={require("../../assets/img/notfoundnoback.gif")} />
                         <Text style={{fontWeight:'bold', color:'white'}}>Nenhum Cartão Pendente Foi Encontrado</Text>
@@ -274,7 +271,7 @@ export default class TelaCartaoPendente extends Component {
 
                                     {this.cutDescription(item.description)}
 
-                                    <View style={{flexDirection:'row', paddingHorizontal:'15%'}}>
+                                    <View style={{flexDirection:'row', paddingHorizontal:15}}>
                                       <ValueField style={{paddingTop:10, fontSize:12}}>{item.categoria}</ValueField>
                                       <IconResponsive style={{marginLeft:15, marginTop:10}} name="clone" size={19}/>
                                     </View>

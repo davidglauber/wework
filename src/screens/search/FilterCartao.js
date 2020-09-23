@@ -33,7 +33,7 @@ import firebase from '../../config/firebase';
 import {Heading6} from '../../components/text/CustomText';
 
 
-import { FilterUnderContainer, HeadingInverse, Sub1Filter, TextFilter, TouchableFilter, TouchableFilterUnselected, TouchableResponsive, SafeBackground, ButtonIconContainer, CallAndMessageContainer, IconResponsive, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
+import { FilterUnderContainer, HeadingInverse, Sub1Filter, TextFilter, TouchableFilter, TouchableFilterUnselected, SafeBackground} from '../home/styles';
 
 import { ThemeContext } from '../../../ThemeContext';
 
@@ -79,19 +79,6 @@ const styles = StyleSheet.create({
   },
   small: {
     flex: 1,
-  },
-  textInput: {
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: 'rgba(0, 0, 0, 0.16)',
-    paddingHorizontal: 8,
-    height: 46,
-    fontSize: 16,
-    textAlignVertical: 'center',
-    textAlign: isRTL ? 'right' : 'left',
-  },
-  textInputFocused: {
-    borderColor: Colors.primaryColor,
   },
   rowWrap: {
     flexDirection: 'row',

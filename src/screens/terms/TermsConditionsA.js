@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import {
   SafeAreaView,
   ScrollView,
+  Dimensions,
   StatusBar,
   StyleSheet,
   Text,
@@ -64,16 +65,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.4,
     textAlign: 'left',
   },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    width: '100%',
-    backgroundColor: Colors.surface,
-  },
   button: {
-    width: '48%',
+    width: Dimensions.get('window').width/3,
+    marginRight:70
   },
 });
 

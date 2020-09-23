@@ -29,8 +29,6 @@ import EmptyState from '../../components/emptystate/EmptyState';
 //import GestureHandler
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-//import gradient
-import  { LinearGradient } from 'expo-linear-gradient';
 
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -97,11 +95,6 @@ const styles = StyleSheet.create({
   subTotalPriceText: {
     fontWeight: '700',
     color: Colors.primaryColor,
-  },
-  bottomButtonContainer: {
-    width: '100%',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
   },
 });
 

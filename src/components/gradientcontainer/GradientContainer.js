@@ -8,7 +8,6 @@
 // import node modules and types
 import React from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
 
 // import colors
 import Colors from '../../theme/colors';
@@ -34,15 +33,7 @@ const GradientContainer = ({
   containerStyle,
   children,
 }: Props) => (
-  <LinearGradient
-    start={start || {x: 0, y: 0}}
-    end={end || {x: 0, y: 1}}
-    colors={
-      colors || [Colors.primaryGradientColor, Colors.secondaryGradientColor]
-    }
-    style={[styles.container, containerStyle]}>
-    {children}
-  </LinearGradient>
+  <View></View>
 );
 
 export default GradientContainer;

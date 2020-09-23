@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Dimensions,
   Button,
   Text,
   TouchableWithoutFeedback,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    width: '100%',
+    width: Dimensions.get('window').width,
   },
   termsContainer: {
     flexDirection: 'row',

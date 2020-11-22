@@ -8,14 +8,14 @@
 // import dependencies
 import React, {Component} from 'react';
 import {
+  View,
   I18nManager,
   ImageBackground,
   Linking,
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Text,
-  View,
+  Text
 } from 'react-native';
 import Color from 'color';
 import {FontAwesome as FAIcon} from '@expo/vector-icons';

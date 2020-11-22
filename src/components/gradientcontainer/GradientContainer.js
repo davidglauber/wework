@@ -7,7 +7,7 @@
 
 // import node modules and types
 import React from 'react';
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet, ViewStyle, View} from 'react-native';
 
 // import colors
 import Colors from '../../theme/colors';

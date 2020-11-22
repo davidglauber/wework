@@ -10,7 +10,6 @@ import React, {Component} from 'react';
 import {
   I18nManager,
   Platform,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
@@ -34,7 +33,6 @@ import Colors from '../../theme/colors';
 
 import { ThemeContext } from '../../../ThemeContext';
 
-import {purchased} from '../../config/purchase';
 
 // PaymentMethodA Config
 const isRTL = I18nManager.isRTL;

@@ -44,7 +44,7 @@ const slides = [
   {
     id: 'slide1',
     lottie: slide1Img,
-    title: 'Seja bem-vindo(a) ao WeWork!',
+    title: 'Seja bem-vindo(a) ao WeWo!',
     description:
       'Esperamos que você tenha a melhor experiência possível com o nosso aplicativo!',
   },
@@ -52,7 +52,7 @@ const slides = [
     id: 'slide2',
     lottie: slide2Img,
     title: 'Anuncie o seu serviço de forma Gratuita',
-    description: 'Na WeWork você pode anunciar o seu serviço de forma totalmente gratuita, dando visibilidade a milhões de pessoas',
+    description: 'Na WeWo você pode anunciar o seu serviço de forma totalmente gratuita, dando visibilidade a milhões de pessoas',
   },
   {
     id: 'slide3',

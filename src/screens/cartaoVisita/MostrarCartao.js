@@ -315,11 +315,11 @@ export default class MostrarCartao extends Component {
     Linking.canOpenURL("whatsapp://send?text=oi").then(supported => {
       if (supported) {
         return Linking.openURL(
-          `whatsapp://send?phone=55${phone}&text=Olá, ${this.props.route.params.nomeToZap} te vi no WeWork e Tenho Interesse no Seu Trabalho`
+          `whatsapp://send?phone=55${phone}&text=Olá, ${this.props.route.params.nomeToZap} te vi no WeWo e Tenho Interesse no Seu Trabalho`
         );
       } else {
         return Linking.openURL(
-          `https://api.whatsapp.com/send?phone=55${phone}&text=Olá, ${this.props.route.params.nomeToZap} te vi no WeWork e Tenho Interesse no Seu Trabalho`
+          `https://api.whatsapp.com/send?phone=55${phone}&text=Olá, ${this.props.route.params.nomeToZap} te vi no WeWo e Tenho Interesse no Seu Trabalho`
         );
       }
     })

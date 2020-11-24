@@ -230,13 +230,13 @@ async componentDidMount() {
       let shortDescription = text.substr(0, 40)
 
       return(
-        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Description>{shortDescription} ...</Description>
         </View>
       );
     } else {
       return(
-        <View style={{justifyContent: 'center', alignItems: 'center',}}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Description>{text}</Description>
         </View>
       );

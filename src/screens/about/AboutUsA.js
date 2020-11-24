@@ -17,6 +17,9 @@ import {
   StyleSheet,
   Text
 } from 'react-native';
+
+import { ThemeContext } from '../../../ThemeContext';
+
 import Color from 'color';
 import {FontAwesome as FAIcon} from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
@@ -34,6 +37,9 @@ import TouchableItem from '../../components/TouchableItem';
 
 // import colors
 import Colors from '../../theme/colors';
+
+//CSS responsivo
+import { SafeBackground, HeadingAbout, SubtitleAbout, FooterText, Footer, SocialButtonAbout } from '../home/styles';
 
 // AboutUsA Config
 const isRTL = I18nManager.isRTL;
@@ -65,6 +71,7 @@ const styles = StyleSheet.create({
   center: {
     justifyContent: 'center',
     alignItems: 'center',
+    alignContent:'center',
     width: '100%',
   },
   swiperContainer: {
@@ -153,6 +160,8 @@ const styles = StyleSheet.create({
 
 // AboutUsA
 export default class AboutUsA extends Component {
+  static contextType = ThemeContext;
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -164,15 +173,15 @@ export default class AboutUsA extends Component {
   };
 
   callPhone = () => {
-    Linking.openURL(`tel:${1601234567}`);
+    Linking.openURL(`tel:${82988232301}`);
   };
 
   render() {
     return (
-      <SafeAreaView style={styles.screenContainer}>
+      <SafeBackground>
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <View style={styles.content}>
@@ -279,16 +288,17 @@ export default class AboutUsA extends Component {
           </View>
 
           <View style={styles.center}>
-            <Subtitle2>CALL US</Subtitle2>
-            <Heading5 style={styles.phone} onPress={this.callPhone}>
-              1-60-123-456-7
-            </Heading5>
+            <HeadingAbout onPress={this.callPhone}>
+             WeWo
+            </HeadingAbout>
+            <SubtitleAbout>Somos uma empresa focada em unir contratantes e contradados de forma rápida e segura</SubtitleAbout>
           </View>
 
           <View style={styles.center}>
             <Subtitle2>FOLLOW US</Subtitle2>
             <View style={styles.social}>
-              <View style={styles.socialButton}>
+              
+              <SocialButtonAbout>
                 <TouchableItem rippleColor={Colors.white} borderless>
                   <View style={styles.socialIconContainer}>
                     <FAIcon
@@ -298,9 +308,9 @@ export default class AboutUsA extends Component {
                     />
                   </View>
                 </TouchableItem>
-              </View>
+              </SocialButtonAbout>
 
-              <View style={styles.socialButton}>
+              <SocialButtonAbout>
                 <TouchableItem rippleColor={Colors.white} borderless>
                   <View style={styles.socialIconContainer}>
                     <FAIcon
@@ -310,27 +320,20 @@ export default class AboutUsA extends Component {
                     />
                   </View>
                 </TouchableItem>
-              </View>
+              </SocialButtonAbout>
 
-              <View style={styles.socialButton}>
-                <TouchableItem rippleColor={Colors.white} borderless>
-                  <View style={styles.socialIconContainer}>
-                    <FAIcon name={YELP_ICON} size={21} color={Colors.white} />
-                  </View>
-                </TouchableItem>
-              </View>
             </View>
           </View>
         </View>
 
-        <View style={styles.footer}>
+        <Footer>
           <TouchableItem>
             <View style={styles.footerButton}>
-              <Text style={styles.footerButtonText}>www.fooddelivery.com</Text>
+              <FooterText>www.wewo.com</FooterText>
             </View>
           </TouchableItem>
-        </View>
-      </SafeAreaView>
+        </Footer>
+      </SafeBackground>
     );
   }
 }

@@ -475,7 +475,9 @@ function MainNavigatorA() {
           name="AboutUs"
           component={AboutUs}
           options={{
-            title: 'About Us',
+            title: 'Sobre Nós',
+            headerStyle: { backgroundColor: dark ? '#121212' : 'white' },
+            headerTitleStyle: { color: dark ? '#FFD700' : 'black' },
           }}
         />
 

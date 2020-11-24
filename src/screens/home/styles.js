@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 // import components
-import {Heading6, Subtitle1, Subtitle2} from '../../components/text/CustomText';
+import {Heading6, Heading5, Subtitle1, Subtitle2} from '../../components/text/CustomText';
 import { Ionicons as Ionicon } from "@expo/vector-icons";
 
 import {SmallText, Caption} from '../../components/text/CustomText';
@@ -20,6 +20,33 @@ export const SafeBackground = styled.SafeAreaView`
     flex:1;
     background: ${props => props.theme.background} 
 `;
+
+export const HeadingAbout = styled(Heading6)`
+    marginTop: 8px;
+    color: ${props => props.theme.color}
+`
+export const SubtitleAbout = styled(Subtitle2)`
+    color: ${props => props.theme.inversePallete};
+    marginLeft:15px;
+    textAlign: center;
+    marginTop:5px
+`
+
+export const FooterText = styled.Text`
+    color: ${props => props.theme.color}; 
+    fontWeight: 500
+`
+
+export const Footer = styled.View`
+    width: 360px;
+    backgroundColor: ${props => props.theme.background}
+`
+
+export const SocialButtonAbout = styled.View`
+    backgroundColor: ${props => props.theme.color}
+    margin: 8px;
+    borderRadius: 22px;
+`
 
 export const ViewCartao = styled.View`
     backgroundColor: ${props => props.theme.background};

@@ -227,10 +227,10 @@ export const TouchableResponsive = styled.TouchableOpacity`
 
 export const ButtonIconContainer = styled.View`
     position: absolute;
-    top: 16px;
+    top: 16;
     border-radius: 18px;
     background: ${props => props.theme.backgroundColor};
-    left: 16px;
+    left: 16;
 `
 
 export const Title = styled.Text`

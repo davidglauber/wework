@@ -5,7 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 // import components
 import {Heading6, Heading5, Subtitle1, Subtitle2} from '../../components/text/CustomText';
-import { Ionicons as Ionicon } from "@expo/vector-icons";
+import { Ionicons as Ionicon } from '@expo/vector-icons';
 
 import {SmallText, Caption} from '../../components/text/CustomText';
 
@@ -43,18 +43,18 @@ export const Footer = styled.View`
 `
 
 export const SocialButtonAbout = styled.View`
-    background-color: ${props => props.theme.color}
+    background-color: ${props => props.theme.color};
     margin: 8px;
-    border-radius: 22px;
+    border-radius: 22px
 `
 
 export const ViewCartao = styled.View`
-    background-color: ${props => props.theme.background};
+    background-color: ${props => props.theme.background}
 `
 
 export const SafeBackgroundPublish = styled.SafeAreaView`
     flex:1;
-    background: ${props => props.theme.backgroundPublish};
+    background: ${props => props.theme.backgroundPublish}
 `;
 
 export const TextDays = styled.Text`
@@ -72,7 +72,7 @@ export const TextFilter = styled.Text`
 export const FilterUnderContainer = styled.View`
     padding-vertical: 26px;
     padding-horizontal: 24px;
-    background-color: ${props => props.theme.background};
+    background-color: ${props => props.theme.background}
 `
 
 export const TouchableFilter = styled.TouchableOpacity`
@@ -105,7 +105,7 @@ export const TextBlock = styled.Text`
     line-height: 22px;
     color: ${props => props.theme.color};
     letter-spacing: 0.4px;
-    text-align: left;
+    text-align: left
 `
 
 export const ContainerButton = styled.View`
@@ -193,7 +193,7 @@ export const SafeAnuncioView = styled.SafeAreaView`
     flex: 1;
     background: ${props => props.theme.background};
     border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
+    border-top-left-radius: 20px
 `
 
 
@@ -203,7 +203,7 @@ export const AnuncioContainer = styled.View`
     margin-bottom:5px; 
     margin-top: 10px; 
     border-radius: 10px; 
-    background-color: ${props => props.theme.backgroundColor}; 
+    background-color: ${props => props.theme.backgroundColor};
 `
 
 export const CallAndMessageContainer = styled.View`
@@ -230,7 +230,7 @@ export const ButtonIconContainer = styled.View`
     top: 16;
     border-radius: 18px;
     background: ${props => props.theme.backgroundColor};
-    left: 16;
+    left: 16
 `
 
 export const Title = styled.Text`

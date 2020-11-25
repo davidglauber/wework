@@ -5,18 +5,12 @@ import {
   FlatList,
   ScrollView,
   StatusBar,
-  StyleSheet,
-  Text,
   Image,
+  Text,
   View,
   TouchableOpacity,
 } from 'react-native';
-import Color from 'color';
 
-
-
-// import colors
-import Colors from '../../theme/colors';
 
 
 //import firebase 
@@ -34,68 +28,7 @@ import { ThemeContext } from '../../../ThemeContext';
 //import ADS
 import { AdMobBanner} from 'expo-ads-admob';
 
-// HomeA Styles
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  container: {
-    flex: 1,
-  },
-  categoriesContainer: {
-    paddingBottom: 16,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 16,
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-  },
-  titleText: {
-    fontWeight: '700',
-  },
-  viewAllText: {
-    color: Colors.primaryColor,
-  },
-  categoriesList: {
-    paddingTop: 4,
-    paddingRight: 16,
-    paddingLeft: 8,
-  },
-  cardImg: {borderRadius: 4},
-  card: {
-    marginLeft: 8,
-    width: 104,
-    height: 72,
-    resizeMode: 'cover',
-  },
-  cardOverlay: {
-    flex: 1,
-    borderRadius: 4,
-    backgroundColor: Color(Colors.overlayColor).alpha(0.2),
-    overflow: 'hidden',
-  },
-  cardContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  productsList: {
-    paddingBottom: 16,
-    // spacing = paddingHorizontal + ActionProductCard margin = 12 + 4 = 16
-    paddingHorizontal: 12,
-  },
-  popularProductsList: {
-    // spacing = paddingHorizontal + ActionProductCardHorizontal margin = 12 + 4 = 16
-    paddingHorizontal: 12,
-    paddingBottom: 16,
-  },
-});
-
-
+ 
 export default class HomeA extends Component {
   static contextType = ThemeContext;
 
@@ -111,7 +44,6 @@ export default class HomeA extends Component {
       isFetched: false,
       isFetchedPublish: false,
       isFetchedButton: false,
-      scrollY: 0
     };
   }
 
@@ -243,38 +175,33 @@ async componentDidMount() {
     }
   }
   
- 
 
   render() {
-    const { status, emailUserFunction, isFetchedButton, isFetchedPublish, activesPublishesAuto, activesPublishesEstab, isFetched } = this.state
-
+   const { status, emailUserFunction, isFetchedButton, isFetchedPublish, activesPublishesAuto, activesPublishesEstab, isFetched } = this.state
+   
     return (
       <SafeBackground>
 
         <StatusBar
           backgroundColor={this.context.dark ? '#121212' : 'white'}
-          barStyle={this.context.dark ? "white-content" : "dark-content"}
+          barStyle={this.context.dark ? 'white-content' : 'dark-content'}
         />
         
-        <View style={styles.container}>
+        <View style={{flex: 1}}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.categoriesContainer}>
-              <View style={styles.titleContainer}>
+            <View style={{paddingBottom: 16}}>
+              <View style={{flexDirection: 'row',  justifyContent: 'space-between',  alignItems: 'center', paddingTop: 16, paddingHorizontal: 16, paddingBottom: 12}}>
               
                 {status == true ? 
                   <View>
-                    <ShimmerPlaceholder visible={isFetchedButton} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5, justifyContent:'center', width:210, height:27}}>
                       <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
                           <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
                       </TouchableOpacity>
-                    </ShimmerPlaceholder>
                     </View>
                     :
-                    <ShimmerPlaceholder visible={isFetchedButton} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5 ,alignItems: 'center', justifyContent: 'center', width:116, height:27}}>
                       <SignUpBottom onPress={this.navigateTo('SignUp')}>
                           <TextBold>Criar Conta</TextBold>
                       </SignUpBottom>
-                    </ShimmerPlaceholder>
                 }
                     
                 <TouchableOpacity onPress={this.navigateTo('Filtro')} style={{width:20, height:20}}>
@@ -286,7 +213,7 @@ async componentDidMount() {
 
             </View>
 
-            <View style={styles.titleContainer}>
+            <View style={{flexDirection: 'row',  justifyContent: 'space-between',  alignItems: 'center', paddingTop: 16, paddingHorizontal: 16, paddingBottom: 12}}>
               <Heading>Anúncios</Heading>
             </View>
 
@@ -298,7 +225,6 @@ async componentDidMount() {
                 
                 <View style={{flex:1, alignItems: 'center'}}>
                       <View>
-                        <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                           <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -324,7 +250,6 @@ async componentDidMount() {
                               </View> 
 
                           </AnuncioContainer>
-                        </ShimmerPlaceholder>
                       </View>
 
                   </View>
@@ -349,7 +274,6 @@ async componentDidMount() {
                 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                      <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                         <AnuncioContainer>
                             <View style={{flexDirection:'row'}}>
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -376,7 +300,6 @@ async componentDidMount() {
                             </View> 
 
                         </AnuncioContainer>
-                      </ShimmerPlaceholder>
                     </View>
                 </View>
                 
@@ -394,7 +317,7 @@ async componentDidMount() {
               /> 
           </ScrollView>
         </View>
-      </SafeBackground>
+            </SafeBackground>
     );
   }
 }

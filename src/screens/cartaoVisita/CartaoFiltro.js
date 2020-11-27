@@ -46,7 +46,6 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 //CSS responsivo
 import { SafeBackground, IconResponsive, AnuncioContainer, IconResponsiveNOBACK, Favorite,  Description, Heading, Title, ValueField, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from '../home/styles';
 
-import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
 
@@ -335,7 +334,6 @@ export default class CartaoFiltro extends Component {
                     enabled={isOpen}
                   > 
 
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                     <AnuncioContainer>
                           <View style={{flexDirection:'row'}}>
                               <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -364,7 +362,6 @@ export default class CartaoFiltro extends Component {
                           </View> 
 
                     </AnuncioContainer>
-                  </ShimmerPlaceholder>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}
@@ -389,7 +386,6 @@ export default class CartaoFiltro extends Component {
                     renderRightActions={this.RightAction}
                     onSwipeableRightOpen={() => this.AddToFav(item.idCartao, item)}
                   > 
-                    <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                     <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -418,7 +414,6 @@ export default class CartaoFiltro extends Component {
                               </View> 
 
                     </AnuncioContainer>
-                    </ShimmerPlaceholder>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}

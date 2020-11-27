@@ -38,7 +38,6 @@ import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, Value
 
 import { ThemeContext } from '../../../ThemeContext';
 
-import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -325,18 +324,14 @@ async componentDidMount() {
               <View style={styles.titleContainer}>
               
                 {status == true ? 
-                  <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5, justifyContent:'center', width:210, height:27}}>
                     <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
                         <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
                     </TouchableOpacity>
-                  </ShimmerPlaceholder>
                     :
 
-                  <ShimmerPlaceholder visible={isFetched} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:5 ,alignItems: 'center', justifyContent: 'center', width:116, height:27}}>
                     <SignUpBottom onPress={this.navigateTo('SignUp')}>
                         <TextBold>Criar Conta</TextBold>
                     </SignUpBottom>
-                  </ShimmerPlaceholder>
                 }
                     
                 <TouchableOpacity onPress={this.navigateTo('Filtro')} style={{width:20, height:20}}>
@@ -359,7 +354,6 @@ async componentDidMount() {
                 
                   <View style={{flex:1, alignItems: 'center'}}>
                       <View>
-                        <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                           <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -385,7 +379,6 @@ async componentDidMount() {
                               </View> 
 
                           </AnuncioContainer>
-                        </ShimmerPlaceholder>
                       </View>
                   </View>
                 
@@ -410,7 +403,6 @@ async componentDidMount() {
                 
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View>
-                      <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                         <AnuncioContainer>
                             <View style={{flexDirection:'row'}}>
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -437,7 +429,6 @@ async componentDidMount() {
                             </View> 
 
                         </AnuncioContainer>
-                      </ShimmerPlaceholder>
                     </View>
                 </View>
                 

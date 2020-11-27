@@ -310,7 +310,6 @@ export default class TelaGeralCriarCartao extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={cartoesAuto}
                         renderItem={({item}) => 
-                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 190,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                             <AnuncioContainer style={{height: 190}}>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -346,7 +345,6 @@ export default class TelaGeralCriarCartao extends Component {
                               </View> 
 
                             </AnuncioContainer>
-                          </ShimmerPlaceholder>
                         }
                       />
                     </View>
@@ -360,7 +358,6 @@ export default class TelaGeralCriarCartao extends Component {
                         keyExtractor={() => this.makeid(17)}
                         data={cartoesEstab}
                         renderItem={({item}) => 
-                          <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 190,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                             <AnuncioContainer style={{height: 190}}>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -396,7 +393,6 @@ export default class TelaGeralCriarCartao extends Component {
                               </View> 
 
                             </AnuncioContainer>
-                          </ShimmerPlaceholder>
                         }
                       />
                     </View>

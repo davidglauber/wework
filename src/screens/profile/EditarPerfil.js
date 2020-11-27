@@ -58,8 +58,8 @@ const IOS = Platform.OS === 'ios';
 const CAMERA_ICON = IOS ? 'ios-camera' : 'md-camera';
 const INPUT_FOCUSED_BORDER_COLOR = Colors.primaryColor;
 
-const widthScreen = Dimensions.get('window').width;
-const heightScreen = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 // EditProfileA Styles
 const styles = StyleSheet.create({
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   buttonContainer: {
-    marginTop:widthScreen/2,
+    marginTop:windowWidth/2,
     paddingHorizontal: 24,
   },
 });
@@ -313,8 +313,8 @@ export default class EditarPerfil extends Component {
                   Alert.alert("Modal has been closed.");
                 }}
               >
-              <View style={{alignItems:'center', paddingTop: 75, width: 100}}>
-                <View style={{alignItems:'center', backgroundColor:'white', height: 50, width:80, backgroundColor:'white', borderRadius:15}}>
+              <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+              <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
                   <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Atualizando Perfil...</Text>
                   <PulseIndicator color='#DAA520'/>
                 </View>

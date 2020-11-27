@@ -18,6 +18,7 @@ import {
   Modal,
   View,
   Text,
+  Dimensions,
   YellowBox
 } from 'react-native';
 
@@ -51,6 +52,9 @@ import { TextInputMask } from 'react-native-masked-text';
 import { ItemContainer, ViewTopForm, SafeBackgroundPublish, IconResponsive, IconResponsiveNOBACK, PublishTouchable, CategoryAndSub, TextDays, TitleChangeColor, InputFormMask, InputForm, SafeViewPublish, Subtitle2Publish, ViewCircle, ChooseOption } from '../home/styles';
 
 import { ThemeContext } from '../../../ThemeContext';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 // import colors
 import Colors from '../../theme/colors';
@@ -1034,8 +1038,8 @@ export default class EditarAnuncio extends Component {
                           Alert.alert("Modal has been closed.");
                         }}
                       >
-                      <View style={{alignItems:'center', paddingTop: 75, width: 100}}>
-                        <View style={{alignItems:'center', backgroundColor:'white', height:50, width:100, backgroundColor:'white', borderRadius:15}}>
+                      <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+                      <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
                           <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Atualizando o seu Anúncio</Text>
                           <PulseIndicator color='#DAA520'/>
                         </View>
@@ -1051,8 +1055,8 @@ export default class EditarAnuncio extends Component {
                           Alert.alert("Modal has been closed.");
                         }}
                       >
-                      <View style={{alignItems:'center', paddingTop: 75, width: 100}}>
-                        <View style={{alignItems:'center', backgroundColor:'white', height:50, width:100, backgroundColor:'white', borderRadius:15}}>
+                      <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+                        <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
                           <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
                           <PulseIndicator color='#DAA520'/>
                         </View>

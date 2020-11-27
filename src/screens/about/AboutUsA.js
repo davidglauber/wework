@@ -291,11 +291,11 @@ export default class AboutUsA extends Component {
             <HeadingAbout onPress={this.callPhone}>
              WeWo
             </HeadingAbout>
-            <SubtitleAbout>Somos uma empresa focada em unir contratantes e contradados de forma rápida e segura</SubtitleAbout>
+            <SubtitleAbout>Somos uma empresa focada em unir Contratantes e Contradados de forma Rápida e Segura. Na nossa plataforma você consegue agilizar contratações para serviços de Pequeno, Médio e Grande porte!</SubtitleAbout>
           </View>
 
           <View style={styles.center}>
-            <Subtitle2>FOLLOW US</Subtitle2>
+            <Subtitle2>SIGA-NOS</Subtitle2>
             <View style={styles.social}>
               
               <SocialButtonAbout>

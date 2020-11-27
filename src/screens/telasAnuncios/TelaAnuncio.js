@@ -47,7 +47,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAnuncioView, ValueFieldPrincipal, TouchableResponsive, IconResponsiveNOBACK, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
-import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
 

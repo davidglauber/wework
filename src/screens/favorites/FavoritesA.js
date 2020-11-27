@@ -279,7 +279,6 @@ export default class FavoritesA extends Component {
                     onSwipeableLeftOpen={() => this.RemoveFav(item.idCartao)}
                   > 
 
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                     <AnuncioContainer>
                           <View style={{flexDirection:'row'}}>
                               <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -308,7 +307,6 @@ export default class FavoritesA extends Component {
                           </View> 
 
                     </AnuncioContainer>
-                  </ShimmerPlaceholder>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}
@@ -326,7 +324,6 @@ export default class FavoritesA extends Component {
                     onSwipeableLeftOpen={() => this.RemoveFav(item.idCartao)}
                   > 
 
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{width: 336, height: 170,  marginBottom:5,  marginTop: 10,  borderRadius: 10}}>
                     <AnuncioContainer>
                               <View style={{flexDirection:'row'}}>
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
@@ -355,7 +352,6 @@ export default class FavoritesA extends Component {
                               </View> 
 
                     </AnuncioContainer>
-                  </ShimmerPlaceholder>
                   </Swipeable>
                 }
                 contentContainerStyle={styles.productList}

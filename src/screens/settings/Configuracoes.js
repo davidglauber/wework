@@ -286,34 +286,24 @@ export default function Configuracoes() {
             <View style={[styles.row, styles.profileContainer]}>
               <View style={styles.leftSide}>
                 {fotoPerfil == '' ?
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:50, width:60, height:60}}>
                     <Image style={{borderRadius:50, width:60, height:60}} source={require('../../assets/img/profile_1.jpeg')}
                     />
-                  </ShimmerPlaceholder>
                   :
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{borderRadius:50, width:60, height:60}}>
                     <Image
                       source={{uri: fotoPerfil}}
                       style={{borderRadius:50, width:60, height:60}}
                     />
-                  </ShimmerPlaceholder>
                 }
                 <View style={styles.profileInfo}>
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{fontWeight: '500', textAlign: 'left', borderRadius: 30}}>
                     <NameUserSetting>{nomeUser}</NameUserSetting>
-                  </ShimmerPlaceholder>
 
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{paddingVertical: 2, borderRadius:30}}>
                     <EmailUserSetting style={styles.email}>
                       {emailUser}
                     </EmailUserSetting>
-                  </ShimmerPlaceholder>
 
-                  <ShimmerPlaceholder visible={isFetchedPublish} shimmerColors={['#DAA520', '#FFD700', '#FFD700']} style={{paddingVertical: 2, borderRadius:30}}>
                     <EmailUserSetting style={styles.email}>
                       {dataNascimento}
                     </EmailUserSetting>
-                  </ShimmerPlaceholder>
                 </View>
               </View>
             </View>

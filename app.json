@@ -33,11 +33,14 @@
         "googleMobileAdsAppId": "ca-app-pub-3940256099942544~1458002511"
       }
     },
-    "description": "We Work - A React Native App",
+    "description": "We Wo - A React Native App",
     "android": {
-      "package": "com.zubito.WeWork_Expo",
+      "package": "com.zubito.wewo",
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-1397640114399871~3615827759"
+        "googleMobileAdsAppId": "ca-app-pub-1397640114399871~3615827759",
+        "googleSignIn" : {
+          "apiKey": "DC5A6173C13C2F7B400867CA125697CC66B45C12"
+        }
       }
     },
     "entryPoint": "node_modules/expo/AppEntry.js"

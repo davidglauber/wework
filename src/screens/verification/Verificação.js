@@ -161,7 +161,7 @@ export default class Verificação extends Component {
         androidStandaloneAppClientId: '739877707204-7s37emv4f00qbqo7brdo2of0cb6ld8pf.apps.googleusercontent.com',
         webClientId: '739877707204-g6egqrbsrdu1i5kplap8i5b993kisoh6.apps.googleusercontent.com',
         iosClientId: '739877707204-6sduc8aq9ggi6d411lhtfi62rne5gvtc.apps.googleusercontent.com',
-        iosStandaloneAppClientId: '739877707204-6sduc8aq9ggi6d411lhtfi62rne5gvtc.apps.googleusercontent.com',
+        iosStandaloneAppClientId: '739877707204-qu6p135qctdnqj3ceq3oum5ohjdillhr.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
       });
   

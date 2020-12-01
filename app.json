@@ -30,7 +30,10 @@
       "supportsTablet": true,
       "bundleIdentifier": "ios.wework",
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~1458002511"
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~1458002511",
+        "googleSignIn":{
+          "reservedClientId": "com.googleusercontent.apps.739877707204-qu6p135qctdnqj3ceq3oum5ohjdillhr"
+        }
       }
     },
     "description": "We Wo - A React Native App",

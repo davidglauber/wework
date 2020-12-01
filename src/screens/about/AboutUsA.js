@@ -176,6 +176,10 @@ export default class AboutUsA extends Component {
     Linking.openURL(`tel:${82988232301}`);
   };
 
+  openInstagram = () => {
+    Linking.openURL('https://www.instagram.com/wewooficial/')
+  }
+
   render() {
     return (
       <SafeBackground>
@@ -311,7 +315,7 @@ export default class AboutUsA extends Component {
               </SocialButtonAbout>
 
               <SocialButtonAbout>
-                <TouchableItem rippleColor={Colors.white} borderless>
+                <TouchableItem onPress={() => this.openInstagram()} rippleColor={Colors.white} borderless>
                   <View style={styles.socialIconContainer}>
                     <FAIcon
                       name={INSTAGRAM_ICON}

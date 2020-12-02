@@ -17,6 +17,7 @@ import {
   Dimensions,
   FlatList,
   StyleSheet,
+  Share,
   Text,
   View,
 } from 'react-native';
@@ -61,6 +62,7 @@ const IOS = Platform.OS === 'ios';
 const MINUS_ICON = IOS ? 'ios-remove' : 'md-remove';
 const PLUS_ICON = IOS ? 'ios-add' : 'md-add';
 const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
+const SHARE_ICON = IOS ? 'ios-share' : 'md-share';
 const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
 // ProductA Styles
@@ -280,6 +282,27 @@ export default class TelaAnuncio extends Component {
     navigation.goBack();
   };
 
+  shareIcon = async () => {
+      try {
+        const result = await Share.share({
+          message:
+            'Veja esse anúncio incrível que achei no WeWo!',
+        });
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+  };
+
+
   makeid(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -352,11 +375,23 @@ export default class TelaAnuncio extends Component {
                       />
                   </Swiper>
 
-                  <ButtonIconContainer>
+                  <ButtonIconContainer style={{borderRadius:10}}>
                     <TouchableItem onPress={this.goBack} borderless>
                       <View style={styles.buttonIconContainer}>
                         <Icon
                           name={CLOSE_ICON}
+                          size={22}
+                          color={Colors.secondaryText}
+                        />
+                      </View>
+                    </TouchableItem>
+                  </ButtonIconContainer>
+
+                  <ButtonIconContainer style={{marginTop:50, borderRadius:10}}>
+                    <TouchableItem onPress={this.shareIcon} borderless>
+                      <View style={styles.buttonIconContainer}>
+                        <Icon
+                          name={SHARE_ICON}
                           size={22}
                           color={Colors.secondaryText}
                         />
@@ -491,11 +526,23 @@ export default class TelaAnuncio extends Component {
                       />
                   </Swiper>
 
-                  <ButtonIconContainer>
+                  <ButtonIconContainer style={{borderRadius:10}}>
                     <TouchableItem onPress={this.goBack} borderless>
                       <View style={styles.buttonIconContainer}>
                         <Icon
                           name={CLOSE_ICON}
+                          size={22}
+                          color={Colors.secondaryText}
+                        />
+                      </View>
+                    </TouchableItem>
+                  </ButtonIconContainer>
+
+                  <ButtonIconContainer style={{marginTop:50, borderRadius:10}}>
+                    <TouchableItem onPress={this.shareIcon} borderless>
+                      <View style={styles.buttonIconContainer}>
+                        <Icon
+                          name={SHARE_ICON}
                           size={22}
                           color={Colors.secondaryText}
                         />

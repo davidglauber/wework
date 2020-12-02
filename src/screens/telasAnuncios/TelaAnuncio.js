@@ -34,6 +34,10 @@ import * as Linking from 'expo-linking';
 import Button from '../../components/buttons/Button';
 import {Caption, Heading5, SmallText} from '../../components/text/CustomText';
 import Icon from '../../components/icon/Icon';
+import IconMain from '../../components/icon/IconMain';
+
+import { Ionicons as Ionicon } from '@expo/vector-icons';
+
 import SizePicker from '../../components/pickers/SizePicker';
 import TouchableItem from '../../components/TouchableItem';
 
@@ -285,8 +289,9 @@ export default class TelaAnuncio extends Component {
   shareIcon = async () => {
       try {
         const result = await Share.share({
+          title: 'WeWo - Onde Todos se Encontram',
           message:
-            'Veja esse anúncio incrível que achei no WeWo!',
+            'Veja esse anúncio incrível que achei no WeWo!  (WeWo - Onde Todos se Encontram)',
         });
         if (result.action === Share.sharedAction) {
           if (result.activityType) {
@@ -378,7 +383,7 @@ export default class TelaAnuncio extends Component {
                   <ButtonIconContainer style={{borderRadius:10}}>
                     <TouchableItem onPress={this.goBack} borderless>
                       <View style={styles.buttonIconContainer}>
-                        <Icon
+                        <IconMain
                           name={CLOSE_ICON}
                           size={22}
                           color={Colors.secondaryText}
@@ -390,7 +395,7 @@ export default class TelaAnuncio extends Component {
                   <ButtonIconContainer style={{marginTop:50, borderRadius:10}}>
                     <TouchableItem onPress={this.shareIcon} borderless>
                       <View style={styles.buttonIconContainer}>
-                        <Icon
+                        <IconMain
                           name={SHARE_ICON}
                           size={22}
                           color={Colors.secondaryText}
@@ -529,7 +534,7 @@ export default class TelaAnuncio extends Component {
                   <ButtonIconContainer style={{borderRadius:10}}>
                     <TouchableItem onPress={this.goBack} borderless>
                       <View style={styles.buttonIconContainer}>
-                        <Icon
+                        <IconMain
                           name={CLOSE_ICON}
                           size={22}
                           color={Colors.secondaryText}
@@ -541,7 +546,7 @@ export default class TelaAnuncio extends Component {
                   <ButtonIconContainer style={{marginTop:50, borderRadius:10}}>
                     <TouchableItem onPress={this.shareIcon} borderless>
                       <View style={styles.buttonIconContainer}>
-                        <Icon
+                        <IconMain
                           name={SHARE_ICON}
                           size={22}
                           color={Colors.secondaryText}

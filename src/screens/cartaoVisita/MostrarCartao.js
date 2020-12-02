@@ -33,6 +33,7 @@ import * as Linking from 'expo-linking';
 import Button from '../../components/buttons/Button';
 import {Caption, Heading5, SmallText} from '../../components/text/CustomText';
 import Icon from '../../components/icon/Icon';
+import IconMain from '../../components/icon/IconMain';
 import SizePicker from '../../components/pickers/SizePicker';
 import TouchableItem from '../../components/TouchableItem';
 
@@ -52,6 +53,7 @@ const IOS = Platform.OS === 'ios';
 const MINUS_ICON = IOS ? 'ios-remove' : 'md-remove';
 const PLUS_ICON = IOS ? 'ios-add' : 'md-add';
 const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
+const SHARE_ICON = IOS ? 'ios-share' : 'md-share';
 const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
 
@@ -288,6 +290,28 @@ export default class MostrarCartao extends Component {
     navigation.goBack();
   };
 
+
+  shareIcon = async () => {
+    try {
+      const result = await Share.share({
+        title: 'WeWo - Onde Todos se Encontram',
+        message:
+          'Veja esse cartão de visita incrível que achei no WeWo!  (WeWo - Onde Todos se Encontram)',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+};
+
   onPressAddToFavorites = () => {
     const {favorite} = this.state;
 
@@ -368,11 +392,23 @@ export default class MostrarCartao extends Component {
                         />
                   </Swiper>
 
-                  <ButtonIconContainer>
+                  <ButtonIconContainer style={{borderRadius:10}}>
                     <TouchableItem onPress={this.goBack} borderless>
                       <View style={styles.buttonIconContainer}>
-                        <Icon
+                        <IconMain
                           name={CLOSE_ICON}
+                          size={22}
+                          color={Colors.secondaryText}
+                        />
+                      </View>
+                    </TouchableItem>
+                  </ButtonIconContainer>
+
+                  <ButtonIconContainer style={{marginTop:50, borderRadius:10}}>
+                    <TouchableItem onPress={this.shareIcon} borderless>
+                      <View style={styles.buttonIconContainer}>
+                        <IconMain
+                          name={SHARE_ICON}
                           size={22}
                           color={Colors.secondaryText}
                         />
@@ -501,10 +537,10 @@ export default class MostrarCartao extends Component {
                       />
                   </Swiper>
 
-                  <ButtonIconContainer>
+                  <ButtonIconContainer style={{borderRadius:10}}>
                     <TouchableItem onPress={this.goBack} borderless>
                       <View style={styles.buttonIconContainer}>
-                        <Icon
+                        <IconMain
                           name={CLOSE_ICON}
                           size={22}
                           color={Colors.secondaryText}
@@ -512,6 +548,19 @@ export default class MostrarCartao extends Component {
                       </View>
                     </TouchableItem>
                   </ButtonIconContainer>
+
+                  <ButtonIconContainer style={{marginTop:50, borderRadius:10}}>
+                    <TouchableItem onPress={this.shareIcon} borderless>
+                      <View style={styles.buttonIconContainer}>
+                        <IconMain
+                          name={SHARE_ICON}
+                          size={22}
+                          color={Colors.secondaryText}
+                        />
+                      </View>
+                    </TouchableItem>
+                  </ButtonIconContainer>
+                  
                 </View>
 
                   <View style={styles.descriptionContainer}>

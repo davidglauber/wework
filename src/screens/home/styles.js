@@ -395,6 +395,9 @@ export const IconSetting = styled(Ionicon)`
     color: ${props => props.theme.colorSetting}
 `
 
+export const IconSettingMAIN = styled(Ionicon)`
+    color: ${props => props.theme.colorICONMAIN}
+`
 
 
 export const PlusContainer = styled.TouchableOpacity`

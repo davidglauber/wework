@@ -7,6 +7,7 @@ export default {
   colorTitle:'#FFD700',
   colorCallAndMessage: '#a37c1a',
   colorSetting: '#DAA520',
+  colorICONMAIN: '#DAA520',
   inversePallete: '#fff',
   containerCall: '#3E3C3F',
   inverseContainerCall: '#645f66',

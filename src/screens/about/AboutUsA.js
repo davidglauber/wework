@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  TouchableOpacity,
   Text
 } from 'react-native';
 
@@ -40,6 +41,7 @@ import Colors from '../../theme/colors';
 
 //CSS responsivo
 import { SafeBackground, HeadingAbout, SubtitleAbout, FooterText, Footer, SocialButtonAbout } from '../home/styles';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 // AboutUsA Config
 const isRTL = I18nManager.isRTL;
@@ -180,6 +182,10 @@ export default class AboutUsA extends Component {
     Linking.openURL('https://www.instagram.com/wewooficial/')
   }
 
+  openLinkedIn = () => {
+    Linking.openURL('https://www.linkedin.com/in/david-glauber-1b1961191/')
+  }
+
   render() {
     return (
       <SafeBackground>
@@ -292,10 +298,20 @@ export default class AboutUsA extends Component {
           </View>
 
           <View style={styles.center}>
-            <HeadingAbout onPress={this.callPhone}>
+            <HeadingAbout>
              WeWo
             </HeadingAbout>
             <SubtitleAbout>Somos uma empresa focada em unir Contratantes e Contradados de forma Rápida e Segura. Na nossa plataforma você consegue agilizar contratações para serviços de Pequeno, Médio e Grande porte!</SubtitleAbout>
+          </View>
+
+
+          <View style={{justifyContent: 'flex-start',alignItems: 'center', alignContent:'center', width: '100%'}}>
+            <HeadingAbout>
+             Desenvolvedor Full-Stack do WeWo
+            </HeadingAbout>
+            <TouchableOpacity onPress={() => this.openLinkedIn()}>
+              <SubtitleAbout>David Glauber de Gusmão Cerqueira Lima (LinkedIn)</SubtitleAbout>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.center}>

@@ -878,9 +878,9 @@ export default class EditarAnuncio extends Component {
                                 firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
                                   firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
                                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
-                                      firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+                                      firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(routeIdAnuncio).update({
                                         titleEstab: e.state.tituloEstab,
-                                        idAnuncio: getSameIdToDocument,
+                                        idAnuncio: routeIdAnuncio,
                                         idUser: userUID,
                                         publishData: e.state.date,
                                         descriptionEstab: e.state.descricaoEstab,
@@ -900,9 +900,9 @@ export default class EditarAnuncio extends Component {
                                       })
                           
                                       //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
-                                      firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
+                                      firebase.firestore().collection('anuncios').doc(routeIdAnuncio).update({
                                         titleEstab: e.state.tituloEstab,
-                                        idAnuncio: getSameIdToDocument,
+                                        idAnuncio: routeIdAnuncio,
                                         idUser: userUID,
                                         publishData: e.state.date,
                                         descriptionEstab: e.state.descricaoEstab,
@@ -946,9 +946,9 @@ export default class EditarAnuncio extends Component {
                                 firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
                                   firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
                                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
-                                      firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(getSameIdToDocument).set({
+                                      firebase.firestore().collection('usuarios').doc(userUID).collection('anuncios').doc(routeIdAnuncio).update({
                                         titleAuto: e.state.tituloAuto,
-                                        idAnuncio: getSameIdToDocument,
+                                        idAnuncio: routeIdAnuncio,
                                         idUser: userUID,
                                         publishData: e.state.date,
                                         nome: e.state.nomeAuto,
@@ -965,9 +965,9 @@ export default class EditarAnuncio extends Component {
                                       })
                           
                                       //subir anuncio para a pasta principal onde todos os anuncios ativos serão visiveis
-                                      firebase.firestore().collection('anuncios').doc(getSameIdToDocument).set({
+                                      firebase.firestore().collection('anuncios').doc(routeIdAnuncio).update({
                                         titleAuto: e.state.tituloAuto,
-                                        idAnuncio: getSameIdToDocument,
+                                        idAnuncio: routeIdAnuncio,
                                         idUser: userUID,
                                         publishData: e.state.date,
                                         nome: e.state.nomeAuto,

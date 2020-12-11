@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Dimensions,
   View,
   ScrollView,
   Text,
@@ -30,7 +31,11 @@ import EmptyState from '../../components/emptystate/EmptyState';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 
-import { FontAwesome5 } from '@expo/vector-icons';
+
+
+//RESPONSIVE FONT 
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 //import firebase
 import firebase from '../../config/firebase';
@@ -297,6 +302,13 @@ export default class CartaoFiltro extends Component {
       );
     }
   }
+
+
+  responsibleFont() {
+    let Height = Dimensions.get('window').height
+    return RFValue(15, Height);
+  }
+
   render() {
     const {cartoesAuto, cartoesEstab, isOpen, products, isFetchedPublish} = this.state;
 
@@ -339,7 +351,7 @@ export default class CartaoFiltro extends Component {
                               <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                               
                               <View style={{flexDirection:'column'}}>
-                                <Title>{item.nome}</Title>
+                                <Title style={{fontSize: this.responsibleFont()}}>{item.nome}</Title>
 
                                 {this.cutDescription(item.description)}
 
@@ -391,7 +403,7 @@ export default class CartaoFiltro extends Component {
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column', }}>
-                                    <Title>{item.title}</Title>
+                                    <Title style={{fontSize: this.responsibleFont()}}>{item.title}</Title>
 
                                     {this.cutDescription(item.description)}
 

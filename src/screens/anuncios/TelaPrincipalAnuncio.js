@@ -9,6 +9,7 @@ import {
   StatusBar,
   StyleSheet,
   BackHandler,
+  Dimensions,
   Text,
   Image,
   View,
@@ -31,6 +32,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, Description, IconResponsiveNOBACK, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
 
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
+
+//RESPONSIVE FONT 
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import { ThemeContext } from '../../../ThemeContext';
 
@@ -272,6 +276,14 @@ sleep = (time) => {
     )
   }
 
+
+  responsibleFont() {
+    let Height = Dimensions.get('window').height
+
+    return RFValue(15, Height);
+  }
+
+
  
   render() {
     const {anunciosEstab, anunciosAuto, isFetchedPublish} = this.state;
@@ -322,7 +334,7 @@ sleep = (time) => {
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column'}}>
-                                    <Title>{item.title}</Title>
+                                    <Title style={{fontSize: this.responsibleFont()}}>{item.title}</Title>
 
                                     {this.cutDescription(item.description)}
                                   </View>
@@ -363,7 +375,7 @@ sleep = (time) => {
                                     <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                     
                                     <View style={{flexDirection:'column'}}>
-                                        <Title>{item.title}</Title>
+                                        <Title style={{fontSize: this.responsibleFont()}}>{item.title}</Title>
                                       
                                         {this.cutDescription(item.description)}
                                     </View>

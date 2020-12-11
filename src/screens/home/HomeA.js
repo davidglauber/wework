@@ -9,6 +9,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 
 
@@ -23,6 +24,10 @@ import { SafeBackground, IconResponsive, AnuncioContainer, Description, IconResp
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
+
+
+//RESPONSIVE FONT 
+import { RFValue } from 'react-native-responsive-fontsize';
 
 
 //import ADS
@@ -176,6 +181,12 @@ async componentDidMount() {
   }
   
 
+  responsibleFont() {
+    let Height = Dimensions.get('window').height
+
+    return RFValue(15, Height);
+  }
+
   render() {
    const { status, emailUserFunction, isFetchedButton, isFetchedPublish, activesPublishesAuto, activesPublishesEstab, isFetched } = this.state
    
@@ -230,7 +241,7 @@ async componentDidMount() {
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column'}}>
-                                      <Title>{item.title}</Title>
+                                      <Title style={{fontSize: this.responsibleFont()}}>{item.title}</Title>
                                       {this.cutDescription(item.description)}
                                   </View>
                               </View>  
@@ -279,7 +290,7 @@ async componentDidMount() {
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                 
                                 <View style={{flexDirection:'column'}}>
-                                    <Title>{item.title}</Title>
+                                    <Title style={{fontSize: this.responsibleFont()}}>{item.title}</Title>
                                     {this.cutDescription(item.description)}
                                 </View>
                             </View>  

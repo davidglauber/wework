@@ -35,6 +35,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import firebase from '../../config/firebase';
 
 
+//RESPONSIVE FONT 
+import { RFValue } from 'react-native-responsive-fontsize';
+
 const fotoCartaoVisita = require('../../assets/img/smile.jpg');
 
 // import colors
@@ -269,6 +272,16 @@ export default class CartaoVisita extends Component {
       );
     }
   }
+
+
+
+  responsibleFont() {
+    let Height = Dimensions.get('window').height
+
+    return RFValue(15, Height);
+  }
+
+
   render() {
     const {cartoesAuto, cartoesEstab, products, isOpen, isFetchedPublish, switchSwipeState} = this.state;
 
@@ -311,7 +324,7 @@ export default class CartaoVisita extends Component {
                               <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                               
                               <View style={{flexDirection:'column'}}>
-                                <Title>{item.nome}</Title>
+                                <Title style={{fontSize: this.responsibleFont()}}>{item.nome}</Title>
 
                                 {this.cutDescription(item.description)}
 
@@ -364,7 +377,7 @@ export default class CartaoVisita extends Component {
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column', }}>
-                                    <Title>{item.title}</Title>
+                                    <Title style={{fontSize: this.responsibleFont()}}>{item.title}</Title>
 
                                     {this.cutDescription(item.description)}
 

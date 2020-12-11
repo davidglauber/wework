@@ -8,6 +8,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Dimensions,
   Image,
   AsyncStorage,
   View,
@@ -37,6 +38,9 @@ const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
 import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, Description, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
 import { ThemeContext } from '../../../ThemeContext';
+
+//RESPONSIVE FONT 
+import { RFValue } from 'react-native-responsive-fontsize';
 
 
 //import icons
@@ -308,6 +312,12 @@ async componentDidMount() {
     }
   }
 
+  responsibleFont() {
+    let Height = Dimensions.get('window').height
+
+    return RFValue(15, Height);
+  }
+
   render() {
     const { status, emailUserFunction, activesPublishesAuto, isFetchedPublish, activesPublishesEstab, isFetched } = this.state
 
@@ -359,7 +369,7 @@ async componentDidMount() {
                                   <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                   
                                   <View style={{flexDirection:'column'}}>
-                                      <Title>{item.title}</Title>
+                                      <Title style={{fontSize: this.responsibleFont()}}>{item.title}</Title>
                                       {this.cutDescription(item.description)}
                                   </View>
                               </View>  
@@ -408,7 +418,7 @@ async componentDidMount() {
                                 <Image source={{uri: item.photo}} style={{width:125, height:88, borderRadius: 10, marginLeft: 20, marginTop: 20}}></Image>
                                 
                                 <View style={{flexDirection:'column'}}>
-                                    <Title>{item.title}</Title>
+                                    <Title style={{fontSize: this.responsibleFont()}}>{item.title}</Title>
                                     {this.cutDescription(item.description)}
                                 </View>
                             </View>  

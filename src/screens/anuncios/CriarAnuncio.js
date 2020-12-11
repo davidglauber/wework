@@ -51,6 +51,9 @@ import { ItemContainer, ViewTopForm, SafeBackgroundPublish, IconResponsive, Icon
 
 import { ThemeContext } from '../../../ThemeContext';
 
+//RESPONSIVE FONT 
+import { RFValue } from 'react-native-responsive-fontsize';
+
 // import colors
 import Colors from '../../theme/colors';
 
@@ -882,6 +885,11 @@ export default class CriarAnuncio extends Component {
   }
 
 
+  responsibleFont() {
+    let Height = Dimensions.get('window').height
+
+    return RFValue(12, Height);
+  }
 
   render() {
     const { categorias, categoria } = this.state
@@ -1212,7 +1220,7 @@ export default class CriarAnuncio extends Component {
 
                             <View style={{flexDirection:'row'}}>
                               <View>
-                                  <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 15, marginTop:20}}>Horário de Abertura</TitleChangeColor>
+                                  <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 15, marginTop:20, fontSize: this.responsibleFont()}}>Horário de Abertura</TitleChangeColor>
                                   <View style={{marginLeft:14, width: 130, height:30}}>
                                       <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeAbertura()}> 
                                         <IconResponsiveNOBACK name="clock" size={24}/>
@@ -1225,7 +1233,7 @@ export default class CriarAnuncio extends Component {
                               </View>
 
                                 <View>
-                                  <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 35, marginTop:20}}>Horário de Fechamento</TitleChangeColor>
+                                  <TitleChangeColor style={{fontWeight:'bold', paddingLeft: 35, marginTop:20, fontSize: this.responsibleFont()}}>Horário de Fechamento</TitleChangeColor>
                                     <View style={{marginLeft:44, width: 130, height:30}}>
                                         <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:4}} onPress={() => this.openModalizeFechamento()}> 
                                           <IconResponsiveNOBACK name="stopwatch" size={24}/>

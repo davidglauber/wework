@@ -13,6 +13,8 @@ import {
   StyleSheet,
   Dimensions,
   Button,
+  Platform,
+  KeyboardAvoidingView,
   Text,
   TouchableWithoutFeedback,
   View,
@@ -125,6 +127,7 @@ export default class Cadastro extends Component {
       nome:'', 
       nomeFocused:false,
       date: new Date(),
+      actualDate: new Date(),
       showDate: false,
       mode:'date',
       phone: '',
@@ -247,6 +250,9 @@ export default class Cadastro extends Component {
 
   navigateTo = screen => () => {
     let dataAtual = this.convertDate();
+    
+    let userDate = this.state.date.getFullYear();
+    let actualYear = this.state.actualDate.getFullYear();
 
     const {navigation} = this.props;
 
@@ -261,6 +267,12 @@ export default class Cadastro extends Component {
     if (this.state.nome == '' || this.state.email == '' || this.state.password == '' || this.state.confirmPassword == '' || this.state.phone == '') {
       alert('Todos os campos devem ser preenchidos!')
     } 
+
+    if(actualYear - userDate >= 13) {
+      return null;
+    } else {
+      alert('Você precisa ter ao menos 13 anos para se cadastrar no WeWo')
+    }
     
     if(this.state.password == this.state.confirmPassword && this.state.password.length >= 6 && this.state.date !== null){  
         navigation.navigate(screen, {
@@ -304,8 +316,6 @@ export default class Cadastro extends Component {
 
 
 
-
-
   render() {
     const {
       emailFocused,
@@ -316,6 +326,7 @@ export default class Cadastro extends Component {
       secureTextEntry2
     } = this.state;
 
+    
     return (
       <View style={{flex:1, backgroundColor:'white'}}>
         <StatusBar
@@ -418,7 +429,6 @@ export default class Cadastro extends Component {
                   placeholder="Número de Telefone"
                 />
 
-              
                   <TouchableOpacity style={{width:150, height: 55, alignItems:'center', justifyContent:'center', marginTop: 30, borderRadius:20}} onPress={() => this.setState({showDate: true})}>
                           <Text style={{color: '#DAA520', fontWeight: 'bold', fontSize:12}}>
                             Defina sua Data de Nascimento: {this.convertDate()}

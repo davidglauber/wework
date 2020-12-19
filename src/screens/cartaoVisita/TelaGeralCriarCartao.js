@@ -3,8 +3,7 @@
 import React, {Component} from 'react';
 import {
   FlatList,
-  ImageBackground,
-  SafeAreaView,
+  Modal,
   Dimensions,
   Alert,
   ScrollView,
@@ -27,14 +26,19 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../../theme/colors';
 
 
-//import icons
-import { FontAwesome5 } from '@expo/vector-icons';
+import { PulseIndicator } from 'react-native-indicators';
 
 
 import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, Description, TouchableDetails, ValueField, TextDetails, IconResponsive, Heading } from '../home/styles';
 
 
 import { ThemeContext } from '../../../ThemeContext';
+
+
+//consts
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -107,7 +111,8 @@ export default class TelaGeralCriarCartao extends Component {
     this.state = {
       cartoesEstab: [],
       cartoesAuto: [],
-      isFetchedPublish: false
+      isFetchedPublish: false,
+      modalVisible: true
     };
   }
 
@@ -137,6 +142,7 @@ export default class TelaGeralCriarCartao extends Component {
         })
       })
       e.setState({cartoesAuto: cartoesAutoDidMount})
+      this.setModalVisible(false)
 
       this.sleep(1000).then(() => { 
         e.setState({isFetchedPublish: true})
@@ -163,6 +169,7 @@ export default class TelaGeralCriarCartao extends Component {
         })
       })
       e.setState({cartoesEstab: cartoesEstabDidMount})
+      this.setModalVisible(false)
 
       this.sleep(1000).then(() => { 
         e.setState({isFetchedPublish: true})
@@ -280,6 +287,9 @@ export default class TelaGeralCriarCartao extends Component {
     }
   }
 
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
 
   responsibleFont() {
     let Height = Dimensions.get('window').height
@@ -298,6 +308,23 @@ export default class TelaGeralCriarCartao extends Component {
         />
 
         <View style={styles.container}>
+          
+          <Modal
+              animationType="slide"
+              transparent={true}
+              visible={this.state.modalVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+              }}
+            >
+            <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+              <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
+                <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+                <PulseIndicator color='#DAA520'/>
+              </View>
+            </View>
+          </Modal>
+
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>

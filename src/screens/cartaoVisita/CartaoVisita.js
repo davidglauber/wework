@@ -14,42 +14,38 @@ import {
   View,
   ScrollView,
   Text,
+  Modal,
   TouchableOpacity,
   Dimensions,
   Image,
   FlatList,
   Alert,
-  TouchableWithoutFeedbackComponent,
 } from 'react-native';
 import remove from 'lodash/remove';
 
-// import components
 import {Heading6, SmallText} from '../../components/text/CustomText';
 
-//import GestureHandler
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import { FontAwesome5 } from '@expo/vector-icons';
 
-//import firebase
 import firebase from '../../config/firebase';
 
 
-//RESPONSIVE FONT 
 import { RFValue } from 'react-native-responsive-fontsize';
 
-const fotoCartaoVisita = require('../../assets/img/smile.jpg');
+import { PulseIndicator } from 'react-native-indicators';
 
-// import colors
 import Colors from '../../theme/colors';
 
-// CartA Config
-const EMPTY_STATE_ICON = 'cart-remove';
+
+//consts
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 //CSS responsivo
 import {SafeBackground, IconResponsive, TextDetails, Description, IconResponsiveNOBACK, TouchableDetails, Favorite, Heading, AnuncioContainer, ValueField, Title, SwipeLeft} from '../home/styles';
 
-import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -114,6 +110,7 @@ export default class CartaoVisita extends Component {
       isFetchedPublish: false,
       switchSwipeState: true,
       isOpen: true,
+      modalVisible: true,
       products: [
         {
           id: 'product1',
@@ -167,6 +164,7 @@ export default class CartaoVisita extends Component {
         })
       })
       e.setState({cartoesAuto: cartoesAutoDidMount})
+      this.setModalVisible(false)
 
       this.sleep(1000).then(() => { 
         e.setState({isFetchedPublish: true})
@@ -193,6 +191,7 @@ export default class CartaoVisita extends Component {
         })
       })
       e.setState({cartoesEstab: cartoesEstabDidMount})
+      this.setModalVisible(false)
 
       this.sleep(1000).then(() => { 
         e.setState({isFetchedPublish: true})
@@ -216,6 +215,10 @@ export default class CartaoVisita extends Component {
     return result;
  }
 
+
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
 
   RightAction() {
       return(
@@ -286,14 +289,28 @@ export default class CartaoVisita extends Component {
     const {cartoesAuto, cartoesEstab, products, isOpen, isFetchedPublish, switchSwipeState} = this.state;
 
     return (
-
       <SafeBackground>
+
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
+          <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+            <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
+              <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+              <PulseIndicator color='#DAA520'/>
+            </View>
+          </View>
+        </Modal>
 
         <StatusBar
           backgroundColor={this.context.dark ? '#121212' : 'white'}
           barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
-        
 
         <View style={styles.titleContainer}>
           <Heading>Cartões de Visita</Heading>

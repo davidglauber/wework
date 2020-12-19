@@ -11,9 +11,11 @@ import {
   Alert,
   I18nManager,
   Platform,
-  SafeAreaView,
+  Text,
   BackHandler,
   TouchableOpacity,
+  Modal,
+  Dimensions,
   ScrollView,
   StatusBar,
   Image,
@@ -36,6 +38,9 @@ import Colors from '../../theme/colors';
 
 //import firebase
 import firebase from '../../config/firebase';
+
+
+import { PulseIndicator } from 'react-native-indicators';
 
 // SettingsB Config
 const isRTL = I18nManager.isRTL;
@@ -60,6 +65,9 @@ const TERMS_ICON = IOS ? 'ios-paper' : 'md-paper';
 const ADD_ICON = IOS ? 'ios-add-circle-outline' : 'md-add-circle-outline';
 const LOGOUT_ICON = IOS ? 'ios-exit' : 'md-exit';
 
+
+
+
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -69,6 +77,10 @@ import { SafeBackground, SetTextUserSetting, IconResponsiveNOBACK, SectionHeader
 import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 import { ThemeContext } from '../../../ThemeContext';
+
+//consts
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 // SettingsB Styles
 const styles = StyleSheet.create({
@@ -196,8 +208,8 @@ export default function Configuracoes() {
   const [dataNascimento, setDataNascimento] = React.useState('');
   const [fotoPerfil, setFotoPerfil] = React.useState('');
   const [value, setValue] = React.useState(false);
-  const [isFetchedPublish, setIsFetchedPublish] = React.useState(false);
-  const {dark, setDark} = useContext(ThemeContext)
+  const {dark, setDark} = useContext(ThemeContext);
+  const [modalVisible, setModalVisible] = React.useState(true)
 
 
   useEffect(() => {
@@ -213,7 +225,7 @@ export default function Configuracoes() {
             setDataNascimento(documentSnapshot.data().dataNascimento)
             setFotoPerfil(documentSnapshot.data().photoProfile)
 
-            setIsFetchedPublish(true)
+            setModalVisible(false)
           })
         } 
         
@@ -269,6 +281,23 @@ export default function Configuracoes() {
 
     return (
       <SafeBackground>
+
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
+          <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+            <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
+              <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+              <PulseIndicator color='#DAA520'/>
+            </View>
+          </View>
+        </Modal>
+
         <StatusBar
           backgroundColor={dark ? '#121212' : 'white'}
           barStyle={dark ? "white-content" : "dark-content"}

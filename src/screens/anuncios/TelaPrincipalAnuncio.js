@@ -4,11 +4,10 @@ import React, {Component} from 'react';
 import {
   FlatList,
   Alert,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
-  BackHandler,
+  Modal,
   Dimensions,
   Text,
   Image,
@@ -18,27 +17,27 @@ import {
 import Color from 'color';
 
 
-import {Heading6} from '../../components/text/CustomText';
 
 // import colors
 import Colors from '../../theme/colors';
 
 import firebase from '../../config/firebase'; 
 
+import { PulseIndicator } from 'react-native-indicators';
 
-//import icons
-import { FontAwesome5 } from '@expo/vector-icons';
 
 import { SafeBackground, Title, AnuncioContainer, PlusContainer, PlusIcon, Description, IconResponsiveNOBACK, TouchableDetails, TextDetails, IconResponsive, Heading } from '../home/styles';
 
-import ShimmerPlaceholder  from 'react-native-shimmer-placeholder';
 
 //RESPONSIVE FONT 
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { ThemeContext } from '../../../ThemeContext';
 
-import {purchased} from '../../config/purchase';
+//consts
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -112,16 +111,17 @@ export default class TelaPrincipalAnuncio extends Component {
     this.state = {
       anunciosEstab: [],
       anunciosAuto:[],
-      isFetchedPublish: false
+      isFetchedPublish: false,
+      modalVisible: true
     };
   }
 
 
 
-//sleep function
-sleep = (time) => {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
+  //sleep function
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
 
 
   async componentDidMount() {
@@ -144,6 +144,7 @@ sleep = (time) => {
         })
       })
       e.setState({anunciosAuto: anunciosAutoDidMount})
+      this.setModalVisible(false)
 
       this.sleep(1000).then(() => { 
         e.setState({isFetchedPublish: true})
@@ -165,6 +166,7 @@ sleep = (time) => {
         })
       })
       e.setState({anunciosEstab: anunciosEstabDidMount})
+      this.setModalVisible(false)
 
       this.sleep(1000).then(() => { 
         e.setState({isFetchedPublish: true})
@@ -187,9 +189,9 @@ sleep = (time) => {
     return result;
   }
 
-
-
-
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
 
   navigateTo = screen => () => {
     const {navigation} = this.props;
@@ -296,6 +298,23 @@ sleep = (time) => {
         />
 
         <View style={styles.container}>
+
+          <Modal
+              animationType="slide"
+              transparent={true}
+              visible={this.state.modalVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+              }}
+            >
+            <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+              <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
+                <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+                <PulseIndicator color='#DAA520'/>
+              </View>
+            </View>
+          </Modal>
+          
           <ScrollView>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>

@@ -15,6 +15,7 @@ import {
   View,
   ScrollView,
   Text,
+  Modal,
   TouchableOpacity,
   Image,
   FlatList,
@@ -31,7 +32,7 @@ import EmptyState from '../../components/emptystate/EmptyState';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 
-
+import { PulseIndicator } from 'react-native-indicators';
 
 //RESPONSIVE FONT 
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -41,7 +42,10 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import firebase from '../../config/firebase';
 
 
-const fotoCartaoVisita = require('../../assets/img/smile.jpg');
+//consts
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 
 // import colors
 import Colors from '../../theme/colors';
@@ -116,6 +120,7 @@ export default class CartaoFiltro extends Component {
       cartoesAuto: [],
       isFetchedPublish: false,
       isOpen: true,
+      modalVisible: true,
       products: [
         {
           id: 'product1',
@@ -186,6 +191,7 @@ export default class CartaoFiltro extends Component {
         
         
               e.setState({cartoesAuto: cartoesAutoDidMount})
+              this.setModalVisible(false)
 
               this.sleep(1000).then(() => { 
                 e.setState({isFetchedPublish: true})
@@ -218,6 +224,7 @@ export default class CartaoFiltro extends Component {
   
   
           e.setState({cartoesEstab: cartoesEstabDidMount})
+          this.setModalVisible(false)
 
           this.sleep(1000).then(() => { 
             e.setState({isFetchedPublish: true})
@@ -247,7 +254,11 @@ export default class CartaoFiltro extends Component {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
- }
+  }
+
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
 
 
   RightAction() {
@@ -313,9 +324,23 @@ export default class CartaoFiltro extends Component {
     const {cartoesAuto, cartoesEstab, isOpen, products, isFetchedPublish} = this.state;
 
     return (
-
       <SafeBackground>
 
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
+          <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+            <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
+              <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+              <PulseIndicator color='#DAA520'/>
+            </View>
+          </View>
+        </Modal>
 
         <StatusBar
           backgroundColor={this.context.dark ? '#121212' : 'white'}

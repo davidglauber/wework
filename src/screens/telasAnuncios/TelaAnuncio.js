@@ -453,7 +453,7 @@ export default class TelaAnuncio extends Component {
 
                       <TouchableResponsive>
                           <TextDescription2 onPress={() => this.openWhatsApp(this.state.phoneNavigator)} style={{fontWeight:'bold', marginRight:30, marginTop:7}}>Conversar</TextDescription2>
-                          <IconResponsiveNOBACK name="comment-alt" size={20}/>
+                          <IconResponsiveNOBACK name="comment" size={20}/>
                       </TouchableResponsive>            
                   </CallAndMessageContainer>
                   </View>

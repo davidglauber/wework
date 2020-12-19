@@ -217,12 +217,12 @@ sleep = (time) => {
       })
       
 
-      if(anunciosDidMount.length  <= 2) {
+      if(anunciosDidMount.length  <= 1) {
         this.props.navigation.navigate('Orders')
       }
 
-      if(anunciosDidMount.length >= 3) {
-        alert('A conta Free permite até 3 anúncios, consulte a tela de PLANOS para mais informações')
+      if(anunciosDidMount.length >= 2) {
+        alert('A conta Free permite até 2 anúncios, consulte a tela de PLANOS para mais informações')
       }
 
       console.log('TAMANHO DA LISTA DE ANUNCIOS:> ' + anunciosDidMount)

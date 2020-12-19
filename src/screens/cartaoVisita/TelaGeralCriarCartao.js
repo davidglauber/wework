@@ -254,12 +254,12 @@ export default class TelaGeralCriarCartao extends Component {
         })
       })
 
-      if(cartoesDidMount.length  <= 2) {
+      if(cartoesDidMount.length  <= 1) {
         this.props.navigation.navigate('TelaCriarCartaoVisita')
       }
 
-      if(cartoesDidMount.length >= 3) {
-        alert('A conta Free permite até 3 cartões, consulte a tela de PLANOS para mais informações')
+      if(cartoesDidMount.length >= 2) {
+        alert('A conta Free permite até 2 cartões, consulte a tela de PLANOS para mais informações')
       }
 
       console.log('TAMANHO DA LISTA DE ANUNCIOS:> ' + cartoesDidMount)

@@ -7,6 +7,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Modal,
   Text,
   Dimensions,
   Image,
@@ -28,12 +29,6 @@ import firebase from '../../config/firebase';
 // HomeA Config
 const imgHolder = require('../../assets/img/imgholder.png');
 
-
-//Import images
-const fotoAnuncio = require('../../assets/img/confeiteira.jpeg');
-const fotoAnuncioEst = require('../../assets/img/traducao.jpg')
-
-
 //CSS responsivo
 import { SafeBackground, IconResponsive, AnuncioContainer, Heading, Title, ValueField, Description, TouchableDetails, TextDetails, SignUpBottom, TextBold, TextBoldGolden } from './styles';
 
@@ -42,13 +37,20 @@ import { ThemeContext } from '../../../ThemeContext';
 //RESPONSIVE FONT 
 import { RFValue } from 'react-native-responsive-fontsize';
 
+import { PulseIndicator } from 'react-native-indicators';
 
 //import icons
 import { FontAwesome5 } from '@expo/vector-icons';
 
 
+
 //import ADS
 import { AdMobBanner} from 'expo-ads-admob';
+
+
+//consts
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 // HomeA Styles
 const styles = StyleSheet.create({
@@ -122,7 +124,8 @@ export default class HomeFiltro extends Component {
       status: null,
       emailUserFunction:'',
       activesPublishesAuto: [],
-      activesPublishesEstab: []
+      activesPublishesEstab: [],
+      modalVisible: true
     };
   }
 
@@ -241,6 +244,7 @@ async componentDidMount() {
         
         
               e.setState({activesPublishesAuto: anunciosAtivosAuto})
+              this.setModalVisible(false)
 
               this.sleep(1000).then(() => { 
                 e.setState({isFetchedPublish: true})
@@ -269,6 +273,7 @@ async componentDidMount() {
   
   
           e.setState({activesPublishesEstab: anunciosAtivosEstab})
+          this.setModalVisible(false)
 
           this.sleep(1000).then(() => { 
             e.setState({isFetchedPublish: true})
@@ -292,6 +297,9 @@ async componentDidMount() {
     return result;
   }
 
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
 
 
   cutDescription(text) {
@@ -329,6 +337,23 @@ async componentDidMount() {
         />
 
         <View style={styles.container}>
+        
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
+          <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+            <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
+              <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+              <PulseIndicator color='#DAA520'/>
+            </View>
+          </View>
+        </Modal>
+
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.categoriesContainer}>
               <View style={styles.titleContainer}>

@@ -268,13 +268,12 @@ export default class Cadastro extends Component {
       alert('Todos os campos devem ser preenchidos!')
     } 
 
-    if(actualYear - userDate >= 13) {
-      return null;
-    } else {
+    if(actualYear - userDate < 13) {
       alert('Você precisa ter ao menos 13 anos para se cadastrar no WeWo')
-    }
+    } 
     
-    if(this.state.password == this.state.confirmPassword && this.state.password.length >= 6 && this.state.date !== null){  
+    
+    if(this.state.password == this.state.confirmPassword && this.state.password.length >= 6 && this.state.date !== null && actualYear - userDate >= 13){  
         navigation.navigate(screen, {
           nome: this.state.nome,
           email: this.state.emailUser,

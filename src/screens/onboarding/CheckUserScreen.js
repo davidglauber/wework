@@ -1,6 +1,8 @@
 // import dependencies
 import React, {Component} from 'react';
-
+import {
+  View
+} from 'react-native';
 
 //import firebase
 import firebase from '../../config/firebase';
@@ -26,8 +28,8 @@ export default class CheckUserScreen extends Component {
 
   render() {
     return (
-        <>
-        </>
+        <View style={{backgroundColor: '#fff'}}>
+        </View>
     );
   }
 }

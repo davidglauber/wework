@@ -174,19 +174,19 @@ export default class PaymentMethodA extends Component {
         </View>
         
         <View style={{flex:1}}>
-          <View style={{flexDirection:'row', alignItems:'center'}}>
-            <Image style={{width:50, height:50}} source={require('../../assets/img/correct.gif')}/>
-            <Text>5 Anúncios e 5 Cartões Simultâneos</Text>
+          <View style={{flexDirection:'row', alignItems:'center', padding:12}}>
+            <Image style={{width:30, height:30}} source={require('../../assets/img/correct.png')}/>
+            <Text style={{marginLeft:10}}>5 Anúncios e 5 Cartões Simultâneos</Text>
           </View>
 
-          <View style={{flexDirection:'row', alignItems:'center'}}>
-            <Image style={{width:50, height:50}} source={require('../../assets/img/correct.gif')}/>
-            <Text>Maior Visibilidade</Text>
+          <View style={{flexDirection:'row', alignItems:'center', padding:12}}>
+            <Image style={{width:30, height:30}} source={require('../../assets/img/correct.png')}/>
+            <Text style={{marginLeft:10}}>Maior Visibilidade</Text>
           </View>
 
-          <View style={{flexDirection:'row', alignItems:'center'}}>
-            <Image style={{width:50, height:50}} source={require('../../assets/img/correct.gif')}/>
-            <Text>Sem Anúncios no App WeWo</Text>
+          <View style={{flexDirection:'row', alignItems:'center', padding:12}}>
+            <Image style={{width:30, height:30}} source={require('../../assets/img/correct.png')}/>
+            <Text style={{marginLeft:10}}>Sem Anúncios no App WeWo</Text>
           </View>
         </View>
 

@@ -12,7 +12,10 @@ import {
   Platform,
   StatusBar,
   StyleSheet,
+  Dimensions,
+  Image,
   View,
+  Text,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Color from 'color';
@@ -33,6 +36,9 @@ import Colors from '../../theme/colors';
 
 import { ThemeContext } from '../../../ThemeContext';
 
+
+//consts
+const windowWidth = Dimensions.get('window').width;
 
 // PaymentMethodA Config
 const isRTL = I18nManager.isRTL;
@@ -148,113 +154,50 @@ export default class PaymentMethodA extends Component {
     );
   };
 
+  signPremium() {
+    alert('Ainda não disponível! Atualizaremos depois :)')
+  }
+
   render() {
     const {cardNumber} = this.state;
 
     return (
-      <SafeBackground style={{justifyContent: 'space-between'}}>
+      <View style={{flex:1, backgroundColor:'#fff'}}>
         <StatusBar
           backgroundColor={this.context.dark ? '#121212' : 'white'}
           barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
-        <View style={styles.swiperContainer}>
-          <Swiper
-            loop={false}
-            showsPagination
-            index={isRTL ? 1 : 0}
-            dot={<View style={styles.dot} />}
-            activeDot={<View style={styles.activeDot} />}
-            paginationStyle={styles.paginationStyle}>
-            <View style={styles.cardContainer}>
-              <CreditCard
-                colors={['#784BA0', '#2B86C5']}
-                brand="visa"
-                last4Digits="3456"
-                cardHolder="Kristin Evans"
-                expiry="09 / 21"
-              />
-              <View style={styles.editButtonContainer}>
-                <TouchableItem
-                  onPress={this.openBottomSheet('3456')}
-                  borderless>
-                  <View style={styles.editButton}>
-                    <Icon name={MORE_ICON} size={22} color={Colors.black} />
-                  </View>
-                </TouchableItem>
-              </View>
-            </View>
+        <View style={{flex:1, paddingLeft:50}}>
+          <Image style={{width:200, height:200, marginLeft:20}} source={require("../../assets/img/star.gif")} />
+          <Text style={{fontSize:20, marginLeft: windowWidth/4, fontWeight:'bold'}}>R$ 9,99</Text>
+        </View>
+        
+        <View style={{flex:1}}>
+          <View style={{flexDirection:'row', alignItems:'center'}}>
+            <Image style={{width:50, height:50}} source={require('../../assets/img/correct.gif')}/>
+            <Text>5 Anúncios e 5 Cartões Simultâneos</Text>
+          </View>
 
-            <View style={styles.cardContainer}>
-              <CreditCard
-                colors={['#0D324D', '#7F5A83']}
-                brand="discover"
-                last4Digits="0123"
-                cardHolder="Kristin Evans"
-                expiry="08 / 20"
-              />
-              <View style={styles.editButtonContainer}>
-                <TouchableItem
-                  onPress={this.openBottomSheet('0123')}
-                  borderless>
-                  <View style={styles.editButton}>
-                    <Icon name={MORE_ICON} size={22} color={Colors.black} />
-                  </View>
-                </TouchableItem>
-              </View>
-            </View>
-          </Swiper>
+          <View style={{flexDirection:'row', alignItems:'center'}}>
+            <Image style={{width:50, height:50}} source={require('../../assets/img/correct.gif')}/>
+            <Text>Maior Visibilidade</Text>
+          </View>
+
+          <View style={{flexDirection:'row', alignItems:'center'}}>
+            <Image style={{width:50, height:50}} source={require('../../assets/img/correct.gif')}/>
+            <Text>Sem Anúncios no App WeWo</Text>
+          </View>
         </View>
 
         <View style={styles.buttonContainer}>
           <Button
-            onPress={this.navigateTo('AddCreditCard')}
+            onPress={() => this.signPremium()}
             title="Assinar Premium"
           />
         </View>
 
-        <BottomSheet
-          ref={(ref) => {
-            this.bottomSheet = ref;
-          }}
-          // FIX: closeOnSwipeDown need height to work properly
-          height={232 + BOTTOM_SHEET_PB} // height of BottomSheet = 64 + 3 * 56 + 16
-        >
-          <View style={styles.bottomSheetItem}>
-            <Caption style={styles.bottomSheetCaption}>
-              {'Payment Method'.toUpperCase()}
-            </Caption>
-            <Subtitle1>xxxx xxxx xxxx {cardNumber}</Subtitle1>
-          </View>
-
-          <TouchableItem>
-            <View style={styles.bottomSheetAction}>
-              <View style={styles.bottomSheetIconContainer}>
-                <Icon name={EDIT_ICON} size={22} color={Colors.accentColor} />
-              </View>
-              <Subtitle1>Edit card details</Subtitle1>
-            </View>
-          </TouchableItem>
-
-          <TouchableItem>
-            <View style={styles.bottomSheetAction}>
-              <View style={styles.bottomSheetIconContainer}>
-                <Icon name={SAVE_ICON} size={22} color={Colors.accentColor} />
-              </View>
-              <Subtitle1>Save for checkouts</Subtitle1>
-            </View>
-          </TouchableItem>
-
-          <TouchableItem>
-            <View style={styles.bottomSheetAction}>
-              <View style={styles.bottomSheetIconContainer}>
-                <Icon name={REMOVE_ICON} size={22} color={Colors.accentColor} />
-              </View>
-              <Subtitle1>Remove card</Subtitle1>
-            </View>
-          </TouchableItem>
-        </BottomSheet>
-      </SafeBackground>
+      </View>
     );
   }
 }

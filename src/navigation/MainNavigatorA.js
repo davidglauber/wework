@@ -433,8 +433,8 @@ function MainNavigatorA() {
           component={PaymentMethod}
           options={{
             title: 'Tela de Planos',
-            headerStyle: { backgroundColor: dark ? '#121212' : 'white' },
-            headerTitleStyle: { color: dark ? '#FFD700' : 'black' },
+            headerStyle: { backgroundColor: 'white' },
+            headerTitleStyle: { color: 'black' }
           }}
         />
         <Stack.Screen

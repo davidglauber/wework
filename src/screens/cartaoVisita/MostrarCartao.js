@@ -14,6 +14,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Modal,
   Dimensions,
   FlatList,
   StyleSheet,
@@ -27,7 +28,7 @@ import Swiper from 'react-native-swiper';
 import * as Linking from 'expo-linking';
 
 
-// import utils
+import { PulseIndicator } from 'react-native-indicators';
 
 // import components
 import Button from '../../components/buttons/Button';
@@ -56,6 +57,9 @@ const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
 const SHARE_ICON = IOS ? 'ios-share' : 'md-share';
 const imgHolder = require('../../assets/img/confeiteira.jpeg');
 
+//consts
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 import { SafeAnuncioView, ValueFieldPrincipal, IconResponsiveNOBACK,  TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
@@ -245,6 +249,7 @@ export default class MostrarCartao extends Component {
       e.setState({cartaoAuto: cartaoAutoDidMount})
       e.setState({dateAuto: dataAtual})
 
+      e.setModalVisible(false)
       e.setState({isFetched: true})
     })
 
@@ -278,6 +283,7 @@ export default class MostrarCartao extends Component {
       e.setState({cartaoEstab: cartaoEstabDidMount})
       e.setState({dateEstab: dataAtual})
 
+      e.setModalVisible(false)
       e.setState({isFetched: true})
     })
 
@@ -310,7 +316,12 @@ export default class MostrarCartao extends Component {
     } catch (error) {
       alert(error.message);
     }
-};
+  };
+
+
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
 
   onPressAddToFavorites = () => {
     const {favorite} = this.state;
@@ -357,6 +368,23 @@ export default class MostrarCartao extends Component {
 
     return (
       <SafeAnuncioView>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
+          <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+            <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
+              <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+              <PulseIndicator color='#DAA520'/>
+            </View>
+          </View>
+        </Modal>
+
         <StatusBar
           backgroundColor={Colors.statusBarColor}
           barStyle="dark-content"

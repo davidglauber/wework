@@ -14,6 +14,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Modal,
   Dimensions,
   FlatList,
   StyleSheet,
@@ -28,17 +29,11 @@ import Swiper from 'react-native-swiper';
 import * as Linking from 'expo-linking';
 
 
-// import utils
+import { PulseIndicator } from 'react-native-indicators';
 
 // import components
-import Button from '../../components/buttons/Button';
-import {Caption, Heading5, SmallText} from '../../components/text/CustomText';
-import Icon from '../../components/icon/Icon';
 import IconMain from '../../components/icon/IconMain';
 
-import { Ionicons as Ionicon } from '@expo/vector-icons';
-
-import SizePicker from '../../components/pickers/SizePicker';
 import TouchableItem from '../../components/TouchableItem';
 
 // import colors
@@ -68,6 +63,10 @@ const PLUS_ICON = IOS ? 'ios-add' : 'md-add';
 const CLOSE_ICON = IOS ? 'ios-close' : 'md-close';
 const SHARE_ICON = IOS ? 'ios-share' : 'md-share';
 const imgHolder = require('../../assets/img/confeiteira.jpeg');
+
+//consts
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 // ProductA Styles
 const styles = StyleSheet.create({
@@ -194,6 +193,7 @@ export default class TelaAnuncio extends Component {
       horario: '',
       anuncioAuto:[],
       anuncioEstab:[],
+      modalVisible: true,
       product: {
         images: [
           require('../../assets/img/confeiteira.jpeg'),
@@ -240,7 +240,8 @@ export default class TelaAnuncio extends Component {
       })
       e.setState({anuncioAuto: anuncioAutoDidMount})
       e.setState({dateAuto: dataAtual})
-
+      
+      e.setModalVisible(false)
       e.setState({isFetched: true})
     })
 
@@ -274,6 +275,7 @@ export default class TelaAnuncio extends Component {
       e.setState({anuncioEstab: anuncioEstabDidMount})
       e.setState({dateEstab: dataAtual})
 
+      e.setModalVisible(false)
       e.setState({isFetched: true})
     })
 
@@ -285,6 +287,10 @@ export default class TelaAnuncio extends Component {
     const {navigation} = this.props;
     navigation.goBack();
   };
+
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
 
   shareIcon = async () => {
       try {
@@ -345,6 +351,23 @@ export default class TelaAnuncio extends Component {
 
     return (
       <SafeAnuncioView>
+
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
+          <View style={{flex:1, alignItems:'center', paddingLeft: windowWidth / 2, paddingTop: windowHeight / 2, width: 100}}>
+            <View style={{alignItems:'center', borderWidth:2, borderColor:'black', backgroundColor:'white', height:100, width: 200, backgroundColor:'white', borderRadius:15}}>
+              <Text style={{fontWeight:'bold', marginTop:10, color:'#9A9A9A'}}>Carregando...</Text>
+              <PulseIndicator color='#DAA520'/>
+            </View>
+          </View>
+        </Modal>
+
         <StatusBar
           backgroundColor={this.context.dark ? '#121212' : 'white'}
           barStyle={this.context.dark ? "white-content" : "dark-content"}

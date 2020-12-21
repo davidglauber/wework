@@ -39,6 +39,7 @@ import { ThemeContext } from '../../../ThemeContext';
 
 //consts
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 // PaymentMethodA Config
 const isRTL = I18nManager.isRTL;
@@ -168,9 +169,9 @@ export default class PaymentMethodA extends Component {
           barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
-        <View style={{flex:1, paddingLeft:50}}>
-          <Image style={{width:200, height:200, marginLeft:20}} source={require("../../assets/img/star.gif")} />
-          <Text style={{fontSize:20, marginLeft: windowWidth/4, fontWeight:'bold'}}>R$ 9,99</Text>
+        <View style={{alignItems:'center', marginBottom: windowHeight/6}}>
+          <Image style={{width:200, height:200}} source={require("../../assets/img/star.gif")} />
+          <Text style={{fontSize:20, fontWeight:'bold'}}>R$ 9,99</Text>
         </View>
         
         <View style={{flex:1}}>

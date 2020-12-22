@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     marginTop: 38,
   },
   digitContainer: {
+    margin: 30,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 5,
@@ -113,7 +114,7 @@ export default function SMSVerificacao () {
 
 
 
- useEffect(() =>{
+  useEffect(() =>{
     async function SendSMS() {
       try {
         const phoneProvider = new firebase.auth.PhoneAuthProvider();
@@ -131,7 +132,21 @@ export default function SMSVerificacao () {
   }, [])
 
 
+  async function SendSMS2() {
+    try {
+      const phoneProvider = new firebase.auth.PhoneAuthProvider();
+      const verificationId = await phoneProvider.verifyPhoneNumber(
+        phoneNumber,
+        recaptchaVerifier.current
+      );
+      setVerificationId(verificationId);
+      alert('O código de verificação foi enviado para o seu celular')
+    } catch (err) {
+      alert('Ocorreu um erro ao enviar o SMS: ' + err)
+    }
+  }
 
+  
     return (
       <SafeAreaView forceInset={{top: 'never'}} style={styles.screenContainer}>
         <StatusBar
@@ -147,21 +162,42 @@ export default function SMSVerificacao () {
           <View style={styles.instructionContainer}>
             <Heading5 style={styles.heading}>Aguarde...</Heading5>
             <Paragraph style={styles.instruction}>
-                O SMS de confirmação foi enviado com o código de acesso. 
+                O SMS de confirmação foi enviado com o código de acesso (PODE LEVAR ATÉ 5 MINUTOS, SE NÃO CHEGAR, PEÇA PARA REENVIAR O CÓDIGO).  
                 Ao receber, digite abaixo
             </Paragraph>
 
 
+            <View style={styles.digitContainer}>
+              <TextInput
+                style={styles.digit}
+                maxLength={6}
+                autoFocus={true}
+                keyboardType={'number-pad'}
+                onChangeText={setVerificationCode}
+              />
+            </View>
+
             <View style={styles.codeContainer}>
-              <View style={styles.digitContainer}>
-                <TextInput
-                  style={styles.digit}
-                  maxLength={6}
-                  autoFocus={true}
-                  keyboardType={'number-pad'}
-                  onChangeText={setVerificationCode}
-                />
-              </View>
+
+
+              <Button
+                onPress={async () => {
+                  try {
+                    SendSMS2()                  
+                    alert('Código Reenviado 👍')
+                  } catch (err) {
+                    navigation.navigate('HomeNavigator')
+                    alert('Erro ao confirmar código', err)
+                  }
+                }}
+                disabled={false}
+                borderRadius={4}
+                color={Colors.onPrimaryColor}
+                small
+                title={'reenviar'.toUpperCase()}
+                titleColor={'#DAA520'}
+              />
+
               <Button
               onPress={async () => {
                 try {

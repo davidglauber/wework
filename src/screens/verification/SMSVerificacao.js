@@ -12,6 +12,7 @@ import {
   I18nManager,
   SafeAreaView,
   StatusBar,
+  AsyncStorage,
   StyleSheet,
   Text,
   View,
@@ -214,6 +215,7 @@ export default function SMSVerificacao () {
                       dataNascimento: getDataNascimento,
                       telefone: getTelefone
                     })
+                  AsyncStorage.setItem('emailUserSaved', getEmail)
                   navigation.navigate('HomeNavigator')
                   alert('Você foi cadastrado com sucesso 👍')
                 } catch (err) {

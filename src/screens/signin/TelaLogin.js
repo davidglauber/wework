@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   StatusBar,
   Alert,
+  AsyncStorage,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
@@ -140,9 +141,14 @@ export default class TelaLogin extends Component {
 
 
 
-  componentDidMount () {
+  async componentDidMount() {
+    let getEmail = '';
+
+    await AsyncStorage.getItem("emailUserSaved").then((value) => {
+      getEmail = value
+    });
+
     let e = this;
-    let getEmail = this.props.route.params.email;
 
     firebase.firestore().collection('usuarios').where("email", "==", getEmail).onSnapshot(documentSnapshot => {
       let compatibleEmails = [];

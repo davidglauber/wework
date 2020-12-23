@@ -14,6 +14,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  AsyncStorage,
   TouchableOpacity,
   View,
   BackHandler
@@ -183,7 +184,9 @@ export default class Verificação extends Component {
                 dataNascimento: e.state.data,
                 telefone: e.state.telefone
               })
+            AsyncStorage.setItem('emailUserSaved', result.user.email)
             this.props.navigation.navigate('HomeNavigator')
+
             alert('Você foi cadastrado com sucesso 👍')
         }).catch((err) => {
           console.log('erro: ' + err)
@@ -229,6 +232,7 @@ export default class Verificação extends Component {
                       dataNascimento: e.state.data,
                       telefone: e.state.telefone
                     })
+                  AsyncStorage.setItem('emailUserSaved', result.user.email)
                   this.props.navigation.navigate('HomeNavigator')
                   alert('Você foi cadastrado com sucesso 👍')
           }).catch(error => {

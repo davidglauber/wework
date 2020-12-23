@@ -287,7 +287,9 @@ export default class Cadastro extends Component {
 
   navigateToSignIn = screen => () => {
     const {navigation} = this.props;
-        navigation.navigate(screen);
+        navigation.navigate(screen, {
+          email:this.state.emailUser
+        });
   };
 
   navigateToTerms = screen => () => {

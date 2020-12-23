@@ -138,6 +138,29 @@ export default class TelaLogin extends Component {
     super(props);
   }
 
+
+
+  componentDidMount () {
+    let e = this;
+    let getEmail = this.props.route.params.email;
+
+    firebase.firestore().collection('usuarios').where("email", "==", getEmail).onSnapshot(documentSnapshot => {
+      let compatibleEmails = [];
+        documentSnapshot.forEach(function(doc) {
+          compatibleEmails.push({
+            email: doc.data().email
+          })
+        })
+
+        if(compatibleEmails.length == 0) {
+          alert('Você não está cadastrado! Por favor faça o cadastro e depois o login!')
+
+          e.props.navigation.navigate("SignUp")
+        }
+    });
+
+
+  }
   
   emailChange = text => {
     this.setState({

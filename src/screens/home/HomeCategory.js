@@ -33,7 +33,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 
 //import ADS
-import { AdMobBanner} from 'expo-ads-admob';
+import { AdMobBanner } from 'expo-ads-admob';
 
 
 
@@ -42,7 +42,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
  
-export default class HomeA extends Component {
+export default class HomeCategory extends Component {
   static contextType = ThemeContext;
 
   constructor(props) {
@@ -80,32 +80,10 @@ export default class HomeA extends Component {
 
 async componentDidMount() {
    let e = this;
-
-    await firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          e.setState({status: true})
-          firebase.firestore().collection('usuarios').doc(user.uid).get().then(documentSnapshot => {
-            var removeCharacters = documentSnapshot.data().email.replace('@', '')
-              let removeCharacters2 = removeCharacters.replace('gmail.com', '')
-              let removeCharacters3 = removeCharacters2.replace('hotmail.com', '')
-              let removeCharacters4 = removeCharacters3.replace('outlook.com', '')
-              let removeCharacters5 = removeCharacters4.replace('live.com', '')
-              let removeCharacters6 = removeCharacters5.replace('yahoo.com', '')
-
-              e.setState({emailUserFunction: removeCharacters6})
-              e.setState({isFetchedButton: true})
-
-        })
-        } else {
-          e.setState({isFetchedButton: true})
-          e.setState({status: false})
-        }
-
-    })
-
+   let titleNavCategory = this.props.route.params.titleOfCategory;
 
     //obter anuncios ativos autonomo 
-    await firebase.firestore().collection('anuncios').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+    await firebase.firestore().collection('anuncios').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).where("categoryAuto", "==", titleNavCategory).onSnapshot(documentSnapshot => {
       let anunciosAtivosAuto = [];
       documentSnapshot.forEach(function(doc) {
         anunciosAtivosAuto.push({
@@ -133,7 +111,7 @@ async componentDidMount() {
 
 
     //obter anuncios ativos estabelecimento
-    await firebase.firestore().collection('anuncios').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+    await firebase.firestore().collection('anuncios').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).where("categoryEstab", "==", titleNavCategory).onSnapshot(documentSnapshot => {
       let anunciosAtivosEstab = [];
       documentSnapshot.forEach(function(doc) {
         anunciosAtivosEstab.push({
@@ -249,29 +227,6 @@ async componentDidMount() {
         </Modal>
 
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{paddingBottom: 16}}>
-              <View style={{flexDirection: 'row',  justifyContent: 'space-between',  alignItems: 'center', paddingTop: 16, paddingHorizontal: 16, paddingBottom: 12}}>
-              
-                {status == true ? 
-                  <View>
-                      <TouchableOpacity onPress={this.navigateTo('Settings')} style={{borderRadius:5, justifyContent:'center', width:216, height:27}}>
-                          <TextBoldGolden>Olá, {emailUserFunction}</TextBoldGolden>
-                      </TouchableOpacity>
-                    </View>
-                    :
-                      <SignUpBottom onPress={this.navigateTo('SignUp')}>
-                          <TextBold>Criar Conta</TextBold>
-                      </SignUpBottom>
-                }
-                    
-                <TouchableOpacity onPress={this.navigateTo('Filtro')} style={{width:20, height:20}}>
-                    <IconResponsiveNOBACK  name="sort-alpha-up" size={19}/>
-                </TouchableOpacity>
-              </View>
-
-            
-
-            </View>
 
             <ScrollView alwaysBounceHorizontal={true} showsHorizontalScrollIndicator={false} horizontal={true} style={{padding:15}}>
                 <FlatList
@@ -279,7 +234,7 @@ async componentDidMount() {
                   keyExtractor={() => this.makeid(17)}
                   data={categories}
                   renderItem={({item}) => 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeCategory', {titleOfCategory: item.titleCategory})} style={{width: windowWidth/3, height:50, alignItems:'center', justifyContent:'center', backgroundColor: '#DAA520', borderRadius:30, marginRight: 20}}>
+                    <TouchableOpacity style={{width: windowWidth/3, height:50, alignItems:'center', justifyContent:'center', backgroundColor: '#DAA520', borderRadius:30, marginRight: 20}}>
                       <Text style={{fontWeight:'bold', color:'#fff', fontSize:13}}>{item.titleCategory}</Text>
                     </TouchableOpacity>
                 }

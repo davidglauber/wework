@@ -21,6 +21,10 @@ export const SafeBackground = styled.SafeAreaView`
     background: ${props => props.theme.background} 
 `;
 
+export const TouchCategory = styled.TouchableOpacity`
+    backgroundColor: ${props => props.theme.backgroundColor}
+`
+
 export const HeadingAbout = styled(Heading6)`
     margin-top: 8px;
     color: ${props => props.theme.color}

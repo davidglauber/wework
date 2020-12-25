@@ -37,14 +37,12 @@ import { AdMobBanner } from 'expo-ads-admob';
 
 
 
-
-
 //consts
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
  
-export default class HomeCategory extends Component {
+export default class HomeCategory2 extends Component {
   static contextType = ThemeContext;
 
   constructor(props) {
@@ -231,7 +229,6 @@ async componentDidMount() {
 
           <ScrollView showsVerticalScrollIndicator={false}>
 
-
             <ScrollView alwaysBounceHorizontal={true} showsHorizontalScrollIndicator={false} horizontal={true} style={{padding:15}}>
                 <TouchableOpacity style={{justifyContent:'center'}} onPress={() => this.props.navigation.navigate('HomeNavigator')}>
                     <IconResponsiveNOBACK style={{marginRight: 24}} name="arrow-left" size={20}/>
@@ -241,7 +238,7 @@ async componentDidMount() {
                   keyExtractor={() => this.makeid(17)}
                   data={categories}
                   renderItem={({item}) => 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeCategory2')} style={{width: windowWidth/3, height:50, alignItems:'center', justifyContent:'center', backgroundColor: '#DAA520', borderRadius:30, marginRight: 20}}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeCategory')} style={{width: windowWidth/3, height:50, alignItems:'center', justifyContent:'center', backgroundColor: '#DAA520', borderRadius:30, marginRight: 20}}>
                       <Text style={{fontWeight:'bold', color:'#fff', fontSize:13}}>{item.titleCategory}</Text>
                     </TouchableOpacity>
                 }

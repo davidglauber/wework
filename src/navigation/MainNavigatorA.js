@@ -55,6 +55,8 @@ import HomeFiltro from '../screens/home/HomeFiltro';
 
 import HomeCategory from '../screens/home/HomeCategory';
 
+import HomeCategory2 from '../screens/home/HomeCategory2';
+
 import CartaoFiltro from '../screens/cartaoVisita/CartaoFiltro'; 
 
 import TelaPrincipalAnuncio from '../screens/anuncios/TelaPrincipalAnuncio';
@@ -277,6 +279,12 @@ function MainNavigatorA() {
         <Stack.Screen
           name="HomeCategory"
           component={HomeCategory}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="HomeCategory2"
+          component={HomeCategory2}
           options={{headerShown: false}}
         />
 

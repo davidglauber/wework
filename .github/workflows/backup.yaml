@@ -7,7 +7,7 @@ on:
 env:
   PROJECT_ID: wewo-299611
   BUCKET: gs://backup-wewo
-
+  
 jobs:
   backup:
     runs-on: ubuntu-latest
@@ -16,6 +16,6 @@ jobs:
       with:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
-    - run:  gcloud info
-    - run:  gcloud config set project $PROJECT_ID
-    - run:  gcloud firestore export $BUCKET
+    - run: gcloud info
+    - run: gcloud config set project $PROJECT_ID
+    - run: gcloud firestore export $BUCKET

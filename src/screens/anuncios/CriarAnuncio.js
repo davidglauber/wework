@@ -128,6 +128,7 @@ export default class CriarAnuncio extends Component {
       descricaoAuto:'',
       descricaoEstab:'',
       enderecoEstab:'',
+      enderecoAuto:'',
       cepEstab: '',
       cepAuto: '',
       enderecoCepEstab: [],
@@ -299,6 +300,11 @@ export default class CriarAnuncio extends Component {
     console.log('endereco estab'  + this.state.enderecoEstab)
   }
 
+  onChangeEnderecoAuto(text) {
+    this.setState({enderecoAuto: text})
+    console.log('endereco estab'  + this.state.enderecoAuto)
+  }
+
   onChangeCEPEstab(text) {
     this.setState({cepEstab: text})
     console.log('cepEstab'  + this.state.cepEstab)
@@ -409,7 +415,7 @@ export default class CriarAnuncio extends Component {
 
     const sumLocation = `${lograd}, ${local}, ${estado}`;
 
-    this.setState({enderecoEstab: sumLocation})
+    this.setState({enderecoAuto: sumLocation})
     modalizeLocationAuto.current?.close()
   }
 
@@ -577,7 +583,7 @@ export default class CriarAnuncio extends Component {
       }
       
       if(typePublish === 'Autonomo') { 
-      if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null && this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.nomeAuto !== '' && this.state.phoneAuto !== '') {
+      if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null && this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.enderecoAuto !== '' && this.state.precoAuto !== '' && this.state.nomeAuto !== '' && this.state.phoneAuto !== '') {
         
         this.setModalVisible(true)
         getFileBlob(this.state.image, async blob => {
@@ -692,6 +698,7 @@ export default class CriarAnuncio extends Component {
                                         nome: e.state.nomeAuto,
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
+                                        localAuto: e.state.enderecoAuto,
                                         type: 'Autonomo',
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
@@ -711,6 +718,7 @@ export default class CriarAnuncio extends Component {
                                         nome: e.state.nomeAuto,
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
+                                        localAuto: e.state.enderecoAuto,
                                         type: 'Autonomo',
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
@@ -1102,6 +1110,16 @@ export default class CriarAnuncio extends Component {
                               />
                           </View>
 
+                            <TouchableOpacity onPress={() => this.openModalizeLocationAuto()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                                <InputForm
+                                  value={this.state.enderecoAuto}
+                                  onChangeText={text => this.onChangeEnderecoAuto(text)}
+                                  keyboardType={"default"}
+                                  editable={false}
+                                  placeholder="Endereço do Autônomo                                                   "
+                                />
+                            </TouchableOpacity>
+
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <InputFormMask
                                 type={'cel-phone'}
@@ -1187,14 +1205,15 @@ export default class CriarAnuncio extends Component {
                               />
                             </View>
                           
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TouchableOpacity onPress={() => this.openModalizeLocationEstab()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                                 <InputForm
                                   value={this.state.enderecoEstab}
                                   onChangeText={text => this.onChangeEnderecoEstab(text)}
                                   keyboardType={"default"}
+                                  editable={false}
                                   placeholder="Endereço do Estabelecimento                                                   "
                                 />
-                            </View>
+                            </TouchableOpacity>
 
                             <View>
 

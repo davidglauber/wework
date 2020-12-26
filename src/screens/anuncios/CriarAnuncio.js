@@ -128,6 +128,8 @@ export default class CriarAnuncio extends Component {
       descricaoAuto:'',
       descricaoEstab:'',
       enderecoEstab:'',
+      cep: '',
+      endereco: [],
       segunda:false,
       terca:false, 
       quarta:false,
@@ -142,6 +144,7 @@ export default class CriarAnuncio extends Component {
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
       modalizePhotos: React.createRef(null),
+      modalizeLocation: React.createRef(null),
       image:null,
       image2:null,
       image3:null,
@@ -293,6 +296,11 @@ export default class CriarAnuncio extends Component {
     console.log('endereco estab'  + this.state.enderecoEstab)
   }
 
+  onChangeCEP(text) {
+    this.setState({cep: text})
+    console.log('cep'  + this.state.cep)
+  }
+
 
   openModalize() {
     const modalizeRef = this.state.modalizeRef;
@@ -323,6 +331,12 @@ export default class CriarAnuncio extends Component {
     const modalizePhotos = this.state.modalizePhotos;
 
     modalizePhotos.current?.open()
+  }
+
+  openModalizeLocation() {
+    const modalizeLocation = this.state.modalizeLocation;
+
+    modalizeLocation.current?.open()
   }
 
 
@@ -364,6 +378,15 @@ export default class CriarAnuncio extends Component {
     const modalizePhotos = this.state.modalizePhotos;
 
     modalizePhotos.current?.close()
+  }
+
+  closeLocationModal(estado, local, lograd) {
+    const modalizeLocation = this.state.modalizeLocation;
+
+    const sumLocation = `${lograd}, ${local}, ${estado}`;
+
+    this.setState({enderecoEstab: sumLocation})
+    modalizeLocation.current?.close()
   }
 
 
@@ -885,6 +908,12 @@ export default class CriarAnuncio extends Component {
   }
 
 
+
+  searchCEP() {
+    fetch(`https://viacep.com.br/ws/${this.state.cep}/json`).then(resposta => resposta.json()).then(obj => this.setState({endereco: obj})).catch(err => alert('Erro ao buscar CEP: ' + err))
+  }
+
+
   responsibleFont() {
     let Height = Dimensions.get('window').height
 
@@ -956,6 +985,12 @@ export default class CriarAnuncio extends Component {
                             </TouchableOpacity>
                           </View>
                         }
+
+                        <View>
+                          <TouchableOpacity onPress={() => this.openModalizeLocation()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                              <FontAwesome5 name="map-marker-alt" size={24} color={'#9A9A9A'}/>
+                          </TouchableOpacity>
+                        </View>
               </View>
 
                      {this.state.type == 'Autonomo' ?     
@@ -1410,6 +1445,53 @@ export default class CriarAnuncio extends Component {
                   </View>
                 }
 
+            </View>
+          </Modalize>
+
+
+
+           {/*Modalize do CEP*/}
+           <Modalize
+            ref={this.state.modalizeLocation}
+            snapPoint={500}
+          >
+            <View style={{flex:1,alignItems:'center', flexDirection:'row'}}>
+                <Text style={{fontWeight: 'bold', padding:15}}>Insira seu CEP</Text>  
+
+                  <View style={{marginRight:20}}>
+                    <InputForm
+                      value={this.state.cep}
+                      maxLength={8}
+                      minLength={8}
+                      onChangeText={text => this.onChangeCEP(text)}
+                      keyboardType={"numeric"}
+                      placeholder="O CEP NÃO PODE TER (-)"
+                    />
+
+                  </View> 
+                  <TouchableOpacity onPress={() => this.searchCEP()} style={{alignItems:'center', justifyContent:'center', marginTop:10, backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:10}}>
+                    <FontAwesome5 name="search-location" size={24} color={'#9A9A9A'}/>
+                  </TouchableOpacity>
+
+            </View>
+
+            <View>
+              <Text style={{fontWeight: 'bold', padding:15, marginTop: 10}}>Estado: {this.state.endereco.uf}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Cidade: {this.state.endereco.localidade}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Logradouro: {this.state.endereco.logradouro}</Text>
+                
+
+              <Text style={{fontWeight: 'bold', padding:15, fontSize:20, marginTop:50}}>Por favor, verifique se as informações conferem, caso sim, confirme e termine o cadastro</Text>
+              
+              <View style={{alignItems: 'center', justifyContent:'center'}}>
+                <TouchableOpacity
+                  onPress={() => this.closeLocationModal(this.state.endereco.uf, this.state.endereco.localidade, this.state.endereco.logradouro)}
+                  style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
+                  >
+                  <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                </TouchableOpacity>
+              </View>
+                
             </View>
           </Modalize>
 

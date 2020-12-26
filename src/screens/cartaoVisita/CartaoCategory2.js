@@ -148,8 +148,9 @@ export default class CartaoCategory2 extends Component {
 
   async componentDidMount() {
     let e = this;
+    let titleNavCategory = this.props.route.params.titleOfCategory;
 
-    await firebase.firestore().collection('cartoes').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+    await firebase.firestore().collection('cartoes').where("type", "==", "Autonomo").where("verifiedPublish", "==", true).where("categoryAuto", "==", titleNavCategory).onSnapshot(documentSnapshot => {
       let cartoesAutoDidMount = []
       documentSnapshot.forEach(function(doc) {
         cartoesAutoDidMount.push({
@@ -172,7 +173,7 @@ export default class CartaoCategory2 extends Component {
       })
     })
 
-    await firebase.firestore().collection('cartoes').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).onSnapshot(documentSnapshot => {
+    await firebase.firestore().collection('cartoes').where("type", "==", "Estabelecimento").where("verifiedPublish", "==", true).where("categoryEstab", "==", titleNavCategory).onSnapshot(documentSnapshot => {
       let cartoesEstabDidMount = []
       documentSnapshot.forEach(function(doc) {
         cartoesEstabDidMount.push({

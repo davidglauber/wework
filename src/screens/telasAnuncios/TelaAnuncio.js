@@ -230,6 +230,7 @@ export default class TelaAnuncio extends Component {
           photo3: doc.data().photoPublish3,
           phone: doc.data().phoneNumberAuto,
           title: doc.data().titleAuto,
+          local: doc.data().localAuto,
           categoria: doc.data().categoryAuto,
           subcategoria: doc.data().subcategoryAuto,
           description: doc.data().descriptionAuto,
@@ -459,6 +460,11 @@ export default class TelaAnuncio extends Component {
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                         <IconResponsiveNOBACK name="phone-square" size={30}/>
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.phone}</TextTheme>
+                  </View>
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                      <IconResponsiveNOBACK name="map-marked-alt" size={25}/>
+                        <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.local}</TextTheme>
                   </View>
 
                   <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>

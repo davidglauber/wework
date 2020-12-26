@@ -64,6 +64,8 @@ const windowHeight = Dimensions.get('window').height;
 import { SafeAnuncioView, ValueFieldPrincipal, IconResponsiveNOBACK,  TouchableResponsive, ButtonIconContainer, CallAndMessageContainer, IconResponsive, Heading, TextDescription, TextTheme, TextDescription2 } from '../home/styles';
 
 
+import { ThemeContext } from '../../../ThemeContext';
+
 //import ADS
 import { AdMobBanner} from 'expo-ads-admob';
 
@@ -187,6 +189,8 @@ const styles = StyleSheet.create({
 
 // ProductA
 export default class MostrarCartao extends Component {
+  static contextType = ThemeContext
+
   constructor(props) {
     super(props);
     this.state = {
@@ -239,6 +243,7 @@ export default class MostrarCartao extends Component {
           photo3: doc.data().photoPublish3,
           phone: doc.data().phoneNumberAuto,
           categoria: doc.data().categoryAuto,
+          local: doc.data().localAuto,
           subcategoria: doc.data().subcategoryAuto,
           description: doc.data().descriptionAuto,
           type: doc.data().type,
@@ -386,8 +391,8 @@ export default class MostrarCartao extends Component {
         </Modal>
 
         <StatusBar
-          backgroundColor={Colors.statusBarColor}
-          barStyle="dark-content"
+          backgroundColor={this.context.dark ? '#121212' : 'white'}
+          barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
         <ScrollView>
@@ -469,6 +474,11 @@ export default class MostrarCartao extends Component {
                   <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
                         <IconResponsiveNOBACK name="phone-square" size={30}/>
                         <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.phone}</TextTheme>
+                  </View>
+
+                  <View style={{paddingHorizontal: 16, marginTop:20, flexDirection:'row', alignItems: 'center'}}>
+                      <IconResponsiveNOBACK name="map-marked-alt" size={25}/>
+                      <TextTheme style={{fontSize:15, marginLeft: 15}}>{item.local}</TextTheme>
                   </View>
 
                   <View style={{paddingHorizontal: 16, marginTop:20, marginBottom:100, flexDirection:'row', alignItems: 'center'}}>

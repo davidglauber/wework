@@ -130,6 +130,11 @@ export default class EditarAnuncio extends Component {
       descricaoAuto:'',
       descricaoEstab:'',
       enderecoEstab:'',
+      enderecoAuto:'',
+      cepEstab: '',
+      cepAuto: '',
+      enderecoCepEstab: [],
+      enderecoCepAuto: [],
       segunda:false,
       terca:false, 
       quarta:false,
@@ -144,6 +149,8 @@ export default class EditarAnuncio extends Component {
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
       modalizePhotos: React.createRef(null),
+      modalizeLocationEstab: React.createRef(null),
+      modalizeLocationAuto: React.createRef(null),
       image:null,
       image2:null,
       image3:null,
@@ -216,6 +223,7 @@ export default class EditarAnuncio extends Component {
             let titulo = ''
             let type = ''
             let verificado = false
+            let location = ''
 
             querySnapshot.forEach(function(doc) {
                 idAnuncio = doc.data().id,
@@ -224,6 +232,7 @@ export default class EditarAnuncio extends Component {
                 subcategoria = doc.data().subcategoryAuto,
                 descricao = doc.data().descriptionAuto,
                 idUser = doc.data().idUser,
+                location = doc.data().localAuto,
                 nome = doc.data().nome
                 telefone = doc.data().phoneNumberAuto,
                 valor = doc.data().valueServiceAuto,
@@ -236,6 +245,7 @@ export default class EditarAnuncio extends Component {
 
             e.setState({idAnuncio: idAnuncio})
             e.setState({tituloAuto: titulo})
+            e.setState({enderecoAuto: location})
             e.setState({descricaoAuto: descricao})
             e.setState({categoria: categoria})
             e.setState({subcategoria: subcategoria})
@@ -417,11 +427,26 @@ export default class EditarAnuncio extends Component {
     console.log('nome auto'  + this.state.nomeAuto)
   }
 
+
   onChangeEnderecoEstab(text) {
     this.setState({enderecoEstab: text})
     console.log('endereco estab'  + this.state.enderecoEstab)
   }
 
+  onChangeEnderecoAuto(text) {
+    this.setState({enderecoAuto: text})
+    console.log('endereco estab'  + this.state.enderecoAuto)
+  }
+
+  onChangeCEPEstab(text) {
+    this.setState({cepEstab: text})
+    console.log('cepEstab'  + this.state.cepEstab)
+  }
+
+  onChangeCEPAuto(text) {
+    this.setState({cepAuto: text})
+    console.log('cepAuto'  + this.state.cepAuto)
+  }
 
   openModalize() {
     const modalizeRef = this.state.modalizeRef;
@@ -470,6 +495,18 @@ export default class EditarAnuncio extends Component {
   }
 
 
+  openModalizeLocationEstab() {
+    const modalizeLocationEstab = this.state.modalizeLocationEstab;
+
+    modalizeLocationEstab.current?.open()
+  }
+
+
+  openModalizeLocationAuto() {
+    const modalizeLocationAuto = this.state.modalizeLocationAuto;
+
+    modalizeLocationAuto.current?.open()
+  }
 
   getCategory(id, param) {
     const modalizeRef = this.state.modalizeRef;
@@ -505,6 +542,25 @@ export default class EditarAnuncio extends Component {
     modalizeRefFechamento.current?.close()
 
     console.log('Horario close Selecionado: '  + param)
+  }
+
+
+  closeLocationModalEstab(estado, local, lograd) {
+    const modalizeLocationEstab = this.state.modalizeLocationEstab;
+
+    const sumLocation = `${lograd}, ${local}, ${estado}`;
+
+    this.setState({enderecoEstab: sumLocation})
+    modalizeLocationEstab.current?.close()
+  }
+
+  closeLocationModalAuto(estado, local, lograd) {
+    const modalizeLocationAuto = this.state.modalizeLocationAuto;
+
+    const sumLocation = `${lograd}, ${local}, ${estado}`;
+
+    this.setState({enderecoAuto: sumLocation})
+    modalizeLocationAuto.current?.close()
   }
 
 
@@ -674,7 +730,7 @@ export default class EditarAnuncio extends Component {
       }
       
       if(typePublish === 'Autonomo') { 
-        if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null && this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.nomeAuto !== '' && this.state.phoneAuto !== '') {
+        if(this.state.image !== null && this.state.image2 !== null && this.state.image3 !== null && this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.enderecoAuto !== '' && this.state.nomeAuto !== '' && this.state.phoneAuto !== '') {
         this.setModalVisible(true)
 
         getFileBlob(this.state.image, async blob => {
@@ -764,7 +820,7 @@ export default class EditarAnuncio extends Component {
                           }
                       
                           if(type == 'Autonomo') {
-                            if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
+                            if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.enderecoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
                                 firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
                                   firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {    
                                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {    
@@ -777,6 +833,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
                                         type: 'Autonomo',
+                                        localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
                                         categoryAuto: e.state.categoria,
@@ -796,6 +853,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
                                         type: 'Autonomo',
+                                        localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
                                         categoryAuto: e.state.categoria,
@@ -942,7 +1000,7 @@ export default class EditarAnuncio extends Component {
                       
                       
                           if(type == 'Autonomo') {
-                            if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
+                            if(this.state.tituloAuto !== '' && this.state.descricaoAuto !== '' && this.state.precoAuto !== '' && this.state.phoneAuto !== '' && this.state.enderecoAuto !== '' && this.state.categoria !== '' && this.state.image !== null && this.state.nomeAuto !== '') {
                                 firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState}`).getDownloadURL().then(function(urlImage) {
                                   firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState2}`).getDownloadURL().then(function(urlImage2) {
                                     firebase.storage().ref(`${storageUrl}/images/${imageIdStorageState3}`).getDownloadURL().then(function(urlImage3) {
@@ -955,6 +1013,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
                                         type: 'Autonomo',
+                                        localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
                                         categoryAuto: e.state.categoria,
@@ -974,6 +1033,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
                                         type: 'Autonomo',
+                                        localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
                                         categoryAuto: e.state.categoria,
@@ -1013,6 +1073,15 @@ export default class EditarAnuncio extends Component {
         alert('Por favor, verifique se TODOS os campos estão preenchidos (incluindo 3 imagens)')
       }
     }
+  }
+
+
+  searchCEPEstab() {
+    fetch(`https://viacep.com.br/ws/${this.state.cepEstab}/json`).then(resposta => resposta.json()).then(obj =>  this.setState({enderecoCepEstab: obj})).catch(err => alert('O CEP pode estar errado ou não existir!'))
+  }
+
+  searchCEPAuto() {
+    fetch(`https://viacep.com.br/ws/${this.state.cepAuto}/json`).then(resposta => resposta.json()).then(obj =>  this.setState({enderecoCepAuto: obj})).catch(err => alert('O CEP pode estar errado ou não existir!'))
   }
 
 
@@ -1105,6 +1174,22 @@ export default class EditarAnuncio extends Component {
                             </TouchableOpacity>
                           </View>
                         }
+
+                        {this.state.type == 'Estabelecimento' ?
+                        <View>
+                          <TouchableOpacity onPress={() => this.openModalizeLocationEstab()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                              <FontAwesome5 name="map-marker-alt" size={24} color={'#9A9A9A'}/>
+                          </TouchableOpacity>
+                        </View> 
+                        
+                        :
+
+                        <View>
+                          <TouchableOpacity onPress={() => this.openModalizeLocationAuto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                            <FontAwesome5 name="map-marker-alt" size={24} color={'#9A9A9A'}/>
+                          </TouchableOpacity>
+                        </View>
+                        }
               </View>
 
                      {this.state.type == 'Autonomo' ?     
@@ -1176,6 +1261,16 @@ export default class EditarAnuncio extends Component {
                                 placeholder="Seu nome                                                                       "
                               />
                           </View>
+
+                          <TouchableOpacity onPress={() => this.openModalizeLocationAuto()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                              <InputForm
+                                value={this.state.enderecoAuto}
+                                onChangeText={text => this.onChangeEnderecoAuto(text)}
+                                keyboardType={"default"}
+                                editable={false}
+                                placeholder="Endereço do Autônomo                                                   "
+                              />
+                          </TouchableOpacity>
 
                           <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                               <InputFormMask
@@ -1262,14 +1357,15 @@ export default class EditarAnuncio extends Component {
                               />
                             </View>
                           
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
+                            <TouchableOpacity onPress={() => this.openModalizeLocationEstab()} style={{flexDirection: 'row', justifyContent: 'space-between',  alignItems: 'center',paddingHorizontal: 16, height: 36}}>
                                 <InputForm
                                   value={this.state.enderecoEstab}
                                   onChangeText={text => this.onChangeEnderecoEstab(text)}
                                   keyboardType={"default"}
+                                  editable={false}
                                   placeholder="Endereço do Estabelecimento                                                   "
                                 />
-                            </View>
+                            </TouchableOpacity>
 
                             <View>
 
@@ -1559,6 +1655,98 @@ export default class EditarAnuncio extends Component {
                   </View>
                 }
 
+            </View>
+          </Modalize>
+
+          {/*Modalize do CEP Estab*/}
+          <Modalize
+            ref={this.state.modalizeLocationEstab}
+            snapPoint={500}
+            >
+            <View style={{flex:1,alignItems:'center', flexDirection:'row'}}>
+                <Text style={{fontWeight: 'bold', padding:15}}>Insira seu CEP</Text>  
+
+                  <View style={{marginRight:20}}>
+                    <InputForm
+                      value={this.state.cepEstab}
+                      maxLength={8}
+                      minLength={8}
+                      onChangeText={text => this.onChangeCEPEstab(text)}
+                      keyboardType={"numeric"}
+                      placeholder="O CEP NÃO PODE TER (-)"
+                    />
+
+                  </View> 
+                  <TouchableOpacity onPress={() => this.searchCEPEstab()} style={{alignItems:'center', justifyContent:'center', marginTop:10, backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:10}}>
+                    <FontAwesome5 name="search-location" size={24} color={'#9A9A9A'}/>
+                  </TouchableOpacity>
+
+            </View>
+
+            <View>
+              <Text style={{fontWeight: 'bold', padding:15, marginTop: 10}}>Estado: {this.state.enderecoCepEstab.uf}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Cidade: {this.state.enderecoCepEstab.localidade}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Logradouro: {this.state.enderecoCepEstab.logradouro}</Text>
+                
+
+              <Text style={{fontWeight: 'bold', padding:15, fontSize:20, marginTop:50}}>Por favor, verifique se as informações conferem, caso sim, confirme e termine o cadastro</Text>
+              
+              <View style={{alignItems: 'center', justifyContent:'center'}}>
+                <TouchableOpacity
+                  onPress={() => this.closeLocationModalEstab(this.state.enderecoCepEstab.uf, this.state.enderecoCepEstab.localidade, this.state.enderecoCepEstab.logradouro)}
+                  style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
+                  >
+                  <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                </TouchableOpacity>
+              </View>
+                
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize do CEP Auto*/}
+          <Modalize
+            ref={this.state.modalizeLocationAuto}
+            snapPoint={500}
+            >
+            <View style={{flex:1,alignItems:'center', flexDirection:'row'}}>
+                <Text style={{fontWeight: 'bold', padding:15}}>Insira seu CEP</Text>  
+
+                  <View style={{marginRight:20}}>
+                    <InputForm
+                      value={this.state.cepAuto}
+                      maxLength={8}
+                      minLength={8}
+                      onChangeText={text => this.onChangeCEPAuto(text)}
+                      keyboardType={"numeric"}
+                      placeholder="O CEP NÃO PODE TER (-)"
+                    />
+
+                  </View> 
+                  <TouchableOpacity onPress={() => this.searchCEPAuto()} style={{alignItems:'center', justifyContent:'center', marginTop:10, backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:10}}>
+                    <FontAwesome5 name="search-location" size={24} color={'#9A9A9A'}/>
+                  </TouchableOpacity>
+
+            </View>
+
+            <View>
+              <Text style={{fontWeight: 'bold', padding:15, marginTop: 10}}>Estado: {this.state.enderecoCepAuto.uf}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Cidade: {this.state.enderecoCepAuto.localidade}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Logradouro: {this.state.enderecoCepAuto.logradouro}</Text>
+                
+
+              <Text style={{fontWeight: 'bold', padding:15, fontSize:20, marginTop:50}}>Por favor, verifique se as informações conferem, caso sim, confirme e termine o cadastro</Text>
+              
+              <View style={{alignItems: 'center', justifyContent:'center'}}>
+                <TouchableOpacity
+                  onPress={() => this.closeLocationModalAuto(this.state.enderecoCepAuto.uf, this.state.enderecoCepAuto.localidade, this.state.enderecoCepAuto.logradouro)}
+                  style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
+                  >
+                  <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                </TouchableOpacity>
+              </View>
+                
             </View>
           </Modalize>
 

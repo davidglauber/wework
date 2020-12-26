@@ -128,8 +128,10 @@ export default class CriarAnuncio extends Component {
       descricaoAuto:'',
       descricaoEstab:'',
       enderecoEstab:'',
-      cep: '',
-      endereco: [],
+      cepEstab: '',
+      cepAuto: '',
+      enderecoCepEstab: [],
+      enderecoCepAuto: [],
       segunda:false,
       terca:false, 
       quarta:false,
@@ -144,7 +146,8 @@ export default class CriarAnuncio extends Component {
       modalizeRefAbertura: React.createRef(null),
       modalizeRefFechamento: React.createRef(null),
       modalizePhotos: React.createRef(null),
-      modalizeLocation: React.createRef(null),
+      modalizeLocationEstab: React.createRef(null),
+      modalizeLocationAuto: React.createRef(null),
       image:null,
       image2:null,
       image3:null,
@@ -296,9 +299,14 @@ export default class CriarAnuncio extends Component {
     console.log('endereco estab'  + this.state.enderecoEstab)
   }
 
-  onChangeCEP(text) {
-    this.setState({cep: text})
-    console.log('cep'  + this.state.cep)
+  onChangeCEPEstab(text) {
+    this.setState({cepEstab: text})
+    console.log('cepEstab'  + this.state.cepEstab)
+  }
+
+  onChangeCEPAuto(text) {
+    this.setState({cepAuto: text})
+    console.log('cepAuto'  + this.state.cepAuto)
   }
 
 
@@ -333,10 +341,17 @@ export default class CriarAnuncio extends Component {
     modalizePhotos.current?.open()
   }
 
-  openModalizeLocation() {
-    const modalizeLocation = this.state.modalizeLocation;
+  openModalizeLocationEstab() {
+    const modalizeLocationEstab = this.state.modalizeLocationEstab;
 
-    modalizeLocation.current?.open()
+    modalizeLocationEstab.current?.open()
+  }
+
+
+  openModalizeLocationAuto() {
+    const modalizeLocationAuto = this.state.modalizeLocationAuto;
+
+    modalizeLocationAuto.current?.open()
   }
 
 
@@ -380,14 +395,24 @@ export default class CriarAnuncio extends Component {
     modalizePhotos.current?.close()
   }
 
-  closeLocationModal(estado, local, lograd) {
-    const modalizeLocation = this.state.modalizeLocation;
+  closeLocationModalEstab(estado, local, lograd) {
+    const modalizeLocationEstab = this.state.modalizeLocationEstab;
 
     const sumLocation = `${lograd}, ${local}, ${estado}`;
 
     this.setState({enderecoEstab: sumLocation})
-    modalizeLocation.current?.close()
+    modalizeLocationEstab.current?.close()
   }
+
+  closeLocationModalAuto(estado, local, lograd) {
+    const modalizeLocationAuto = this.state.modalizeLocationAuto;
+
+    const sumLocation = `${lograd}, ${local}, ${estado}`;
+
+    this.setState({enderecoEstab: sumLocation})
+    modalizeLocationAuto.current?.close()
+  }
+
 
 
   closeDescriptionModal(){
@@ -909,8 +934,12 @@ export default class CriarAnuncio extends Component {
 
 
 
-  searchCEP() {
-    fetch(`https://viacep.com.br/ws/${this.state.cep}/json`).then(resposta => resposta.json()).then(obj => this.setState({endereco: obj})).catch(err => alert('Erro ao buscar CEP: ' + err))
+  searchCEPEstab() {
+    fetch(`https://viacep.com.br/ws/${this.state.cepEstab}/json`).then(resposta => resposta.json()).then(obj =>  this.setState({enderecoCepEstab: obj})).catch(err => alert('O CEP pode estar errado ou não existir!'))
+  }
+
+  searchCEPAuto() {
+    fetch(`https://viacep.com.br/ws/${this.state.cepAuto}/json`).then(resposta => resposta.json()).then(obj =>  this.setState({enderecoCepAuto: obj})).catch(err => alert('O CEP pode estar errado ou não existir!'))
   }
 
 
@@ -986,11 +1015,21 @@ export default class CriarAnuncio extends Component {
                           </View>
                         }
 
+                        {this.state.type == 'Estabelecimento' ?
                         <View>
-                          <TouchableOpacity onPress={() => this.openModalizeLocation()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                          <TouchableOpacity onPress={() => this.openModalizeLocationEstab()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
                               <FontAwesome5 name="map-marker-alt" size={24} color={'#9A9A9A'}/>
                           </TouchableOpacity>
+                        </View> 
+                        
+                        :
+
+                        <View>
+                          <TouchableOpacity onPress={() => this.openModalizeLocationAuto()} style={{alignItems:'center', justifyContent:'center', backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:30}}>
+                            <FontAwesome5 name="map-marker-alt" size={24} color={'#9A9A9A'}/>
+                          </TouchableOpacity>
                         </View>
+                        }
               </View>
 
                      {this.state.type == 'Autonomo' ?     
@@ -1450,42 +1489,89 @@ export default class CriarAnuncio extends Component {
 
 
 
-           {/*Modalize do CEP*/}
-           <Modalize
-            ref={this.state.modalizeLocation}
+           {/*Modalize do CEP Estab*/}
+            <Modalize
+            ref={this.state.modalizeLocationEstab}
             snapPoint={500}
-          >
+            >
             <View style={{flex:1,alignItems:'center', flexDirection:'row'}}>
                 <Text style={{fontWeight: 'bold', padding:15}}>Insira seu CEP</Text>  
 
                   <View style={{marginRight:20}}>
                     <InputForm
-                      value={this.state.cep}
+                      value={this.state.cepEstab}
                       maxLength={8}
                       minLength={8}
-                      onChangeText={text => this.onChangeCEP(text)}
+                      onChangeText={text => this.onChangeCEPEstab(text)}
                       keyboardType={"numeric"}
                       placeholder="O CEP NÃO PODE TER (-)"
                     />
 
                   </View> 
-                  <TouchableOpacity onPress={() => this.searchCEP()} style={{alignItems:'center', justifyContent:'center', marginTop:10, backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:10}}>
+                  <TouchableOpacity onPress={() => this.searchCEPEstab()} style={{alignItems:'center', justifyContent:'center', marginTop:10, backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:10}}>
                     <FontAwesome5 name="search-location" size={24} color={'#9A9A9A'}/>
                   </TouchableOpacity>
 
             </View>
 
             <View>
-              <Text style={{fontWeight: 'bold', padding:15, marginTop: 10}}>Estado: {this.state.endereco.uf}</Text>
-              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Cidade: {this.state.endereco.localidade}</Text>
-              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Logradouro: {this.state.endereco.logradouro}</Text>
+              <Text style={{fontWeight: 'bold', padding:15, marginTop: 10}}>Estado: {this.state.enderecoCepEstab.uf}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Cidade: {this.state.enderecoCepEstab.localidade}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Logradouro: {this.state.enderecoCepEstab.logradouro}</Text>
                 
 
               <Text style={{fontWeight: 'bold', padding:15, fontSize:20, marginTop:50}}>Por favor, verifique se as informações conferem, caso sim, confirme e termine o cadastro</Text>
               
               <View style={{alignItems: 'center', justifyContent:'center'}}>
                 <TouchableOpacity
-                  onPress={() => this.closeLocationModal(this.state.endereco.uf, this.state.endereco.localidade, this.state.endereco.logradouro)}
+                  onPress={() => this.closeLocationModalEstab(this.state.enderecoCepEstab.uf, this.state.enderecoCepEstab.localidade, this.state.enderecoCepEstab.logradouro)}
+                  style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
+                  >
+                  <FontAwesome5 name="check-circle" size={24} color={'white'}/>
+                </TouchableOpacity>
+              </View>
+                
+            </View>
+          </Modalize>
+
+
+
+          {/*Modalize do CEP Auto*/}
+          <Modalize
+            ref={this.state.modalizeLocationAuto}
+            snapPoint={500}
+            >
+            <View style={{flex:1,alignItems:'center', flexDirection:'row'}}>
+                <Text style={{fontWeight: 'bold', padding:15}}>Insira seu CEP</Text>  
+
+                  <View style={{marginRight:20}}>
+                    <InputForm
+                      value={this.state.cepAuto}
+                      maxLength={8}
+                      minLength={8}
+                      onChangeText={text => this.onChangeCEPAuto(text)}
+                      keyboardType={"numeric"}
+                      placeholder="O CEP NÃO PODE TER (-)"
+                    />
+
+                  </View> 
+                  <TouchableOpacity onPress={() => this.searchCEPAuto()} style={{alignItems:'center', justifyContent:'center', marginTop:10, backgroundColor:'#E3E3E3', width:40, height:40, borderRadius:10}}>
+                    <FontAwesome5 name="search-location" size={24} color={'#9A9A9A'}/>
+                  </TouchableOpacity>
+
+            </View>
+
+            <View>
+              <Text style={{fontWeight: 'bold', padding:15, marginTop: 10}}>Estado: {this.state.enderecoCepAuto.uf}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Cidade: {this.state.enderecoCepAuto.localidade}</Text>
+              <Text style={{fontWeight: 'bold', paddingLeft:15, marginTop: 10}}>Logradouro: {this.state.enderecoCepAuto.logradouro}</Text>
+                
+
+              <Text style={{fontWeight: 'bold', padding:15, fontSize:20, marginTop:50}}>Por favor, verifique se as informações conferem, caso sim, confirme e termine o cadastro</Text>
+              
+              <View style={{alignItems: 'center', justifyContent:'center'}}>
+                <TouchableOpacity
+                  onPress={() => this.closeLocationModalAuto(this.state.enderecoCepAuto.uf, this.state.enderecoCepAuto.localidade, this.state.enderecoCepAuto.logradouro)}
                   style={{borderRadius:30, alignItems:'center', justifyContent:'center', backgroundColor:'#DAA520', height: 40, width: 40, marginBottom:40}}
                   >
                   <FontAwesome5 name="check-circle" size={24} color={'white'}/>

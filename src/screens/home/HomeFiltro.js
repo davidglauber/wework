@@ -148,9 +148,13 @@ export default class HomeFiltro extends Component {
 async componentDidMount() {
   console.reportErrorsAsExceptions = false;
     let arrayOfSelectedCategories = this.props.route.params.categoriasFiltradas;
+    let arrayOfSelectedStates = this.props.route.params.estadosFiltrados;
+    let sumLengthArrays = arrayOfSelectedStates.length + arrayOfSelectedCategories.length;
+
     let typeRoute = this.props.route.params.type;
 
     console.log('ARRAY RECEBIDO DO NAVIGATOR: ' + arrayOfSelectedCategories)
+    console.log('ARRAY RECEBIDO DO NAVIGATOR ESTADOS: ' + arrayOfSelectedStates)
     console.log('type RECEBIDO DO NAVIGATOR: ' + typeRoute)
 
     let e = this;
@@ -216,16 +220,18 @@ async componentDidMount() {
 
 
 
-    if(arrayOfSelectedCategories.length == 0) {
+    if(arrayOfSelectedCategories.length == 0 && arrayOfSelectedStates.length == 0) {
         this.props.navigation.navigate('HomeNavigator')
     }
 
     //Pegando lista de categorias selecionadas
-    for(var i = 0; i < arrayOfSelectedCategories.length; i++) {
+    for(var i = 0; i < sumLengthArrays; i++) {
         console.log('Elementos: ' + arrayOfSelectedCategories)
 
         if(typeRoute == 'Autonomo') {
-          firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+
+          if(arrayOfSelectedStates.length <= 0 && arrayOfSelectedCategories.length > 0) {
+            firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
               let anunciosAtivosAuto = [];
               documentSnapshot.forEach(function(doc) {
                 anunciosAtivosAuto.push({
@@ -250,10 +256,99 @@ async componentDidMount() {
                 e.setState({isFetchedPublish: true})
               })
             })
+          }
+
+
+          if(arrayOfSelectedStates.length > 0 && arrayOfSelectedCategories.length <= 0) {
+            firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("UFAuto", "in", arrayOfSelectedStates).onSnapshot(documentSnapshot => {
+              let anunciosAtivosAuto = [];
+              documentSnapshot.forEach(function(doc) {
+                anunciosAtivosAuto.push({
+                  idUser: doc.data().idUser,
+                  nome: doc.data().nome,
+                  idAnuncio: doc.data().idAnuncio,
+                  photo: doc.data().photoPublish,
+                  title: doc.data().titleAuto,
+                  description: doc.data().descriptionAuto,
+                  type: doc.data().type,
+                  phone: doc.data().phoneNumberAuto,
+                  verified: doc.data().verifiedPublish,
+                  value: doc.data().valueServiceAuto
+                })
+              })
+        
+        
+              e.setState({activesPublishesAuto: anunciosAtivosAuto})
+              this.setModalVisible(false)
+
+              this.sleep(1000).then(() => { 
+                e.setState({isFetchedPublish: true})
+              })
+            })
+          }
+
+
+          if(arrayOfSelectedStates.length > 0 && arrayOfSelectedCategories.length > 0) {
+            firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+              let anunciosAtivosAuto = [];
+              documentSnapshot.forEach(function(doc) {
+                anunciosAtivosAuto.push({
+                  idUser: doc.data().idUser,
+                  nome: doc.data().nome,
+                  idAnuncio: doc.data().idAnuncio,
+                  photo: doc.data().photoPublish,
+                  title: doc.data().titleAuto,
+                  description: doc.data().descriptionAuto,
+                  type: doc.data().type,
+                  phone: doc.data().phoneNumberAuto,
+                  verified: doc.data().verifiedPublish,
+                  value: doc.data().valueServiceAuto
+                })
+              })
+        
+        
+              e.setState({activesPublishesAuto: anunciosAtivosAuto})
+              this.setModalVisible(false)
+
+              this.sleep(1000).then(() => { 
+                e.setState({isFetchedPublish: true})
+              })
+            })
+
+
+            firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("UFAuto", "in", arrayOfSelectedStates).onSnapshot(documentSnapshot => {
+              let anunciosAtivosAuto = [];
+              documentSnapshot.forEach(function(doc) {
+                anunciosAtivosAuto.push({
+                  idUser: doc.data().idUser,
+                  nome: doc.data().nome,
+                  idAnuncio: doc.data().idAnuncio,
+                  photo: doc.data().photoPublish,
+                  title: doc.data().titleAuto,
+                  description: doc.data().descriptionAuto,
+                  type: doc.data().type,
+                  phone: doc.data().phoneNumberAuto,
+                  verified: doc.data().verifiedPublish,
+                  value: doc.data().valueServiceAuto
+                })
+              })
+        
+        
+              e.setState({activesPublishesAuto: anunciosAtivosAuto})
+              this.setModalVisible(false)
+
+              this.sleep(1000).then(() => { 
+                e.setState({isFetchedPublish: true})
+              })
+            })
+          }
+
         }
 
         
         if(typeRoute == 'Estabelecimento') {
+
+          if(arrayOfSelectedStates.length <= 0 && arrayOfSelectedCategories.length > 0) {
           //obter anuncios ativos estabelecimento
           await firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
             let anunciosAtivosEstab = [];
@@ -279,6 +374,88 @@ async componentDidMount() {
             e.setState({isFetchedPublish: true})
           })
         })
+
+        }
+
+        if(arrayOfSelectedStates.length > 0 && arrayOfSelectedCategories.length <= 0) {
+          await firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("UFEstab", "in", arrayOfSelectedStates).onSnapshot(documentSnapshot => {
+            let anunciosAtivosEstab = [];
+            documentSnapshot.forEach(function(doc) {
+                anunciosAtivosEstab.push({
+                    idUser: doc.data().idUser,
+                    idAnuncio: doc.data().idAnuncio,
+                    photo: doc.data().photoPublish,
+                    title: doc.data().titleEstab,
+                    description: doc.data().descriptionEstab,
+                    phone: doc.data().phoneNumberEstab,
+                    type: doc.data().type,
+                    verified: doc.data().verifiedPublish,
+                    value: doc.data().valueServiceEstab
+                })
+            })
+  
+  
+          e.setState({activesPublishesEstab: anunciosAtivosEstab})
+          this.setModalVisible(false)
+
+            this.sleep(1000).then(() => { 
+              e.setState({isFetchedPublish: true})
+            })
+          })
+        }
+
+        if(arrayOfSelectedStates.length > 0 && arrayOfSelectedCategories.length > 0) {
+          await firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("UFEstab", "in", arrayOfSelectedStates).onSnapshot(documentSnapshot => {
+            let anunciosAtivosEstab = [];
+            documentSnapshot.forEach(function(doc) {
+                anunciosAtivosEstab.push({
+                    idUser: doc.data().idUser,
+                    idAnuncio: doc.data().idAnuncio,
+                    photo: doc.data().photoPublish,
+                    title: doc.data().titleEstab,
+                    description: doc.data().descriptionEstab,
+                    phone: doc.data().phoneNumberEstab,
+                    type: doc.data().type,
+                    verified: doc.data().verifiedPublish,
+                    value: doc.data().valueServiceEstab
+                })
+            })
+  
+  
+          e.setState({activesPublishesEstab: anunciosAtivosEstab})
+          this.setModalVisible(false)
+
+            this.sleep(1000).then(() => { 
+              e.setState({isFetchedPublish: true})
+            })
+          })
+
+          await firebase.firestore().collection('anuncios').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+            let anunciosAtivosEstab = [];
+            documentSnapshot.forEach(function(doc) {
+                anunciosAtivosEstab.push({
+                    idUser: doc.data().idUser,
+                    idAnuncio: doc.data().idAnuncio,
+                    photo: doc.data().photoPublish,
+                    title: doc.data().titleEstab,
+                    description: doc.data().descriptionEstab,
+                    phone: doc.data().phoneNumberEstab,
+                    type: doc.data().type,
+                    verified: doc.data().verifiedPublish,
+                    value: doc.data().valueServiceEstab
+                })
+            })
+  
+  
+          e.setState({activesPublishesEstab: anunciosAtivosEstab})
+          this.setModalVisible(false)
+
+            this.sleep(1000).then(() => { 
+              e.setState({isFetchedPublish: true})
+            })
+          })
+        }
+
         }
 
 

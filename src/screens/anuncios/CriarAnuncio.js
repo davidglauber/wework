@@ -133,6 +133,8 @@ export default class CriarAnuncio extends Component {
       cepAuto: '',
       enderecoCepEstab: [],
       enderecoCepAuto: [],
+      UFEstab: '',
+      UFAuto:'',
       segunda:false,
       terca:false, 
       quarta:false,
@@ -407,6 +409,7 @@ export default class CriarAnuncio extends Component {
     const sumLocation = `${lograd}, ${local}, ${estado}`;
 
     this.setState({enderecoEstab: sumLocation})
+    this.setState({UFEstab: estado})
     modalizeLocationEstab.current?.close()
   }
 
@@ -416,6 +419,7 @@ export default class CriarAnuncio extends Component {
     const sumLocation = `${lograd}, ${local}, ${estado}`;
 
     this.setState({enderecoAuto: sumLocation})
+    this.setState({UFAuto: estado})
     modalizeLocationAuto.current?.close()
   }
 
@@ -631,6 +635,7 @@ export default class CriarAnuncio extends Component {
                                         valueServiceEstab: e.state.precoEstab,
                                         type: 'Estabelecimento',
                                         verifiedPublish: true,
+                                        UFEstab: e.state.UFEstab,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
                                         categoryEstab: e.state.categoria,
@@ -652,6 +657,7 @@ export default class CriarAnuncio extends Component {
                                         descriptionEstab: e.state.descricaoEstab,
                                         valueServiceEstab: e.state.precoEstab,
                                         type: 'Estabelecimento',
+                                        UFEstab: e.state.UFEstab,
                                         verifiedPublish: true,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
@@ -700,6 +706,7 @@ export default class CriarAnuncio extends Component {
                                         valueServiceAuto: e.state.precoAuto,
                                         localAuto: e.state.enderecoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
                                         categoryAuto: e.state.categoria,
@@ -720,6 +727,7 @@ export default class CriarAnuncio extends Component {
                                         valueServiceAuto: e.state.precoAuto,
                                         localAuto: e.state.enderecoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
                                         categoryAuto: e.state.categoria,

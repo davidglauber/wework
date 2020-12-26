@@ -123,7 +123,6 @@ export default class Filtro extends Component {
     super(props);
     this.state = {
       categorias: [],
-      estadosSelecionados: [],
       selected:[],
       selectedStates: [],
       type:'Estabelecimento',
@@ -212,16 +211,16 @@ export default class Filtro extends Component {
     console.log('LISTA DE SELECIONADOS: ' + selected)
   }
 
-  renderAndSelectStates(itemTitle) {
+  renderAndSelectStates(itemUF) {
     let selected = this.state.selectedStates;
     let estados = this.state.estados;
     let array = [];
 
-    var index = estados.indexOf(itemTitle)
+    var index = estados.indexOf(itemUF)
 
 
     estados.splice(index, 1)
-    array.push(itemTitle);
+    array.push(itemUF);
 
     if(selected.length <= 0) {
       this.setState({selectedStates: array})
@@ -232,7 +231,7 @@ export default class Filtro extends Component {
     } else {
       this.setState({selectedStates: selected.concat(array)})
     }
-    console.log('LISTA DE SELECIONADOS: ' + selected)
+    console.log('LISTA DE SELECIONADOS: ' + this.state.selectedStates)
   }
 
 
@@ -338,10 +337,10 @@ export default class Filtro extends Component {
             </ScrollView>
 
             <Sub1Filter style={styles.mt8}>Escolha o Estado abaixo</Sub1Filter>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <ScrollView  contentContainerStyle={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
               {estados.map((item) => (
-                <View style={{marginBottom:20}}>
-                    <TouchableFilterUnselected onPress={() => this.renderAndSelectStates(item)}>
+                <View>
+                    <TouchableFilterUnselected onPress={() => this.renderAndSelectStates(item.uf)}>
                       <TextFilter>{item.estado}</TextFilter>
                     </TouchableFilterUnselected>
                 </View>
@@ -364,8 +363,8 @@ export default class Filtro extends Component {
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
                 {selectedStates.map((item) => (
                   <View>
-                      <TouchableFilter key={item.uf} onPress={() => this.reuploadStatesToList(item)}>
-                        <TextFilter>{item.estado}</TextFilter>
+                      <TouchableFilter key={item} onPress={() => this.reuploadStatesToList(item)}>
+                        <TextFilter>{item}</TextFilter>
                       </TouchableFilter>
                   </View>
                 ))}
@@ -393,7 +392,7 @@ export default class Filtro extends Component {
             
             <Button onPress={() => this.props.navigation.navigate('HomeFiltro', {
               categoriasFiltradas: this.state.selected,
-              estadosFiltrados: this.state.estadosSelecionados,
+              estadosFiltrados: this.state.selectedStates,
               type: this.state.type
             })} title="Aplicar Filtros" rounded />
           </FilterUnderContainer>

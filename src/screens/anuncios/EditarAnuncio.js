@@ -135,6 +135,8 @@ export default class EditarAnuncio extends Component {
       cepAuto: '',
       enderecoCepEstab: [],
       enderecoCepAuto: [],
+      UFEstab: '',
+      UFAuto:'',
       segunda:false,
       terca:false, 
       quarta:false,
@@ -551,6 +553,7 @@ export default class EditarAnuncio extends Component {
     const sumLocation = `${lograd}, ${local}, ${estado}`;
 
     this.setState({enderecoEstab: sumLocation})
+    this.setState({UFEstab: estado})
     modalizeLocationEstab.current?.close()
   }
 
@@ -560,6 +563,7 @@ export default class EditarAnuncio extends Component {
     const sumLocation = `${lograd}, ${local}, ${estado}`;
 
     this.setState({enderecoAuto: sumLocation})
+    this.setState({UFAuto: estado})
     modalizeLocationAuto.current?.close()
   }
 
@@ -769,6 +773,7 @@ export default class EditarAnuncio extends Component {
                                         valueServiceEstab: e.state.precoEstab,
                                         publishData: e.state.date,
                                         type: 'Estabelecimento',
+                                        UFEstab: e.state.UFEstab,
                                         verifiedPublish: true,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
@@ -791,6 +796,7 @@ export default class EditarAnuncio extends Component {
                                         valueServiceEstab: e.state.precoEstab,
                                         publishData: e.state.date,
                                         type: 'Estabelecimento',
+                                        UFEstab: e.state.UFEstab,
                                         verifiedPublish: true,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
@@ -833,6 +839,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
@@ -853,6 +860,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
@@ -944,6 +952,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionEstab: e.state.descricaoEstab,
                                         valueServiceEstab: e.state.precoEstab,
                                         type: 'Estabelecimento',
+                                        UFEstab: e.state.UFEstab,
                                         verifiedPublish: true,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
@@ -966,6 +975,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionEstab: e.state.descricaoEstab,
                                         valueServiceEstab: e.state.precoEstab,
                                         type: 'Estabelecimento',
+                                        UFEstab: e.state.UFEstab,
                                         verifiedPublish: true,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
@@ -1013,6 +1023,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
@@ -1033,6 +1044,7 @@ export default class EditarAnuncio extends Component {
                                         descriptionAuto: e.state.descricaoAuto,
                                         valueServiceAuto: e.state.precoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,

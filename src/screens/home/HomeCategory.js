@@ -241,7 +241,7 @@ async componentDidMount() {
                   keyExtractor={() => this.makeid(17)}
                   data={categories}
                   renderItem={({item}) => 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeCategory2', {titleOfCategory: item.titleCategory})} style={{width: windowWidth/3, height:50, alignItems:'center', justifyContent:'center', backgroundColor: '#DAA520', borderRadius:30, marginRight: 20}}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeCategory2', {titleOfCategory: item.titleCategory})} style={{width: windowWidth/3, height:50, alignItems:'center', justifyContent:'center', backgroundColor: '#DAA520', borderRadius:10, marginRight: 20}}>
                       <Text style={{fontWeight:'bold', color:'#fff', fontSize:13}}>{item.titleCategory}</Text>
                     </TouchableOpacity>
                 }

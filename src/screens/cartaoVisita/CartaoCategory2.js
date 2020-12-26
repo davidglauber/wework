@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 });
 
 // CartA
-export default class CartaoVisita extends Component {
+export default class CartaoCategory2 extends Component {
   static contextType = ThemeContext
   
   constructor(props) {
@@ -333,29 +333,20 @@ export default class CartaoVisita extends Component {
           barStyle={this.context.dark ? "white-content" : "dark-content"}
         />
 
-        <View style={styles.titleContainer}>
-          <Heading>Cartões de Visita</Heading>
-          {products.length > 0 && (
-            <View style={styles.inline}>
-              <TouchableOpacity onPress={this.navigateTo('FilterCartao')} style={{marginRight:5}}>
-                    <IconResponsiveNOBACK  name="sort-alpha-up" size={19} />
-              </TouchableOpacity>
-            
-            </View>
-          )}
-        </View>
-
 
           <ScrollView>
             <ScrollView alwaysBounceHorizontal={true} showsHorizontalScrollIndicator={false} horizontal={true} style={{padding:15}}>
+                <TouchableOpacity style={{justifyContent:'center'}} onPress={() => this.props.navigation.navigate('HomeNavigator')}>
+                    <IconResponsiveNOBACK style={{marginRight: 24}} name="arrow-left" size={20}/>
+                </TouchableOpacity>
                 <FlatList
-                  horizontal={true}
-                  keyExtractor={() => this.makeid(17)}
-                  data={categories}
-                  renderItem={({item}) => 
-                    <TouchCategory onPress={() => this.props.navigation.navigate('CartaoCategory', {titleOfCategory: item.titleCategory})} style={{width: windowWidth/3, height:50, alignItems:'center', justifyContent:'center', borderRadius:10, marginRight: 20}}>
-                      <Text style={{fontWeight:'bold', color:'#fff', fontSize:13}}>{item.titleCategory}</Text>
-                    </TouchCategory>
+                horizontal={true}
+                keyExtractor={() => this.makeid(17)}
+                data={categories}
+                renderItem={({item}) => 
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('CartaoCategory', {titleOfCategory: item.titleCategory})} style={{width: windowWidth/3, height:50, alignItems:'center', justifyContent:'center', backgroundColor: '#DAA520', borderRadius:10, marginRight: 20}}>
+                    <Text style={{fontWeight:'bold', color:'#fff', fontSize:13}}>{item.titleCategory}</Text>
+                    </TouchableOpacity>
                 }
                 ></FlatList>
             </ScrollView>

@@ -57,7 +57,11 @@ import HomeCategory from '../screens/home/HomeCategory';
 
 import HomeCategory2 from '../screens/home/HomeCategory2';
 
-import CartaoFiltro from '../screens/cartaoVisita/CartaoFiltro'; 
+import CartaoFiltro from '../screens/cartaoVisita/CartaoFiltro';
+
+import CartaoCategory from '../screens/cartaoVisita/CartaoCategory';
+
+import CartaoCategory2 from '../screens/cartaoVisita/CartaoCategory2';
 
 import TelaPrincipalAnuncio from '../screens/anuncios/TelaPrincipalAnuncio';
 
@@ -276,6 +280,20 @@ function MainNavigatorA() {
           options={{headerShown: false}}
         />
 
+        
+        <Stack.Screen
+          name="CartaoCategory"
+          component={CartaoCategory}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="CartaoCategory2"
+          component={CartaoCategory2}
+          options={{headerShown: false}}
+        />
+
+
         <Stack.Screen
           name="HomeCategory"
           component={HomeCategory}
@@ -293,6 +311,8 @@ function MainNavigatorA() {
           component={CartaoFiltro}
           options={{headerShown: false}}
         />
+
+
 
         <Stack.Screen
           name="TelaLogout"

@@ -133,6 +133,8 @@ export default class EditarCartao extends Component {
       cepAuto: '',
       enderecoCepEstab: [],
       enderecoCepAuto: [],
+      UFEstab: '',
+      UFAuto:'',
       segunda:false,
       terca:false, 
       quarta:false,
@@ -496,6 +498,7 @@ export default class EditarCartao extends Component {
     const sumLocation = `${lograd}, ${local}, ${estado}`;
 
     this.setState({enderecoEstab: sumLocation})
+    this.setState({UFEstab: estado})
     modalizeLocationEstab.current?.close()
   }
 
@@ -505,6 +508,7 @@ export default class EditarCartao extends Component {
     const sumLocation = `${lograd}, ${local}, ${estado}`;
 
     this.setState({enderecoAuto: sumLocation})
+    this.setState({UFAuto: estado})
     modalizeLocationAuto.current?.close()
   }
 
@@ -737,6 +741,7 @@ export default class EditarCartao extends Component {
                                         descriptionEstab: e.state.descricaoEstab,
                                         publishData: e.state.date,
                                         type: 'Estabelecimento',
+                                        UFEstab: e.state.UFEstab,
                                         verifiedPublish: true,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
@@ -758,6 +763,7 @@ export default class EditarCartao extends Component {
                                         descriptionEstab: e.state.descricaoEstab,
                                         publishData: e.state.date,
                                         type: 'Estabelecimento',
+                                        UFEstab: e.state.UFEstab,
                                         verifiedPublish: true,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
@@ -799,6 +805,7 @@ export default class EditarCartao extends Component {
                                         publishData: e.state.date,
                                         descriptionAuto: e.state.descricaoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
@@ -817,6 +824,7 @@ export default class EditarCartao extends Component {
                                         publishData: e.state.date,
                                         descriptionAuto: e.state.descricaoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
@@ -899,6 +907,7 @@ export default class EditarCartao extends Component {
                                         descriptionEstab: e.state.descricaoEstab,
                                         publishData: e.state.date,
                                         type: 'Estabelecimento',
+                                        UFEstab: e.state.UFEstab,
                                         verifiedPublish: true,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
@@ -921,6 +930,7 @@ export default class EditarCartao extends Component {
                                         publishData: e.state.date,
                                         type: 'Estabelecimento',
                                         verifiedPublish: true,
+                                        UFEstab: e.state.UFEstab,
                                         phoneNumberEstab: e.state.phoneEstab,
                                         localEstab: e.state.enderecoEstab,
                                         categoryEstab: e.state.categoria,
@@ -961,6 +971,7 @@ export default class EditarCartao extends Component {
                                         publishData: e.state.date,
                                         descriptionAuto: e.state.descricaoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,
@@ -979,6 +990,7 @@ export default class EditarCartao extends Component {
                                         publishData: e.state.date,
                                         descriptionAuto: e.state.descricaoAuto,
                                         type: 'Autonomo',
+                                        UFAuto: e.state.UFAuto,
                                         localAuto: e.state.enderecoAuto,
                                         verifiedPublish: true,
                                         phoneNumberAuto: e.state.phoneAuto,

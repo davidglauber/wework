@@ -348,6 +348,17 @@ export default class FilterCartao extends Component {
             </ScrollView>
 
 
+            <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+                {selectedStates.map((item) => (
+                  <View>
+                      <TouchableFilter key={item} onPress={() => this.reuploadStatesToList(item)}>
+                        <TextFilter>{item}</TextFilter>
+                      </TouchableFilter>
+                  </View>
+                ))}
+            </ScrollView>
+
+
             <View style={{flexDirection:'row'}}>
               <View>
                 {selectedStates.length == 1 ?

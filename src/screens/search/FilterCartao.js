@@ -111,7 +111,36 @@ export default class FilterCartao extends Component {
     this.state = {
       categorias: [],
       selected:[],
-      type:'Estabelecimento'
+      type:'Estabelecimento',
+      selectedStates: [],
+      estados: [ 
+        {uf: 'AC', estado: 'Acre'},
+        {uf: 'AL', estado: 'Alagoas'},
+        {uf: 'AM', estado: 'Amazonas'},
+        {uf: 'BA', estado: 'Bahia'},
+        {uf: 'CE', estado: 'Ceará'},
+        {uf: 'DF', estado: 'Distrito Federal'},
+        {uf: 'ES', estado: 'Espírito Santo'},
+        {uf: 'GO', estado: 'Goías'},
+        {uf: 'MA', estado: 'Maranhão'},
+        {uf: 'MT', estado: 'Mato Grosso'},
+        {uf: 'MS', estado: 'Mato Grosso do Sul'},
+        {uf: 'MG', estado: 'Minas Gerais'},
+        {uf: 'PA', estado: 'Pará'},
+        {uf: 'PB', estado: 'Paraíba'},
+        {uf: 'PR', estado: 'Paraná'},
+        {uf: 'PE', estado: 'Pernambuco'},
+        {uf: 'PI', estado: 'Piauí'},
+        {uf: 'RJ', estado: 'Rio de Janeiro'},
+        {uf: 'RN', estado: 'Rio Grande do Norte'},
+        {uf: 'RS', estado: 'Rio Grande do Sul'},
+        {uf: 'RO', estado: 'Rondônia'},
+        {uf: 'RR', estado: 'Roraíma'},
+        {uf: 'SC', estado: 'Santa Catarina'},
+        {uf: 'SP', estado: 'São Paulo'},
+        {uf: 'SE', estado: 'Sergipe'},
+        {uf: 'TO', estado: 'Tocantins'},
+      ]
     };
   }
 
@@ -169,6 +198,29 @@ export default class FilterCartao extends Component {
     console.log('LISTA DE SELECIONADOS: ' + selected)
   }
 
+  renderAndSelectStates(itemUF) {
+    let selected = this.state.selectedStates;
+    let estados = this.state.estados;
+    let array = [];
+
+    var index = estados.indexOf(itemUF)
+
+
+    estados.splice(index, 1)
+    array.push(itemUF);
+
+    if(selected.length <= 0) {
+      this.setState({selectedStates: array})
+    } 
+
+    else if(selected.length >= 10) {
+      alert('Você só pode escolher até 10 estados diferentes!')
+    } else {
+      this.setState({selectedStates: selected.concat(array)})
+    }
+    console.log('LISTA DE SELECIONADOS: ' + this.state.selectedStates)
+  }
+
 
   reuploadCategoriesToList(itemTitle) {
     let selected = this.state.selected;
@@ -190,9 +242,31 @@ export default class FilterCartao extends Component {
   }
 
 
+  reuploadStatesToList(itemTitle) {
+    let selected = this.state.selectedStates;
+    let estados = this.state.estados;
+    let array = [];
+
+    var index = selected.indexOf(itemTitle)
+
+
+    selected.splice(index, 1)
+    array.push(itemTitle);
+    
+    if(estados.length <= 0) {
+      this.setState({estados: array})
+    } else {
+      this.setState({estados: estados.concat(array)})
+    }
+
+  }
+
+
   render() {
     const {
       categorias,
+      estados,
+      selectedStates,
       selected
     } = this.state;
 
@@ -248,6 +322,17 @@ export default class FilterCartao extends Component {
                 </View>
               ))}
             </ScrollView>
+
+            <Sub1Filter style={styles.mt8}>Escolha o Estado abaixo</Sub1Filter>
+            <ScrollView  contentContainerStyle={{flexDirection: 'row', flexWrap: 'wrap',   justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 16}}>
+              {estados.map((item) => (
+                <View>
+                    <TouchableFilterUnselected onPress={() => this.renderAndSelectStates(item.uf)}>
+                      <TextFilter>{item.estado}</TextFilter>
+                    </TouchableFilterUnselected>
+                </View>
+              ))}
+            </ScrollView>
           </View>
 
 
@@ -262,13 +347,30 @@ export default class FilterCartao extends Component {
                 ))}
             </ScrollView>
 
-            {selected.length == 1 ?
-              <Text style={{marginBottom:17, color:'#DAA520', fontWeight: "bold"}}>{selected.length} categoria selecionada</Text>
-              :
-              <Text style={{marginBottom:17, color:'#DAA520', fontWeight: "bold"}}>{selected.length} categorias selecionadas</Text>
-            }
+
+            <View style={{flexDirection:'row'}}>
+              <View>
+                {selectedStates.length == 1 ?
+                  <Text style={{marginBottom:17, fontSize:11, color:'#DAA520', fontWeight: "bold"}}>{selected.length} categoria selecionada</Text>
+                  :
+                  <Text style={{marginBottom:17, fontSize:11, color:'#DAA520', fontWeight: "bold"}}>{selected.length} categorias selecionadas</Text>
+                }
+              </View>
+
+
+              <View style={{marginLeft:55}}>
+                {selectedStates.length == 1 ?
+                  <Text style={{marginBottom:17, fontSize:11, color:'#DAA520', fontWeight: "bold"}}>{selectedStates.length} estado selecionado</Text>
+                  :
+                  <Text style={{marginBottom:17, fontSize:11, color:'#DAA520', fontWeight: "bold"}}>{selectedStates.length} estados selecionados</Text>
+                }
+              </View>
+            </View>
+
+            
             <Button onPress={() => this.props.navigation.navigate('CartaoFiltro', {
               categoriasFiltradas: this.state.selected,
+              estadosFiltrados: this.state.selectedStates,
               type: this.state.type
             })} title="Aplicar Filtros" rounded />
           </FilterUnderContainer>

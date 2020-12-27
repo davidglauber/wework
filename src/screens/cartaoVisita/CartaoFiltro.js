@@ -157,23 +157,26 @@ export default class CartaoFiltro extends Component {
   async componentDidMount() {
     let e = this;
     let arrayOfSelectedCategories = this.props.route.params.categoriasFiltradas;
+    let arrayOfSelectedStates = this.props.route.params.estadosFiltrados;
+    let sumLengthArrays = arrayOfSelectedStates.length + arrayOfSelectedCategories.length;
     let typeRoute = this.props.route.params.type;
 
     console.log('ARRAY RECEBIDO DO NAVIGATOR: ' + arrayOfSelectedCategories)
+    console.log('ARRAY RECEBIDO DO NAVIGATOR ESTADOS: ' + arrayOfSelectedStates)
     console.log('type RECEBIDO DO NAVIGATOR: ' + typeRoute)
 
 
-    if(arrayOfSelectedCategories.length == 0) {
-        console.log('ENTROU NO IF NULO')
+    if(arrayOfSelectedCategories.length == 0 && arrayOfSelectedStates.length == 0) {
         this.props.navigation.navigate('Cart')
     }
 
 
     //Pegando lista de categorias selecionadas
-    for(var i = 0; i < arrayOfSelectedCategories.length; i++) {
+    for(var i = 0; i < sumLengthArrays; i++) {
         console.log('Elementos: ' + arrayOfSelectedCategories)
 
         if(typeRoute == 'Autonomo') {
+          if(arrayOfSelectedStates.length <= 0 && arrayOfSelectedCategories.length > 0) {
           firebase.firestore().collection('cartoes').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
               let cartoesAutoDidMount = [];
               documentSnapshot.forEach(function(doc) {
@@ -197,11 +200,101 @@ export default class CartaoFiltro extends Component {
                 e.setState({isFetchedPublish: true})
               })
             })
+
+          }
+
+
+
+
+
+          if(arrayOfSelectedStates.length > 0 && arrayOfSelectedCategories.length <= 0) {
+            firebase.firestore().collection('cartoes').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("UFAuto", "in", arrayOfSelectedStates).onSnapshot(documentSnapshot => {
+                let cartoesAutoDidMount = [];
+                documentSnapshot.forEach(function(doc) {
+                  cartoesAutoDidMount.push({
+                      idUser: doc.data().idUser,
+                      nome: doc.data().nome,
+                      idCartao: doc.data().idCartao,
+                      photo: doc.data().photoPublish,
+                      description: doc.data().descriptionAuto,
+                      type: doc.data().type,
+                      categoria: doc.data().categoryAuto,
+                      phone: doc.data().phoneNumberAuto,
+                  })
+                })
+          
+          
+                e.setState({cartoesAuto: cartoesAutoDidMount})
+                this.setModalVisible(false)
+  
+                this.sleep(1000).then(() => { 
+                  e.setState({isFetchedPublish: true})
+                })
+              })
+  
+            }
+
+
+
+
+
+
+            if(arrayOfSelectedStates.length > 0 && arrayOfSelectedCategories.length > 0) {
+              firebase.firestore().collection('cartoes').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryAuto", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+                  let cartoesAutoDidMount = [];
+                  documentSnapshot.forEach(function(doc) {
+                    cartoesAutoDidMount.push({
+                        idUser: doc.data().idUser,
+                        nome: doc.data().nome,
+                        idCartao: doc.data().idCartao,
+                        photo: doc.data().photoPublish,
+                        description: doc.data().descriptionAuto,
+                        type: doc.data().type,
+                        categoria: doc.data().categoryAuto,
+                        phone: doc.data().phoneNumberAuto,
+                    })
+                  })
+            
+            
+                  e.setState({cartoesAuto: cartoesAutoDidMount})
+                  this.setModalVisible(false)
+    
+                  this.sleep(1000).then(() => { 
+                    e.setState({isFetchedPublish: true})
+                  })
+                })
+    
+
+
+                firebase.firestore().collection('cartoes').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("UFAuto", "in", arrayOfSelectedStates).onSnapshot(documentSnapshot => {
+                  let cartoesAutoDidMount = [];
+                  documentSnapshot.forEach(function(doc) {
+                    cartoesAutoDidMount.push({
+                        idUser: doc.data().idUser,
+                        nome: doc.data().nome,
+                        idCartao: doc.data().idCartao,
+                        photo: doc.data().photoPublish,
+                        description: doc.data().descriptionAuto,
+                        type: doc.data().type,
+                        categoria: doc.data().categoryAuto,
+                        phone: doc.data().phoneNumberAuto,
+                    })
+                  })
+            
+            
+                  e.setState({cartoesAuto: cartoesAutoDidMount})
+                  this.setModalVisible(false)
+    
+                  this.sleep(1000).then(() => { 
+                    e.setState({isFetchedPublish: true})
+                  })
+                })
+              }
         }
 
         
         if(typeRoute == 'Estabelecimento') {
-          //obter anuncios ativos estabelecimento
+          if(arrayOfSelectedStates.length <= 0 && arrayOfSelectedCategories.length > 0) {
           await firebase.firestore().collection('cartoes').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
             let cartoesEstabDidMount = [];
             documentSnapshot.forEach(function(doc) {
@@ -230,8 +323,117 @@ export default class CartaoFiltro extends Component {
             e.setState({isFetchedPublish: true})
           })
         })
+
+
         }
 
+
+
+
+        if(arrayOfSelectedStates.length > 0 && arrayOfSelectedCategories.length <= 0) {
+          await firebase.firestore().collection('cartoes').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("UFEstab", "in", arrayOfSelectedStates).onSnapshot(documentSnapshot => {
+            let cartoesEstabDidMount = [];
+            documentSnapshot.forEach(function(doc) {
+                cartoesEstabDidMount.push({
+                    idUser: doc.data().idUser,
+                    idCartao: doc.data().idCartao,
+                    photo: doc.data().photoPublish,
+                    local: doc.data().localEstab,
+                    title: doc.data().titleEstab,
+                    description: doc.data().descriptionEstab,
+                    phone: doc.data().phoneNumberEstab,
+                    timeOpen: doc.data().timeOpen,
+                    timeClose: doc.data().timeClose,
+                    type: doc.data().type,
+                    verified: doc.data().verifiedPublish,
+                    categoria: doc.data().categoryEstab,
+                    workDays: doc.data().workDays
+                })
+            })
+  
+  
+          e.setState({cartoesEstab: cartoesEstabDidMount})
+          this.setModalVisible(false)
+
+          this.sleep(1000).then(() => { 
+            e.setState({isFetchedPublish: true})
+          })
+        })
+
+
+        }
+
+
+
+
+
+
+        if(arrayOfSelectedStates.length > 0 && arrayOfSelectedCategories.length > 0) {
+          await firebase.firestore().collection('cartoes').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("categoryEstab", "in", arrayOfSelectedCategories).onSnapshot(documentSnapshot => {
+            let cartoesEstabDidMount = [];
+            documentSnapshot.forEach(function(doc) {
+                cartoesEstabDidMount.push({
+                    idUser: doc.data().idUser,
+                    idCartao: doc.data().idCartao,
+                    photo: doc.data().photoPublish,
+                    local: doc.data().localEstab,
+                    title: doc.data().titleEstab,
+                    description: doc.data().descriptionEstab,
+                    phone: doc.data().phoneNumberEstab,
+                    timeOpen: doc.data().timeOpen,
+                    timeClose: doc.data().timeClose,
+                    type: doc.data().type,
+                    verified: doc.data().verifiedPublish,
+                    categoria: doc.data().categoryEstab,
+                    workDays: doc.data().workDays
+                })
+            })
+  
+  
+          e.setState({cartoesEstab: cartoesEstabDidMount})
+          this.setModalVisible(false)
+
+          this.sleep(1000).then(() => { 
+            e.setState({isFetchedPublish: true})
+          })
+        })
+
+
+
+        await firebase.firestore().collection('cartoes').where("type", "==", typeRoute).where("verifiedPublish", "==", true).where("UFEstab", "in", arrayOfSelectedStates).onSnapshot(documentSnapshot => {
+          let cartoesEstabDidMount = [];
+          documentSnapshot.forEach(function(doc) {
+              cartoesEstabDidMount.push({
+                  idUser: doc.data().idUser,
+                  idCartao: doc.data().idCartao,
+                  photo: doc.data().photoPublish,
+                  local: doc.data().localEstab,
+                  title: doc.data().titleEstab,
+                  description: doc.data().descriptionEstab,
+                  phone: doc.data().phoneNumberEstab,
+                  timeOpen: doc.data().timeOpen,
+                  timeClose: doc.data().timeClose,
+                  type: doc.data().type,
+                  verified: doc.data().verifiedPublish,
+                  categoria: doc.data().categoryEstab,
+                  workDays: doc.data().workDays
+              })
+          })
+
+
+        e.setState({cartoesEstab: cartoesEstabDidMount})
+        this.setModalVisible(false)
+
+        this.sleep(1000).then(() => { 
+          e.setState({isFetchedPublish: true})
+        })
+      })
+
+        }
+
+        
+
+      }
 
     }
 

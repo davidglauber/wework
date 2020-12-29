@@ -156,7 +156,7 @@ export default class PaymentMethodA extends Component {
   };
 
   signPremium() {
-    alert('Ainda não disponível! Atualizaremos depois :)')
+    alert('Ainda não disponível! Atualizaremos depois :)');
   }
 
   render() {

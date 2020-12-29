@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "2.1.0",
+    "version": "2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "androidStatusBar": {
@@ -38,6 +38,7 @@
     },
     "description": "We Wo - A React Native App",
     "android": {
+      "versionCode": 4,
       "package": "com.zubito.wewo",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-1397640114399871~3615827759",

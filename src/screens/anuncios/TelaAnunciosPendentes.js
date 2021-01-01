@@ -70,12 +70,6 @@ const styles = StyleSheet.create({
     height: 72,
     resizeMode: 'cover',
   },
-  cardOverlay: {
-    flex: 1,
-    borderRadius: 4,
-    backgroundColor: Color(Colors.overlayColor).alpha(0.2),
-    overflow: 'hidden',
-  },
   cardContainer: {
     flex: 1,
     justifyContent: 'flex-end',

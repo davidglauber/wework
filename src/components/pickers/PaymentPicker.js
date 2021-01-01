@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 22,
     height: 22,
-    backgroundColor: Color(Colors.primaryColor).alpha(0.1)
+    backgroundColor: Color(Colors.primaryColor).alpha(0.16)
   }
 });
 

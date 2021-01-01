@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     marginHorizontal: -16,
     paddingVertical: 5,
     paddingHorizontal: 16,
-    backgroundColor: 'rgba(0, 0, 0, .12)',
+    backgroundColor: 'rgba(0, 0, 0, 0.12)',
   },
   title: {
     paddingTop: 16,

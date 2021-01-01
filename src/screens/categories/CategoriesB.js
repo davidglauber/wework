@@ -53,12 +53,6 @@ const styles = StyleSheet.create({
     height: CARD_HEIGHT,
     resizeMode: 'cover',
   },
-  cardOverlay: {
-    flex: 1,
-    borderRadius: CARD_BORDER_RADIUS,
-    backgroundColor: Color(Colors.overlayColor).alpha(0.24),
-    overflow: 'hidden',
-  },
   cardContainer: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -149,7 +143,7 @@ export default class CategoriesA extends Component {
       source={getImgSource(item.imageUri)}
       imageStyle={styles.cardImg}
       style={styles.card}>
-      <View style={styles.cardOverlay}>
+      <View>
         <TouchableItem
           onPress={this.navigateTo('Category')}
           style={styles.cardContainer}

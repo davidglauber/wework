@@ -70,17 +70,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  stepText: {
-    fontWeight: '700',
-    color: Color(Colors.black).alpha(0.56),
-  },
   activeStepText: {
     color: Colors.primaryColor,
-  },
-  line: {
-    width: 48,
-    height: 2,
-    backgroundColor: Color(Colors.black).alpha(0.32),
   },
   activeLine: {
     backgroundColor: Colors.primaryColor,
@@ -101,7 +92,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   overline: {
-    color: Color(Colors.secondaryText).alpha(0.6),
+    color: "#fff",
     textAlign: 'left',
   },
   inputContainerStyle: {
@@ -287,14 +278,13 @@ export default class CheckoutA extends Component {
               <View style={styles.stepContainer}>
                 <Caption
                   style={[
-                    styles.stepText,
+                    
                     activeIndex === 0 && styles.activeStepText,
                   ]}>
                   Delivery
                 </Caption>
                 <Caption
                   style={[
-                    styles.stepText,
                     activeIndex === 0 && styles.activeStepText,
                   ]}>
                   address
@@ -308,14 +298,12 @@ export default class CheckoutA extends Component {
               <View style={styles.stepContainer}>
                 <Caption
                   style={[
-                    styles.stepText,
                     activeIndex === 1 && styles.activeStepText,
                   ]}>
                   Payment
                 </Caption>
                 <Caption
                   style={[
-                    styles.stepText,
                     activeIndex === 1 && styles.activeStepText,
                   ]}>
                   method
@@ -329,14 +317,12 @@ export default class CheckoutA extends Component {
               <View style={styles.stepContainer}>
                 <Caption
                   style={[
-                    styles.stepText,
                     activeIndex === 2 && styles.activeStepText,
                   ]}>
                   Place
                 </Caption>
                 <Caption
                   style={[
-                    styles.stepText,
                     activeIndex === 2 && styles.activeStepText,
                   ]}>
                   order

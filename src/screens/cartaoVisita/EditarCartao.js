@@ -19,10 +19,10 @@ import {
   View,
   Dimensions,
   Text,
-  YellowBox
+  LogBox
 } from 'react-native';
 
-YellowBox.ignoreWarnings(['Setting a timer']);
+LogBox.ignoreLogs(['Setting a timer']);
 
 import {Subtitle2} from '../../components/text/CustomText';
 import { Modalize } from 'react-native-modalize';

@@ -52,14 +52,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  iconContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: Color(Colors.primaryColor).alpha(0.16),
-  },
   instruction: {
     marginTop: 32,
     paddingHorizontal: 16,
@@ -178,7 +170,7 @@ export default class TelaEsqueciSenha extends Component {
 
         <ScrollView contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.instructionContainer}>
-            <View style={styles.iconContainer}>
+            <View>
               <Icon name="lock-outline" size={36} color={Colors.primaryColor} />
             </View>
             <Paragraph style={styles.instruction}>

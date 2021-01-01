@@ -244,7 +244,7 @@ function MainNavigatorA() {
           component={ForgotPassword}
           options={({navigation}) => ({ 
             headerTitleStyle: {
-              color:'#00b970'
+              color:'#fff'
             },
             headerStyle: {
               elevation: 0,
@@ -256,7 +256,7 @@ function MainNavigatorA() {
               <HeaderIconButton
                 onPress={() => navigation.goBack()}
                 name={'ios-arrow-back'}
-                color={'#00b970'}
+                color={'#fff'}
                 />
                 )
               })}

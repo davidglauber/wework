@@ -174,7 +174,7 @@ const OrderItemB = ({
             <Subtitle2 style={styles.onTheWay}>On the way</Subtitle2>
           </View>
           <Button
-            color={Color(Colors.primaryColor).alpha(0.16)}
+            color={"#fff"}
             title="Track"
             titleColor={Colors.primaryColor}
             buttonStyle={styles.extraSmallButton}
@@ -189,7 +189,7 @@ const OrderItemB = ({
             <Subtitle2 style={styles.pending}>Pending delivery</Subtitle2>
           </View>
           <Button
-            color={Color(Colors.secondaryColor).alpha(0.12)}
+            color={"#fff"}
             title="Cancel"
             titleColor={Colors.secondaryColor}
             buttonStyle={styles.extraSmallButton}
@@ -204,7 +204,7 @@ const OrderItemB = ({
             <Subtitle2 style={styles.delivered}>Delivered</Subtitle2>
           </View>
           <Button
-            color={Color(Colors.primaryColor).alpha(0.16)}
+            color={"#fff"}
             title="Reorder"
             titleColor={Colors.primaryColor}
             buttonStyle={styles.extraSmallButton}

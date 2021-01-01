@@ -17,7 +17,7 @@ import TouchableItem from '../TouchableItem';
 import Colors from '../../theme/colors';
 
 // FilterPicker Config
-const PICKED_BACKGROUND_COLOR = Color(Colors.primaryColor).alpha(0.24);
+const PICKED_BACKGROUND_COLOR = Color(Colors.primaryColor);
 const PICKED_TEXT_COLOR = Colors.primaryColorDark;
 
 // FilterPicker Styles

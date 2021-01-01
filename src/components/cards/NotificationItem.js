@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     margin: 1,
     borderRadius: 4,
-    backgroundColor: Color(Colors.error).alpha(0.12).string(),
+    backgroundColor: "#fff",
   },
   deleteButtonContainer: {
     width: 88,
@@ -142,32 +142,32 @@ const renderIcon = (type, readOut) => {
     case 'on_the_way':
       ICON_NAME = ON_THE_WAY_ICON;
       ICON_COLOR = ON_THE_WAY_ICON_COLOR;
-      ICON_BACKGROUND = Color(ON_THE_WAY_ICON_COLOR).alpha(0.16);
+      ICON_BACKGROUND = Color(ON_THE_WAY_ICON_COLOR);
       break;
     case 'ready_for_delivery':
       ICON_NAME = READY_FOR_DELIVERY_ICON;
       ICON_COLOR = READY_FOR_DELIVERY_ICON_COLOR;
-      ICON_BACKGROUND = Color(READY_FOR_DELIVERY_ICON_COLOR).alpha(0.16);
+      ICON_BACKGROUND = Color(READY_FOR_DELIVERY_ICON_COLOR);
       break;
     case 'failed_delivery':
       ICON_NAME = FAILED_DELIVERY_ICON;
       ICON_COLOR = FAILED_DELIVERY_ICON_COLOR;
-      ICON_BACKGROUND = Color(FAILED_DELIVERY_ICON_COLOR).alpha(0.16);
+      ICON_BACKGROUND = Color(FAILED_DELIVERY_ICON_COLOR);
       break;
     case 'delivered':
       ICON_NAME = DELIVERED_ICON;
       ICON_COLOR = DELIVERED_ICON_COLOR;
-      ICON_BACKGROUND = Color(DELIVERED_ICON_COLOR).alpha(0.16);
+      ICON_BACKGROUND = Color(DELIVERED_ICON_COLOR);
       break;
     case 'exception':
       ICON_NAME = EXCEPTION_ICON;
       ICON_COLOR = EXCEPTION_ICON_COLOR;
-      ICON_BACKGROUND = Color(EXCEPTION_ICON_COLOR).alpha(0.16);
+      ICON_BACKGROUND = Color(EXCEPTION_ICON_COLOR);
       break;
     default:
       ICON_NAME = NOTIFICATIONS_ICON;
       ICON_COLOR = DEFAULT_ICON_COLOR;
-      ICON_BACKGROUND = Color(Colors.primaryColor).alpha(0.12);
+      ICON_BACKGROUND = Color(Colors.primaryColor);
   }
 
   if (readOut) {

@@ -95,7 +95,7 @@ const OutlinedButton = ({
   socialIconName,
   title,
   titleColor,
-  rippleColor = Color(Colors.primaryColor).alpha(0.12).rgb().string(),
+  rippleColor = "#fff",
   rounded,
 }: Props) => (
   <View

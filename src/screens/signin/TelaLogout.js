@@ -43,14 +43,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  iconContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: Color(Colors.primaryColor).alpha(0.16),
-  },
   instruction: {
     marginTop: 32,
     paddingHorizontal: 16,

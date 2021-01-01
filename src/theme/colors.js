@@ -5,7 +5,7 @@ import config from "../config";
 const themes = {
   jade: {
     // primary color
-    primaryColor: "#00b970",
+    primaryColor: "#fff",
     primaryColorDark: "#00945a",
     primaryColorLight: "#00e78c",
     onPrimaryColor: "#fff",
@@ -26,7 +26,7 @@ const themes = {
     statusBarColor: "#fff",
 
     // gradient colors
-    primaryGradientColor: "#00b970",
+    primaryGradientColor: "#fff",
     secondaryGradientColor: "#00b9a7",
 
     // overlay color
@@ -59,7 +59,7 @@ const themes = {
     onAccentColor: "#fff",
 
     // secondary color
-    secondaryColor: "#00b970", // '#239d19'
+    secondaryColor: "#fff", // '#239d19'
     onSecondaryColor: "#fff",
 
     // tertiary color, secondary color intermediately related

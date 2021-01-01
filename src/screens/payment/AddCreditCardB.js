@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   caption: {
     marginRight: 38,
-    color: Color(Colors.white).alpha(0.76),
+    color: Colors.white,
     textAlign: 'left',
   },
   whiteText: {
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
   },
   overline: {
-    color: Color(Colors.secondaryText).alpha(0.6),
+    color: "#fff",
     textAlign: 'left',
   },
   inputWrapper: {

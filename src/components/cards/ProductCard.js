@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     margin: 1,
-    backgroundColor: Color(Colors.error).alpha(0.12).string(),
+    backgroundColor: "#fff",
   },
   deleteButtonContainer: {
     width: 88,

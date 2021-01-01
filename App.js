@@ -8,7 +8,7 @@
 // import dependencies
 import 'react-native-gesture-handler';
 import React , {useState}from 'react';
-import {YellowBox} from 'react-native';
+import { LogBox } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {enableScreens} from 'react-native-screens';
 
@@ -16,7 +16,7 @@ import {enableScreens} from 'react-native-screens';
 enableScreens();
 
 // TODO: Remove when fixed
-YellowBox.ignoreWarnings([
+LogBox.ignoreLogs([
   'VirtualizedLists should never be nested',
   'Warning: componentWillReceiveProps has been renamed, and is not recommended',
 ]);

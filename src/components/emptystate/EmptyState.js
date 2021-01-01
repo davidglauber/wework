@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: Color(Colors.secondaryColor).alpha(0.12),
+    backgroundColor: "#fff",
   },
   title: {
     marginBottom: 16,

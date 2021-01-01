@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     bottom: 14,
     transform: [{scaleX: isRTL ? -1 : 1}],
   },
-  dot: {backgroundColor: Color(Colors.white).alpha(0.48)},
+  dot: {backgroundColor: Colors.white},
   activeDot: {backgroundColor: Colors.white},
   bgImg: {
     flex: 1,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   caption: {
-    color: Color(Colors.white).alpha(0.87),
+    color: Colors.white,
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 4,

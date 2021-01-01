@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   overline: {
-    color: Color(Colors.secondaryText).alpha(0.6),
+    color: "#fff",
     textAlign: 'left',
   },
   inputContainerStyle: {

@@ -61,11 +61,6 @@ const styles = StyleSheet.create({
     color: Colors.white,
     textAlign: 'center',
   },
-  caption: {
-    marginRight: 38,
-    color: Color(Colors.white).alpha(0.76),
-    textAlign: 'left',
-  },
   whiteText: {
     color: Colors.white,
   },

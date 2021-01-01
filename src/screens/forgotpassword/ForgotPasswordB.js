@@ -50,14 +50,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  iconContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: Color(Colors.surface).alpha(0.96),
-  },
   instruction: {
     marginTop: 32,
     paddingHorizontal: 16,
@@ -168,7 +160,7 @@ export default class ForgotPasswordB extends Component {
 
           <ScrollView contentContainerStyle={styles.contentContainerStyle}>
             <View style={styles.instructionContainer}>
-              <View style={styles.iconContainer}>
+              <View>
                 <Icon
                   name="lock-outline"
                   size={36}

@@ -152,7 +152,7 @@ const OrderItemA = ({
           </View>
 
           <Button
-            color={Color(Colors.primaryColor).alpha(0.16)}
+            color={Color(Colors.primaryColor)}
             title="Track"
             titleColor={Colors.primaryColor}
             buttonStyle={styles.extraSmallButton}
@@ -168,7 +168,7 @@ const OrderItemA = ({
           </View>
 
           <Button
-            color={Color(Colors.secondaryColor).alpha(0.12)}
+            color={Color(Colors.secondaryColor)}
             title="Cancel"
             titleColor={Colors.secondaryColor}
             buttonStyle={styles.extraSmallButton}
@@ -184,7 +184,7 @@ const OrderItemA = ({
           </View>
 
           <Button
-            color={Color(Colors.primaryColor).alpha(0.16)}
+            color={Color(Colors.primaryColor)}
             title="Reorder"
             titleColor={Colors.primaryColor}
             buttonStyle={styles.extraSmallButton}

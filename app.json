@@ -39,7 +39,7 @@
     "description": "We Wo - A React Native App",
     "android": {
       "versionCode": 5,
-      "permissions":["BILLING"],
+      "permissions":["com.android.vending.BILLING"],
       "package": "com.zubito.wewo",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-1397640114399871~3615827759",

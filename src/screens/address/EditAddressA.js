@@ -465,7 +465,7 @@ export default class EditAddressA extends Component {
           <View style={styles.buttonsContainer}>
             <Button
               onPress={this.removeAddress}
-              color={Color(Colors.secondaryColor).alpha(0.12).rgb().string()}
+              color={"#fff"}
               small
               title={'Remove'.toUpperCase()}
               titleColor={Colors.secondaryColor}

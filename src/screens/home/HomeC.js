@@ -80,12 +80,6 @@ const styles = StyleSheet.create({
     height: 92,
     resizeMode: 'cover',
   },
-  cardOverlay: {
-    flex: 1,
-    borderRadius: 44,
-    backgroundColor: Color(Colors.black).alpha(0.16),
-    overflow: 'hidden',
-  },
   cardContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -228,7 +222,7 @@ export default class HomeC extends Component {
       source={getImgSource(item.imageUri)}
       imageStyle={styles.cardImg}
       style={styles.card}>
-      <View style={styles.cardOverlay}>
+      <View>
         <TouchableItem
           onPress={this.navigateTo('Category')}
           style={styles.cardContainer}

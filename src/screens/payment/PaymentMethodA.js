@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     height: 240, // cardContainer.height + dot.height
   },
   dot: {
-    backgroundColor: Color(Colors.black).alpha(0.4),
+    backgroundColor: Colors.black,
     width: 8,
     height: 8,
     borderRadius: 4,

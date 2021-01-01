@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     margin: 1,
     borderRadius: 4,
-    backgroundColor: Color(Colors.error).alpha(0.12).string(),
+    backgroundColor: "#fff",
   },
   deleteButtonContainer: {
     borderBottomRightRadius: 4,

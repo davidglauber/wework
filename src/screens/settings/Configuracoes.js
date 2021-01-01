@@ -60,7 +60,7 @@ const VISIT_CARD = IOS ? 'ios-albums' : 'ios-albums';
 
 const ABOUT_ICON = IOS ? 'ios-finger-print' : 'md-finger-print';
 const UPDATE_ICON = IOS ? 'ios-cloud-download' : 'md-cloud-download';
-const TERMS_ICON = IOS ? 'ios-paper' : 'md-paper';
+const TERMS_ICON = IOS ? 'book' : 'book';
 
 const ADD_ICON = IOS ? 'ios-add-circle-outline' : 'md-add-circle-outline';
 const LOGOUT_ICON = IOS ? 'ios-exit' : 'md-exit';

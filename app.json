@@ -38,7 +38,7 @@
     },
     "description": "We Wo - A React Native App",
     "android": {
-      "versionCode": 5,
+      "versionCode": 6,
       "permissions":["com.android.vending.BILLING"],
       "package": "com.zubito.wewo",
       "config": {

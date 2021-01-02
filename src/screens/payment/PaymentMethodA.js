@@ -17,19 +17,10 @@ import {
   View,
   Text,
 } from 'react-native';
-import Swiper from 'react-native-swiper';
-import Color from 'color';
 
 // import components
-import BottomSheet from '../../components/bottomsheet/BottomSheet';
 import Button from '../../components/buttons/Button';
-import CreditCard from '../../components/creditcard/CreditCard';
-import Icon from '../../components/icon/Icon';
-import {Caption, Subtitle1} from '../../components/text/CustomText';
-import TouchableItem from '../../components/TouchableItem';
 
-//CSS responsivo
-import { SafeBackground } from '../home/styles';
 
 // import colors
 import Colors from '../../theme/colors';
@@ -171,7 +162,7 @@ export default class PaymentMethodA extends Component {
 
         <View style={{alignItems:'center', marginBottom: windowHeight/6}}>
           <Image style={{width:200, height:200}} source={require("../../assets/img/star.gif")} />
-          <Text style={{fontSize:20, fontWeight:'bold'}}>R$ 9,99</Text>
+          <Text style={{fontSize:20, fontWeight:'bold'}}>Mensal: R$ 9,99</Text>
         </View>
         
         <View style={{flex:1}}>

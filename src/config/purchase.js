@@ -27,7 +27,7 @@ export const requestPurchase = async (productId) => {
     try {
         await RNIap.requestSubscription(productId)
     } catch (error) {
-        alert('Erro ao recuperar dados de compra, por favor tente novamente')
+        alert('Erro ao recuperar dados de compra, por favor tente novamente: ' + error)
     }
 
 };
@@ -35,10 +35,8 @@ export const requestPurchase = async (productId) => {
 
 export const fetchAvailableProducts = async (productIds) => {
     try {
-        const getProducts = await RNIap.getProducts(productIds);
-    } catch (error) {
-        
-    }
+        const getProducts = await RNIap.getSubscriptions(productIds);
+    } catch (error) {}
 };
 
 

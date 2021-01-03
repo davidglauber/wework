@@ -28,6 +28,9 @@ import Colors from '../../theme/colors';
 import { ThemeContext } from '../../../ThemeContext';
 
 
+//import IAP API 
+import Qonversion from 'react-native-qonversion';
+
 //consts
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -124,6 +127,7 @@ export default class PaymentMethodA extends Component {
     super(props);
     this.state = {
       cardNumber: '',
+      products: []
     };
   }
 
@@ -146,9 +150,21 @@ export default class PaymentMethodA extends Component {
     );
   };
 
-  signPremium() {
-    alert('Ainda não disponível! Atualizaremos depois :)');
+
+  componentDidMount() {
+    Qonversion.launchWithKey('SQf_c2TSWa25dt07-6DQPxFwmYV_h9Ry', false)
   }
+ 
+
+  async signPremium() {
+    
+    alert('OI MEU CHAPA')
+  }
+
+
+
+
+
 
   render() {
     const {cardNumber} = this.state;

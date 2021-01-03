@@ -553,6 +553,13 @@ async componentDidMount() {
               <Heading>Anúncios</Heading>
             </View>
 
+            {activesPublishesAuto.length == 0 && activesPublishesEstab.length == 0 &&
+              <View style={{flex:1, justifyContent:'center', alignItems:'center', padding:50}}>
+                <Image style={{width:200, height:200}} source={require("../../assets/img/notfoundnoback.gif")} />
+                <Text style={{fontWeight:'bold'}}>Nenhum Anúncio Foi Encontrado</Text>
+              </View>
+            }
+
               <FlatList 
                 keyExtractor={() => this.makeid(17)}
                 data={activesPublishesAuto}

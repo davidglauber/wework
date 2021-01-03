@@ -132,11 +132,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.fooddelivery"
+        applicationId "com.zubito.wewo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "6.0"
+        versionCode 7
+        versionName "7.0"
     }
     splits {
         abi {
@@ -191,6 +191,12 @@ android {
 }
 
 dependencies {
+    def billing_version = "3.0.0"
+
+    implementation "com.android.billingclient:billing:$billing_version"
+    
+    compile project(':unimodules-core')
+    
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

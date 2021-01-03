@@ -561,6 +561,13 @@ export default class CartaoFiltro extends Component {
             </View>
           )}
         </View>
+
+        {cartoesAuto.length == 0 && cartoesEstab.length == 0 &&
+          <View style={{flex:1, justifyContent:'center', alignItems:'center', padding:50}}>
+            <Image style={{width:200, height:200}} source={require("../../assets/img/notfoundnoback.gif")} />
+            <Text style={{fontWeight:'bold'}}>Nenhum Cartão Foi Encontrado</Text>
+          </View>
+        }
           <ScrollView>
             <View>
               <FlatList
